@@ -1,0 +1,8 @@
+{
+  "temperature": 0,
+  "models": [
+    { "model": "gpt-oss:20b", "think": "low", "note": "gpt-oss does not accept think=false; 'low' is its smallest setting" },
+    { "model": "gemma4:31b", "think": false },
+    { "model": "qwen3.8:27b", "think": false }
+  ]
+}

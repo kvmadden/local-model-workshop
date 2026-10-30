@@ -1,0 +1,25 @@
+{"id": "s01", "input": "Lisinopril 10 mg tablet. Take 1 tablet by mouth once daily.", "tags": ["plain"]}
+{"id": "s02", "input": "Atorvastatin 40 mg tab, 1 tab PO QHS", "tags": ["abbreviation"]}
+{"id": "s03", "input": "Metformin 500 mg tablet - take 2 tablets by mouth twice daily with meals", "tags": ["arithmetic"]}
+{"id": "s04", "input": "Amoxicillin 250 mg/5 mL suspension: give 10 mL by mouth every 8 hours for 10 days", "tags": ["liquid", "arithmetic"]}
+{"id": "s05", "input": "Levothyroxine 75 mcg tab, take 1 tab po qAM on an empty stomach", "tags": ["abbreviation"]}
+{"id": "s06", "input": "Albuterol HFA 90 mcg/actuation: inhale 2 puffs every 4 hours as needed for wheezing", "tags": ["arithmetic", "prn"]}
+{"id": "s07", "input": "Ibuprofen 200 mg tablets, take 3 tablets by mouth q6h prn pain", "tags": ["abbreviation", "arithmetic", "prn"]}
+{"id": "s08", "input": "Nitroglycerin 0.4 mg sublingual tablet: place 1 tablet under the tongue as needed for chest pain", "tags": ["prn"]}
+{"id": "s09", "input": "Gabapentin 300 mg capsule, take 1 capsule by mouth three times daily", "tags": ["plain"]}
+{"id": "s10", "input": "Prednisone 20 mg tab: take 2 tabs by mouth once daily x 5 days", "tags": ["arithmetic"]}
+{"id": "s11", "input": "Insulin glargine 100 units/mL: inject 18 units subcutaneously at bedtime", "tags": ["plain"]}
+{"id": "s12", "input": "Methotrexate 2.5 mg tab, take 6 tablets by mouth once weekly on Mondays", "tags": ["arithmetic"]}
+{"id": "s13", "input": "Cephalexin 500 mg cap 1 cap PO QID x 7d", "tags": ["abbreviation"]}
+{"id": "s14", "input": "Sertraline 50 mg tab - take one-half tablet by mouth once daily", "tags": ["arithmetic"]}
+{"id": "s15", "input": "Ondansetron 4 mg ODT: dissolve 1 tablet on tongue every 8 hours as needed for nausea", "tags": ["prn"]}
+{"id": "s16", "input": "Hydrochlorothiazide 25 mg, 1 tab po qd", "tags": ["abbreviation"]}
+{"id": "s17", "input": "Metoprolol tartrate 25 mg tablet: take 1 tablet by mouth every 12 hours", "tags": ["plain"]}
+{"id": "s18", "input": "Cetirizine 1 mg/mL oral solution, give 5 mL by mouth once daily", "tags": ["liquid", "arithmetic"]}
+{"id": "s19", "input": "Acetaminophen 325 mg tabs - take 2 tabs PO q4h PRN fever, max 10 tabs/day", "tags": ["abbreviation", "arithmetic", "prn"]}
+{"id": "s20", "input": "Omeprazole 20 mg DR capsule, take 1 capsule by mouth BID before meals", "tags": ["abbreviation"]}
+{"id": "s21", "input": "Fluticasone propionate 50 mcg/spray nasal spray: 2 sprays in each nostril once daily", "tags": ["arithmetic"]}
+{"id": "s22", "input": "Furosemide 40 mg tab, take 1/2 tab by mouth twice a day", "tags": ["arithmetic"]}
+{"id": "s23", "input": "Warfarin 5 mg tablet: take 1.5 tablets by mouth every evening", "tags": ["arithmetic"]}
+{"id": "s24", "input": "Hydroxyzine HCl 25 mg tab 1 po tid prn itching", "tags": ["abbreviation", "prn"]}
+{"id": "s25", "input": "Melatonin 3 mg tab - take 1 tablet by mouth at bedtime as needed for sleep", "tags": ["prn"]}

@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-30",
+  "n": 25,
+  "temperature": 0,
+  "hardware": {
+    "cpu": "Apple M1 Max",
+    "cores": 10,
+    "memoryGB": 64,
+    "platform": "darwin 27.2.0",
+    "node": "v24.14.1",
+    "ollama": "0.40.6"
+  },
+  "results": [
+    {
+      "label": "mock (echo)",
+      "provider": "mock",
+      "model": "mock-default",
+      "counts": {
+        "n": 25,
+        "parsed": 0,
+        "medication": 0,
+        "dose": 0,
+        "frequency": 0,
+        "allCorrect": 0
+      },
+      "latencyMs": null,
+      "errors": 0
+    },
+    {
+      "label": "gpt-oss:20b",
+      "provider": "ollama",
+      "model": "gpt-oss:20b",
+      "think": "low",
+      "details": {
+        "parameter_size": "20.9B",
+        "quantization_level": "MXFP4",
+        "family": "gpt-oss",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 25,
+        "parsed": 25,
+        "medication": 25,
+        "dose": 25,
+        "frequency": 25,
+        "allCorrect": 25
+      },
+      "latencyMs": {
+        "p50": 4955,
+        "p95": 19427,
+        "mean": 6623
+      },
+      "errors": 0
+    },
+    {
+      "label": "gemma4:31b",
+      "provider": "ollama",
+      "model": "gemma4:31b",
+      "think": false,
+      "details": {
+        "parameter_size": "31.7B",
+        "quantization_level": "nvfp4",
+        "family": "gemma4",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 25,
+        "parsed": 25,
+        "medication": 25,
+        "dose": 25,
+        "frequency": 25,
+        "allCorrect": 25
+      },
+      "latencyMs": {
+        "p50": 4872,
+        "p95": 7877,
+        "mean": 5294
+      },
+      "errors": 0
+    },
+    {
+      "label": "qwen3.8:27b",
+      "provider": "ollama",
+      "model": "qwen3.8:27b",
+      "think": false,
+      "details": {
+        "parameter_size": "27.8B",
+        "quantization_level": "nvfp4",
+        "family": "qwen3_5",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 25,
+        "parsed": 25,
+        "medication": 25,
+        "dose": 25,
+        "frequency": 23,
+        "allCorrect": 23
+      },
+      "latencyMs": {
+        "p50": 4192,
+        "p95": 5637,
+        "mean": 4166
+      },
+      "errors": 0
+    }
+  ]
+}

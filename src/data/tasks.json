@@ -1,0 +1,87 @@
+[
+  {
+    "id": "transcribe-meetings",
+    "title": "Transcribe Audio & Video Meetings",
+    "category": "Voice & Audio",
+    "description": "Convert recorded meetings, voice memos, or podcasts into text transcripts offline, without uploading the audio.",
+    "recommendedModel": "Whisper (Large-v3)",
+    "recommendedApp": "MacWhisper",
+    "appUrl": "https://goodsnooze.gumroad.com/l/macwhisper",
+    "appIconName": "Mic",
+    "setupSteps": [
+      "Download MacWhisper from goodsnooze.gumroad.com/l/macwhisper, Jan from jan.ai, or Open WebUI from openwebui.com.",
+      "Open MacWhisper or Open WebUI and select the Whisper Large-v3 model in settings.",
+      "Drag and drop any audio or video file to start automated transcription.",
+      "Export formatted text or transcript timestamps with 1-click."
+    ],
+    "sampleWorkflow": "Drop audio file → Instant GPU transcription → Export markdown notes"
+  },
+  {
+    "id": "document-search",
+    "title": "Private Document Search & Summaries",
+    "category": "Knowledge Base",
+    "description": "Search across local PDFs, Word docs, and notes without uploading sensitive company or personal files to the cloud.",
+    "recommendedModel": "Llama 3.2 (3B)",
+    "recommendedApp": "AnythingLLM",
+    "appUrl": "https://anythingllm.com",
+    "appIconName": "FileText",
+    "setupSteps": [
+      "Download AnythingLLM Desktop from anythingllm.com, Jan from jan.ai, GPT4All from gpt4all.io, or Msty from msty.app.",
+      "Create a local workspace named \"Confidential Documents\".",
+      "Select Llama 3.2 3B as your default local execution model.",
+      "Drag PDFs into the workspace and chat with your local documents."
+    ],
+    "sampleWorkflow": "Drag PDFs into workspace → Local vector indexing → Chat & summarize"
+  },
+  {
+    "id": "dictation-cleanup",
+    "title": "Offline Dictation & Writing Cleanup",
+    "category": "Productivity & Writing",
+    "description": "Transform rough voice dictation, ramble notes, or quick thoughts into polished memos, emails, and articles.",
+    "recommendedModel": "Phi-3.5 Mini (3.8B)",
+    "recommendedApp": "LM Studio",
+    "appUrl": "https://lmstudio.ai",
+    "appIconName": "Edit3",
+    "setupSteps": [
+      "Download LM Studio from lmstudio.ai, Jan from jan.ai, GPT4All from gpt4all.io, or Msty from msty.app.",
+      "Search and download Phi-3.5-mini-instruct in the model catalog.",
+      "Load the model in the chat tab with system prompt \"Clean up dictation\".",
+      "Paste voice text to get instant clean prose."
+    ],
+    "sampleWorkflow": "Paste rough voice dictation → Click Clean Up → Get polished memo"
+  },
+  {
+    "id": "code-reasoning",
+    "title": "Local Code & Complex Brainstorming",
+    "category": "Engineering & Reasoning",
+    "description": "Get deep step-by-step reasoning, code suggestions, and architectural analysis running entirely on your Mac GPU.",
+    "recommendedModel": "DeepSeek-R1 (8B)",
+    "recommendedApp": "Ollama",
+    "appUrl": "https://ollama.com",
+    "appIconName": "Cpu",
+    "setupSteps": [
+      "Download Ollama from ollama.com, Jan from jan.ai, GPT4All from gpt4all.io, or Open WebUI from openwebui.com.",
+      "Open Ollama or Jan desktop client (runs natively on Apple Silicon).",
+      "Pull or select model: deepseek-r1:8b",
+      "Connect any desktop client (Jan from jan.ai, GPT4All from gpt4all.io, Msty from msty.app, Open WebUI from openwebui.com)."
+    ],
+    "sampleWorkflow": "Ask complex technical prompt → Local GPU reasoning → Detailed response"
+  },
+  {
+    "id": "general-qa",
+    "title": "Fast On-Device Q&A & Writing",
+    "category": "General Assistant",
+    "description": "Lightweight, rapid response assistant for daily questions, email drafting, and copy editing with minimal RAM footprint.",
+    "recommendedModel": "Qwen 2.5 (7B)",
+    "recommendedApp": "LM Studio",
+    "appUrl": "https://lmstudio.ai",
+    "appIconName": "MessageSquare",
+    "setupSteps": [
+      "Download LM Studio from lmstudio.ai, Jan from jan.ai, GPT4All from gpt4all.io, Msty from msty.app, or Open WebUI from openwebui.com.",
+      "Find Qwen 2.5 7B in the recommended models list.",
+      "Click Download and launch the local chat interface.",
+      "Start instant zero-latency conversation."
+    ],
+    "sampleWorkflow": "Open local chat → Type query → Instant private response"
+  }
+]

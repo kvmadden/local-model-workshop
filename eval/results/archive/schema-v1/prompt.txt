@@ -1,0 +1,13 @@
+You extract structured fields from one synthetic medication instruction line.
+
+Return a JSON object with exactly these keys:
+- "medication": the drug name as written, without strength or dosage form.
+- "dose_value": the amount given per single administration, as a number. Multiply the strength by the quantity when needed (for example, 3 tablets of 250 mg is 750; 15 mL of 100 mg/5 mL is 300; 1 spray in each nostril of 25 mcg/spray is 50).
+- "dose_unit": one of "mg", "mcg", "g", "units", "mL".
+- "frequency": one of "once_daily", "twice_daily", "three_times_daily", "four_times_daily", "every_4_hours", "every_6_hours", "every_8_hours", "every_12_hours", "at_bedtime", "once_weekly", "as_needed".
+
+Frequency rules: map the written schedule. "daily", "qd", "qAM" and "every evening" are once_daily. "BID" and "twice a day" are twice_daily. "every 12 hours" is every_12_hours. "QHS" and "at bedtime" are at_bedtime. If an interval is given with "as needed", use the interval. Use as_needed only when no schedule or interval is given.
+
+Line: {{input}}
+
+JSON:

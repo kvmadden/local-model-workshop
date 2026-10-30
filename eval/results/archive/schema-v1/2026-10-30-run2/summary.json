@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-30",
+  "n": 25,
+  "temperature": 0,
+  "hardware": {
+    "cpu": "Apple M1 Max",
+    "cores": 10,
+    "memoryGB": 64,
+    "platform": "darwin 27.2.0",
+    "node": "v24.14.1",
+    "ollama": "0.40.6"
+  },
+  "results": [
+    {
+      "label": "mock (echo)",
+      "provider": "mock",
+      "model": "mock-default",
+      "counts": {
+        "n": 25,
+        "parsed": 0,
+        "medication": 0,
+        "dose": 0,
+        "frequency": 0,
+        "allCorrect": 0
+      },
+      "latencyMs": null,
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 74.4,
+        "end": 74.4
+      }
+    },
+    {
+      "label": "gpt-oss:20b",
+      "provider": "ollama",
+      "model": "gpt-oss:20b",
+      "think": "low",
+      "details": {
+        "parameter_size": "20.9B",
+        "quantization_level": "MXFP4",
+        "family": "gpt-oss",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 25,
+        "parsed": 25,
+        "medication": 25,
+        "dose": 25,
+        "frequency": 25,
+        "allCorrect": 25
+      },
+      "latencyMs": {
+        "p50": 5634,
+        "p95": 9233,
+        "mean": 5647
+      },
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 73.6,
+        "end": 153.5
+      }
+    },
+    {
+      "label": "gemma4:31b",
+      "provider": "ollama",
+      "model": "gemma4:31b",
+      "think": false,
+      "details": {
+        "parameter_size": "31.7B",
+        "quantization_level": "nvfp4",
+        "family": "gemma4",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 25,
+        "parsed": 25,
+        "medication": 25,
+        "dose": 25,
+        "frequency": 25,
+        "allCorrect": 25
+      },
+      "latencyMs": {
+        "p50": 6217,
+        "p95": 8652,
+        "mean": 6437
+      },
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 147.6,
+        "end": 114.5
+      }
+    },
+    {
+      "label": "qwen3.8:27b",
+      "provider": "ollama",
+      "model": "qwen3.8:27b",
+      "think": false,
+      "details": {
+        "parameter_size": "27.8B",
+        "quantization_level": "nvfp4",
+        "family": "qwen3_5",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 25,
+        "parsed": 25,
+        "medication": 25,
+        "dose": 25,
+        "frequency": 24,
+        "allCorrect": 24
+      },
+      "latencyMs": {
+        "p50": 4182,
+        "p95": 5267,
+        "mean": 4760
+      },
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 106.3,
+        "end": 123.6
+      }
+    }
+  ]
+}

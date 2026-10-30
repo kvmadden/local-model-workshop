@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "drug": {
+      "type": "string"
+    },
+    "dose_per_administration": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["mg", "mcg", "g", "units", "mL"]
+        }
+      },
+      "required": ["value", "unit"]
+    },
+    "frequency": {
+      "type": ["string", "null"],
+      "enum": [
+        "once_daily",
+        "twice_daily",
+        "three_times_daily",
+        "four_times_daily",
+        "every_4_hours",
+        "every_6_hours",
+        "every_8_hours",
+        "every_12_hours",
+        "once_weekly",
+        null
+      ]
+    },
+    "timing": {
+      "type": ["string", "null"],
+      "enum": ["morning", "evening", "bedtime", "with_meals", "before_meals", "after_meals", null]
+    },
+    "prn": {
+      "type": "boolean"
+    },
+    "prn_indication": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": ["drug", "dose_per_administration", "frequency", "timing", "prn", "prn_indication"]
+}

@@ -1,0 +1,25 @@
+{"id": "s01", "medication": "lisinopril", "medication_match": "lisinopril", "dose_value": 10, "dose_unit": "mg", "frequency": "once_daily"}
+{"id": "s02", "medication": "atorvastatin", "medication_match": "atorvastatin", "dose_value": 40, "dose_unit": "mg", "frequency": "at_bedtime"}
+{"id": "s03", "medication": "metformin", "medication_match": "metformin", "dose_value": 1000, "dose_unit": "mg", "frequency": "twice_daily"}
+{"id": "s04", "medication": "amoxicillin", "medication_match": "amoxicillin", "dose_value": 500, "dose_unit": "mg", "frequency": "every_8_hours"}
+{"id": "s05", "medication": "levothyroxine", "medication_match": "levothyroxine", "dose_value": 75, "dose_unit": "mcg", "frequency": "once_daily"}
+{"id": "s06", "medication": "albuterol", "medication_match": "albuterol", "dose_value": 180, "dose_unit": "mcg", "frequency": "every_4_hours"}
+{"id": "s07", "medication": "ibuprofen", "medication_match": "ibuprofen", "dose_value": 600, "dose_unit": "mg", "frequency": "every_6_hours"}
+{"id": "s08", "medication": "nitroglycerin", "medication_match": "nitroglycerin", "dose_value": 0.4, "dose_unit": "mg", "frequency": "as_needed"}
+{"id": "s09", "medication": "gabapentin", "medication_match": "gabapentin", "dose_value": 300, "dose_unit": "mg", "frequency": "three_times_daily"}
+{"id": "s10", "medication": "prednisone", "medication_match": "prednisone", "dose_value": 40, "dose_unit": "mg", "frequency": "once_daily"}
+{"id": "s11", "medication": "insulin glargine", "medication_match": "glargine", "dose_value": 18, "dose_unit": "units", "frequency": "at_bedtime"}
+{"id": "s12", "medication": "methotrexate", "medication_match": "methotrexate", "dose_value": 15, "dose_unit": "mg", "frequency": "once_weekly"}
+{"id": "s13", "medication": "cephalexin", "medication_match": "cephalexin", "dose_value": 500, "dose_unit": "mg", "frequency": "four_times_daily"}
+{"id": "s14", "medication": "sertraline", "medication_match": "sertraline", "dose_value": 25, "dose_unit": "mg", "frequency": "once_daily"}
+{"id": "s15", "medication": "ondansetron", "medication_match": "ondansetron", "dose_value": 4, "dose_unit": "mg", "frequency": "every_8_hours"}
+{"id": "s16", "medication": "hydrochlorothiazide", "medication_match": "hydrochlorothiazide", "dose_value": 25, "dose_unit": "mg", "frequency": "once_daily"}
+{"id": "s17", "medication": "metoprolol tartrate", "medication_match": "metoprolol", "dose_value": 25, "dose_unit": "mg", "frequency": "every_12_hours"}
+{"id": "s18", "medication": "cetirizine", "medication_match": "cetirizine", "dose_value": 5, "dose_unit": "mg", "frequency": "once_daily"}
+{"id": "s19", "medication": "acetaminophen", "medication_match": "acetaminophen", "dose_value": 650, "dose_unit": "mg", "frequency": "every_4_hours"}
+{"id": "s20", "medication": "omeprazole", "medication_match": "omeprazole", "dose_value": 20, "dose_unit": "mg", "frequency": "twice_daily"}
+{"id": "s21", "medication": "fluticasone propionate", "medication_match": "fluticasone", "dose_value": 200, "dose_unit": "mcg", "frequency": "once_daily"}
+{"id": "s22", "medication": "furosemide", "medication_match": "furosemide", "dose_value": 20, "dose_unit": "mg", "frequency": "twice_daily"}
+{"id": "s23", "medication": "warfarin", "medication_match": "warfarin", "dose_value": 7.5, "dose_unit": "mg", "frequency": "once_daily"}
+{"id": "s24", "medication": "hydroxyzine", "medication_match": "hydroxyzine", "dose_value": 25, "dose_unit": "mg", "frequency": "three_times_daily"}
+{"id": "s25", "medication": "melatonin", "medication_match": "melatonin", "dose_value": 3, "dose_unit": "mg", "frequency": "at_bedtime"}

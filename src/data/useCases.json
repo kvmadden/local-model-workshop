@@ -1,0 +1,106 @@
+{
+  "transcription": {
+    "id": "transcription",
+    "title": "Voice Transcription Playground",
+    "subtitle": "Convert spoken meeting recordings and voice notes into clean offline text transcripts.",
+    "description": "Process raw voice dictation or meeting recordings locally on your Mac using Whisper Large-v3 with zero cloud uploads.",
+    "recommendedModel": "Whisper (Large-v3)",
+    "recommendedApp": "MacWhisper",
+    "sampleInputs": [
+      {
+        "id": "voice-sample-1",
+        "label": "Executive Team Meeting Recording (Sample 1)",
+        "content": "Alright everyone let us review the Q3 product roadmap... the team lead mentioned we need the local model workshop completed by Friday with full Playwright E2E coverage... a designer agreed to handle the UI styling."
+      },
+      {
+        "id": "voice-sample-2",
+        "label": "Client Strategy Dictation (Sample 2)",
+        "content": "Um so basically for the new client workflow we want to make sure all document processing stays local on Apple Silicon... no external APIs or cloud leaks."
+      },
+      {
+        "id": "voice-sample-3",
+        "label": "Podcast Episode Draft (Sample 3)",
+        "content": "Welcome back to local AI weekly! Today we are exploring small 3B and 8B models running locally on Mac M-series chips."
+      }
+    ],
+    "defaultOutput": "Local Transcription Result:\n[00:00:01] Speaker 1: Reviewing Q3 product roadmap and Apple Silicon GPU acceleration.\n[00:00:08] Speaker 2: Local model workshop project is on track with Playwright E2E coverage."
+  },
+  "summarizing": {
+    "id": "summarizing",
+    "title": "Confidential Document Summarizing Playground",
+    "subtitle": "Extract key insights, action items, and executive summaries from private local documents.",
+    "description": "Summarize internal reports, legal files, or strategy memos using Llama 3.2 3B without sending data over the network.",
+    "recommendedModel": "Llama 3.2 (3B)",
+    "recommendedApp": "AnythingLLM",
+    "sampleInputs": [
+      {
+        "id": "doc-sample-1",
+        "label": "Q3 Financial & Operations Report",
+        "content": "Executive Summary: Q3 revenue grew 18% quarter-over-quarter. Operational efficiency increased due to migrating workflows onto local Mac hardware, eliminating cloud API costs by $4,500/month. Recommended Next Steps: 1. Expand local model deployment. 2. Standardize on 8B parameter models for analytical tasks."
+      },
+      {
+        "id": "doc-sample-2",
+        "label": "Data Handling Policy",
+        "content": "Section 4: All customer data processing must be restricted to local air-gapped environments. No customer records or transcripts may leave local Mac memory without explicit cryptographic consent."
+      },
+      {
+        "id": "doc-sample-3",
+        "label": "Product Engineering Overview",
+        "content": "Architecture overview: Vite frontend paired with local model runner engine. All operations execute client-side with deterministic fallback adapters for automated UI test suites."
+      }
+    ],
+    "defaultOutput": "Confidential Summary:\n## Executive Summary\n- Revenue Growth: +18% Q/Q with zero cloud API expense.\n- Key Action Item: On-Device Processing across team Macs.\n- Data Handling: processed locally in this demo; no network call is made."
+  },
+  "dictation": {
+    "id": "dictation",
+    "title": "Dictation Cleanup Playground",
+    "subtitle": "Turn messy spoken ramble and voice notes into crisp, professional prose.",
+    "description": "Clean up filler words, false starts, and fragmented thoughts using Phi-3.5 Mini to produce publication-ready writing.",
+    "recommendedModel": "Phi-3.5 Mini (3.8B)",
+    "recommendedApp": "LM Studio",
+    "sampleInputs": [
+      {
+        "id": "dict-sample-1",
+        "label": "Rough Email to Stakeholders",
+        "content": "Hey team uh so I was thinking about the project update... like we should probably send them a quick email saying the test suite is ready and all 15 test cases are passing green, ya know?"
+      },
+      {
+        "id": "dict-sample-2",
+        "label": "Spoken Brainstorming Notes",
+        "content": "Um okay so for the model catalog... we need to highlight Mac RAM usage like 8GB or 16GB and show the Apple Silicon rating out of 10 so non-tech users know what to download."
+      },
+      {
+        "id": "dict-sample-3",
+        "label": "Feature Release Announcement Draft",
+        "content": "So yeah we just released the new zero-code local model workshop! No code blocks or JSON configs needed at all, super simple click and run UI."
+      }
+    ],
+    "defaultOutput": "Polished Dictation Output:\nCleaned up formatting and removed filler words.\n\nSubject: Project Status Update — Test Suite Completion\n\nHi team,\n\nI am pleased to inform you that our project test suite is now fully complete and verified."
+  },
+  "file-chat": {
+    "id": "file-chat",
+    "title": "File Chatting Playground",
+    "subtitle": "Converse directly with local files and knowledge repositories in real time.",
+    "description": "Ask questions about complex documents and receive accurate, context-aware answers generated entirely on your Mac.",
+    "recommendedModel": "Qwen 2.5 (7B) / DeepSeek-R1 (8B)",
+    "recommendedApp": "AnythingLLM / Ollama",
+    "sampleInputs": [
+      {
+        "id": "chat-sample-1",
+        "label": "Local Model Deployment Guide",
+        "content": "Guide details: LM Studio allows 1-click model downloads. MacWhisper handles audio files. Ollama provides terminal and background service model hosting on macOS."
+      },
+      {
+        "id": "chat-sample-2",
+        "label": "Apple Silicon Memory Guide",
+        "content": "Memory specs: 8GB RAM is ideal for 3B parameter models like Llama 3.2 and Whisper. 16GB RAM supports 7B and 8B models like Qwen 2.5 and DeepSeek-R1 comfortably."
+      },
+      {
+        "id": "chat-sample-3",
+        "label": "Workshop UI Style Notes",
+        "content": "Design law: Dark slate background palette (bg-slate-950, bg-slate-900), min 44px touch targets, zero raw code clutter for non-technical users."
+      }
+    ],
+    "defaultOutput": "Direct Answer from Local Context:\nBased on your local document without exposing sensitive content to public servers:\n- For 8GB RAM Macs: Use Llama 3.2 (3B) or Whisper (Large-v3).\n- For 16GB RAM Macs: Qwen 2.5 (7B) and DeepSeek-R1 (8B) run smoothly."
+  }
+}

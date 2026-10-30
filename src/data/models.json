@@ -1,0 +1,127 @@
+[
+  {
+    "id": "llama-3.2-3b",
+    "ollamaPull": "ollama pull llama3.2",
+    "name": "Llama 3.2 (3B)",
+    "family": "Meta",
+    "parameters": "3.21 Billion",
+    "macRamRequired": "8 GB System RAM (2.2 GB VRAM Footprint)",
+    "appleSiliconScore": "Ultra-Fast (~45–85 tok/s)",
+    "recommendedFor": [
+      "Document Summarization",
+      "Quick Q&A",
+      "Low Memory Mac",
+      "Jan & AnythingLLM"
+    ],
+    "setupSteps": [
+      "Download LM Studio from lmstudio.ai, Jan from jan.ai, GPT4All from gpt4all.io, Msty from msty.app, or Open WebUI from openwebui.com.",
+      "Search for \"Llama-3.2-3B-Instruct\" in your chosen desktop app model catalog.",
+      "Click the 1-Click Download button (Q4_K_M version recommended).",
+      "Select the model in your chat header and start asking questions offline!"
+    ],
+    "description": "Meta's 3B instruction model. Small enough for 8 GB Macs and quick on short summaries and Q&A.",
+    "appPairing": "Jan (jan.ai), AnythingLLM & Msty (msty.app)",
+    "appUrl": "https://jan.ai",
+    "license": "Llama 3.2 Community License"
+  },
+  {
+    "id": "qwen-2.5-7b",
+    "ollamaPull": "ollama pull qwen2.5",
+    "name": "Qwen 2.5 (7B)",
+    "family": "Alibaba Cloud",
+    "parameters": "7.61 Billion",
+    "macRamRequired": "16 GB System RAM (4.7 GB VRAM Footprint)",
+    "appleSiliconScore": "High-Speed (~20–45 tok/s)",
+    "recommendedFor": [
+      "General Writing",
+      "Multilingual Processing",
+      "Open WebUI Chat",
+      "Coding Assistance"
+    ],
+    "setupSteps": [
+      "Download Ollama from ollama.com, LM Studio from lmstudio.ai, Jan from jan.ai, GPT4All from gpt4all.io, Msty from msty.app, or Open WebUI from openwebui.com.",
+      "Search for \"Qwen-2.5-7B\" in the app discover tab.",
+      "Click Download to save model files directly to your Mac unified storage.",
+      "Launch local chat session with zero configuration needed."
+    ],
+    "description": "Alibaba's 7B general model with strong multilingual coverage. A common default for writing and chat on 16 GB Macs.",
+    "appPairing": "Ollama, LM Studio & Open WebUI (openwebui.com)",
+    "appUrl": "https://openwebui.com",
+    "license": "Apache 2.0 Open Source"
+  },
+  {
+    "id": "deepseek-r1-8b",
+    "ollamaPull": "ollama pull deepseek-r1:8b",
+    "name": "DeepSeek-R1 (8B)",
+    "family": "DeepSeek AI",
+    "parameters": "8.03 Billion",
+    "macRamRequired": "16 GB System RAM (4.9 GB VRAM Footprint)",
+    "appleSiliconScore": "Deep Reasoning (~18–40 tok/s)",
+    "recommendedFor": [
+      "Deep Reasoning",
+      "Math & Logic",
+      "Complex Problem Solving",
+      "Step-by-Step Thinking"
+    ],
+    "setupSteps": [
+      "Download Ollama from ollama.com, Jan from jan.ai, or GPT4All from gpt4all.io.",
+      "Open Terminal or app library and pull: ollama pull deepseek-r1:8b",
+      "Wait for initial model download to complete (approx 4.9 GB).",
+      "Chat in desktop apps like Jan (jan.ai), GPT4All (gpt4all.io), Msty (msty.app), or Open WebUI (openwebui.com)."
+    ],
+    "description": "An 8B distilled reasoning model that writes out its thinking before the answer. Slower per answer, useful for multi-step problems.",
+    "appPairing": "Ollama, Jan (jan.ai) & GPT4All (gpt4all.io)",
+    "appUrl": "https://jan.ai",
+    "license": "MIT License"
+  },
+  {
+    "id": "whisper-large-v3",
+    "ollamaPull": null,
+    "name": "Whisper (Large-v3)",
+    "family": "OpenAI",
+    "parameters": "1.55 Billion",
+    "macRamRequired": "8 GB System RAM (3.1 GB VRAM Footprint)",
+    "appleSiliconScore": "Real-Time Audio (15x Speedup)",
+    "recommendedFor": [
+      "Voice Transcription",
+      "Audio & Video Files",
+      "Multilingual Audio",
+      "Meeting Notes"
+    ],
+    "setupSteps": [
+      "Download MacWhisper from goodsnooze.gumroad.com/l/macwhisper or use Jan / Open WebUI extensions.",
+      "Choose \"Whisper Large-v3 Turbo\" in MacWhisper model preferences.",
+      "The app automatically configures Apple Metal GPU acceleration.",
+      "Drag any MP3, WAV, or MOV file into MacWhisper for local transcription."
+    ],
+    "description": "OpenAI's speech-to-text model, run through whisper.cpp-based apps such as MacWhisper. Supports many languages.",
+    "appPairing": "MacWhisper & Open WebUI",
+    "appUrl": "https://goodsnooze.gumroad.com/l/macwhisper",
+    "license": "MIT License"
+  },
+  {
+    "id": "phi-3.5-mini",
+    "ollamaPull": "ollama pull phi3.5",
+    "name": "Phi-3.5 Mini (3.8B)",
+    "family": "Microsoft",
+    "parameters": "3.82 Billion",
+    "macRamRequired": "8 GB System RAM (2.6 GB VRAM Footprint)",
+    "appleSiliconScore": "Ultra-Fast (~45–85 tok/s)",
+    "recommendedFor": [
+      "Dictation Cleanup",
+      "Mobile/Laptop Battery Efficiency",
+      "Fast Copy Editing",
+      "GPT4All & Msty"
+    ],
+    "setupSteps": [
+      "Download LM Studio from lmstudio.ai, Jan from jan.ai, GPT4All from gpt4all.io, or Msty from msty.app.",
+      "Search for \"Phi-3.5-mini-instruct\" in the model catalog.",
+      "Click Download (requires under 3 GB storage).",
+      "Select Phi-3.5 in the chat top bar for local dictation cleanup."
+    ],
+    "description": "Microsoft's 3.8B model. Small footprint, suited to short rewriting and cleanup tasks.",
+    "appPairing": "LM Studio, GPT4All (gpt4all.io) & Msty (msty.app)",
+    "appUrl": "https://msty.app",
+    "license": "MIT License"
+  }
+]

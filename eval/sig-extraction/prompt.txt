@@ -1,0 +1,18 @@
+You extract structured fields from one synthetic medication instruction line.
+
+Return a JSON object with exactly these keys:
+- "drug": the drug name as written, without strength or dosage form.
+- "dose_per_administration": an object {"value": number, "unit": one of "mg", "mcg", "g", "units", "mL"}. The amount given each time the patient takes the drug. Multiply the strength by the quantity when needed (for example, 3 tablets of 250 mg is 750 mg; 15 mL of 100 mg/5 mL is 300 mg; 1 spray in each nostril of 25 mcg/spray is 50 mcg).
+- "frequency": how often the dose is scheduled. One of "once_daily", "twice_daily", "three_times_daily", "four_times_daily", "every_4_hours", "every_6_hours", "every_8_hours", "every_12_hours", "once_weekly", or null.
+- "timing": the time of day or anchor the dose is tied to. One of "morning", "evening", "bedtime", "with_meals", "before_meals", "after_meals", or null.
+- "prn": true if the line says the dose is taken as needed ("as needed", "PRN"), otherwise false.
+- "prn_indication": the reason given for as-needed use (for example "headache"), or null if none is given.
+
+These are separate dimensions. Fill each one independently:
+- Frequency is the schedule only. "daily" and "qd" are once_daily. "BID" and "twice a day" are twice_daily. "every 12 hours" is every_12_hours, not twice_daily. A dose tied to one time of day ("qAM", "QHS", "every morning", "every evening", "at bedtime") is once_daily. Use null only when the line gives no schedule, interval or time of day at all.
+- Timing is the time of day or meal anchor only. "qAM" is morning, "QHS" is bedtime. Use null when the line gives no time of day or meal anchor. An interval such as "every 8 hours" is a frequency, not a timing.
+- As needed does not replace the schedule. "every 6 hours as needed" has frequency every_6_hours and prn true. "as needed" with no schedule has frequency null and prn true.
+
+Line: {{input}}
+
+JSON:
