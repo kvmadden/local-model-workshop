@@ -146,6 +146,10 @@ npm run eval -- --models gpt-oss:20b --out eval/results/my-run
 
 To use live models, install [Ollama](https://ollama.com), pull the models named in `eval/sig-extraction/models.json` (or edit that file), and leave Ollama running on `localhost:11434`. Set `OLLAMA_HOST` to point the eval at a different address.
 
+## Development history
+
+Built in August 2026 over 28 commits in a private repository. The full history includes personal notes and private configuration, so this repository is a cleaned public snapshot. The medication-instruction evaluation and its schema revision were added for this release in October 2026.
+
 ## License
 
 MIT, Copyright (c) 2026 Kevin Madden. See `LICENSE`. All data in this repository, including the eval cases, gold labels and playground samples, is fictional or synthetic.
