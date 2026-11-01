@@ -13,10 +13,11 @@
     "test:e2e:report": "playwright show-report",
     "eval": "vite-node scripts/eval-sig.ts --",
     "eval:mock": "vite-node scripts/eval-sig.ts -- --mock-only --out eval/results/mock-only",
-    "audit:score": "vite-node scripts/audit-report.ts --write",
+    "audit:score": "vite-node scripts/audit-requalify-v2.ts --check",
     "audit:infer": "vite-node scripts/audit-infer.ts --",
-    "audit:inspect": "vite-node scripts/audit-inspector.ts --write",
-    "audit:rescore": "vite-node scripts/audit-rescore.ts --"
+    "audit:inspect": "vite-node scripts/audit-requalify-v2.ts --check",
+    "audit:rescore": "vite-node scripts/audit-rescore.ts --",
+    "audit:qualify:v2": "vite-node scripts/audit-requalify-v2.ts --"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",

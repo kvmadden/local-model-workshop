@@ -12,7 +12,7 @@
 
 [Audit protocol and results](eval/extraction-audit/AUDIT.md) · [Offline control scores](eval/extraction-audit/RESULTS.md) · [How this was built](docs/HOW-BUILT.md)
 
-Run `npm run audit:score` to reproduce the committed offline controls. Local acquisition is a separate `npm run audit:infer -- --out eval/extraction-audit/local-NEW-ID` command and requires the named models already installed. No paid API is used. All historical results below remain unchanged.
+The inspector uses evaluator v2, which rejects duplicate identities. V1 reports and evaluator source remain frozen under the existing paths and `eval/extraction-audit/versions/v1/source`. Run `npm run audit:qualify:v2 -- --out eval/extraction-audit/versions/v2` only in a fresh output checkout to regenerate v2 evidence from unchanged saved replies; existing output is never overwritten. `npm run audit:score` and `npm run audit:inspect` reproduce and verify v2 artifacts without writing files; `npm test` verifies both versions. Local acquisition is a separate `npm run audit:infer -- --out eval/extraction-audit/local-NEW-ID` command and requires the named models already installed. No paid API is used. All historical results below remain unchanged.
 
 # Local Model Workshop
 

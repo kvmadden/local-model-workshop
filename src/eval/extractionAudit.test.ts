@@ -64,7 +64,7 @@ it('reproduces complete errors and fixed gallery offline with no network', async
   const { readFileSync } = await import('node:fs')
   vi.stubGlobal('fetch', () => { throw new Error('Network disabled') })
   try {
-    const { report } = await import('../../scripts/audit-report')
+    const { report } = await import('../../eval/extraction-audit/versions/v1/source/scripts/audit-report-replay')
     for (const control of ['empty', 'everything', 'rules']) {
       const rows = JSON.parse(readFileSync(`eval/extraction-audit/${control}.json`, 'utf8'))
       const saved = JSON.parse(readFileSync(`eval/extraction-audit/reports/${control}.json`, 'utf8'))
@@ -117,7 +117,35 @@ it('reproduces partial acquired replies without presenting a complete run', asyn
     const { inspectPartial } = await import('../../scripts/audit-partial')
     const path = 'eval/extraction-audit/local-20261101-corrected/pass1-qwen3_8_27b'
     const saved = JSON.parse(readFileSync(`${path}-inspection.json`, 'utf8'))
-    expect({ status: 'incomplete, unmeasured', ...inspectPartial(`${path}.json`) }).toEqual(saved)
+    expect({ status: 'incomplete, unmeasured', ...inspectPartial(`${path}.json`, 'v1') }).toEqual(saved)
     expect(saved.acquired).toBeLessThan(saved.expected)
   } finally { vi.unstubAllGlobals() }
+})
+
+it('does not let duplicate entity order hide conflicting evidence', () => {
+  const wrong = { ...drug, spans: [{ start: 8, end: 12 }] }
+  for (const prediction of [[drug, wrong], [wrong, drug], [drug, drug]]) {
+    const result = scoreEntities(input, [drug], prediction)
+    expect(result.predicted).toBe(2)
+    expect(result.tp).toBe(0)
+    expect(result.precision).toBe(0)
+    expect(result.exact).toBe(false)
+    expect(result.unsupported).toHaveLength(2)
+  }
+})
+it('rejects duplicate gold identities instead of silently choosing one', () => {
+  expect(() => scoreEntities(input, [drug, drug], [drug])).toThrow(/duplicate gold/i)
+})
+
+it('penalizes duplicate identities even when one span is invalid', () => {
+  for (const spans of [[], [{ start: 80, end: 90 }]]) {
+    const invalid = { ...drug, spans }
+    for (const prediction of [[drug, invalid], [invalid, drug]]) {
+      const scored = scoreEntities(input, [drug], prediction)
+      expect(scored.supported).toHaveLength(0)
+      expect(scored.unsupported).toHaveLength(2)
+      expect(scored.missing).toHaveLength(1)
+      expect(scored.precision).toBe(0)
+    }
+  }
 })

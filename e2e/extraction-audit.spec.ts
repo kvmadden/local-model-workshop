@@ -38,9 +38,9 @@ test('saved audit exposes rights, spans and fixed failures by keyboard', async (
     await select.selectOption('c04')
     if (!await inspector.locator('details').last().getAttribute('open').then(v => v !== null)) await inspector.getByText('Exact spans and derivations', { exact: true }).click()
     await expect(inspector.getByText('Multiply 12.5 × 0.5 = 6.25 mg')).toBeVisible()
-    await page.getByTestId('audit-run').selectOption('reports/empty.json')
+    await page.getByTestId('audit-run').selectOption('versions/v2/reports/empty.json')
     await expect(inspector.getByText('None', { exact: true }).first()).toBeVisible()
-    await page.getByTestId('audit-run').selectOption('reports/everything.json')
+    await page.getByTestId('audit-run').selectOption('versions/v2/reports/everything.json')
     await expect(inspector.getByRole('link', { name: 'Complete errors and intervals' })).toHaveAttribute('href', /reports\/everything.json$/)
   }
 })
@@ -49,7 +49,7 @@ test('saved audit exposes rights, spans and fixed failures by keyboard', async (
 test('incomplete real acquisition exposes its reply and keeps aggregates unmeasured', async ({ page }) => {
   await page.goto('/')
   await page.getByTestId('tab-benchmark-studio').click()
-  await page.getByTestId('audit-run').selectOption('local-20261101-corrected/pass1-qwen3_8_27b-inspection.json')
+  await page.getByTestId('audit-run').selectOption('versions/v2/local-20261101-corrected/pass1-qwen3_8_27b-inspection.json')
   await page.getByTestId('audit-case').selectOption('p16')
   const inspector = page.getByTestId('saved-run-inspector')
   await expect(inspector.getByText('Unmeasured, incomplete acquisition')).toBeVisible()

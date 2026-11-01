@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
-import { AuditCase, Entity, TASKS, scoreEntities, baseline, failureType, FAILURE_ORDER, validateSplits } from '../src/eval/extractionAudit'
+import { AuditCase, Entity, TASKS, scoreEntities, failureType, FAILURE_ORDER, validateSplits } from '../src/eval/extractionAudit'
 export const root = 'eval/extraction-audit'
 export const read = (p: string) => readFileSync(p, 'utf8')
 export const hash = (p: string) => createHash('sha256').update(read(p)).digest('hex')
@@ -23,10 +23,12 @@ export function report(rows: SavedRow[], name: string) {
     return { id: c.id, split: c.split, sourceFamily: c.sourceFamily, ...score, failure: failureType(score, row.error), error: row.error, latencyMs: row.latencyMs }
   })
   const ratio = (a: number, b: number) => b ? a / b : null
+  // Bootstrap draws reuse immutable scored documents.
+  const counts = new Map(documents.map(d => [d, { tp: d.supported.length, extra: d.unsupported.length, missing: d.missing.length }]))
   const totals = (docs: typeof documents, task?: string) => {
-    const tp = docs.reduce((n, d) => n + d.supported.filter(e => !task || e.task === task).length, 0)
-    const extra = docs.reduce((n, d) => n + d.unsupported.filter(e => !task || e.task === task).length, 0)
-    const missing = docs.reduce((n, d) => n + d.missing.filter(e => !task || e.task === task).length, 0)
+    const tp = docs.reduce((n, d) => n + (task ? d.supported.filter(e => e.task === task).length : counts.get(d)!.tp), 0)
+    const extra = docs.reduce((n, d) => n + (task ? d.unsupported.filter(e => e.task === task).length : counts.get(d)!.extra), 0)
+    const missing = docs.reduce((n, d) => n + (task ? d.missing.filter(e => e.task === task).length : counts.get(d)!.missing), 0)
     return { tp, predicted: tp + extra, gold: tp + missing, unsupported: extra, missing, precision: ratio(tp, tp + extra), recall: ratio(tp, tp + missing) }
   }
   // Seeded document-cluster bootstrap. Resample source families, not individual facts.
@@ -43,19 +45,6 @@ export function report(rows: SavedRow[], name: string) {
     return { split, documents: docs.length, ...totals(docs), abstentions: docs.filter(d => d.predicted === 0).length, exact: docs.filter(d => d.exact).length, perTask: Object.fromEntries(TASKS.map(task => [task, totals(docs, task)])), bootstrap95: { precision: interval('precision'), recall: interval('recall'), samples: 1000, unit: 'source document family', seed: 20261101 } }
   })
   const errors = documents.filter(d => d.failure).sort((a, b) => FAILURE_ORDER.indexOf(a.failure!) - FAILURE_ORDER.indexOf(b.failure!) || a.id.localeCompare(b.id))
-  return { name, status: 'draft, pending pharmacist review', reviewedMetrics: null, modelDigest: null, timing: 'unmeasured for controls', corpusHashes: { public: hash(`${root}/public.json`), challenge: hash(`${root}/challenge.json`) }, splits, errors, gallery: errors.slice(0, 8), documents }
+  return { evaluatorVersion: 'v2', name, status: 'draft, pending pharmacist review', reviewedMetrics: null, modelDigest: null, timing: 'unmeasured for controls', corpusHashes: { public: hash(`${root}/public.json`), challenge: hash(`${root}/challenge.json`) }, splits, errors, gallery: errors.slice(0, 8), documents }
 }
-export function writeReports() {
-  mkdirSync(`${root}/reports`, { recursive: true })
-  for (const name of ['empty', 'everything', 'rules']) {
-    const rows = cases.map(c => ({ id: c.id, output: JSON.stringify({ entities: baseline(name, c.input) }), error: null, latencyMs: null }))
-    writeFileSync(`${root}/${name}.json`, JSON.stringify(rows, null, 2) + '\n')
-    writeFileSync(`${root}/reports/${name}.json`, JSON.stringify(report(rows, name), null, 2) + '\n')
-  }
-  const reports = ['empty', 'everything', 'rules'].map(name => report(JSON.parse(read(`${root}/${name}.json`)), name))
-  const lines = ['# Fixed public extraction audit', '', 'Draft, pending pharmacist review. These are offline controls, not model quality measurements. No second independent review has occurred.', '', '| Control | Set | Exact/docs | TP/predicted | TP/gold | Unsupported | Missing |', '| --- | --- | --- | --- | --- | --- | --- |']
-  for (const r of reports) for (const s of r.splits) lines.push(`| ${r.name} | ${s.split} | ${s.exact}/${s.documents} | ${s.tp}/${s.predicted} | ${s.tp}/${s.gold || 'N/A'} | ${s.unsupported}/${s.predicted || 'N/A'} | ${s.missing}/${s.gold || 'N/A'} |`)
-  lines.push('', 'Each JSON report contains all errors, per-task denominators, source-family bootstrap intervals and the first eight failures under the published fixed ordering. Zero-denominator ratios are null (N/A).', '', 'Local model results and the 10 second p95 budget remain unmeasured for this corpus. Historical timing remains inconclusive. See AUDIT.md for acquisition and review limits.', '')
-  writeFileSync(`${root}/RESULTS.md`, lines.join('\n'))
-}
-if (process.argv.includes('--write')) writeReports()
+if (process.argv.includes('--write')) throw new Error('Frozen v1 reports are immutable. Use npm run audit:qualify:v2 with a new --out directory.')

@@ -25,8 +25,14 @@ export function validEntity(input: string, e: Entity): boolean {
 export function scoreEntities(input: string, gold: Entity[], prediction: Entity[]) {
   if (!gold.every(e => validEntity(input, e))) throw new Error('Invalid gold evidence')
   const expected = new Map(gold.map(e => [key(e), e]))
+  if (expected.size !== gold.length) throw new Error('Invalid duplicate gold identity')
+  const frequencies = new Map<string, number>()
+  for (const e of prediction) {
+    if (e && TASKS.includes(e.task as typeof TASKS[number]) && typeof e.value === 'string' && e.value.trim()) frequencies.set(key(e), (frequencies.get(key(e)) ?? 0) + 1)
+  }
   const predicted = new Map<string, Entity>()
-  prediction.forEach((e, i) => predicted.set(validEntity(input, e) ? key(e) : `invalid:${i}`, e))
+  // Conflicting or repeated identities are unsupported, never last-write-wins.
+  prediction.forEach((e, i) => predicted.set(validEntity(input, e) && frequencies.get(key(e)) === 1 ? key(e) : `invalid:${i}`, e))
   const supported: Entity[] = []
   const unsupported: Entity[] = []
   for (const [k, e] of predicted) {

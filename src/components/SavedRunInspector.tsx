@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import publicCases from '../../eval/extraction-audit/public.json'
 import challengeCases from '../../eval/extraction-audit/challenge.json'
 import protocolUrl from '../../eval/extraction-audit/AUDIT.md?url'
-import inspectorAsset from '../../eval/extraction-audit/inspector.json?url'
+import inspectorAsset from '../../eval/extraction-audit/versions/v2/inspector.json?url'
 import { AuditCase, Entity } from '../eval/extractionAudit'
 
 interface InspectorRun {
@@ -14,7 +14,7 @@ interface InspectorRun {
   documents: { id: string, supported: Entity[], missing: Entity[], unsupported: Entity[], error: string | null, output?: string | null }[]
 }
 const cases = [...publicCases, ...challengeCases] as AuditCase[]
-const reportAssets = import.meta.glob(['../../eval/extraction-audit/reports/*.json', '../../eval/extraction-audit/local-*/report-*.json', '../../eval/extraction-audit/local-*/*-inspection.json'], { query: '?url', import: 'default', eager: true }) as Record<string, string>
+const reportAssets = import.meta.glob(['../../eval/extraction-audit/versions/v2/reports/*.json', '../../eval/extraction-audit/versions/v2/local-*/report-*.json', '../../eval/extraction-audit/versions/v2/local-*/*-inspection.json'], { query: '?url', import: 'default', eager: true }) as Record<string, string>
 const repo = 'https://github.com/kvmadden/local-model-workshop/blob/main/eval/extraction-audit'
 const count = (items: Entity[]) => items.length ? items.map(e => `${e.task}: ${e.value}`).join('\n') : 'None'
 export function SavedRunInspector() {
@@ -29,7 +29,7 @@ export function SavedRunInspector() {
     return () => { active = false }
   }, [])
   const [selected, setSelected] = useState('p01')
-  const [runId, setRunId] = useState('reports/rules.json')
+  const [runId, setRunId] = useState('versions/v2/reports/rules.json')
   if (!savedRuns) return <p role={loadError ? 'alert' : 'status'} className="text-slate-300">{loadError ? 'Saved evidence could not be loaded. Retry this page.' : 'Loading saved extraction evidence…'}</p>
   const run = savedRuns.find(r => r.id === runId)!
   const c = cases.find(c => c.id === selected)!
@@ -40,7 +40,7 @@ export function SavedRunInspector() {
       <div><p className="text-indigo-300 text-sm font-bold">SAVED EXTRACTION AUDIT</p><h2 id="audit-title" className="text-2xl font-bold">Does every fact have evidence?</h2></div>
       <span className="rounded-full bg-amber-950/80 text-amber-400 px-3 py-2 text-sm">Draft · pharmacist review pending</span>
     </div>
-    <p className="text-slate-300">Inspect saved controls and acquisition attempts on unchanged public label text. Labels are draft. The quiet-machine 10 second p95 budget has not been validated.</p>
+    <p className="text-slate-300">Evaluator v2. Inspect saved controls and acquisition attempts on unchanged public label text. Labels are draft. The quiet-machine 10 second p95 budget has not been validated.</p>
     <div className="grid sm:grid-cols-3 gap-3">
       {[['Source documents', '10 dev · 20 final'], ['Separate challenge', '12 synthetic cases'], ['This set, selected run', split.tp === null ? 'Unmeasured, incomplete acquisition' : `${split.tp}/${split.predicted} supported · ${split.tp}/${split.gold} found`]].map(([label, value]) => <div key={label} className="bg-slate-950 rounded-xl p-4"><p className="text-sm text-slate-400">{label}</p><p className="font-semibold mt-1">{value}</p></div>)}
     </div>
