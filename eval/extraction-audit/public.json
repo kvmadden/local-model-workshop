@@ -1,0 +1,2642 @@
+[
+  {
+    "id": "p01",
+    "split": "dev",
+    "sourceFamily": "lisinopril",
+    "sourceId": "00f67e1a-6999-4295-9c9f-fcb1ce9711b8",
+    "input": "DOSAGE AND ADMINISTRATION Lisinopril monotherapy is an effective treatment of hypertension in once-daily doses of 10 mg to 80 mg, while hydrochlorothiazide monotherapy is effective in doses of 12.5 mg per day to 50 mg per day. In clinical trials of lisinopril/hydrochlorothiazide combination therapy using lisinopril doses of 10 mg to 80 mg and hydrochlorothiazide doses of 6.25 mg to 50 mg, the antihypertensive response rates generally increased with increasing dose of either component. The side effects (see WARNINGS ) of lisinopril are generally rare and apparently independent of dose; those of hydrochlorothiazide are a mixture of dose-dependent phenomena (primarily hypokalemia) and dose-independent phenomena (e.g., pancreatitis), the former much more common than the latter. Therapy with any combination of lisinopril and hydrochlorothiazide may be associated with either or both",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22lisinopril%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00f67e1a-6999-4295-9c9f-fcb1ce9711b8",
+      "snapshot": "sources/lisinopril.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 889,
+      "sha256": "3d8ec43ad28ac506983c1449d1f76fcd39951366a3d195ebe7d06e90cde6ca12",
+      "acquiredAt": "2026-11-01T12:44:00.055310+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "lisinopril",
+        "spans": [
+          {
+            "start": 26,
+            "end": 36
+          }
+        ]
+      },
+      {
+        "task": "drug",
+        "value": "hydrochlorothiazide",
+        "spans": [
+          {
+            "start": 136,
+            "end": 155
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg",
+        "spans": [
+          {
+            "start": 114,
+            "end": 119
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "80 mg",
+        "spans": [
+          {
+            "start": 123,
+            "end": 128
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "12.5 mg",
+        "spans": [
+          {
+            "start": 193,
+            "end": 200
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50 mg",
+        "spans": [
+          {
+            "start": 212,
+            "end": 217
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "6.25 mg",
+        "spans": [
+          {
+            "start": 374,
+            "end": 381
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once-daily",
+        "spans": [
+          {
+            "start": 94,
+            "end": 104
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p02",
+    "split": "dev",
+    "sourceFamily": "atorvastatin",
+    "sourceId": "00afce9b-48c9-487a-a738-e359c005c707",
+    "input": "2 DOSAGE AND ADMINISTRATION Take orally once daily with or without food ( 2.1 ). Assess LDL-C when clinically appropriate, as early as 4 weeks after initiating atorvastatin calcium tablets, and adjust dosage if necessary ( 2.1 ). Adults ( 2.2 ): Recommended starting dosage is 10 or 20 mg once daily; dosage range is 10 mg to 80 mg once daily. Patients requiring LDL-C reduction >45% may start at 40 mg once daily. Pediatric Patients Aged 10 Years of Age and Older with HeFH: Recommended starting dosage is 10 mg once daily; dosage range is 10 to 20 mg once daily ( 2.3 ). Pediatric Patients Aged 10 Years of Age and Older with HoFH: Recommended starting dosage is 10 to 20 mg once daily; dosage range is 10 to 80 mg once daily ( 2.4 ). See full prescribing information for atorvastatin calcium tablets dosage modifications due to drug interactions ( 2.5 ). 2.1 Important Dosage Information Take",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22atorvastatin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00afce9b-48c9-487a-a738-e359c005c707",
+      "snapshot": "sources/atorvastatin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 895,
+      "sha256": "78703fb104e0484c574bac09d80594537e1a6b4b19203bb3d812f88831b543ab",
+      "acquiredAt": "2026-11-01T12:44:00.854175+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "atorvastatin",
+        "spans": [
+          {
+            "start": 160,
+            "end": 172
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg",
+        "spans": [
+          {
+            "start": 283,
+            "end": 288
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg",
+        "spans": [
+          {
+            "start": 317,
+            "end": 322
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "80 mg",
+        "spans": [
+          {
+            "start": 326,
+            "end": 331
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "40 mg",
+        "spans": [
+          {
+            "start": 397,
+            "end": 402
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 to 20 mg",
+        "spans": [
+          {
+            "start": 541,
+            "end": 552
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 to 80 mg",
+        "spans": [
+          {
+            "start": 705,
+            "end": 716
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 40,
+            "end": 50
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p03",
+    "split": "dev",
+    "sourceFamily": "metformin",
+    "sourceId": "0098dec4-f0e5-45d5-8aa4-5d0faf9ab142",
+    "input": "2 DOSAGE AND ADMINISTRATION Take ZITUVIMET orally twice daily with meals. ( 2.1 ) Individualize the dosage of ZITUVIMET on the basis of the patient's current regimen, effectiveness, and tolerability. ( 2.1 ) The maximum recommended daily dose is 100 mg of sitagliptin and 2,000 mg of metformin HCl. ( 2.1 ) The recommended starting dose in patients not currently treated with metformin is 50 mg sitagliptin and 500 mg metformin HCl twice daily, with gradual dose escalation recommended to reduce gastrointestinal side effects associated with metformin. ( 2.1 ) The starting dose in patients already treated with metformin should provide sitagliptin dosed as 50 mg twice daily (100 mg total daily dose) and the dose of metformin already being taken. For patients taking metformin HCl 850 mg twice daily, the recommended starting dose of ZITUVIMET is 50 mg sitagliptin and 1,000 mg metformin HCl twice",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22metformin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0098dec4-f0e5-45d5-8aa4-5d0faf9ab142",
+      "snapshot": "sources/metformin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 899,
+      "sha256": "dfca6c7be8deced5811cc13289883c53de0e67fd88b18c73c807074bc88fcf25",
+      "acquiredAt": "2026-11-01T12:44:01.857335+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "zituvimet",
+        "spans": [
+          {
+            "start": 33,
+            "end": 42
+          }
+        ]
+      },
+      {
+        "task": "drug",
+        "value": "sitagliptin",
+        "spans": [
+          {
+            "start": 256,
+            "end": 267
+          }
+        ]
+      },
+      {
+        "task": "drug",
+        "value": "metformin",
+        "spans": [
+          {
+            "start": 284,
+            "end": 293
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "100 mg",
+        "spans": [
+          {
+            "start": 246,
+            "end": 252
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "000 mg",
+        "spans": [
+          {
+            "start": 274,
+            "end": 280
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50 mg",
+        "spans": [
+          {
+            "start": 389,
+            "end": 394
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "500 mg",
+        "spans": [
+          {
+            "start": 411,
+            "end": 417
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "850 mg",
+        "spans": [
+          {
+            "start": 783,
+            "end": 789
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 50,
+            "end": 61
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 232,
+            "end": 237
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "with meals",
+        "spans": [
+          {
+            "start": 62,
+            "end": 72
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p04",
+    "split": "dev",
+    "sourceFamily": "amlodipine",
+    "sourceId": "003dd1ec-16f8-4f96-b6a8-c4689d35892a",
+    "input": "2 DOSAGE AND ADMINISTRATION \u2022Adult recommended starting dose: 5 mg once daily with maximum dose 10 mg once daily. ( 2.1 ) \u043e Small, fragile, or elderly patients, or patients with hepatic insufficiency may be started on 2.5 mg once daily. ( 2.1 ) \u2022Pediatric starting dose: 2.5 mg to 5 mg once daily. ( 2.2 ) Important Limitation : Doses in excess of 5 mg daily have not been studied in pediatric patients. ( 2.2 ) 2.1 Adults The usual initial antihypertensive oral dose of amlodipine besylate tablet is 5 mg once daily and the maximum dose is 10 mg once daily. Small, fragile, or elderly patients, or patients with hepatic insufficiency may be started on 2.5 mg once daily and this dose may be used when adding amlodipine besylate tablet to other antihypertensive therapy. Adjust dosage according to blood pressure goals. In general, wait 7 to 14 days between titration steps. Titrate more rapidly,",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22amlodipine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=003dd1ec-16f8-4f96-b6a8-c4689d35892a",
+      "snapshot": "sources/amlodipine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 896,
+      "sha256": "eb3c1ec1b4a4fa90a5c36925eddf51a2c3f1acf8640c0ffa71a1ac3dd5b6529a",
+      "acquiredAt": "2026-11-01T12:44:02.692937+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "amlodipine",
+        "spans": [
+          {
+            "start": 471,
+            "end": 481
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "5 mg",
+        "spans": [
+          {
+            "start": 62,
+            "end": 66
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg",
+        "spans": [
+          {
+            "start": 96,
+            "end": 101
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "2.5 mg",
+        "spans": [
+          {
+            "start": 218,
+            "end": 224
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 67,
+            "end": 77
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 353,
+            "end": 358
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p05",
+    "split": "dev",
+    "sourceFamily": "losartan",
+    "sourceId": "021cd76a-b093-4704-8410-5e7d01e20a54",
+    "input": "2 DOSAGE AND ADMINISTRATION Hypertension \u2022 Usual adult dose: 50 mg once daily. (2.1) \u2022 Usual pediatric starting dose: 0.7 mg per kg once daily (up to 50 mg). (2.1) Hypertensive Patients with Left Ventricular Hypertrophy \u2022 Usual starting dose: 50 mg once daily. (2.2) \u2022 Add hydrochlorothiazide 12.5 mg and/or increase losartan potassium to 100 mg followed by an increase to hydrochlorothiazide 25 mg if further blood pressure response is needed. (2.2 , 14.2) Nephropathy in Type 2 Diabetic Patients \u2022 Usual dose: 50 mg once daily. (2.3) \u2022 Increase dose to 100 mg once daily if further blood pressure response is needed. (2.3) 2.1 Hypertension Adult Hypertension The usual starting dose of losartan potassium tablets is 50 mg once daily. The dosage can be increased to a maximum dose of 100 mg once daily as needed to control blood pressure [see Clinical Studies (14.1) ]. A starting dose of 25 mg is",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22losartan%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=021cd76a-b093-4704-8410-5e7d01e20a54",
+      "snapshot": "sources/losartan.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 898,
+      "sha256": "dc417c371d3d09a447612ee58306e33cd97119ba206262ff9b265a208422a557",
+      "acquiredAt": "2026-11-01T12:44:04.579971+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "hydrochlorothiazide",
+        "spans": [
+          {
+            "start": 273,
+            "end": 292
+          }
+        ]
+      },
+      {
+        "task": "drug",
+        "value": "losartan",
+        "spans": [
+          {
+            "start": 317,
+            "end": 325
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50 mg",
+        "spans": [
+          {
+            "start": 61,
+            "end": 66
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "0.7 mg",
+        "spans": [
+          {
+            "start": 118,
+            "end": 124
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "12.5 mg",
+        "spans": [
+          {
+            "start": 293,
+            "end": 300
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "100 mg",
+        "spans": [
+          {
+            "start": 339,
+            "end": 345
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "25 mg",
+        "spans": [
+          {
+            "start": 393,
+            "end": 398
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 67,
+            "end": 77
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "as needed",
+        "spans": [
+          {
+            "start": 803,
+            "end": 812
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p06",
+    "split": "dev",
+    "sourceFamily": "omeprazole",
+    "sourceId": "015b1c8f-9d5b-4afc-a55c-1a731b5fc72a",
+    "input": "Directions \u2022 for adults 18 years of age and older \u2022 this product is to be used once a day (every 24 hours), every day for 14 days \u2022 it may take 1 to 4 days for full effect; some people get complete relief of symptoms within 24 hours 14-Day Course of Treatment \u2022 swallow 1 tablet with a glass of water before eating in the morning \u2022 take every day for 14 days \u2022 do not take more than 1 tablet a day \u2022 do not use for more than 14 days unless directed by your doctor \u2022 swallow whole. Do not chew or crush tablets Repeated 14-Day Courses (if needed) \u2022 you may repeat a 14-day course every 4 months \u2022 do not take for more than 14 days or more often than every 4 months unless directed by a doctor \u2022 children under 18 years of age: ask a doctor. Heartburn in children may sometimes be caused by a serious condition.",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22omeprazole%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=015b1c8f-9d5b-4afc-a55c-1a731b5fc72a",
+      "snapshot": "sources/omeprazole.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 809,
+      "sha256": "89aa87653e6c25e88c2067183f64c8630a0a7ef7fcb24cafc5737499860339dc",
+      "acquiredAt": "2026-11-01T12:44:05.223187+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "schedule",
+        "value": "once a day",
+        "spans": [
+          {
+            "start": 79,
+            "end": 89
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 24 hours",
+        "spans": [
+          {
+            "start": 91,
+            "end": 105
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "in the morning",
+        "spans": [
+          {
+            "start": 315,
+            "end": 329
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "if needed",
+        "spans": [
+          {
+            "start": 535,
+            "end": 544
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p07",
+    "split": "dev",
+    "sourceFamily": "gabapentin",
+    "sourceId": "01b810b7-f4c8-4412-bbc5-b9220d8770d8",
+    "input": "2 DOSAGE AND ADMlNlSTRATION Postherpetic Neuralgia (2.1) Dose can be titrated up as needed to a dose of 1800 mg/day Day 1: Single 300 mg dose Day 2: 600 mg/day (i.e., 300 mg two times a day) Day 3: 900 mg/day (i.e., 300 mg three times a day) Epilepsy with Partial Onset Seizures (2.2) Patients 12 years of age and older: starting dose is 300 mg three times daily; may be titrated up to 600 mg three times daily Patients 3 to 11 years of age: starting dose range is 10 to 15 mg/kg/day, given in three divided doses; recommended dose in patients 3 to 4 years of age is 40 mg/kg/day, given in three divided doses; the recommended dose in patients 5 to 11 years of age is 25 to 35 mg/kg/day, given in three divided doses. The recommended dose is reached by upward titration over a period of approximately 3 days Dose should be adjusted in patients with reduced renal function ( 2.3 , 2.4 ) 2.1 Dosage",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22gabapentin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=01b810b7-f4c8-4412-bbc5-b9220d8770d8",
+      "snapshot": "sources/gabapentin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 896,
+      "sha256": "653134c6f5ffd56c526b678f85792cb5b0228cd29942defea68a212b4a97a509",
+      "acquiredAt": "2026-11-01T12:44:06.104819+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "dose",
+        "value": "1800 mg/day",
+        "spans": [
+          {
+            "start": 104,
+            "end": 115
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "300 mg",
+        "spans": [
+          {
+            "start": 130,
+            "end": 136
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "600 mg/day",
+        "spans": [
+          {
+            "start": 149,
+            "end": 159
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "900 mg/day",
+        "spans": [
+          {
+            "start": 198,
+            "end": 208
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "600 mg",
+        "spans": [
+          {
+            "start": 386,
+            "end": 392
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 to 15 mg/kg/day",
+        "spans": [
+          {
+            "start": 465,
+            "end": 483
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "40 mg/kg/day",
+        "spans": [
+          {
+            "start": 567,
+            "end": 579
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "25 to 35 mg/kg/day",
+        "spans": [
+          {
+            "start": 668,
+            "end": 686
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "two times a day",
+        "spans": [
+          {
+            "start": 174,
+            "end": 189
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "three times daily",
+        "spans": [
+          {
+            "start": 345,
+            "end": 362
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "as needed",
+        "spans": [
+          {
+            "start": 81,
+            "end": 90
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p08",
+    "split": "dev",
+    "sourceFamily": "levothyroxine",
+    "sourceId": "008de8fd-150f-4022-8ccb-c8bfa94875c7",
+    "input": "2 DOSAGE AND ADMINISTRATION Administer once daily, preferably on an empty stomach, one-half to one hour before breakfast with a full glass of water. (2.1) Administer at least 4 hours before or after drugs that are known to interfere with absorption. (2.1) Evaluate the need for dose adjustments when regularly administering within one hour of certain foods that may affect absorption. (2.1) Advise patients to stop biotin and biotin-containing supplements at least 2 days before assessing TSH and/or T4 levels. (2.2) Starting dose depends on a variety of factors, including age, body weight, cardiovascular status, and concomitant medications. Peak therapeutic effect may not be attained for 4 to 6 weeks. (2.2) See full prescribing information for dosing in specific patient populations. (2.3) Adequacy of therapy determined with periodic monitoring of TSH and/or T4 as well as clinical status.",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22levothyroxine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=008de8fd-150f-4022-8ccb-c8bfa94875c7",
+      "snapshot": "sources/levothyroxine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 895,
+      "sha256": "7c62a83962a82bccecc0f1c2205f8f2cfb62107d901454a45a75efbe00c2d28f",
+      "acquiredAt": "2026-11-01T12:44:06.966836+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 39,
+            "end": 49
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "before breakfast",
+        "spans": [
+          {
+            "start": 104,
+            "end": 120
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p09",
+    "split": "dev",
+    "sourceFamily": "sertraline",
+    "sourceId": "00179766-980b-44b0-99d3-1fee2bb27e37",
+    "input": "DOSAGE AND ADMINISTRATION Initial Treatment Dosage for Adults Major Depressive Disorder \u2013Sertraline hydrochloride treatment should be administered at a dose of 50 mg once daily. While a relationship between dose and effect has not been established for major depressive disorder, OCD, panic disorder, PTSD or social anxiety disorder, patients were dosed in a range of 50-200 mg/day in the clinical trials demonstrating the effectiveness of Sertraline hydrochloride for the treatment of this indication. Consequently, a dose of 50 mg, administered once daily, is recommended as the initial therapeutic dose. Patients not responding to a 50 mg dose may benefit from dose increases up to a maximum of 200 mg/day. Given the 24 hour elimination half-life of sertraline hydrochloride, dose changes should not occur at intervals of less than 1 week. Premenstrual Dysphoric Disorder \u2013 Sertraline",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22sertraline%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00179766-980b-44b0-99d3-1fee2bb27e37",
+      "snapshot": "sources/sertraline.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 886,
+      "sha256": "48937ad715fcf1bd75806dd761a28daec85924d736100d5272fb0e736c731d59",
+      "acquiredAt": "2026-11-01T12:44:07.935866+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "sertraline",
+        "spans": [
+          {
+            "start": 89,
+            "end": 99
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50 mg",
+        "spans": [
+          {
+            "start": 160,
+            "end": 165
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50-200 mg/day",
+        "spans": [
+          {
+            "start": 367,
+            "end": 380
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "200 mg/day",
+        "spans": [
+          {
+            "start": 697,
+            "end": 707
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 166,
+            "end": 176
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p10",
+    "split": "dev",
+    "sourceFamily": "furosemide",
+    "sourceId": "01a5f094-b473-4e46-9e61-69d5ec6dd766",
+    "input": "DOSAGE AND ADMINISTRATION Edema Therapy should be individualized according to patient response to gain maximal therapeutic response and to determine the minimal dose needed to maintain that response. Adults: The usual initial dose of furosemide tablets is 20 to 80 mg given as a single dose. Ordinarily a prompt diuresis ensues. If needed, the same dose can be administered 6 to 8 hours later or the dose may be increased. The dose may be raised by 20 or 40 mg and given not sooner than 6 to 8 hours after the previous dose until the desired diuretic effect has been obtained. The individually determined single dose should then be given once or twice daily (e.g., at 8 am and 2 pm). The dose of furosemide tablets may be carefully titrated up to 600 mg/day in patients with clinically severe edematous states. Edema may be most efficiently and safely mobilized by giving furosemide tablets on 2 to",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22furosemide%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=01a5f094-b473-4e46-9e61-69d5ec6dd766",
+      "snapshot": "sources/furosemide.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 898,
+      "sha256": "f2cbba7f73994f903f79eea0e3025f98f3cfd097f64936e11bbea18ce726fee1",
+      "acquiredAt": "2026-11-01T12:44:08.665684+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "furosemide",
+        "spans": [
+          {
+            "start": 234,
+            "end": 244
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 to 80 mg",
+        "spans": [
+          {
+            "start": 256,
+            "end": 267
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "40 mg",
+        "spans": [
+          {
+            "start": 455,
+            "end": 460
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "600 mg/day",
+        "spans": [
+          {
+            "start": 747,
+            "end": 757
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 646,
+            "end": 657
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "if needed",
+        "spans": [
+          {
+            "start": 329,
+            "end": 338
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p11",
+    "split": "final",
+    "sourceFamily": "hydroxyzine",
+    "sourceId": "02616eee-a1a4-4afc-b84e-69fd28755138",
+    "input": "DOSAGE For symptomatic relief of anxiety and tension associated with psychoneurosis and as an adjunct in organic disease states in which anxiety is manifested: in adults, 50 mg to 100 mg q.i.d.; children under 6 years, 50 mg daily in divided doses; and over 6 years, 50 mg to 100 mg daily in divided doses. For use in the management of pruritus due to allergic conditions such as chronic urticaria and atopic and contact dermatoses, and in histamine-mediated pruritus: in adults, 25 mg t.i.d. or q.i.d.; children under 6 years, 50 mg daily in divided doses; and over 6 years, 50 mg to 100 mg daily in divided doses. As a sedative when used as a premedication and following general anesthesia: 50 mg to 100 mg in adults, and 0.6 mg/kg in children. When treatment is initiated by the intramuscular route of administration, subsequent doses may be administered orally. As with all medications, the",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22hydroxyzine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=02616eee-a1a4-4afc-b84e-69fd28755138",
+      "snapshot": "sources/hydroxyzine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 894,
+      "sha256": "72254494a31945613241563312e641279ba19759b937cf88013df7ca2dd532b9",
+      "acquiredAt": "2026-11-01T12:44:09.344668+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "dose",
+        "value": "50 mg",
+        "spans": [
+          {
+            "start": 171,
+            "end": 176
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "100 mg",
+        "spans": [
+          {
+            "start": 180,
+            "end": 186
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "25 mg",
+        "spans": [
+          {
+            "start": 480,
+            "end": 485
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "0.6 mg/kg",
+        "spans": [
+          {
+            "start": 724,
+            "end": 733
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 225,
+            "end": 230
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p12",
+    "split": "final",
+    "sourceFamily": "ibuprofen",
+    "sourceId": "00653b7c-7099-487e-9a01-e89781c21323",
+    "input": "Directions do not take more than directed the smallest effective dose should be used adults and children 12 years and over: take 1 tablet every 4 to 6 hours while symptoms persist if pain or fever does not respond to 1 tablet, 2 tablets may be used do not exceed 6 tablets in 24 hours, unless directed by a doctor children under 12 years: ask a doctor",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22ibuprofen%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00653b7c-7099-487e-9a01-e89781c21323",
+      "snapshot": "sources/ibuprofen.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 351,
+      "sha256": "7f0c08adb2ba9115ab691cf562acd78effdf4e4e7b3bb0b4ee48ecb7b1e39a46",
+      "acquiredAt": "2026-11-01T12:44:09.897355+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "schedule",
+        "value": "every 4 to 6 hours",
+        "spans": [
+          {
+            "start": 138,
+            "end": 156
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "while symptoms persist",
+        "spans": [
+          {
+            "start": 157,
+            "end": 179
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p13",
+    "split": "final",
+    "sourceFamily": "acetaminophen",
+    "sourceId": "0005aafa-08f8-4990-a54d-cc097195708f",
+    "input": "Directions do not take more than directed adults and children 12 years and over take 2 gelcaps every 6 hours while symptoms last do not take more than 6 gelcaps in 24 hours, unless directed by a doctor do not take for more than 10 days unless directed by a doctor children under 12 years: ask a doctor",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22acetaminophen%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0005aafa-08f8-4990-a54d-cc097195708f",
+      "snapshot": "sources/acetaminophen.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 301,
+      "sha256": "3f01a003ca9c3fdbc1aaf493f020de8b54507d6a3ce810974bd45227893fe442",
+      "acquiredAt": "2026-11-01T12:44:10.863585+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "schedule",
+        "value": "every 6 hours",
+        "spans": [
+          {
+            "start": 95,
+            "end": 108
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "while symptoms last",
+        "spans": [
+          {
+            "start": 109,
+            "end": 128
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p14",
+    "split": "final",
+    "sourceFamily": "nitroglycerin",
+    "sourceId": "041f127e-5166-4484-bc1a-0a373d1187ae",
+    "input": "2 DOSAGE AND ADMINISTRATION Administer one tablet under the tongue or in the buccal pouch at the first sign of an acute anginal attack. Allow tablet to dissolve without swallowing. One additional tablet may be administered every 5 minutes until relief is obtained. No more than three tablets are recommended within a 15-minute period. If the pain persists after a total of 3 tablets in a 15-minute period, or if the pain is different than is typically experienced, seek prompt medical attention. Nitroglycerin sublingual tablets may be used prophylactically 5 to 10 minutes prior to engaging in activities that might precipitate an acute attack. For patients with xerostomia, a small sip of water prior to placing the tablet under the tongue may help maintain mucosal hydration and aid dissolution of the tablet. Administer nitroglycerin sublingual tablets at rest, preferably in the sitting",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22nitroglycerin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=041f127e-5166-4484-bc1a-0a373d1187ae",
+      "snapshot": "sources/nitroglycerin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 891,
+      "sha256": "d6a141e5b3b08ee7fafc2270d9cde615142756fc7b6e769796aaa5984260a646",
+      "acquiredAt": "2026-11-01T12:44:11.598646+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "nitroglycerin",
+        "spans": [
+          {
+            "start": 496,
+            "end": 509
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p15",
+    "split": "final",
+    "sourceFamily": "albuterol",
+    "sourceId": "04c8a345-0a0d-5a01-e063-6294a90a40d2",
+    "input": "2 DOSAGE AND ADMINISTRATION For oral inhalation only. ( 2 ) Treatment or prevention of bronchospasm in adult and pediatric patients aged 4 years and older: 2 inhalations by oral inhalation every 4 to 6 hours. For some patients, 1 inhalation every 4 hours may be sufficient. ( 2.1 ) Prevention of exercise-induced bronchospasm in adult and pediatric patients aged 4 years and older: 2 inhalations by oral inhalation 15 to 30 minutes before exercise. ( 2.2 ) Priming information: Prime Albuterol Sulfate HFA before using for the first time, when the inhaler has not been used for more than 2 weeks, or when the inhaler has been dropped. To prime Albuterol Sulfate HFA, release 4 sprays into the air away from the face, shaking well before each spray. ( 2.3 ) Cleaning information: At least once a week, wash the actuator with warm water and let it air-dry completely. ( 2.3 ) 2.1 Recommended Dosage",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22albuterol%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=04c8a345-0a0d-5a01-e063-6294a90a40d2",
+      "snapshot": "sources/albuterol.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 896,
+      "sha256": "796f40d38cc18569102beff949bc98098c24f87664eaa3d6bdc5954d819457e3",
+      "acquiredAt": "2026-11-01T12:44:12.520697+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "albuterol",
+        "spans": [
+          {
+            "start": 484,
+            "end": 493
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 4 to 6 hours",
+        "spans": [
+          {
+            "start": 189,
+            "end": 207
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 4 hours",
+        "spans": [
+          {
+            "start": 241,
+            "end": 254
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p16",
+    "split": "final",
+    "sourceFamily": "prednisone",
+    "sourceId": "0060b86b-0b79-4c54-a7be-97683a933a05",
+    "input": "DOSAGE AND ADMINISTRATION The initial dosage of prednisone may vary from 5 mg to 60 mg of prednisone per day depending on the specific disease entity being treated. In situations of less severity lower doses will generally suffice while in selected patients higher initial doses may be required. The initial dosage should be maintained or adjusted until a satisfactory response is noted. If after a reasonable period of time there is a lack of satisfactory clinical response, prednisone should be discontinued and the patient transferred to other appropriate therapy. IT SHOULD BE EMPHASIZED THAT DOSAGE REQUIREMENTS ARE VARIABLE AND MUST BE INDIVIDUALIZED ON THE BASIS OF THE DISEASE UNDER TREATMENT AND THE RESPONSE OF THE PATIENT . After a favorable response is noted, the proper maintenance dosage should be determined by decreasing the initial drug dosage in small decrements at appropriate",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22prednisone%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0060b86b-0b79-4c54-a7be-97683a933a05",
+      "snapshot": "sources/prednisone.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 895,
+      "sha256": "7d92d502ae83607fcc455d124cfb26cf68bd5444115252ec405dcd0632303c1f",
+      "acquiredAt": "2026-11-01T12:44:13.179268+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "prednisone",
+        "spans": [
+          {
+            "start": 48,
+            "end": 58
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "5 mg",
+        "spans": [
+          {
+            "start": 73,
+            "end": 77
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "60 mg",
+        "spans": [
+          {
+            "start": 81,
+            "end": 86
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p17",
+    "split": "final",
+    "sourceFamily": "warfarin",
+    "sourceId": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+    "input": "2 DOSAGE AND ADMINISTRATION Individualize dosing regimen for each patient, and adjust based on INR response. ( 2.1 , 2.2 ) Knowledge of genotype can inform initial dose selection. ( 2.3 ) Monitoring: Obtain daily INR determinations upon initiation until stable in the therapeutic range. Obtain subsequent INR determinations every 1 to 4 weeks. ( 2.4 ) Review conversion instructions from other anticoagulants. ( 2.8 ) 2.1 Individualized Dosing The dosage and administration of warfarin sodium tablets must be individualized for each patient according to the patient\u2019s International Normalized Ratio (INR) response to the drug. Adjust the dose based on the patient\u2019s INR and the condition being treated. Consult the latest evidence-based clinical practice guidelines regarding the duration and intensity of anticoagulation for the indicated conditions. 2.2 Recommended Target INR Ranges and Durations",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22warfarin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0cbce382-9c88-4f58-ae0f-532a841e8f95",
+      "snapshot": "sources/warfarin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 899,
+      "sha256": "2148c0c2fc6cab02954447fb6cc611b0f9aa16de9218cce864c19b0676e0d8f8",
+      "acquiredAt": "2026-11-01T12:44:14.087784+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "warfarin",
+        "spans": [
+          {
+            "start": 477,
+            "end": 485
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 207,
+            "end": 212
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p18",
+    "split": "final",
+    "sourceFamily": "methotrexate",
+    "sourceId": "04a95db9-a124-4b97-bd71-1c37a6b3b0c8",
+    "input": "2 DOSAGE AND ADMINISTRATION \u2022 Instruct patients and caregivers to take the recommended dosage as directed, because medication errors have led to deaths. (2.1, 5.9) \u2022 Verify pregnancy status in females of reproductive potential before starting methotrexate tablets. (4, 5.1) \u2022 ALL: The recommended dosage is 20 mg/m 2 orally once weekly as a part of a combination chemotherapy maintenance regimen. (2.2) \u2022 Mycosis fungoides: The recommended dosage is 25 to 75 mg orally once weekly as monotherapy; 10 mg/m 2 orally twice weekly as part of combination chemotherapy. (2.2) \u2022 Relapsed or refractory non-Hodgkin lymphoma: The recommended dosage is 2.5 mg orally two to four times per week as part of metronomic combination chemotherapy. (2.2) \u2022 Rheumatoid Arthritis: The recommended starting dosage is 7.5 mg orally once weekly; adjust dose to achieve an optimal response. (2.3) \u2022 pJIA: The recommended",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22methotrexate%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=04a95db9-a124-4b97-bd71-1c37a6b3b0c8",
+      "snapshot": "sources/methotrexate.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 897,
+      "sha256": "ad234b06814c7027b8415971faab40c414130e5177cef2eb946c7b9555a8ce30",
+      "acquiredAt": "2026-11-01T12:44:14.831123+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "methotrexate",
+        "spans": [
+          {
+            "start": 243,
+            "end": 255
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg",
+        "spans": [
+          {
+            "start": 307,
+            "end": 312
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "25 to 75 mg",
+        "spans": [
+          {
+            "start": 450,
+            "end": 461
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg",
+        "spans": [
+          {
+            "start": 497,
+            "end": 502
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "2.5 mg",
+        "spans": [
+          {
+            "start": 643,
+            "end": 649
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "7.5 mg",
+        "spans": [
+          {
+            "start": 797,
+            "end": 803
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p19",
+    "split": "final",
+    "sourceFamily": "cephalexin",
+    "sourceId": "02b5cd6f-3df8-43c1-879d-217fcf55231a",
+    "input": "2 DOSAGE AND ADMINISTRATION Adults and patients at least 15 years of age The usual dose is 250 mg every 6 hours, but a dose of 500 mg every 12 hours may be administered ( 2.1 ) Pediatric patients (over 1 year of age) Otitis media: 75 to 100 mg/kg in equally divided doses every 6 hours ( 2.2 ) All other indications: 25 to 50 mg/kg given in equally divided doses ( 2.2 ) In severe infections: 50 to 100 mg/kg may be administered in equally divided doses ( 2.2 ) Duration of therapy ranges from 7 to 14 days depending on the infection type and severity. ( 2 ) Dosage adjustment is required in patients with severe and end stage renal disease (ESRD) defined as creatinine clearance below 30 mL/min. ( 2.3 ) 2.1 Adults and Pediatric Patients at Least 15 Years of Age The usual dose of oral cephalexin capsules is 250 mg every 6 hours, but a dose of 500 mg every 12 hours may be administered. Treatment",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22cephalexin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=02b5cd6f-3df8-43c1-879d-217fcf55231a",
+      "snapshot": "sources/cephalexin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 898,
+      "sha256": "331153f29d39f6e2c9a69e4377f7487cb733cdc929d63565697593bc4e2357bb",
+      "acquiredAt": "2026-11-01T12:44:15.498854+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "cephalexin",
+        "spans": [
+          {
+            "start": 787,
+            "end": 797
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "250 mg",
+        "spans": [
+          {
+            "start": 91,
+            "end": 97
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "500 mg",
+        "spans": [
+          {
+            "start": 127,
+            "end": 133
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "75 to 100 mg/kg",
+        "spans": [
+          {
+            "start": 231,
+            "end": 246
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "25 to 50 mg/kg",
+        "spans": [
+          {
+            "start": 317,
+            "end": 331
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50 to 100 mg/kg",
+        "spans": [
+          {
+            "start": 393,
+            "end": 408
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "30 ml",
+        "spans": [
+          {
+            "start": 686,
+            "end": 691
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 6 hours",
+        "spans": [
+          {
+            "start": 98,
+            "end": 111
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 12 hours",
+        "spans": [
+          {
+            "start": 134,
+            "end": 148
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p20",
+    "split": "final",
+    "sourceFamily": "amoxicillin",
+    "sourceId": "00b86913-50c8-443f-8467-f4f499d358af",
+    "input": "2 DOSAGE AND ADMINISTRATION Pediatric Patients aged 3 months to 12 years weighing less than or equal to 40 kg: 90 mg/kg/day divided every 12 hours, administered for 10 days. ( 2 ) 2.1 Important Administration Instructions To minimize the potential for gastrointestinal intolerance, amoxicillin and clavulanate potassium for oral suspension, 600 mg/42.9 mg per 5 mL should be taken at the start of a meal. Absorption of clavulanate potassium may be enhanced when amoxicillin and clavulanate potassium for oral suspension, 600 mg/42.9 mg per 5 mL is administered at the start of a meal. 2.2 Dosage in Pediatric Patients Pediatric patients aged 3 months to 12 years weighing less than or equal to 40 kg : Based on the amoxicillin component (600 mg/5 mL), the recommended dose of amoxicillin and clavulanate potassium for oral suspension, 600 mg/42.9 mg per 5 mL is 90 mg/kg/day divided every 12 hours,",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22amoxicillin%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00b86913-50c8-443f-8467-f4f499d358af",
+      "snapshot": "sources/amoxicillin.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 898,
+      "sha256": "17c16d7ddb6606c93aa8e938ef409c9a66e8a5d9a9de64960e2907f151304f2d",
+      "acquiredAt": "2026-11-01T12:44:16.233732+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "amoxicillin",
+        "spans": [
+          {
+            "start": 282,
+            "end": 293
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "90 mg/kg/day",
+        "spans": [
+          {
+            "start": 111,
+            "end": 123
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "600 mg",
+        "spans": [
+          {
+            "start": 341,
+            "end": 347
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "42.9 mg",
+        "spans": [
+          {
+            "start": 348,
+            "end": 355
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "5 ml",
+        "spans": [
+          {
+            "start": 360,
+            "end": 364
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 12 hours",
+        "spans": [
+          {
+            "start": 132,
+            "end": 146
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p21",
+    "split": "final",
+    "sourceFamily": "fluoxetine",
+    "sourceId": "02283de9-6087-45f7-a9ce-3b082ce860de",
+    "input": "2 DOSAGE AND ADMINISTRATION Indication Adult Pediatric MDD ( 2.1 ) 20 mg/day in am (initial dose) 10 to 20 mg/day (initial dose) OCD ( 2.2 ) 20 mg/day in am (initial dose) 10 mg/day (initial dose) Bulimia Nervosa ( 2.3 ) 60 mg/day in am Panic Disorder ( 2.4 ) 10 mg/day (initial dose) Depressive Episodes Associated with Bipolar I Disorder ( 2.5 ) Oral in combination with olanzapine: 5 mg of oral olanzapine and 20 mg of fluoxetine once daily (initial dose) Oral in combination with olanzapine: 2.5 mg of oral olanzapine and 20 mg of fluoxetine once daily (initial dose) A lower or less frequent dosage should be used in patients with hepatic impairment, the elderly, and for patients with concurrent disease or on multiple concomitant medications ( 2.7 ) Fluoxetine capsules and olanzapine in combination: Dosage adjustments should be made with the individual components according to efficacy and",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22fluoxetine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=02283de9-6087-45f7-a9ce-3b082ce860de",
+      "snapshot": "sources/fluoxetine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 898,
+      "sha256": "1e466ffe22f428ff01e41be971671368724e36947cfee610e16a86e7d0238ad4",
+      "acquiredAt": "2026-11-01T12:44:17.076208+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "fluoxetine",
+        "spans": [
+          {
+            "start": 422,
+            "end": 432
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg/day",
+        "spans": [
+          {
+            "start": 67,
+            "end": 76
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 to 20 mg/day",
+        "spans": [
+          {
+            "start": 98,
+            "end": 113
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg/day",
+        "spans": [
+          {
+            "start": 172,
+            "end": 181
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "60 mg/day",
+        "spans": [
+          {
+            "start": 221,
+            "end": 230
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "5 mg",
+        "spans": [
+          {
+            "start": 385,
+            "end": 389
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg",
+        "spans": [
+          {
+            "start": 413,
+            "end": 418
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "2.5 mg",
+        "spans": [
+          {
+            "start": 496,
+            "end": 502
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 433,
+            "end": 443
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p22",
+    "split": "final",
+    "sourceFamily": "escitalopram",
+    "sourceId": "0458445b-e431-4c82-86b8-90373813c10a",
+    "input": "2 DOSAGE AND ADMINISTRATION Indication and Population Recommended Dosage MDD in Adults ( 2.1 ) Initial: 10 mg once daily Recommended: 10 mg once daily Maximum: 20 mg once daily MDD in Pediatric Patients 12 years and older ( 2.1 ) Initial: 10 mg once daily Recommended: 10 mg once daily Maximum: 20 mg once daily GAD in Adults ( 2.2 ) Initial: 10 mg once daily Recommended: 10 mg once daily Maximum: 20 mg once daily No additional benefits were seen at 20 mg once daily ( 2.1 ) Administer once daily, morning or evening, with or without food ( 2.3 ) Elderly patients: recommended dosage is 10 mg once daily ( 2.4 ) Hepatic impairment: recommended dosage is 10 mg once daily ( 2.4 , 8.6 ) When discontinuing escitalopram, reduce dose gradually whenever possible ( 2.5 ) 2.1 Major Depressive Disorder Adults The recommended dosage of escitalopram in adults is 10 mg once daily. A fixed-dose trial of",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22escitalopram%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0458445b-e431-4c82-86b8-90373813c10a",
+      "snapshot": "sources/escitalopram.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 896,
+      "sha256": "6d9a80d26f88467a46e9ae1ceb6bfe9c4acb11c13c6b7f3c3d1041d766753c82",
+      "acquiredAt": "2026-11-01T12:44:17.901086+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "escitalopram",
+        "spans": [
+          {
+            "start": 706,
+            "end": 718
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg",
+        "spans": [
+          {
+            "start": 104,
+            "end": 109
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg",
+        "spans": [
+          {
+            "start": 160,
+            "end": 165
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 110,
+            "end": 120
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p23",
+    "split": "final",
+    "sourceFamily": "duloxetine",
+    "sourceId": "00628e5e-4c5b-2573-e063-6294a90a0e3b",
+    "input": "2 DOSAGE AND ADMINISTRATION Take Duloxetine delayed-release capsules once daily, with or without food. Swallow whole; do not crush, chew, or open capsule ( 2.1 ) Indication Starting Dose Target Dose Maximum Dose MDD ( 2.2 ) 40 mg/day to 60 mg/day Acute Treatment: 40 mg/day (20 mg twice daily) to 60 mg/day (once daily or as 30 mg twice daily); Maintenance Treatment: 60 mg/day 120 mg/day GAD ( 2.3 ) Adults 60 mg/day 60 mg/day (once daily) 120 mg/day Geriatric 30 mg/day 60 mg/day (once daily) 120 mg/day Pediatrics (7 to 17 years of age) 30 mg/day 30 to 60 mg/day (once daily) 120 mg/day DPNP ( 2.4 ) 60 mg/day 60 mg/day (once daily) 60 mg/day FM ( 2.5 ) Adults and Pediatrics (13 to 17 years of age) 30 mg/day 60 mg/day (once daily) 60 mg/day Chronic Musculoskeletal Pain ( 2.6 ) 30 mg/day 60 mg/day (once daily) 60 mg/day Discontinuing Duloxetine delayed-release capsules: Gradually reduce",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22duloxetine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00628e5e-4c5b-2573-e063-6294a90a0e3b",
+      "snapshot": "sources/duloxetine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 893,
+      "sha256": "9e058d62e059ee6ef376090e130732d3edf16fbd3a41b4015279524060632a6d",
+      "acquiredAt": "2026-11-01T12:44:18.779327+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "duloxetine",
+        "spans": [
+          {
+            "start": 33,
+            "end": 43
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "40 mg/day",
+        "spans": [
+          {
+            "start": 224,
+            "end": 233
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "60 mg/day",
+        "spans": [
+          {
+            "start": 237,
+            "end": 246
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg",
+        "spans": [
+          {
+            "start": 275,
+            "end": 280
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "30 mg",
+        "spans": [
+          {
+            "start": 325,
+            "end": 330
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "120 mg/day",
+        "spans": [
+          {
+            "start": 378,
+            "end": 388
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "30 mg/day",
+        "spans": [
+          {
+            "start": 462,
+            "end": 471
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "30 to 60 mg/day",
+        "spans": [
+          {
+            "start": 550,
+            "end": 565
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 69,
+            "end": 79
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 281,
+            "end": 292
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p24",
+    "split": "final",
+    "sourceFamily": "pantoprazole",
+    "sourceId": "014f9762-6948-46b7-8659-5c89f35ad8bf",
+    "input": "2 DOSAGE AND ADMINISTRATION GERD and a History of EE Adults: The recommended dosage is 40 mg once daily by intravenous injection (over at least 2 minutes) or intravenous infusion (for 15 minutes) for up to 10 days. ( 2.1 ) Discontinue as soon as the patient is able to receive oral treatment. Switch to an appropriate oral medication within 10 days of starting pantoprazole sodium for injection. ( 2.1 ) Pathological Hypersecretion Conditions, Including ZE Syndrome The recommended adult dosage is 80 mg every 12 hours by intravenous injection (over at least 2 minutes) or intravenous infusion (for 15 minutes). ( 2.2 ) For information on how to adjust dosing for individual patient needs, see the full prescribing information. ( 2.2 ) When switching between intravenous to oral formulations of gastric acid inhibitors, consider the pharmacodynamic action of the drugs to ensure continuity of acid",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22pantoprazole%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=014f9762-6948-46b7-8659-5c89f35ad8bf",
+      "snapshot": "sources/pantoprazole.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 897,
+      "sha256": "9734d8d6d2c4f90735f47e3b4079b89d7e5fb3d45b523a676c9e291e9b52fed9",
+      "acquiredAt": "2026-11-01T12:44:19.980458+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "pantoprazole",
+        "spans": [
+          {
+            "start": 361,
+            "end": 373
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "40 mg",
+        "spans": [
+          {
+            "start": 87,
+            "end": 92
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "80 mg",
+        "spans": [
+          {
+            "start": 498,
+            "end": 503
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 93,
+            "end": 103
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 12 hours",
+        "spans": [
+          {
+            "start": 504,
+            "end": 518
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p25",
+    "split": "final",
+    "sourceFamily": "famotidine",
+    "sourceId": "002875d2-8c30-2d2e-e063-6294a90ae01e",
+    "input": "2 DOSAGE AND ADMINISTRATION Indication Recommended Dosage ( 2.1 ) Adult and Pediatric Patients 40 kg and greater Active DU 40 mg once daily; or 20 mg twice daily Active Gastric Ulcer 40 mg once daily GERD 20 mg twice daily Erosive Esophagitis 20 mg twice daily; or 40 mg twice daily Adults Pathological Hypersecretory Conditions 20 mg every 6 hours; adjust to patient needs; maximum 160 mg every 6 hours Risk Reduction of DU Recurrence 20 mg once daily \u2022 See full prescribing information for complete dosing information, including dosing in renal impairment, and recommended treatment duration. ( 2.1 , 2.2 ) Administration ( 2.3 ): \u2022 Take once daily before bedtime or twice daily in the morning and before bedtime with or without food. 2.1 Recommended Dosage Table 1 shows the recommended dosage of famotidine 20 mg and 40 mg tablets in adult and pediatric patients weighing 40 kg and greater with",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22famotidine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=002875d2-8c30-2d2e-e063-6294a90ae01e",
+      "snapshot": "sources/famotidine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 898,
+      "sha256": "ee71d5f1df687c9cd11d781cc571607f6e2b8d323e1c3cfbdb14ded671266915",
+      "acquiredAt": "2026-11-01T12:44:20.708713+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "famotidine",
+        "spans": [
+          {
+            "start": 800,
+            "end": 810
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "40 mg",
+        "spans": [
+          {
+            "start": 123,
+            "end": 128
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "20 mg",
+        "spans": [
+          {
+            "start": 144,
+            "end": 149
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "160 mg",
+        "spans": [
+          {
+            "start": 383,
+            "end": 389
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 129,
+            "end": 139
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 150,
+            "end": 161
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 6 hours",
+        "spans": [
+          {
+            "start": 335,
+            "end": 348
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "in the morning",
+        "spans": [
+          {
+            "start": 681,
+            "end": 695
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p26",
+    "split": "final",
+    "sourceFamily": "cetirizine",
+    "sourceId": "013ce40e-37c9-4b84-b530-ed895f60ce0e",
+    "input": "Directions may be taken with or without water chew or crush tablets completely before swallowing children 2 to under 6 years of age Chew and swallow 1 tablet (2.5 mg) once daily; If needed, dose can be increased to a maximum of 2 tablets (5 mg) once daily or 1 tablet (2.5 mg) every 12 hours. Do not give more than 2 tablets (5 mg) in 24 hours. adults and children 6 years and over Chew and swallow 2 tablets (5 mg) or 4 tablets (10 mg) once daily depending upon severity of symptoms; do not take more than 4 tablets (10 mg) in 24 hours. adults 65 years and over Chew and swallow 2 tablets (5 mg) once daily; do not take more than 2 tablets (5 mg) in 24 hours. children under 2 years of age ask a doctor consumers with liver or kidney disease ask a doctor",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22cetirizine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=013ce40e-37c9-4b84-b530-ed895f60ce0e",
+      "snapshot": "sources/cetirizine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 755,
+      "sha256": "4203869c032e3dc7f3b00950d7f54c8851e3a88d77aba4328f985fde755d131c",
+      "acquiredAt": "2026-11-01T12:44:21.208749+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "dose",
+        "value": "2.5 mg",
+        "spans": [
+          {
+            "start": 159,
+            "end": 165
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "5 mg",
+        "spans": [
+          {
+            "start": 239,
+            "end": 243
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg",
+        "spans": [
+          {
+            "start": 430,
+            "end": 435
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "once daily",
+        "spans": [
+          {
+            "start": 167,
+            "end": 177
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "every 12 hours",
+        "spans": [
+          {
+            "start": 277,
+            "end": 291
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "if needed",
+        "spans": [
+          {
+            "start": 179,
+            "end": 188
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p27",
+    "split": "final",
+    "sourceFamily": "loratadine",
+    "sourceId": "0038bc38-c205-4d8d-ab78-1abbcd76829e",
+    "input": "Directions adults and children 6 years and over 1 tablet daily; not more than 1 tablet in 24 hours children under 6 years of age ask a doctor consumers with liver or kidney disease ask a doctor",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22loratadine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0038bc38-c205-4d8d-ab78-1abbcd76829e",
+      "snapshot": "sources/loratadine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 193,
+      "sha256": "c7a695b0241a52d5b2dffedd7169787341d0879ad4a8ad0ed20ed371ae0e0d05",
+      "acquiredAt": "2026-11-01T12:44:21.690177+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 57,
+            "end": 62
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p28",
+    "split": "final",
+    "sourceFamily": "naproxen",
+    "sourceId": "000155a8-709c-44e5-a75f-cd890f3a7caf",
+    "input": "2 DOSAGE AND ADMINISTRATION Use the lowest effective dosage for shortest duration consistent with individual patient treatment goals. ( 2.1 ) Rheumatoid Arthritis, Osteoarthritis, and Ankylosing Spondylitis Naproxen tablets 250 mg (one-half tablet) 500 mg twice daily Naproxen sodium tablets 275 mg (one-half tablet) 550 mg twice daily The dose may be adjusted up or down depending on the clinical response of the patient. In patients who tolerate lower doses well, the dose may be increased to naproxen 1500 mg/ day for up to 6 months. Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets may not allow for the flexible dose titration needed in pediatric patients with polyarticular juvenile idiopathic arthritis. A liquid formulation may be more appropriate. Recommended total daily dose of naproxen is approximately 10 mg/kg given in 2 divided doses. Dosing with naproxen tablets is not",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22naproxen%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=000155a8-709c-44e5-a75f-cd890f3a7caf",
+      "snapshot": "sources/naproxen.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 897,
+      "sha256": "9cd2ed383868d4774b6eb648d795161ca49fc27e2655afe4ed90ad2969d4de09",
+      "acquiredAt": "2026-11-01T12:44:22.513206+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "naproxen",
+        "spans": [
+          {
+            "start": 207,
+            "end": 215
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "250 mg",
+        "spans": [
+          {
+            "start": 224,
+            "end": 230
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "500 mg",
+        "spans": [
+          {
+            "start": 249,
+            "end": 255
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "275 mg",
+        "spans": [
+          {
+            "start": 292,
+            "end": 298
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "550 mg",
+        "spans": [
+          {
+            "start": 317,
+            "end": 323
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "1500 mg",
+        "spans": [
+          {
+            "start": 504,
+            "end": 511
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "10 mg/kg",
+        "spans": [
+          {
+            "start": 827,
+            "end": 835
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 256,
+            "end": 267
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 787,
+            "end": 792
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p29",
+    "split": "final",
+    "sourceFamily": "ondansetron",
+    "sourceId": "00327696-c496-4c83-a63e-9e29fd6246d4",
+    "input": "2 DOSAGE AND ADMINISTRATION See full prescribing information for the recommended dosage in adults and pediatrics (2) Patients with severe hepatic impairment: do not exceed a total daily dose of 8 mg ( 2.2 , 8.6 ) 2.1 Dosage The recommended dosage regimens for adult and pediatric patients are described in Table 1 and Table 2, respectively. Corresponding doses of ondansetron tablets may be used interchangeably. Table 1: Adult Recommended Dosage Regimen for Prevention of Nausea and Vomiting Indication Dosage Regimen Highly Emetogenic Cancer Chemotherapy A single 24 mg dose administered 30 minutes before the start of single-day highly emetogenic chemotherapy, including cisplatin greater than or equal to 50 mg/m 2 Moderately Emetogenic Cancer Chemotherapy 8 mg administered 30 minutes before the start of chemotherapy, with a subsequent 8 mg dose 8 hours after the first dose. Then administer 8",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22ondansetron%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00327696-c496-4c83-a63e-9e29fd6246d4",
+      "snapshot": "sources/ondansetron.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 899,
+      "sha256": "6e06523225538a51d572e6624ea8181622f10be71f3db7c3b5ebd21bedad0882",
+      "acquiredAt": "2026-11-01T12:44:23.509133+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "ondansetron",
+        "spans": [
+          {
+            "start": 364,
+            "end": 375
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "8 mg",
+        "spans": [
+          {
+            "start": 194,
+            "end": 198
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "24 mg",
+        "spans": [
+          {
+            "start": 566,
+            "end": 571
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "50 mg",
+        "spans": [
+          {
+            "start": 709,
+            "end": 714
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 180,
+            "end": 185
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  },
+  {
+    "id": "p30",
+    "split": "final",
+    "sourceFamily": "clonidine",
+    "sourceId": "00c6d67a-bb11-4884-9eeb-4e1b8701a08b",
+    "input": "DOSAGE AND ADMINISTRATION Adults: The dose of clonidine hydrochloride tablets must be adjusted according to the patient\u2019s individual blood pressure response. The following is a general guide to its administration. Initial Dose: 0.1 mg tablet twice daily (morning and bedtime). Elderly patients may benefit from a lower initial dose. Maintenance Dose: Further increments of 0.1 mg per day may be made at weekly intervals if necessary until the desired response is achieved. Taking the larger portion of the oral daily dose at bedtime may minimize transient adjustment effects of dry mouth and drowsiness. The therapeutic doses most commonly employed have ranged from 0.2 mg to 0.6 mg per day given in divided doses. Studies have indicated that 2.4 mg is the maximum effective daily dose, but doses as high as this have rarely been employed. Renal Impairment: Patients with renal impairment may",
+    "source": {
+      "provider": "openFDA",
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22clonidine%22+AND+_exists_%3Adosage_and_administration&limit=1",
+      "original": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00c6d67a-bb11-4884-9eeb-4e1b8701a08b",
+      "snapshot": "sources/clonidine.json",
+      "section": "dosage_and_administration",
+      "start": 0,
+      "end": 892,
+      "sha256": "ecca1d64bb170acbabe8decaaf04bea0123b7b4ede2eabba47d6cf5b5f7c39ac",
+      "acquiredAt": "2026-11-01T12:44:24.859564+00:00",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://open.fda.gov/license/",
+      "rightsNote": "openFDA default CC0 policy. Drug label text only, no GMDN device content. No endorsement implied."
+    },
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Label excerpt may describe multiple populations, titration or alternatives. Extract stated mentions, do not infer a patient prescription.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "clonidine",
+        "spans": [
+          {
+            "start": 46,
+            "end": 55
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "0.1 mg",
+        "spans": [
+          {
+            "start": 228,
+            "end": 234
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "0.2 mg",
+        "spans": [
+          {
+            "start": 666,
+            "end": 672
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "0.6 mg",
+        "spans": [
+          {
+            "start": 676,
+            "end": 682
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "2.4 mg",
+        "spans": [
+          {
+            "start": 743,
+            "end": 749
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 242,
+            "end": 253
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 511,
+            "end": 516
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "at bedtime",
+        "spans": [
+          {
+            "start": 522,
+            "end": 532
+          }
+        ]
+      }
+    ],
+    "annotationNote": "AI-proposed literal mention labels. First occurrence is canonical evidence for repeated identical mentions. Dose ranges and daily or weight-based quantities retain their stated units. Not a resolved regimen. Pharmacist review pending."
+  }
+]

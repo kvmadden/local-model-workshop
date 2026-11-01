@@ -1,0 +1,626 @@
+[
+  {
+    "id": "c01",
+    "split": "challenge",
+    "sourceFamily": "authored-1",
+    "input": "Candesartan 16 mg. Take 1 tablet PO bid.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "candesartan",
+        "spans": [
+          {
+            "start": 0,
+            "end": 11
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "16 mg",
+        "spans": [
+          {
+            "start": 12,
+            "end": 17
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "bid",
+        "spans": [
+          {
+            "start": 36,
+            "end": 39
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c02",
+    "split": "challenge",
+    "sourceFamily": "authored-2",
+    "input": "Rizatriptan 7 mg as needed for migraine.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "rizatriptan",
+        "spans": [
+          {
+            "start": 0,
+            "end": 11
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "7 mg",
+        "spans": [
+          {
+            "start": 12,
+            "end": 16
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "as needed",
+        "spans": [
+          {
+            "start": 17,
+            "end": 26
+          }
+        ]
+      },
+      {
+        "task": "indication",
+        "value": "migraine",
+        "spans": [
+          {
+            "start": 31,
+            "end": 39
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c03",
+    "split": "challenge",
+    "sourceFamily": "authored-3",
+    "input": "Doxepin 6 mg at bedtime as needed for insomnia.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "doxepin",
+        "spans": [
+          {
+            "start": 0,
+            "end": 7
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "6 mg",
+        "spans": [
+          {
+            "start": 8,
+            "end": 12
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "at bedtime",
+        "spans": [
+          {
+            "start": 13,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "as needed",
+        "spans": [
+          {
+            "start": 24,
+            "end": 33
+          }
+        ]
+      },
+      {
+        "task": "indication",
+        "value": "insomnia",
+        "spans": [
+          {
+            "start": 38,
+            "end": 46
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c04",
+    "split": "challenge",
+    "sourceFamily": "authored-4",
+    "input": "Carvedilol 12.5 mg tablets. Take half a tablet daily.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "carvedilol",
+        "spans": [
+          {
+            "start": 0,
+            "end": 10
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 47,
+            "end": 52
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "6.25 mg",
+        "spans": [
+          {
+            "start": 11,
+            "end": 18
+          },
+          {
+            "start": 33,
+            "end": 37
+          }
+        ],
+        "derivation": {
+          "operation": "multiply",
+          "operands": [
+            12.5,
+            0.5
+          ],
+          "unit": "mg"
+        }
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c05",
+    "split": "challenge",
+    "sourceFamily": "authored-5",
+    "input": "Liothyronine 22 mcg every morning.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "liothyronine",
+        "spans": [
+          {
+            "start": 0,
+            "end": 12
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "22 mcg",
+        "spans": [
+          {
+            "start": 13,
+            "end": 19
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "every morning",
+        "spans": [
+          {
+            "start": 20,
+            "end": 33
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c06",
+    "split": "challenge",
+    "sourceFamily": "authored-6",
+    "input": "Take verapamil daily. Dose not supplied.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "verapamil",
+        "spans": [
+          {
+            "start": 5,
+            "end": 14
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 15,
+            "end": 20
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c07",
+    "split": "challenge",
+    "sourceFamily": "authored-7",
+    "input": "Do not take digoxin. No active medication instruction.",
+    "gold": [],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c08",
+    "split": "challenge",
+    "sourceFamily": "authored-8",
+    "input": "Stopped torsemide yesterday. No current dose.",
+    "gold": [],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c09",
+    "split": "challenge",
+    "sourceFamily": "authored-9",
+    "input": "Take valsartan 83 mg daily and pravastatin 37 mg at bedtime.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "valsartan",
+        "spans": [
+          {
+            "start": 5,
+            "end": 14
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "83 mg",
+        "spans": [
+          {
+            "start": 15,
+            "end": 20
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "daily",
+        "spans": [
+          {
+            "start": 21,
+            "end": 26
+          }
+        ]
+      },
+      {
+        "task": "drug",
+        "value": "pravastatin",
+        "spans": [
+          {
+            "start": 31,
+            "end": 42
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "37 mg",
+        "spans": [
+          {
+            "start": 43,
+            "end": 48
+          }
+        ]
+      },
+      {
+        "task": "timing",
+        "value": "at bedtime",
+        "spans": [
+          {
+            "start": 49,
+            "end": 59
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c10",
+    "split": "challenge",
+    "sourceFamily": "authored-10",
+    "input": "Take baclofen 9 mg q8h PRN spasms.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "baclofen",
+        "spans": [
+          {
+            "start": 5,
+            "end": 13
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "9 mg",
+        "spans": [
+          {
+            "start": 14,
+            "end": 18
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "q8h",
+        "spans": [
+          {
+            "start": 19,
+            "end": 22
+          }
+        ]
+      },
+      {
+        "task": "prn",
+        "value": "prn",
+        "spans": [
+          {
+            "start": 23,
+            "end": 26
+          }
+        ]
+      },
+      {
+        "task": "indication",
+        "value": "spasms",
+        "spans": [
+          {
+            "start": 27,
+            "end": 33
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c11",
+    "split": "challenge",
+    "sourceFamily": "authored-11",
+    "input": "Take lactulose 17 mL twice daily.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "lactulose",
+        "spans": [
+          {
+            "start": 5,
+            "end": 14
+          }
+        ]
+      },
+      {
+        "task": "dose",
+        "value": "17 ml",
+        "spans": [
+          {
+            "start": 15,
+            "end": 20
+          }
+        ]
+      },
+      {
+        "task": "schedule",
+        "value": "twice daily",
+        "spans": [
+          {
+            "start": 21,
+            "end": 32
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  {
+    "id": "c12",
+    "split": "challenge",
+    "sourceFamily": "authored-12",
+    "input": "Take doxazosin as directed. Ask the prescriber for the dose and schedule.",
+    "gold": [
+      {
+        "task": "drug",
+        "value": "doxazosin",
+        "spans": [
+          {
+            "start": 5,
+            "end": 14
+          }
+        ]
+      }
+    ],
+    "review": {
+      "status": "draft",
+      "reviewer": null,
+      "correction": null
+    },
+    "ambiguity": "Synthetic stress instruction, not a dosing recommendation. Bedtime is not promoted to a daily schedule. Negated and stopped mentions are not active instructions.",
+    "source": {
+      "provider": "Original synthetic challenge",
+      "url": "https://github.com/kvmadden/local-model-workshop",
+      "original": "https://github.com/kvmadden/local-model-workshop",
+      "snapshot": "challenge.json",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  }
+]

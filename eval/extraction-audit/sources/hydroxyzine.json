@@ -1,0 +1,7 @@
+{
+  "id": "638cf29d-9dc9-4a80-8937-ba3811482f08",
+  "set_id": "02616eee-a1a4-4afc-b84e-69fd28755138",
+  "effective_time": "20241216",
+  "dosage_and_administration": "DOSAGE For symptomatic relief of anxiety and tension associated with psychoneurosis and as an adjunct in organic disease states in which anxiety is manifested: in adults, 50 mg to 100 mg q.i.d.; children under 6 years, 50 mg daily in divided doses; and over 6 years, 50 mg to 100 mg daily in divided doses. For use in the management of pruritus due to allergic conditions such as chronic urticaria and atopic and contact dermatoses, and in histamine-mediated pruritus: in adults, 25 mg t.i.d. or q.i.d.; children under 6 years, 50 mg daily in divided doses; and over 6 years, 50 mg to 100 mg daily in divided doses. As a sedative when used as a premedication and following general anesthesia: 50 mg to 100 mg in adults, and 0.6 mg/kg in children. When treatment is initiated by the intramuscular route of administration, subsequent doses may be administered orally. As with all medications, the dosage should be adjusted according to the patient\u2019s response to therapy.",
+  "acquisition_url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22hydroxyzine%22+AND+_exists_%3Adosage_and_administration&limit=1"
+}

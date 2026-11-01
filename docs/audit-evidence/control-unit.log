@@ -1,0 +1,120 @@
+
+> local-model-workshop@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.6 /Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo
+
+stdout | src/engine/templateResolver.edge.test.ts > templateResolver stress and edge cases > 3. Large Template Strings & Thousands of Variable Substitutions > resolves a >100KB template with 1,000 variable substitutions correctly
+100KB (106780 chars) / 1,000 vars resolution time: 0.365ms
+
+stdout | src/engine/templateResolver.edge.test.ts > templateResolver stress and edge cases > 3. Large Template Strings & Thousands of Variable Substitutions > resolves a >500KB template with 5,000 variable substitutions correctly
+500KB (577780 chars) / 5,000 vars resolution time: 10.918ms
+
+stdout | src/engine/templateResolver.edge.test.ts > templateResolver stress and edge cases > 3. Large Template Strings & Thousands of Variable Substitutions > handles 10,000 missing variable lookups efficiently
+10,000 missing vars lookup time: 4.807ms
+
+stdout | src/engine/templateResolver.edge.test.ts > templateResolver stress and edge cases > 3. Large Template Strings & Thousands of Variable Substitutions > handles large context dictionaries (50,000 keys) without degradation
+50,000 context keys lookup time: 0.014ms
+
+stdout | src/engine/templateResolver.edge.test.ts > templateResolver stress and edge cases > 5. Benchmark Throughput (Sub-millisecond Resolution Target) > achieves sub-millisecond per-resolution latency over 1,000 typical iterations
+Average throughput over 1000 runs: 0.00286 ms per resolution (Total: 2.86 ms)
+
+ ✓ src/engine/templateResolver.edge.test.ts (23 tests) 94ms
+stdout | src/engine/modelAdapter.edge.test.ts > Edge cases: MockEndpoint & ModelAdapters > 5. Memory/Leak Safety Stress Test (1,000 Rapid Executions) > executes 1,000 rapid mock executions without memory leak or unhandled rejections
+[Stress Test Stats] 1,000 rapid executions completed in 4ms. Initial Heap: 41.23 MB, Final Heap: 43.31 MB, Delta: 2.08 MB.
+
+ ✓ src/engine/modelAdapter.edge.test.ts (18 tests) 286ms
+ ✓ src/services/modelVersionTruthfulness.test.tsx (39 tests) 174ms
+ ✓ src/components/catalog.stress.test.tsx (13 tests) 256ms
+stderr | src/components/hardware-layout.stress.test.tsx > Hardware advisor and layout stress tests > Task 2: ModelCatalog & BenchmarkStudio Integration & Stress > BenchmarkStudio switches prompts and triggers export recipe button
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:81:7)
+    at listOnTimeout (node:internal/timers:605:17)
+    at processTimers (node:internal/timers:541:7) undefined
+
+ ✓ src/components/hardware-layout.stress.test.tsx (12 tests) 383ms
+stdout | src/components/flow-builder.stress.test.tsx > Phase 2 Empirical Stress & Hardening Test Suite > 1. Duplicate Key & State Desync on step deletion followed by step addition
+[HARDENING VERIFIED] Verified unique step ID generation prevents React duplicate key warnings.
+
+ ✓ src/engine/modelAdapter.test.ts (13 tests) 30ms
+stdout | src/components/flow-builder.stress.test.tsx > Phase 2 Empirical Stress & Hardening Test Suite > 3. Concurrent "Run Step" while "Run Flow" is executing is disabled by UI (hardened)
+[HARDENING VERIFIED] Run Step 2 disabled state during Run Flow: true
+
+stdout | src/engine/flowRunner.edge.test.ts > FlowRunner edge cases and stress tests > 6. High Concurrency & Long Step Chains Stress Test > executes a 50-step linear flow sequentially with context accumulation
+50-step flow execution time: 0.86ms
+
+ ✓ src/engine/flowRunner.edge.test.ts (21 tests) 2145ms
+   ✓ FlowRunner edge cases and stress tests > 1. Template Substitution & Context Pollution Edge Cases > prevents double template evaluation when step output contains curly braces {{injected}}  307ms
+   ✓ FlowRunner edge cases and stress tests > 1. Template Substitution & Context Pollution Edge Cases > handles step output containing regex replacement tokens ($1, $&, $', $`, $$) without string corruption  306ms
+   ✓ FlowRunner edge cases and stress tests > 1. Template Substitution & Context Pollution Edge Cases > identifies variable alias collision when a step is named "input"  304ms
+   ✓ FlowRunner edge cases and stress tests > 1. Template Substitution & Context Pollution Edge Cases > handles step ID equal to another step index alias (e.g. step 1 ID is "step2")  303ms
+   ✓ FlowRunner edge cases and stress tests > 3. Special Characters, Multiline Strings & Large Data Resilience > preserves complex multiline formatting, code blocks, and control characters through step chain  304ms
+   ✓ FlowRunner edge cases and stress tests > 3. Special Characters, Multiline Strings & Large Data Resilience > propagates 500KB large output string cleanly through 3 sequential steps  304ms
+ ✓ src/eval/sigScore.test.ts (15 tests) 10ms
+ ✓ src/components/ui-flows.stress.test.tsx (17 tests) 2025ms
+   ✓ UI components and data flows stress tests > Document Summarizer Playground — Text Input Edge Cases > handles special characters, HTML tags, backslashes, and unicode emojis safely  525ms
+   ✓ UI components and data flows stress tests > Document Summarizer Playground — Text Input Edge Cases > EMPIRICAL FINDING: custom text typed in textarea is IGNORED by output engine  530ms
+   ✓ UI components and data flows stress tests > Dictation Cleanup Playground — Text Input Edge Cases > EMPIRICAL FINDING: custom text typed in dictation textarea is IGNORED in polished output  510ms
+ ✓ src/engine/templateResolver.test.ts (19 tests) 3ms
+stdout | src/components/flow-builder.stress.test.tsx > Phase 2 Empirical Stress & Hardening Test Suite > 6. Engine executes 500 rapid 10-step flows without memory leak or performance degradation
+[STRESS METRICS] 500 10-step flows (5,000 steps total) executed in 19.28ms. Heap Delta: 18.79 MB
+
+ ✓ src/components/flow-builder.stress.test.tsx (7 tests) 1500ms
+   ✓ Phase 2 Empirical Stress & Hardening Test Suite > 2. Rapid Double-Click on Run Flow triggers race condition / double execution  420ms
+   ✓ Phase 2 Empirical Stress & Hardening Test Suite > 3. Concurrent "Run Step" while "Run Flow" is executing is disabled by UI (hardened)  437ms
+   ✓ Phase 2 Empirical Stress & Hardening Test Suite > 4. Reordering steps while Flow is running is disabled  534ms
+ ✓ src/components/WorkshopComponents.test.tsx (16 tests) 2516ms
+   ✓ Workshop component unit tests > Use Case Studio & 4 Playgrounds > VoiceTranscriptionPlayground supports sample audio selection and transcription output generation  529ms
+   ✓ Workshop component unit tests > Use Case Studio & 4 Playgrounds > DocSummarizingPlayground processes document summaries with local air-gapped badge  514ms
+   ✓ Workshop component unit tests > Use Case Studio & 4 Playgrounds > DictationCleanupPlayground supports filler word toggle and side-by-side polished view  509ms
+   ✓ Workshop component unit tests > Use Case Studio & 4 Playgrounds > FileChattingPlayground supports query chips, local Q&A feed, and document citations  525ms
+ ✓ src/services/ollamaService.test.ts (10 tests) 5ms
+ ✓ src/components/UI.edge.test.tsx (11 tests) 2505ms
+   ✓ UI components and App edge cases > 1. App Component & Core Canvas Workflow > runs flow and updates step badges to completed with outputs  449ms
+   ✓ UI components and App edge cases > 2. Multi-line Prompts & Code Snippet Templates > preserves multi-line prompt formatting, newlines, and code blocks  426ms
+   ✓ UI components and App edge cases > 3. Template Variables with Spaces and Special Characters > handles {{ input }} with spaces and special character inputs  419ms
+   ✓ UI components and App edge cases > 7. Inspector Intermediate Output Overriding > allows manually editing step output editor and re-running downstream step  521ms
+   ✓ UI components and App edge cases > 8. Simulated Backend Error Banner Rendering > renders error container when a step experiences execution failure  430ms
+stdout | src/components/task_wizard_a11y_stress.test.tsx > TaskWizard Modal Accessibility & Focus Trap Empirical Suite > 4. Focus return to trigger element check when modal is closed
+Active element after Escape: view-setup-guide-btn
+
+ ✓ src/components/task_wizard_a11y_stress.test.tsx (4 tests) 337ms
+ ✓ src/engine/vramLockManager.test.ts (8 tests) 45ms
+ ✓ src/engine/vramLockManager.edge.test.ts (4 tests) 4ms
+ ✓ src/services/catalogFamilyLockstep.test.ts (2 tests) 2ms
+ ✓ src/engine/mockEndpoint.test.ts (9 tests) 219ms
+ ✓ src/components/OllamaPullTruthfulness.test.tsx (4 tests) 84ms
+ ✓ src/engine/flowRunner.test.ts (12 tests) 2795ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 1. Full Flow Execution (runFlow) > executes a 2-step flow sequentially and resolves template context  306ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 1. Full Flow Execution (runFlow) > executes a 3-step chain propagating context through all steps  455ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 2. Context Resolution & Variable Alias Formats > resolves bracket notation {{step[id].output}} and 1-based index {{step[1].output}}  302ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 2. Context Resolution & Variable Alias Formats > resolves shorthand placeholders without .output ({{step1}}, {{step_name}})  305ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 3. Single Step Execution (runSingleStep) > handles target step specified by numeric index or ID string  304ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 4. Execution Callbacks & State Transitions > invokes callbacks in strict chronological order with accurate step status  308ms
+   ✓ FlowRunner — Asynchronous Execution Engine Suite > 6. Error Handling & Flow Halting > halts execution on step error and updates flow/step status to error  305ms
+ ✓ src/eval/holdout.test.ts (2 tests) 71ms
+ ✓ src/eval/legacyScore.test.ts (1 test) 9ms
+ ✓ src/components/workshop.stress.test.tsx (16 tests) 4682ms
+   ✓ Workshop stress tests > 3. 4 Use Case Studio Playgrounds Interactive & Stress Testing > VoiceTranscriptionPlayground > handles sample audio selection, transcription output generation, and export feedback  931ms
+   ✓ Workshop stress tests > 3. 4 Use Case Studio Playgrounds Interactive & Stress Testing > VoiceTranscriptionPlayground > handles rapid re-triggering of transcription without crash or unhandled state  511ms
+   ✓ Workshop stress tests > 3. 4 Use Case Studio Playgrounds Interactive & Stress Testing > DocSummarizingPlayground > handles chip selection, textarea custom input, output generation, and empty state disable  925ms
+   ✓ Workshop stress tests > 3. 4 Use Case Studio Playgrounds Interactive & Stress Testing > DictationCleanupPlayground > handles ramble selection, custom input, filler word toggle, side-by-side view, and output generation  924ms
+   ✓ Workshop stress tests > 3. 4 Use Case Studio Playgrounds Interactive & Stress Testing > FileChattingPlayground > handles doc switching, query chip selection, custom queries, Enter keypress, and citations  931ms
+ ✓ src/components/playgrounds/TruthfulLiveLabeling.test.tsx (19 tests) 6621ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > voice transcription: a run with no engine yields synthetic output that is still labelled demo  813ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > doc summarizing: a run with no engine yields synthetic output that is still labelled demo  811ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > dictation cleanup: a run with no engine yields synthetic output that is still labelled demo  835ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > file chatting: a run with no engine yields synthetic output that is still labelled demo  817ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > voice transcription: clicking the live toggle then running cannot produce a live claim (original bug)  809ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > doc summarizing: clicking the live toggle then running cannot produce a live claim (original bug)  809ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > dictation cleanup: clicking the live toggle then running cannot produce a live claim (original bug)  808ms
+   ✓ Workshop truthfulness — no synthetic output under live labels > file chatting: clicking the live toggle then running cannot produce a live claim (original bug)  807ms
+
+ Test Files  25 passed (25)
+      Tests  315 passed (315)
+   Start at  04:47:47
+   Duration  9.04s (transform 1.25s, setup 0ms, collect 4.73s, tests 26.80s, environment 10.61s, prepare 1.83s)

@@ -1,0 +1,47 @@
+{
+  "createdAt": "2026-11-01T12:46:30.661Z",
+  "hashes": {
+    "eval/extraction-audit/public.json": "5c343305b00cd6d86018c7e777f6f2f244b29c548c7d697b59a62fcb7994edf4",
+    "eval/extraction-audit/challenge.json": "8c663e8e34dd40d36ffe77d54d8b9658f2b30e71ecce650ab2e1e53f128cde8d",
+    "eval/extraction-audit/prompt.txt": "7ee1e9c65d7621fbe2d1cf1aa911f82e3cd6ae5d42cb61b80d60ac8036c0b4e9",
+    "eval/extraction-audit/schema.json": "08c3f2e15f2507a228f09308bf2d2fc215f9d25b2593f041f520d10597835482",
+    "src/eval/extractionAudit.ts": "1905ae096383cb0cd9b4f2339ec7a04e6e9fe8f9f42500bae38f3ee3b879c139",
+    "src/eval/auditInference.ts": "8db842a0339a276946c461d27d8f2d131d9c2b0d2c452eb3e0c3ce1e1342e6f2",
+    "scripts/audit-infer.ts": "0b093ab74d5eb8177b47ac61b883058589148c921dd8e0075ab8ea988e17c417",
+    "scripts/audit-report.ts": "682f9b2a84b434ac2d70a079caa166dbc5b83f5657ed1dc8fb62f6dc3cb6bf12",
+    "src/engine/flowRunner.ts": "b652409f842c676f822b8bb80e0c4cc944694dfebec7a48bb61c6d6eaa8c6b4b",
+    "src/engine/modelAdapter.ts": "849c2ba8f2da2c97beb04c3442354491a64c24411049e78402d310569ab0481d",
+    "src/engine/templateResolver.ts": "8d33ed7f7f49c0d8d4abc05c252a01829ad92b9054351744c76dbdf48e4bdf36",
+    "eval/sig-extraction/models.json": "7a28699a672f483559fbd1b49371fdd4d9b63385744749afe7559a3e6bd1cc3b"
+  },
+  "models": [
+    {
+      "model": "gpt-oss:20b",
+      "think": "low",
+      "note": "gpt-oss does not accept think=false; 'low' is its smallest setting",
+      "digest": "f38aa0c53da5f8c49d08c43a99df24ff53167fe68e24664a7777288e7656fdfe"
+    },
+    {
+      "model": "gemma4:31b",
+      "think": false,
+      "digest": "92808281a855666acf35743d49004bb30c810152cd004baf78f31b4578920e49"
+    },
+    {
+      "model": "qwen3.8:27b",
+      "think": false,
+      "digest": "47951e4a666180bc2aedfc93c169472f2de783696fe196efbf063f5730ecf163"
+    }
+  ],
+  "missing": [],
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpus": "Apple M1 Max",
+    "memoryBytes": 68719476736
+  },
+  "budgetMs": 10000,
+  "seed": 20261101,
+  "review": "draft",
+  "quietMachine": false,
+  "note": "Shared builder machine. Timing is observational and cannot certify a quiet-machine budget."
+}

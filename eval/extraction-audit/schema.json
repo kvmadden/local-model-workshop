@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "entities"
+  ],
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "task",
+          "value",
+          "spans"
+        ],
+        "properties": {
+          "task": {
+            "type": "string",
+            "enum": [
+              "drug",
+              "dose",
+              "schedule",
+              "timing",
+              "prn",
+              "indication",
+              "abstention"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
+          "spans": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "start",
+                "end"
+              ],
+              "properties": {
+                "start": {
+                  "type": "integer"
+                },
+                "end": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "derivation": {
+            "type": "object",
+            "properties": {
+              "operation": {
+                "const": "multiply"
+              },
+              "operands": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

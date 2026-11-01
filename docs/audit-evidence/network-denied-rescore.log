@@ -1,0 +1,6 @@
+report-pass1-gemma4_31b.json: complete errors, gallery, counts and intervals reproduced offline
+report-pass1-gpt_oss_20b.json: complete errors, gallery, counts and intervals reproduced offline
+report-pass1-qwen3_8_27b.json: complete errors, gallery, counts and intervals reproduced offline
+report-pass2-gemma4_31b.json: complete errors, gallery, counts and intervals reproduced offline
+report-pass2-gpt_oss_20b.json: complete errors, gallery, counts and intervals reproduced offline
+report-pass2-qwen3_8_27b.json: complete errors, gallery, counts and intervals reproduced offline
