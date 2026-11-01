@@ -1,3 +1,19 @@
+# Can a local model preserve dose, schedule and as-needed meaning within 10 seconds?
+
+**Answer:** historical synthetic runs support a provisional model choice. The new public-text extraction audit is draft, pending pharmacist review, and the quiet-machine 10 second p95 budget remains unvalidated.
+
+| How we test it | Evidence | Limit |
+| --- | --- | --- |
+| Public label mentions | 10 dev and 20 final unchanged openFDA excerpts, source and rights manifest | Label prose is not a patient prescription |
+| Hard instructions | Separate 12-case synthetic challenge with exact spans and arithmetic | New labels are AI-proposed drafts |
+| Anti-gaming controls | Empty, extract-everything and narrow rules baselines | Controls are not model quality |
+| Extra facts and missing facts | Exact normalized entity sets, per-task denominators, document bootstrap intervals | Small fixed public benchmark, not a blind test |
+| Saved-run inspection | Benchmark Studio, source/license links, spans and fixed failure gallery | Rules control is explicitly identified |
+
+[Audit protocol and results](eval/extraction-audit/AUDIT.md) · [Offline control scores](eval/extraction-audit/RESULTS.md) · [How this was built](docs/HOW-BUILT.md)
+
+Run `npm run audit:score` to reproduce the committed offline controls. Local acquisition is a separate `npm run audit:infer -- --out eval/extraction-audit/local-NEW-ID` command and requires the named models already installed. No paid API is used. All historical results below remain unchanged.
+
 # Local Model Workshop
 
 For product teams deciding whether a local language model is good enough for a defined task. Explore models, run a prompt flow, and inspect a reproducible evaluation before making the choice.
@@ -76,3 +92,11 @@ See the [original detailed evaluation and architecture](docs/ORIGINAL-EVALUATION
 Built in August 2026 over 28 commits in a private repository. This is a cleaned public snapshot. The medication evaluation and schema review were added in October 2026. The showcase adds a frozen holdout and visual documentation without tuning the engine or prompts.
 
 MIT, Copyright (c) 2026 Kevin Madden. All sample data is fictional or synthetic.
+
+## Public extraction inspector
+
+Benchmark Studio now opens the saved-run inspector. It shows public-source rights, exact spans, draft labels, supported and unsupported facts and a fixed failure gallery. The corrected exploratory local acquisition stopped at 23/42 Qwen requests because the shared host could not provide the quiet-machine environment. Two complete corrected timing passes and Kevin's new gold review remain pending. No new model winner or latency-budget claim is published.
+
+![Saved extraction inspector in light mode](docs/media/audit-light-1440.png)
+
+[Inspector walkthrough GIF](docs/media/audit-inspector.gif) · [Phone, light](docs/media/audit-light-390.png) · [Phone, dark](docs/media/audit-dark-390.png)

@@ -1,0 +1,7 @@
+{
+  "id": "ee8e3aa2-8550-41c7-9911-0723b3fb2f87",
+  "set_id": "0005aafa-08f8-4990-a54d-cc097195708f",
+  "effective_time": "20260102",
+  "dosage_and_administration": "Directions do not take more than directed adults and children 12 years and over take 2 gelcaps every 6 hours while symptoms last do not take more than 6 gelcaps in 24 hours, unless directed by a doctor do not take for more than 10 days unless directed by a doctor children under 12 years: ask a doctor",
+  "acquisition_url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22acetaminophen%22+AND+_exists_%3Adosage_and_administration&limit=1"
+}

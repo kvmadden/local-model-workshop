@@ -1,0 +1,254 @@
+[
+  {
+    "id": "p01",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":114,\"end\":119}]},{\"task\":\"dose\",\"value\":\"80 mg\",\"spans\":[{\"start\":123,\"end\":128}]},{\"task\":\"dose\",\"value\":\"12.5 mg\",\"spans\":[{\"start\":193,\"end\":200}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":212,\"end\":217}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":326,\"end\":331}]},{\"task\":\"dose\",\"value\":\"80 mg\",\"spans\":[{\"start\":335,\"end\":340}]},{\"task\":\"dose\",\"value\":\"6.25 mg\",\"spans\":[{\"start\":374,\"end\":381}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":385,\"end\":390}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p02",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":283,\"end\":288}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":317,\"end\":322}]},{\"task\":\"dose\",\"value\":\"80 mg\",\"spans\":[{\"start\":326,\"end\":331}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":397,\"end\":402}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":507,\"end\":512}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":547,\"end\":552}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":671,\"end\":676}]},{\"task\":\"dose\",\"value\":\"80 mg\",\"spans\":[{\"start\":711,\"end\":716}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":40,\"end\":50}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":289,\"end\":299}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":332,\"end\":342}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":403,\"end\":413}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":513,\"end\":523}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":553,\"end\":563}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":677,\"end\":687}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":717,\"end\":727}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p03",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":246,\"end\":252}]},{\"task\":\"dose\",\"value\":\"000 mg\",\"spans\":[{\"start\":274,\"end\":280}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":389,\"end\":394}]},{\"task\":\"dose\",\"value\":\"500 mg\",\"spans\":[{\"start\":411,\"end\":417}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":658,\"end\":663}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":677,\"end\":683}]},{\"task\":\"dose\",\"value\":\"850 mg\",\"spans\":[{\"start\":783,\"end\":789}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":849,\"end\":854}]},{\"task\":\"dose\",\"value\":\"000 mg\",\"spans\":[{\"start\":873,\"end\":879}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":50,\"end\":61}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":432,\"end\":443}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":664,\"end\":675}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":790,\"end\":801}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p04",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":62,\"end\":66}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":96,\"end\":101}]},{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":218,\"end\":224}]},{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":271,\"end\":277}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":281,\"end\":285}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":348,\"end\":352}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":501,\"end\":505}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":541,\"end\":546}]},{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":653,\"end\":659}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":67,\"end\":77}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":102,\"end\":112}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":225,\"end\":235}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":286,\"end\":296}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":506,\"end\":516}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":547,\"end\":557}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":660,\"end\":670}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p05",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":61,\"end\":66}]},{\"task\":\"dose\",\"value\":\"0.7 mg\",\"spans\":[{\"start\":118,\"end\":124}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":150,\"end\":155}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":243,\"end\":248}]},{\"task\":\"dose\",\"value\":\"12.5 mg\",\"spans\":[{\"start\":293,\"end\":300}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":339,\"end\":345}]},{\"task\":\"dose\",\"value\":\"25 mg\",\"spans\":[{\"start\":393,\"end\":398}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":512,\"end\":517}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":555,\"end\":561}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":718,\"end\":723}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":785,\"end\":791}]},{\"task\":\"dose\",\"value\":\"25 mg\",\"spans\":[{\"start\":890,\"end\":895}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":67,\"end\":77}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":132,\"end\":142}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":249,\"end\":259}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":518,\"end\":528}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":562,\"end\":572}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":724,\"end\":734}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":792,\"end\":802}]},{\"task\":\"prn\",\"value\":\"as needed\",\"spans\":[{\"start\":803,\"end\":812}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p06",
+    "output": "{\"entities\":[{\"task\":\"schedule\",\"value\":\"every 24 hours\",\"spans\":[{\"start\":91,\"end\":105}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p07",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"1800 mg\",\"spans\":[{\"start\":104,\"end\":111}]},{\"task\":\"dose\",\"value\":\"300 mg\",\"spans\":[{\"start\":130,\"end\":136}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":149,\"end\":155}]},{\"task\":\"dose\",\"value\":\"300 mg\",\"spans\":[{\"start\":167,\"end\":173}]},{\"task\":\"dose\",\"value\":\"900 mg\",\"spans\":[{\"start\":198,\"end\":204}]},{\"task\":\"dose\",\"value\":\"300 mg\",\"spans\":[{\"start\":216,\"end\":222}]},{\"task\":\"dose\",\"value\":\"300 mg\",\"spans\":[{\"start\":338,\"end\":344}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":386,\"end\":392}]},{\"task\":\"dose\",\"value\":\"15 mg\",\"spans\":[{\"start\":471,\"end\":476}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":567,\"end\":572}]},{\"task\":\"dose\",\"value\":\"35 mg\",\"spans\":[{\"start\":674,\"end\":679}]},{\"task\":\"schedule\",\"value\":\"three times daily\",\"spans\":[{\"start\":345,\"end\":362}]},{\"task\":\"schedule\",\"value\":\"three times daily\",\"spans\":[{\"start\":393,\"end\":410}]},{\"task\":\"prn\",\"value\":\"as needed\",\"spans\":[{\"start\":81,\"end\":90}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p08",
+    "output": "{\"entities\":[{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":39,\"end\":49}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p09",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":160,\"end\":165}]},{\"task\":\"dose\",\"value\":\"200 mg\",\"spans\":[{\"start\":370,\"end\":376}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":526,\"end\":531}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":635,\"end\":640}]},{\"task\":\"dose\",\"value\":\"200 mg\",\"spans\":[{\"start\":697,\"end\":703}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":166,\"end\":176}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":546,\"end\":556}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p10",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"80 mg\",\"spans\":[{\"start\":262,\"end\":267}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":455,\"end\":460}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":747,\"end\":753}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":646,\"end\":657}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p11",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":171,\"end\":176}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":180,\"end\":186}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":219,\"end\":224}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":267,\"end\":272}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":276,\"end\":282}]},{\"task\":\"dose\",\"value\":\"25 mg\",\"spans\":[{\"start\":480,\"end\":485}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":528,\"end\":533}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":576,\"end\":581}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":585,\"end\":591}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":693,\"end\":698}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":702,\"end\":708}]},{\"task\":\"dose\",\"value\":\"0.6 mg\",\"spans\":[{\"start\":724,\"end\":730}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p12",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p13",
+    "output": "{\"entities\":[{\"task\":\"schedule\",\"value\":\"every 6 hours\",\"spans\":[{\"start\":95,\"end\":108}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p14",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p15",
+    "output": "{\"entities\":[{\"task\":\"schedule\",\"value\":\"every 4 hours\",\"spans\":[{\"start\":241,\"end\":254}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p16",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":73,\"end\":77}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":81,\"end\":86}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p17",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p18",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":307,\"end\":312}]},{\"task\":\"dose\",\"value\":\"75 mg\",\"spans\":[{\"start\":456,\"end\":461}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":497,\"end\":502}]},{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":643,\"end\":649}]},{\"task\":\"dose\",\"value\":\"7.5 mg\",\"spans\":[{\"start\":797,\"end\":803}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p19",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"250 mg\",\"spans\":[{\"start\":91,\"end\":97}]},{\"task\":\"dose\",\"value\":\"500 mg\",\"spans\":[{\"start\":127,\"end\":133}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":237,\"end\":243}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":323,\"end\":328}]},{\"task\":\"dose\",\"value\":\"100 mg\",\"spans\":[{\"start\":399,\"end\":405}]},{\"task\":\"dose\",\"value\":\"30 ml\",\"spans\":[{\"start\":686,\"end\":691}]},{\"task\":\"dose\",\"value\":\"250 mg\",\"spans\":[{\"start\":810,\"end\":816}]},{\"task\":\"dose\",\"value\":\"500 mg\",\"spans\":[{\"start\":846,\"end\":852}]},{\"task\":\"schedule\",\"value\":\"every 6 hours\",\"spans\":[{\"start\":98,\"end\":111}]},{\"task\":\"schedule\",\"value\":\"every 12 hours\",\"spans\":[{\"start\":134,\"end\":148}]},{\"task\":\"schedule\",\"value\":\"every 6 hours\",\"spans\":[{\"start\":272,\"end\":285}]},{\"task\":\"schedule\",\"value\":\"every 6 hours\",\"spans\":[{\"start\":817,\"end\":830}]},{\"task\":\"schedule\",\"value\":\"every 12 hours\",\"spans\":[{\"start\":853,\"end\":867}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p20",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"90 mg\",\"spans\":[{\"start\":111,\"end\":116}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":341,\"end\":347}]},{\"task\":\"dose\",\"value\":\"42.9 mg\",\"spans\":[{\"start\":348,\"end\":355}]},{\"task\":\"dose\",\"value\":\"5 ml\",\"spans\":[{\"start\":360,\"end\":364}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":521,\"end\":527}]},{\"task\":\"dose\",\"value\":\"42.9 mg\",\"spans\":[{\"start\":528,\"end\":535}]},{\"task\":\"dose\",\"value\":\"5 ml\",\"spans\":[{\"start\":540,\"end\":544}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":738,\"end\":744}]},{\"task\":\"dose\",\"value\":\"5 ml\",\"spans\":[{\"start\":745,\"end\":749}]},{\"task\":\"dose\",\"value\":\"600 mg\",\"spans\":[{\"start\":835,\"end\":841}]},{\"task\":\"dose\",\"value\":\"42.9 mg\",\"spans\":[{\"start\":842,\"end\":849}]},{\"task\":\"dose\",\"value\":\"5 ml\",\"spans\":[{\"start\":854,\"end\":858}]},{\"task\":\"dose\",\"value\":\"90 mg\",\"spans\":[{\"start\":862,\"end\":867}]},{\"task\":\"schedule\",\"value\":\"every 12 hours\",\"spans\":[{\"start\":132,\"end\":146}]},{\"task\":\"schedule\",\"value\":\"every 12 hours\",\"spans\":[{\"start\":883,\"end\":897}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p21",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":67,\"end\":72}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":104,\"end\":109}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":141,\"end\":146}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":172,\"end\":177}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":221,\"end\":226}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":260,\"end\":265}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":385,\"end\":389}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":413,\"end\":418}]},{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":496,\"end\":502}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":526,\"end\":531}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":433,\"end\":443}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":546,\"end\":556}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p22",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":104,\"end\":109}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":134,\"end\":139}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":160,\"end\":165}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":239,\"end\":244}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":269,\"end\":274}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":295,\"end\":300}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":343,\"end\":348}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":373,\"end\":378}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":399,\"end\":404}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":452,\"end\":457}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":589,\"end\":594}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":656,\"end\":661}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":857,\"end\":862}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":110,\"end\":120}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":140,\"end\":150}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":166,\"end\":176}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":245,\"end\":255}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":275,\"end\":285}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":301,\"end\":311}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":349,\"end\":359}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":379,\"end\":389}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":405,\"end\":415}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":458,\"end\":468}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":488,\"end\":498}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":595,\"end\":605}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":662,\"end\":672}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":863,\"end\":873}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p23",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":224,\"end\":229}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":237,\"end\":242}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":264,\"end\":269}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":275,\"end\":280}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":297,\"end\":302}]},{\"task\":\"dose\",\"value\":\"30 mg\",\"spans\":[{\"start\":325,\"end\":330}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":368,\"end\":373}]},{\"task\":\"dose\",\"value\":\"120 mg\",\"spans\":[{\"start\":378,\"end\":384}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":408,\"end\":413}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":418,\"end\":423}]},{\"task\":\"dose\",\"value\":\"120 mg\",\"spans\":[{\"start\":441,\"end\":447}]},{\"task\":\"dose\",\"value\":\"30 mg\",\"spans\":[{\"start\":462,\"end\":467}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":472,\"end\":477}]},{\"task\":\"dose\",\"value\":\"120 mg\",\"spans\":[{\"start\":495,\"end\":501}]},{\"task\":\"dose\",\"value\":\"30 mg\",\"spans\":[{\"start\":540,\"end\":545}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":556,\"end\":561}]},{\"task\":\"dose\",\"value\":\"120 mg\",\"spans\":[{\"start\":579,\"end\":585}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":603,\"end\":608}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":613,\"end\":618}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":636,\"end\":641}]},{\"task\":\"dose\",\"value\":\"30 mg\",\"spans\":[{\"start\":703,\"end\":708}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":713,\"end\":718}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":736,\"end\":741}]},{\"task\":\"dose\",\"value\":\"30 mg\",\"spans\":[{\"start\":783,\"end\":788}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":793,\"end\":798}]},{\"task\":\"dose\",\"value\":\"60 mg\",\"spans\":[{\"start\":816,\"end\":821}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":69,\"end\":79}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":281,\"end\":292}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":308,\"end\":318}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":331,\"end\":342}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":429,\"end\":439}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":483,\"end\":493}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":567,\"end\":577}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":624,\"end\":634}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":724,\"end\":734}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":804,\"end\":814}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p24",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":87,\"end\":92}]},{\"task\":\"dose\",\"value\":\"80 mg\",\"spans\":[{\"start\":498,\"end\":503}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":93,\"end\":103}]},{\"task\":\"schedule\",\"value\":\"every 12 hours\",\"spans\":[{\"start\":504,\"end\":518}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p25",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":123,\"end\":128}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":144,\"end\":149}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":183,\"end\":188}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":205,\"end\":210}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":243,\"end\":248}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":265,\"end\":270}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":329,\"end\":334}]},{\"task\":\"dose\",\"value\":\"160 mg\",\"spans\":[{\"start\":383,\"end\":389}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":436,\"end\":441}]},{\"task\":\"dose\",\"value\":\"20 mg\",\"spans\":[{\"start\":811,\"end\":816}]},{\"task\":\"dose\",\"value\":\"40 mg\",\"spans\":[{\"start\":821,\"end\":826}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":129,\"end\":139}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":150,\"end\":161}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":189,\"end\":199}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":211,\"end\":222}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":249,\"end\":260}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":271,\"end\":282}]},{\"task\":\"schedule\",\"value\":\"every 6 hours\",\"spans\":[{\"start\":335,\"end\":348}]},{\"task\":\"schedule\",\"value\":\"every 6 hours\",\"spans\":[{\"start\":390,\"end\":403}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":442,\"end\":452}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":640,\"end\":650}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":669,\"end\":680}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p26",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":159,\"end\":165}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":239,\"end\":243}]},{\"task\":\"dose\",\"value\":\"2.5 mg\",\"spans\":[{\"start\":269,\"end\":275}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":326,\"end\":330}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":410,\"end\":414}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":430,\"end\":435}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":518,\"end\":523}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":591,\"end\":595}]},{\"task\":\"dose\",\"value\":\"5 mg\",\"spans\":[{\"start\":642,\"end\":646}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":167,\"end\":177}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":245,\"end\":255}]},{\"task\":\"schedule\",\"value\":\"every 12 hours\",\"spans\":[{\"start\":277,\"end\":291}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":437,\"end\":447}]},{\"task\":\"schedule\",\"value\":\"once daily\",\"spans\":[{\"start\":597,\"end\":607}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p27",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p28",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"250 mg\",\"spans\":[{\"start\":224,\"end\":230}]},{\"task\":\"dose\",\"value\":\"500 mg\",\"spans\":[{\"start\":249,\"end\":255}]},{\"task\":\"dose\",\"value\":\"275 mg\",\"spans\":[{\"start\":292,\"end\":298}]},{\"task\":\"dose\",\"value\":\"550 mg\",\"spans\":[{\"start\":317,\"end\":323}]},{\"task\":\"dose\",\"value\":\"1500 mg\",\"spans\":[{\"start\":504,\"end\":511}]},{\"task\":\"dose\",\"value\":\"10 mg\",\"spans\":[{\"start\":827,\"end\":832}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":256,\"end\":267}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":324,\"end\":335}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p29",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"8 mg\",\"spans\":[{\"start\":194,\"end\":198}]},{\"task\":\"dose\",\"value\":\"24 mg\",\"spans\":[{\"start\":566,\"end\":571}]},{\"task\":\"dose\",\"value\":\"50 mg\",\"spans\":[{\"start\":709,\"end\":714}]},{\"task\":\"dose\",\"value\":\"8 mg\",\"spans\":[{\"start\":761,\"end\":765}]},{\"task\":\"dose\",\"value\":\"8 mg\",\"spans\":[{\"start\":842,\"end\":846}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "p30",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"0.1 mg\",\"spans\":[{\"start\":228,\"end\":234}]},{\"task\":\"dose\",\"value\":\"0.1 mg\",\"spans\":[{\"start\":373,\"end\":379}]},{\"task\":\"dose\",\"value\":\"0.2 mg\",\"spans\":[{\"start\":666,\"end\":672}]},{\"task\":\"dose\",\"value\":\"0.6 mg\",\"spans\":[{\"start\":676,\"end\":682}]},{\"task\":\"dose\",\"value\":\"2.4 mg\",\"spans\":[{\"start\":743,\"end\":749}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":242,\"end\":253}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c01",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"16 mg\",\"spans\":[{\"start\":12,\"end\":17}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c02",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"7 mg\",\"spans\":[{\"start\":12,\"end\":16}]},{\"task\":\"prn\",\"value\":\"as needed\",\"spans\":[{\"start\":17,\"end\":26}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c03",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"6 mg\",\"spans\":[{\"start\":8,\"end\":12}]},{\"task\":\"prn\",\"value\":\"as needed\",\"spans\":[{\"start\":24,\"end\":33}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c04",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"12.5 mg\",\"spans\":[{\"start\":11,\"end\":18}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c05",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"22 mcg\",\"spans\":[{\"start\":13,\"end\":19}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c06",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c07",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c08",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c09",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"83 mg\",\"spans\":[{\"start\":15,\"end\":20}]},{\"task\":\"dose\",\"value\":\"37 mg\",\"spans\":[{\"start\":43,\"end\":48}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c10",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"9 mg\",\"spans\":[{\"start\":14,\"end\":18}]},{\"task\":\"prn\",\"value\":\"prn\",\"spans\":[{\"start\":23,\"end\":26}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c11",
+    "output": "{\"entities\":[{\"task\":\"dose\",\"value\":\"17 ml\",\"spans\":[{\"start\":15,\"end\":20}]},{\"task\":\"schedule\",\"value\":\"twice daily\",\"spans\":[{\"start\":21,\"end\":32}]}]}",
+    "error": null,
+    "latencyMs": null
+  },
+  {
+    "id": "c12",
+    "output": "{\"entities\":[]}",
+    "error": null,
+    "latencyMs": null
+  }
+]

@@ -1,0 +1,102 @@
+
+ RUN  v3.2.6 /Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard
+
+ ❯ src/eval/extractionAudit.test.ts (5 tests | 5 failed) 9ms
+   × penalizes a correct drug plus an invented drug 5ms
+     → expected 1 to be 0.5 // Object.is equality
+   × rejects wrong dose, lost PRN, invented schedule and nonexistent offsets 0ms
+     → expected true to be false // Object.is equality
+   × exposes opposite baseline failures and N/A recall 0ms
+     → expected 1 to be +0 // Object.is equality
+   × rejects source derivatives crossing splits 1ms
+     → expected [Function] to throw an error
+   × only passes text to inference and cannot promote draft metrics 2ms
+     → expected '{"input":"Aspirin 5 mg daily as neede…' to be 'Aspirin 5 mg daily as needed' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/eval/extractionAudit.test.ts > penalizes a correct drug plus an invented drug
+AssertionError: expected 1 to be 0.5 // Object.is equality
+
+- Expected
++ Received
+
+- 0.5
++ 1
+
+ ❯ src/eval/extractionAudit.test.ts:7:90
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/eval/extractionAudit.test.ts > rejects wrong dose, lost PRN, invented schedule and nonexistent offsets
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/eval/extractionAudit.test.ts:13:58
+     11|   for (const task of ['dose', 'prn', 'schedule']) {
+     12|     const prediction = gold.map(e => e.task === task ? { ...e, value: …
+     13|     expect(scoreEntities(input, gold, prediction).exact).toBe(false)
+       |                                                          ^
+     14|   }
+     15|   expect(scoreEntities(input, gold, gold.filter(e => e.task !== 'prn')…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/eval/extractionAudit.test.ts > exposes opposite baseline failures and N/A recall
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/eval/extractionAudit.test.ts:19:71
+     17| })
+     18| it('exposes opposite baseline failures and N/A recall', () => {
+     19|   expect(scoreEntities(input, gold, baseline('empty', input)).recall).…
+       |                                                                       ^
+     20|   expect(scoreEntities(input, gold, baseline('everything', input)).pre…
+     21|   expect(scoreEntities(input, [], []).recall).toBeNull()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/eval/extractionAudit.test.ts > rejects source derivatives crossing splits
+AssertionError: expected [Function] to throw an error
+ ❯ src/eval/extractionAudit.test.ts:24:110
+     22| })
+     23| it('rejects source derivatives crossing splits', () => {
+     24|   expect(() => validateSplits([{ sourceFamily: 'x', split: 'dev' }, { …
+       |                                                                                                              ^
+     25| })
+     26| it('only passes text to inference and cannot promote draft metrics', (…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/eval/extractionAudit.test.ts > only passes text to inference and cannot promote draft metrics
+AssertionError: expected '{"input":"Aspirin 5 mg daily as neede…' to be 'Aspirin 5 mg daily as needed' // Object.is equality
+
+Expected: "Aspirin 5 mg daily as needed"
+Received: "{"input":"Aspirin 5 mg daily as needed","id":"a","tags":["x"],"gold":[{"task":"drug","value":"aspirin","spans":[{"start":0,"end":7}]},{"task":"dose","value":"5 mg","spans":[{"start":8,"end":12}]},{"task":"schedule","value":"daily","spans":[{"start":13,"end":18}]},{"task":"prn","value":"as needed","spans":[{"start":19,"end":28}]}]}"
+
+ ❯ src/eval/extractionAudit.test.ts:27:64
+     25| })
+     26| it('only passes text to inference and cannot promote draft metrics', (…
+     27|   expect(inferenceText({ input, id: 'a', tags: ['x'], gold })).toBe(in…
+       |                                                                ^
+     28|   expect(inferenceText({ input, id: 'z', tags: ['y'], gold: [] })).toB…
+     29|   expect(() => reviewedMetrics([{ review: { status: 'draft' } }])).toT…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  04:43:25
+   Duration  514ms (transform 22ms, setup 0ms, collect 21ms, tests 9ms, environment 206ms, prepare 77ms)

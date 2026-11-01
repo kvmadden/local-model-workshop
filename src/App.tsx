@@ -174,11 +174,11 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
   return (
     <div
       data-testid="app-container"
-      data-theme={activeTab === 'builder' && lightTheme ? 'light' : 'dark'}
+      data-theme={(activeTab === 'builder' || activeTab === 'benchmark') && lightTheme ? 'light' : 'dark'}
       className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans antialiased"
     >
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === 'builder' && <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-3 flex justify-end">
+      {(activeTab === 'builder' || activeTab === 'benchmark') && <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-3 flex justify-end">
         <button
           type="button"
           onClick={() => setLightTheme(value => !value)}
@@ -191,9 +191,9 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
       <ErrorBoundary>
         <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-6">
           <ErrorTrigger />
-          {activeTab !== 'builder' && <Hero />}
+          {activeTab !== 'builder' && activeTab !== 'benchmark' && <Hero />}
 
-          {activeTab !== 'builder' && <OllamaDetector />}
+          {activeTab !== 'builder' && activeTab !== 'benchmark' && <OllamaDetector />}
 
           {activeTab === 'wizard' && <TaskWizard />}
 
@@ -237,7 +237,7 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
       </ErrorBoundary>
 
       <footer className="border-t border-slate-900 bg-slate-950 py-4 px-6 text-center text-xs text-slate-400">
-        Local Model Workshop &bull; MIT License &bull; All sample data is fictional
+        Local Model Workshop &bull; MIT License &bull; Public label excerpts and synthetic examples, see source licenses
       </footer>
     </div>
   );

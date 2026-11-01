@@ -1,0 +1,7 @@
+{
+  "id": "4bd1345d-d116-426e-825f-bbf29381746a",
+  "set_id": "00653b7c-7099-487e-9a01-e89781c21323",
+  "effective_time": "20260429",
+  "dosage_and_administration": "Directions do not take more than directed the smallest effective dose should be used adults and children 12 years and over: take 1 tablet every 4 to 6 hours while symptoms persist if pain or fever does not respond to 1 tablet, 2 tablets may be used do not exceed 6 tablets in 24 hours, unless directed by a doctor children under 12 years: ask a doctor",
+  "acquisition_url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22ibuprofen%22+AND+_exists_%3Adosage_and_administration&limit=1"
+}

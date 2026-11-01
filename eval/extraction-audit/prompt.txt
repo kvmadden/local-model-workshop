@@ -1,0 +1,8 @@
+Extract literal medication facts from this text. Return {"entities": [...]} only.
+Each entity has task, value and spans with zero-based start and exclusive end in the input text.
+Tasks: drug, dose, schedule, timing, prn, indication, abstention.
+Use lowercase values and collapse whitespace. Return distinct task/value pairs, citing the FIRST occurrence of each pair. Do not add a drug that is absent from the text. Do not turn a bedtime anchor into a schedule. Keep PRN separate from schedule. Do not extract active instructions from negated or stopped medication text. Missing facts are absent entities, never invented values.
+For public label prose, extract literal mentions, including dose ranges and weight-based or daily units. Multiple populations or alternatives are not a single patient prescription. Preserve their literal wording. Only extract an indication explicitly attached to as-needed use. Do not extract unrelated clinical indications.
+For explicit tablet arithmetic, a dose value may be derived with operation multiply, numeric operands, and unit. Cite the strength span and the tablet-count span separately. Never invent a contiguous span for a calculated dose.
+Input text:
+{{input}}

@@ -1,0 +1,14 @@
+{
+  "status": "incomplete, unmeasured",
+  "stoppedAt": "2026-11-01T12:59:53.647540+00:00",
+  "reason": "Shared builder host load averaged about 50. No quiet-machine timing environment was available. New gold also remains draft. Exploratory acquisition was stopped and all completed request outputs retained. Two complete corrected timing passes remain pending.",
+  "files": [
+    {
+      "file": "pass1-qwen3_8_27b.json",
+      "acquired": 23,
+      "expected": 42
+    }
+  ],
+  "qualityMetrics": "unmeasured",
+  "quietMachineBudget": "unmeasured"
+}

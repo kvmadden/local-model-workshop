@@ -1,0 +1,4 @@
+['npm', 'ci'] exit=0
+['npm', 'test'] exit=0
+['npm', 'run', 'build'] exit=0
+['npx', 'playwright', 'test', '--workers=2'] exit=0
