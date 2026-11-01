@@ -12,6 +12,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import os from 'os';
+import { scoreLegacy, LegacyGold } from '../src/eval/legacyScore'
 import path from 'path';
 import { FlowRunner } from '../src/engine/flowRunner';
 import { Flow, ModelConfig } from '../src/types/flow';
@@ -32,8 +33,8 @@ interface ModelEntry {
   note?: string;
 }
 
-const readJsonl = <T>(f: string): T[] =>
-  readFileSync(path.join(EVAL_DIR, f), 'utf8')
+const readJsonl = <T>(f: string, directory = EVAL_DIR): T[] =>
+  readFileSync(path.join(directory, f), 'utf8')
     .trim()
     .split('\n')
     .map((l) => JSON.parse(l) as T);
@@ -43,10 +44,16 @@ function arg(name: string): string | undefined {
   return i !== -1 ? process.argv[i + 1] : undefined;
 }
 
-const cases = readJsonl<Case>('cases.jsonl');
-const golds = readJsonl<SigGold>('gold.jsonl');
-const promptTemplate = readFileSync(path.join(EVAL_DIR, 'prompt.txt'), 'utf8');
-const schema = JSON.parse(readFileSync(path.join(EVAL_DIR, 'schema.json'), 'utf8'));
+const heldout = process.argv.includes('--heldout')
+const legacy = process.argv.includes('--schema-v1')
+const revisionDir = legacy ? path.join(ROOT, 'eval/results/archive/schema-v1') : EVAL_DIR
+const frozen = heldout ? JSON.parse(readFileSync(path.join(ROOT, 'eval/heldout/frozen.json'), 'utf8')) : null
+const cases: Case[] = frozen ? frozen.cases : readJsonl<Case>('cases.jsonl')
+const golds: Array<SigGold | LegacyGold> = frozen
+  ? frozen.cases.map((c: { v1: LegacyGold, v2: SigGold }) => legacy ? c.v1 : c.v2)
+  : legacy ? readJsonl<LegacyGold>('gold.jsonl', revisionDir) : readJsonl<SigGold>('gold.jsonl')
+const promptTemplate = readFileSync(path.join(revisionDir, 'prompt.txt'), 'utf8')
+const schema = JSON.parse(readFileSync(path.join(revisionDir, 'schema.json'), 'utf8'))
 const config = JSON.parse(readFileSync(path.join(EVAL_DIR, 'models.json'), 'utf8')) as {
   temperature: number;
   models: ModelEntry[];
@@ -107,7 +114,7 @@ async function evaluate(label: string, modelConfig: ModelConfig, details?: Recor
     const gold = golds.find((g) => g.id === c.id)!;
     const r = await runOne(c.input, modelConfig);
     if (r.error) errors++;
-    const s = scoreCase(gold, r.text);
+    const s = legacy ? scoreLegacy(gold as LegacyGold, r.text) : scoreCase(gold as SigGold, r.text)
     scores.push(s);
     if (r.latencyMs !== null && !r.error) latencies.push(r.latencyMs);
     lines.push(JSON.stringify({ id: c.id, input: c.input, tags: c.tags, gold, output: r.text, error: r.error, latencyMs: r.latencyMs, score: s }));
@@ -185,10 +192,10 @@ async function main() {
     node: process.version,
     ollama: ollamaVersion,
   };
-  const summary = { date: today, n: cases.length, temperature: config.temperature, hardware, results };
+  const summary = { dataset: heldout ? 'heldout-seed-20261031' : 'original-25', schema: legacy ? 'v1' : 'v2', date: today, n: cases.length, temperature: config.temperature, hardware, results };
   writeFileSync(path.join(outDir, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
 
-  const FIELD_HEADERS = ['Drug', 'Dose', 'Frequency', 'Timing', 'PRN', 'PRN indication'];
+  const FIELD_HEADERS = legacy ? ['Drug', 'Dose', 'Frequency'] : ['Drug', 'Dose', 'Frequency', 'Timing', 'PRN', 'PRN indication'];
   const pct = (k: number, n: number) => `${k}/${n} (${Math.round((100 * k) / n)}%)`;
   const md = [
     `Run ${today} on ${hardware.cpu}, ${hardware.memoryGB} GB, Ollama ${ollamaVersion ?? 'n/a'}. n=${cases.length}, temperature ${config.temperature}.`,
@@ -199,7 +206,7 @@ async function main() {
       const c = r.counts;
       const settings = r.provider === 'mock' ? 'echo, no model' : `${r.details?.parameter_size}, ${r.details?.quantization_level}, think=${JSON.stringify(r.think)}`;
       const lat = r.latencyMs ? [`${((r.latencyMs.p50 ?? 0) / 1000).toFixed(2)} s`, `${((r.latencyMs.p95 ?? 0) / 1000).toFixed(2)} s`] : ['n/a', 'n/a'];
-      const fields = SIG_FIELDS.map((k) => pct(c[k], c.n)).join(' | ');
+      const fields = (legacy ? SIG_FIELDS.slice(0, 3) : SIG_FIELDS).map((k) => pct(c[k], c.n)).join(' | ');
       return `| ${r.label} | ${settings} | ${pct(c.allCorrect, c.n)} | ${fields} | ${pct(c.parsed, c.n)} | ${lat[0]} | ${lat[1]} | ${r.loadAvg1m.start} / ${r.loadAvg1m.end} |`;
     }),
     '',
