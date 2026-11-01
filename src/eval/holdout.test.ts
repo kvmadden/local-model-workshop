@@ -12,7 +12,7 @@ describe('frozen synthetic holdout', () => {
   })
   it('has disjoint inputs and ids, and internally consistent v2 gold', () => {
     const frozen = JSON.parse(read('eval/heldout/frozen.json'))
-    const old = read('eval/sig-extraction/cases.jsonl').trim().split('\n').map(JSON.parse)
+    const old = read('eval/sig-extraction/cases.jsonl').trim().split('\n').map(line => JSON.parse(line))
     expect(frozen.seed).toBe(20261031)
     expect(frozen.cases).toHaveLength(12)
     for (const c of frozen.cases) {

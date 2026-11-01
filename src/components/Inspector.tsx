@@ -17,12 +17,12 @@ export const Inspector: React.FC<InspectorProps> = ({
 }) => {
   return (
     <div className="bg-slate-950/80 border border-slate-800 rounded-lg p-4 space-y-3">
-      <div className="flex items-center justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider">
+      <div className="flex items-center justify-between gap-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">
         <span className="flex items-center gap-1.5">
           <Eye className="w-3.5 h-3.5 text-indigo-400" />
           Step Inspector & Execution Output
         </span>
-        <span className="font-mono text-slate-400">
+        <span className="font-mono text-slate-400 shrink-0 whitespace-nowrap">
           {step.output ? `${step.output.length} chars` : 'No output'}
         </span>
       </div>

@@ -24,6 +24,7 @@ function ErrorTrigger() {
 
 export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
   const [activeTab, setActiveTab] = useState<TabType>(initialTab);
+  const [lightTheme, setLightTheme] = useState(false)
 
   // Flow Builder Canvas state
   const [flowTitle, setFlowTitle] = useState('Linear Model Flow');
@@ -173,9 +174,19 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
   return (
     <div
       data-testid="app-container"
+      data-theme={activeTab === 'builder' && lightTheme ? 'light' : 'dark'}
       className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans antialiased"
     >
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      {activeTab === 'builder' && <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-3 flex justify-end">
+        <button
+          type="button"
+          onClick={() => setLightTheme(value => !value)}
+          className="min-h-[44px] px-4 rounded-lg border border-slate-700 bg-slate-800 text-slate-100 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-500"
+        >
+          {lightTheme ? 'Use dark theme' : 'Use light theme'}
+        </button>
+      </div>}
 
       <ErrorBoundary>
         <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-6">

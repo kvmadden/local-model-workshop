@@ -1,0 +1,138 @@
+{
+  "dataset": "heldout-seed-20261031",
+  "schema": "v1",
+  "date": "2026-11-01",
+  "n": 12,
+  "temperature": 0,
+  "hardware": {
+    "cpu": "Apple M1 Max",
+    "cores": 10,
+    "memoryGB": 64,
+    "platform": "darwin 27.2.0",
+    "node": "v24.14.1",
+    "ollama": "0.40.6"
+  },
+  "results": [
+    {
+      "label": "mock (echo)",
+      "provider": "mock",
+      "model": "mock-default",
+      "counts": {
+        "n": 12,
+        "parsed": 0,
+        "drug": 0,
+        "dose": 0,
+        "frequency": 0,
+        "timing": 0,
+        "prn": 0,
+        "prn_indication": 0,
+        "allCorrect": 0
+      },
+      "latencyMs": null,
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 200.3,
+        "end": 200.3
+      }
+    },
+    {
+      "label": "gpt-oss:20b",
+      "provider": "ollama",
+      "model": "gpt-oss:20b",
+      "think": "low",
+      "details": {
+        "parameter_size": "20.9B",
+        "quantization_level": "MXFP4",
+        "family": "gpt-oss",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 12,
+        "parsed": 12,
+        "drug": 12,
+        "dose": 12,
+        "frequency": 12,
+        "timing": 0,
+        "prn": 0,
+        "prn_indication": 0,
+        "allCorrect": 12
+      },
+      "latencyMs": {
+        "p50": 3325,
+        "p95": 4315,
+        "mean": 3264
+      },
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 201.4,
+        "end": 241.3
+      }
+    },
+    {
+      "label": "gemma4:31b",
+      "provider": "ollama",
+      "model": "gemma4:31b",
+      "think": false,
+      "details": {
+        "parameter_size": "31.7B",
+        "quantization_level": "nvfp4",
+        "family": "gemma4",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 12,
+        "parsed": 12,
+        "drug": 12,
+        "dose": 12,
+        "frequency": 12,
+        "timing": 0,
+        "prn": 0,
+        "prn_indication": 0,
+        "allCorrect": 12
+      },
+      "latencyMs": {
+        "p50": 4929,
+        "p95": 5680,
+        "mean": 5054
+      },
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 258.9,
+        "end": 292.8
+      }
+    },
+    {
+      "label": "qwen3.8:27b",
+      "provider": "ollama",
+      "model": "qwen3.8:27b",
+      "think": false,
+      "details": {
+        "parameter_size": "27.8B",
+        "quantization_level": "nvfp4",
+        "family": "qwen3_5",
+        "otherModelsResident": []
+      },
+      "counts": {
+        "n": 12,
+        "parsed": 12,
+        "drug": 12,
+        "dose": 12,
+        "frequency": 9,
+        "timing": 0,
+        "prn": 0,
+        "prn_indication": 0,
+        "allCorrect": 9
+      },
+      "latencyMs": {
+        "p50": 3916,
+        "p95": 10328,
+        "mean": 4458
+      },
+      "errors": 0,
+      "loadAvg1m": {
+        "start": 311.1,
+        "end": 257.4
+      }
+    }
+  ]
+}
