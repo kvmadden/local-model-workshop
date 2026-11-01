@@ -1,0 +1,3 @@
+Owner integration at remote 4b5af0b5c14bf84f5a067fa7adeaf380d2521569.
+
+The original historical-hashes.json bytes from 4c1440f9e3f70153f3aa1f89c413fe8ead16488e are archived as historical-hashes.original.json. The frozen-input-hashes.json itself is unchanged. Its historical-manifest hash is checked against the archive; all other hashes still check their original paths. The current historical manifest retains every old mapping and adds the owner's docs/EVALUATION.md and docs/VERIFICATION.md mappings. Both new docs are hash-validated. No saved replies, reports, model identities, timings, v2 artifacts, or archived evaluator sources changed. The owner's two tests and README limitations are retained.

@@ -2,10 +2,22 @@ import { expect, it, vi } from 'vitest'
 import { readFileSync, readdirSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 const hash = (value: string | Buffer) => createHash('sha256').update(value).digest('hex')
+// The owner extended the historical coverage manifest after the v1 snapshot.
+// Preserve that snapshot byte-for-byte and require every old mapping to survive.
+const frozenBytes = (file: string) => readFileSync(file === 'eval/extraction-audit/historical-hashes.json'
+  ? 'eval/extraction-audit/versions/v1/historical-hashes.original.json' : file)
+
+it('preserves the original historical manifest while validating the owner extension', () => {
+  const original = JSON.parse(frozenBytes('eval/extraction-audit/historical-hashes.json').toString())
+  const current = JSON.parse(readFileSync('eval/extraction-audit/historical-hashes.json', 'utf8'))
+  for (const [file, expected] of Object.entries(original)) expect(current[file], file).toBe(expected)
+  expect(Object.keys(current).filter(file => !(file in original)).sort()).toEqual(['docs/EVALUATION.md', 'docs/VERIFICATION.md'])
+  for (const [file, expected] of Object.entries(current)) expect(hash(frozenBytes(file)), file).toBe(expected)
+})
 
 it('preserves all pre-repair audit inputs, replies, reports, freezes and inspector bytes', () => {
   const manifest = JSON.parse(readFileSync('eval/extraction-audit/versions/v1/frozen-input-hashes.json', 'utf8'))
-  for (const [file, expected] of Object.entries(manifest)) expect(hash(readFileSync(file)), file).toBe(expected)
+  for (const [file, expected] of Object.entries(manifest)) expect(hash(frozenBytes(file)), file).toBe(expected)
   const original = readFileSync('eval/extraction-audit/versions/v1/source/scripts/audit-report.ts', 'utf8')
   expect(readFileSync('eval/extraction-audit/versions/v1/source/scripts/audit-report-replay.ts', 'utf8')).toBe(original.replace("if (process.argv.includes('--write')) writeReports()\n", ''))
   const freeze = JSON.parse(readFileSync('eval/extraction-audit/local-20261101-corrected/freeze.json', 'utf8'))
@@ -42,7 +54,7 @@ it('refuses legacy writers and existing v2 output without changing evidence', as
     expect(result.status).not.toBe(0)
     expect(result.stderr).toMatch(message)
   }
-  for (const [file, expected] of Object.entries(manifest)) expect(hash(readFileSync(file)), file).toBe(expected)
+  for (const [file, expected] of Object.entries(manifest)) expect(hash(frozenBytes(file)), file).toBe(expected)
   expect(readFileSync('eval/extraction-audit/versions/v2/qualification.json', 'utf8')).toBe(current)
 })
 
