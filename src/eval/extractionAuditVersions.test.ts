@@ -63,6 +63,12 @@ it('auto-replays partial v1 freezes and fails closed on an unknown evaluator', a
     writeFileSync(path, JSON.stringify([{ id: c.id, output: JSON.stringify({ entities: [c.gold[0], c.gold[0]] }), error: null, latencyMs: null }]))
     expect(inspectPartial(path).documents.find(d => d.id === c.id)?.supported).toHaveLength(1)
     expect(inspectPartial(path, 'v2').documents.find(d => d.id === c.id)?.supported).toHaveLength(0)
+    for (const source of ['src/eval/extractionAudit.ts', 'scripts/audit-report.ts']) freeze.hashes[source] = hash(readFileSync(source))
+    writeFileSync(join(dir, 'freeze.json'), JSON.stringify(freeze))
+    expect(inspectPartial(path).documents.find(d => d.id === c.id)?.supported).toHaveLength(0)
+    freeze.hashes[`${root}/public.json`] = 'changed corpus'
+    writeFileSync(join(dir, 'freeze.json'), JSON.stringify(freeze))
+    expect(() => inspectPartial(path)).toThrow(/Frozen v2 evaluation differs/)
     freeze.hashes['src/eval/extractionAudit.ts'] = 'unknown'
     writeFileSync(join(dir, 'freeze.json'), JSON.stringify(freeze))
     expect(() => inspectPartial(path)).toThrow(/Unknown frozen evaluator/)

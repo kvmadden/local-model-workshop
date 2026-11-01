@@ -5,6 +5,7 @@ import { scoreEntities, failureType, FAILURE_ORDER } from '../src/eval/extractio
 import { cases as casesV1, parseOutput as parseV1 } from '../eval/extraction-audit/versions/v1/source/scripts/audit-report-replay'
 import { scoreEntities as scoreV1, failureType as failureV1, FAILURE_ORDER as orderV1 } from '../eval/extraction-audit/versions/v1/source/src/eval/extractionAudit'
 export function inspectPartial(path: string, version: 'v1' | 'v2' | 'auto' = 'auto') {
+  const frozenReplay = version !== 'v2'
   if (version === 'auto') {
     const freeze = JSON.parse(readFileSync(`${dirname(path)}/freeze.json`, 'utf8'))
     const sources = ['src/eval/extractionAudit.ts', 'scripts/audit-report.ts']
@@ -12,11 +13,11 @@ export function inspectPartial(path: string, version: 'v1' | 'v2' | 'auto' = 'au
     else if (sources.every(file => hash(file) === freeze.hashes[file])) version = 'v2'
     else throw Error('Unknown frozen evaluator; choose an explicit requalification version')
   }
-  if (version === 'v1') {
+  if (frozenReplay) {
     const freeze = JSON.parse(readFileSync(`${dirname(path)}/freeze.json`, 'utf8'))
     for (const file of ['src/eval/extractionAudit.ts', 'scripts/audit-report.ts', `${root}/public.json`, `${root}/challenge.json`]) {
-      const source = file.startsWith(root) ? file : `${root}/versions/v1/source/${file}`
-      if (hash(source) !== freeze.hashes[file]) throw Error(`Frozen v1 evaluation differs: ${file}`)
+      const source = file.startsWith(root) || version === 'v2' ? file : `${root}/versions/v1/source/${file}`
+      if (hash(source) !== freeze.hashes[file]) throw Error(`Frozen ${version} evaluation differs: ${file}`)
     }
   }
   const selectedCases = version === 'v1' ? casesV1 : cases
