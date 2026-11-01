@@ -10,6 +10,8 @@
 | Extra facts and missing facts | Exact normalized entity sets, per-task denominators, document bootstrap intervals | Small fixed public benchmark, not a blind test |
 | Saved-run inspection | Benchmark Studio, source/license links, spans and fixed failure gallery | Rules control is explicitly identified |
 
+**What this does not prove.** No local model has a complete score on the new corpus yet. The new labels have not been reviewed by a pharmacist or a second independent reviewer. Entity sets do not show that each dose is tied to the right drug in multi-drug text, and label prose is not a patient prescription. This is an offline engineering diagnostic, not clinical validation.
+
 [Audit protocol and results](eval/extraction-audit/AUDIT.md) · [Offline control scores](eval/extraction-audit/RESULTS.md) · [How this was built](docs/HOW-BUILT.md)
 
 Run `npm run audit:score` to reproduce the committed offline controls. Local acquisition is a separate `npm run audit:infer -- --out eval/extraction-audit/local-NEW-ID` command and requires the named models already installed. No paid API is used. All historical results below remain unchanged.

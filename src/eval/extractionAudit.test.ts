@@ -15,6 +15,30 @@ it('rejects wrong dose, lost PRN, invented schedule and nonexistent offsets', ()
   expect(scoreEntities(input, gold, gold.filter(e => e.task !== 'prn')).missing).toHaveLength(1)
   expect(scoreEntities(input, [drug], [{ ...drug, spans: [{ start: 80, end: 90 }] }]).precision).toBe(0)
 })
+it('fails a pure invented schedule, a wrong dose on the right span and a dose citing the wrong span', () => {
+  const invented = scoreEntities(input, [drug], [drug, { task: 'schedule', value: 'daily', spans: [{ start: 13, end: 18 }] }])
+  expect(invented.exact).toBe(false)
+  expect(invented.unsupported.map(e => e.task)).toEqual(['schedule'])
+  const dose = gold[1]
+  const wrongValue = scoreEntities(input, gold, gold.map(e => e === dose ? { ...dose, value: '50 mg' } : e))
+  expect(wrongValue.exact).toBe(false)
+  expect(wrongValue.missing.map(e => e.task)).toEqual(['dose'])
+  const wrongSpan = scoreEntities(input, gold, gold.map(e => e === dose ? { ...dose, spans: [{ start: 0, end: 7 }] } : e))
+  expect(wrongSpan.exact).toBe(false)
+  const lostPrn = scoreEntities(input, gold, [...gold.filter(e => e.task !== 'prn' && e.task !== 'schedule'), { task: 'schedule', value: 'daily as needed', spans: [{ start: 13, end: 28 }] }])
+  expect(lostPrn.exact).toBe(false)
+  expect(lostPrn.missing.map(e => e.task).sort()).toEqual(['prn', 'schedule'])
+})
+it('keeps committed source families inside one split', async () => {
+  const { readFileSync } = await import('node:fs')
+  const rows = ['public', 'challenge'].flatMap(n => JSON.parse(readFileSync(`eval/extraction-audit/${n}.json`, 'utf8')))
+  expect(() => validateSplits(rows)).not.toThrow()
+  const bySnapshot = new Map<string, string>()
+  for (const r of rows.filter((r: any) => r.source)) {
+    expect(bySnapshot.get(r.source.original) ?? r.split).toBe(r.split)
+    bySnapshot.set(r.source.original, r.split)
+  }
+})
 it('exposes opposite baseline failures and N/A recall', () => {
   expect(scoreEntities(input, gold, baseline('empty', input)).recall).toBe(0)
   expect(scoreEntities(input, gold, baseline('everything', input)).precision).toBeLessThan(1)

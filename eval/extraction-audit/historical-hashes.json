@@ -1,7 +1,9 @@
 {
+  "docs/EVALUATION.md": "a3b48d92737cf661f35cd9f13d5e454c7a651d763579e09cfdf37b63e4155243",
   "docs/MISSES.md": "b1414f365a7bab4e4eb87f7b97fab1cc78172012be1252071e94499aa44c1305",
   "docs/ORIGINAL-EVALUATION.md": "5f12c50da9459fad8bf248734fa0c5d7a4b77139a33439334ba38b1ecc7a80c1",
   "docs/RESULTS.md": "16d1782dff3640ebcadba6d6d743d94d6e0c1e8c32f5d203f5ab1cfda6a710ec",
+  "docs/VERIFICATION.md": "24df0e79dac54e46c099a0b5df019033eff27e9a1023ad1991201be109b802ce",
   "eval/heldout/frozen.json": "dfc3d06a33a8714f258215528833e9feb64fcc81be115799e80707e67f433a00",
   "eval/results/2026-10-30-v2-run1/raw-gemma4_31b.jsonl": "d2555f71facebb4fb7d626f12fc2b8963c6e6afc92cadec11dafbbd89cd2fbd9",
   "eval/results/2026-10-30-v2-run1/raw-gpt-oss_20b.jsonl": "35f3c954072eb4fb1eae46c47bd151f75bbd84b46fee37ae422d954d6dfe1e93",
