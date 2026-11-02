@@ -2,11 +2,11 @@
 
 ## Scope and provenance
 
-Base: `2b830f6` from `origin/main`. Work uses the isolated dispatcher-created worktree from the named local-model-workshop clone. No open repository PR covered this work at discovery or the pre-push recheck. The queued showcase job is this run. No work ledger row was changed.
+Base: `2b830f6` from `origin/main`. Work uses an isolated worktree. No open repository PR covered this work at discovery or the pre-push recheck.
 
-Repository inventory and searches covered source, evaluation scripts, the schema archive and README. There are no nested AGENTS.md, CLAUDE.md, CANONICAL.md or FACTS.md in this repository. Estate brief and recent-run checks found the assigned showcase and separate portfolio-site jobs, not another owner implementing this repository change.
+Repository inventory and searches covered source, evaluation scripts, the schema archive and README. There are no nested AGENTS.md, CLAUDE.md, CANONICAL.md or FACTS.md in this repository.
 
-The dispatcher storage plan resolves evidence to `/Volumes/HubData/evidence`. This run's logs and screenshots are under `/Volumes/HubData/evidence/local-model-workshop-showcase`. Storage-plan receipt: `storage-plan-local-model-workshop-showcase-bbdc6306-576b-4fac-aef4-58cf1eb0be8b.json`.
+This run's full logs and screenshots are kept in a local evidence home outside the repository.
 
 `1b528e3` commits the seed, generator, frozen labels and freeze tests before any new model inference. No model, prompt, schema or scorer rule was tuned from heldout output. The original 25 cases, gold, prompts and all four historical run directories have zero diff from the base. The original README is preserved in ORIGINAL-EVALUATION.md.
 

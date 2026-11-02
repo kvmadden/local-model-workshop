@@ -3,7 +3,7 @@
 > vitest run
 
 
- RUN  v3.2.6 /Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard
+ RUN  v3.2.6 <repo>
 
 stdout | src/components/flow-builder.stress.test.tsx > Phase 2 Empirical Stress & Hardening Test Suite > 1. Duplicate Key & State Desync on step deletion followed by step addition
 [HARDENING VERIFIED] Verified unique step ID generation prevents React duplicate key warnings.
@@ -15,10 +15,10 @@ stdout | src/components/flow-builder.stress.test.tsx > Phase 2 Empirical Stress 
 
 stderr | src/components/hardware-layout.stress.test.tsx > Hardware advisor and layout stress tests > Task 2: ModelCatalog & BenchmarkStudio Integration & Stress > BenchmarkStudio switches prompts and triggers export recipe button
 Error: Not implemented: navigation (except hash changes)
-    at module.exports (/Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
-    at navigateFetch (/Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
-    at exports.navigate (/Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
-    at Timeout._onTimeout (/Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:81:7)
+    at module.exports (<repo>/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (<repo>/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (<repo>/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (<repo>/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:81:7)
     at listOnTimeout (node:internal/timers:605:17)
     at processTimers (node:internal/timers:541:7) undefined
 

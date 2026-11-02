@@ -1,14 +1,14 @@
 # Extraction audit verification
 
-Base: `2d3938eae610851a777916dfde70b187cbc77714`, fetched from origin/main on November 1, 2026. PR #1 is merged. No other open PR was returned. Job 31's handoff was read and its merged showcase work was left in place. Searches covered source, archived evaluation schemas, templates, state briefs, queued and started work and recent run evidence. This change owns the residual extraction audit and saved-run inspection only.
+Base: `2d3938eae610851a777916dfde70b187cbc77714`, fetched from origin/main on November 1, 2026. PR #1 is merged. No other open PR was returned. Its merged showcase work was left in place. Searches covered source, archived evaluation schemas and templates. This change owns the residual extraction audit and saved-run inspection only.
 
-The worktree is registered to the named clone at `/Users/kevin/dev/repos/local-model-workshop`. It started clean on the base commit. No other builder edits were reverted. Evidence home `/Volumes/HubData/evidence` was resolved from job 40's MFW_STORAGE allocation. Full working evidence is in `local-model-workshop-audit` there. Portable selected logs are in [audit-evidence](audit-evidence).
+The worktree started clean on the base commit. No other edits were reverted. Full working evidence is kept in a local evidence home outside the repository. Portable selected logs are in [audit-evidence](audit-evidence).
 
 ## RED and GREEN
 
 Before the scorer implementation, five contract tests ran against placeholders and all five failed. The first assertion expected precision 0.5 for one supported and one invented drug, but received 1. Other failures covered dose and PRN or schedule, empty controls, crossed source splits and metadata leakage. The [RED log](audit-evidence/red-assertions.log) preserves the actual assertions.
 
-Exact initial command: `npx vitest run src/eval/extractionAudit.test.ts > /Volumes/HubData/evidence/local-model-workshop-audit/red-assertions.log 2>&1`, followed by `tail -60` on the log. The shell wrapper returned 0 because its final command printed the log. That was a failed suite, not a green run. The first missing-module run also failed before the placeholders were supplied.
+Exact initial command: `npx vitest run src/eval/extractionAudit.test.ts > <evidence home>/red-assertions.log 2>&1`, followed by `tail -60` on the log. The shell wrapper returned 0 because its final command printed the log. That was a failed suite, not a green run. The first missing-module run also failed before the placeholders were supplied.
 
 The five initial contract tests then passed. Additional tests verify public snapshot hashes and spans, review status, source IDs, exact offline report and gallery reproduction with fetch disabled, actual adapter request invariance, inference/key isolation, every historical evaluation byte, saved inspector reproduction and incomplete acquisition inspection. The [candidate unit log](audit-evidence/candidate-unit.log) records the final suite.
 
@@ -43,6 +43,6 @@ The saved inspector reuses current Slate and Indigo tokens and the existing them
 
 The offline CLI was also executed under macOS `sandbox-exec` with `(version 1)(allow default)(deny network*)`. Both `node node_modules/.bin/vite-node scripts/audit-report.ts --write` and `node node_modules/.bin/vite-node scripts/audit-rescore.ts --run eval/extraction-audit/local-20261101` exited 0 with networking denied. This supplements the fetch-disabled tests.
 
-Media capture command: `CAPTURE_AUDIT=1 npx playwright test e2e/extraction-audit.spec.ts --config showcase.playwright.config.ts --workers=1`, exit 0, two tests. All six final PNGs were visually inspected and their dimensions verified as 1440x900, 430x932 and 390x844. The GIF has three 1440x900 frames across six seconds. A temporary Pillow environment assembled the captured frames, then was removed. Media and source frames are preserved in the registry evidence home.
+Media capture command: `CAPTURE_AUDIT=1 npx playwright test e2e/extraction-audit.spec.ts --config showcase.playwright.config.ts --workers=1`, exit 0, two tests. All six final PNGs were visually inspected and their dimensions verified as 1440x900, 430x932 and 390x844. The GIF has three 1440x900 frames across six seconds. A temporary Pillow environment assembled the captured frames, then was removed. Media and source frames are preserved in the evidence home.
 
 Final candidate gate: `npm test` exit 0 with 328 tests, `npm run build` exit 0, and `npx playwright test --workers=2` exit 0 with 72 tests. `git diff --check` exited 0. The final candidate has no remaining unit, build or browser failure relative to the untouched main control.
