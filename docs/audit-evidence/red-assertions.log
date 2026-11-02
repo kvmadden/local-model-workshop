@@ -1,5 +1,5 @@
 
- RUN  v3.2.6 /Volumes/HubData/work/worktrees/local-model-workshop-showcase-standard
+ RUN  v3.2.6 <repo>
 
  ❯ src/eval/extractionAudit.test.ts (5 tests | 5 failed) 9ms
    × penalizes a correct drug plus an invented drug 5ms

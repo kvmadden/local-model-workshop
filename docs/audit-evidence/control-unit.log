@@ -3,7 +3,7 @@
 > vitest run
 
 
- RUN  v3.2.6 /Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo
+ RUN  v3.2.6 <repo>
 
 stdout | src/engine/templateResolver.edge.test.ts > templateResolver stress and edge cases > 3. Large Template Strings & Thousands of Variable Substitutions > resolves a >100KB template with 1,000 variable substitutions correctly
 100KB (106780 chars) / 1,000 vars resolution time: 0.365ms
@@ -29,10 +29,10 @@ stdout | src/engine/modelAdapter.edge.test.ts > Edge cases: MockEndpoint & Model
  ✓ src/components/catalog.stress.test.tsx (13 tests) 256ms
 stderr | src/components/hardware-layout.stress.test.tsx > Hardware advisor and layout stress tests > Task 2: ModelCatalog & BenchmarkStudio Integration & Stress > BenchmarkStudio switches prompts and triggers export recipe button
 Error: Not implemented: navigation (except hash changes)
-    at module.exports (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
-    at navigateFetch (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
-    at exports.navigate (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
-    at Timeout._onTimeout (/Users/kevin/dev/oe-runs/tmp/workshop-main-control-wawlhytx/repo/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:81:7)
+    at module.exports (<repo>/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (<repo>/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (<repo>/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (<repo>/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:81:7)
     at listOnTimeout (node:internal/timers:605:17)
     at processTimers (node:internal/timers:541:7) undefined
 
