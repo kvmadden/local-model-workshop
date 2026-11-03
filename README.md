@@ -58,7 +58,7 @@ Computed from the saved replies by `src/eval/decision.test.ts`. Each row takes c
   - a built-in mock, the default, which needs nothing installed
   - a local Ollama
   - an OpenAI-compatible server on this Mac, such as LM Studio
-- **Local by default, and enforced.** The adapters refuse to send prompt text to any host that is not this machine unless code explicitly sets `allowRemote` (and, for a hosted OpenAI endpoint, an API key). "This machine" means `localhost`, a 127.x.x.x address, `::1` or an IPv4-mapped loopback address. A name that merely ends in `.localhost` does not count. No request that carries prompt text follows a redirect, so a local endpoint cannot pass the prompt on. Running locally does not by itself make anything private or compliant. Storage, logging and network settings still need their own checks.
+- **Local by default, and enforced.** The adapters refuse to send prompt text to any host that is not this machine unless code explicitly sets `allowRemote` (and, for a hosted OpenAI endpoint, an API key). "This machine" means loopback addresses only: the loopback name, the IPv4 loopback range, the IPv6 loopback address or an IPv4-mapped loopback address. Subdomains of the loopback name do not count. No request that carries prompt text follows a redirect, so a local endpoint cannot pass the prompt on. Running locally does not by itself make anything private or compliant. Storage, logging and network settings still need their own checks.
 - **Try it and Reference.** A task wizard, four playgrounds, a model catalog and a hardware advisor. Catalog speeds are bandwidth arithmetic, not measurements. Playground output is labeled demo output unless a matching local model ran.
 - **Saved-run inspector.** Benchmark Studio opens an inspector for the extraction audit on public label text (below).
 
@@ -77,7 +77,7 @@ npm run eval -- --suite path/to/locked-set.json --out eval/results/fresh-run
 What the harness does on every run:
 
 - **Never overwrites.** It refuses an existing output folder.
-- **Checks before it writes.** A `--models` name that is not in `models.json`, or a model the local Ollama does not have, stops the run before the folder is created. `OLLAMA_HOST` can be written the way Ollama accepts it, such as `127.0.0.1:11434`.
+- **Checks before it writes.** A `--models` name that is not in `models.json`, or a model the local Ollama does not have, stops the run before the folder is created. `OLLAMA_HOST` can be written the way Ollama accepts it, such as a host and port with no scheme.
 - **Randomizes order.** Case and model order are shuffled from a recorded seed.
 - **Times honestly.** It makes two warm-up requests and records whether they failed, reports the first timed request apart, enforces a per-request deadline, and counts failed requests at the time they took.
 - **Keeps partial evidence.** Each reply is written to disk as soon as it is scored. A run that stops partway, or is interrupted, still writes a summary marked incomplete.
@@ -111,7 +111,7 @@ Tested with Node 24.
 
 ```bash
 npm ci
-npm run dev                       # http://127.0.0.1:5176, starts in mock mode
+npm run dev                       # prints a local address, starts in mock mode
 npm test                          # unit tests, including evidence re-scoring
 npx playwright install chromium   # once
 npm run test:e2e                  # browser tests, with Ollama stubbed
@@ -120,7 +120,7 @@ npm run audit:score               # reproduce the audit artifacts offline
 node scripts/render-results.mjs   # redraw the results chart from the committed summaries
 ```
 
-The browser app talks to `http://localhost:11434` directly. Ollama accepts requests from localhost pages by default. If you serve the app from any other origin, add only that origin to `OLLAMA_ORIGINS`. Never set it to `*`, which lets any website you visit use your local models.
+The browser app talks directly to Ollama on the same computer, at its default port 11434. Ollama accepts requests from pages served on loopback addresses by default. If you serve the app from any other origin, add only that origin to `OLLAMA_ORIGINS`. Never set it to `*`, which lets any website you visit use your local models.
 
 CI runs the unit tests, the build, the offline audit check, a baselines run and the browser tests on every pull request.
 
