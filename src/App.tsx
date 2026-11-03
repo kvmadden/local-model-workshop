@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import { TabType } from './types/workshop';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Header } from './components/Header';
@@ -14,7 +14,8 @@ import { FlowCanvas } from './components/FlowCanvas';
 import { StepCard } from './components/StepCard';
 import { Step, ExecutionStatus } from './types/flow';
 import { FlowRunner } from './engine/flowRunner';
-import { RunComparison } from './components/RunComparison';
+// The run comparison carries the saved replies, so it loads as its own chunk.
+const RunComparison = lazy(() => import('./components/RunComparison').then((m) => ({ default: m.RunComparison })));
 
 type Theme = 'light' | 'dark';
 const THEME_KEY = 'local-model-workshop-theme';
@@ -222,7 +223,11 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
 
           {REFERENCE_TABS.includes(activeTab) && <OllamaDetector />}
 
-          {activeTab === 'compare' && <RunComparison />}
+          {activeTab === 'compare' && (
+            <Suspense fallback={<p className="font-mono text-[13px] text-ink-3">Loading the saved replies</p>}>
+              <RunComparison />
+            </Suspense>
+          )}
 
           {activeTab === 'wizard' && <TaskWizard />}
 
