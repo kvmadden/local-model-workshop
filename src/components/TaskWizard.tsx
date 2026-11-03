@@ -65,7 +65,7 @@ export const TaskWizard: React.FC = () => {
             Match Your Mac Goal to the Perfect Local Model &amp; App
           </h2>
           <p className="text-slate-400 text-sm md:text-base leading-relaxed">
-            Select what you want to accomplish on your Mac today. We match your objective with the ideal 100% private offline app — no coding, terminal scripts, or technical setup required.
+            Select what you want to accomplish on your Mac today. We match your objective with a desktop app that runs models on this Mac — no coding, terminal scripts, or technical setup required.
           </p>
           <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
             <span className="font-semibold text-slate-300">Supported Mac Apps:</span>

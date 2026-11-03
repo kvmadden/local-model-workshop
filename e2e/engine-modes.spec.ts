@@ -82,7 +82,7 @@ const PLAYGROUNDS: Playground[] = [
     tab: 'usecase-tab-file-chat',
     container: 'file-chatting-playground',
     liveTag: ENGINE_MODEL_TAGS.fileChat,
-    demoCopy: /Direct Answer from Local Context/,
+    demoCopy: /Demo answer from the sample document \(no model ran\)/,
     endpoint: '/api/chat',
     liveText: LIVE_CHAT_TEXT,
   },
@@ -90,7 +90,7 @@ const PLAYGROUNDS: Playground[] = [
 
 /** Copy that asserts a real model produced what is on screen. */
 const LIVE_CLAIM =
-  /Live Local Ollama Streaming|Live Local Ollama Engine|Live Streaming|Engine: Ollama|via Ollama/i;
+  /Live Local Ollama Streaming|Live Local Ollama Engine|Local Ollama on this machine|Live Streaming|Engine: Ollama|via Ollama/i;
 
 const openPlayground = async (page: Page, tab: string) => {
   await page.goto('/');

@@ -255,9 +255,15 @@ describe('UI components and App edge cases', () => {
       await changeInputValue(providerSelect, 'ollama');
       expect(modelInput.value).toBe('llama3');
 
-      // Switch provider to openai
+      // Switch provider to a local OpenAI-compatible server
       await changeInputValue(providerSelect, 'openai');
-      expect(modelInput.value).toBe('gpt-3.5-turbo');
+      expect(modelInput.value).toBe('local-model');
+      expect((getByTestId('step-endpoint-input-0') as HTMLInputElement).value).toBe('http://127.0.0.1:1234/v1/chat/completions');
+      expect(getByTestId('step-endpoint-note-0')?.textContent).toContain('on this Mac');
+
+      // An address on another machine is flagged, and the adapter refuses to send there
+      await changeInputValue(getByTestId('step-endpoint-input-0') as HTMLInputElement, 'https://api.example.com/v1/chat/completions');
+      expect(getByTestId('step-endpoint-note-0')?.textContent).toContain('not this Mac');
 
       // Edit model input
       await changeInputValue(modelInput, 'gpt-4o');

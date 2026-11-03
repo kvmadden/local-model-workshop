@@ -269,8 +269,7 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
       await page.click('[data-testid="run-playground-btn"]');
 
       const output = page.locator('[data-testid="playground-output-container"]');
-      await expect(output).toContainText('Direct Answer from Local Context');
-      await expect(output).toContainText('exposing sensitive content to public servers');
+      await expect(output).toContainText('Demo answer from the sample document (no model ran)');
     });
   });
 

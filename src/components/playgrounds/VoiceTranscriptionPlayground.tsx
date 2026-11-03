@@ -95,6 +95,14 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
   };
 
   const handleExport = () => {
+    // Write the transcript shown on screen to a real .txt file.
+    const blob = new Blob([transcriptOutput], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'transcript.txt';
+    link.click();
+    URL.revokeObjectURL(url);
     setExportFeedback(true);
     setTimeout(() => setExportFeedback(false), 2000);
   };
@@ -103,7 +111,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
     <SharedPlayground
       containerTestId="voice-transcription-playground"
       title="Voice Transcription Playground"
-      subtitle="Convert spoken audio notes and meeting recordings into clean offline transcripts."
+      subtitle="Turn a rough transcript into a clean, speaker-labelled one. This panel uses sample transcript text, not audio. Audio needs a speech model such as Whisper."
       icon={<Mic className="w-5 h-5 text-indigo-400" />}
       mode={mode}
       onModeChange={setMode}
@@ -215,7 +223,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
             </label>
             <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5" />
-              {mode === 'live' ? 'Live Local Ollama Streaming' : '100% Offline GPU Processing'}
+              {mode === 'live' ? 'Local Ollama on this machine (text only)' : 'Demo sample, no audio processed'}
             </span>
           </div>
 
@@ -231,7 +239,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
             </div>
 
             <div className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
-              <span>Engine: {mode === 'live' ? `Ollama (${matchingTag})` : 'OpenAI Whisper (Large-v3 Turbo)'}</span>
+              <span>Engine: {mode === 'live' ? `Ollama (${matchingTag}), text cleanup` : 'none, demo sample'}</span>
               <span>Status: {isProcessing ? 'Processing' : 'Complete'}</span>
             </div>
           </div>

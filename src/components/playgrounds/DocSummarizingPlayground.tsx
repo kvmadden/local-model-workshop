@@ -166,7 +166,7 @@ export const DocSummarizingPlayground: React.FC = () => {
                   <span>
                     {mode === 'live'
                       ? `Streaming Live Tokens from Ollama (${matchingTag})...`
-                      : 'Summarizing Privately On Apple Silicon...'}
+                      : 'Preparing the demo summary...'}
                   </span>
                 </>
               ) : (
@@ -175,7 +175,7 @@ export const DocSummarizingPlayground: React.FC = () => {
                   <span>
                     {mode === 'live'
                       ? 'Run Live Ollama Summarization'
-                      : 'Summarize Privately (Demo Mode)'}
+                      : 'Show Demo Summary (no model runs)'}
                   </span>
                 </>
               )}
@@ -190,11 +190,11 @@ export const DocSummarizingPlayground: React.FC = () => {
               2. Executive Summary Output:
             </label>
             <span
-              data-testid="air-gapped-badge"
+              data-testid="execution-badge"
               className="text-[11px] text-emerald-400 font-semibold px-2.5 py-1 bg-emerald-950/80 border border-emerald-800/80 rounded-full flex items-center gap-1.5"
             >
-              <Lock className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{mode === 'live' ? 'Live Local Ollama Engine' : '100% Air-Gapped Local Execution'}</span>
+              {mode === 'live' ? <Lock className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5 text-emerald-400" />}
+              <span>{mode === 'live' ? 'Local Ollama on this machine' : 'Demo output, no model ran'}</span>
             </span>
           </div>
 
