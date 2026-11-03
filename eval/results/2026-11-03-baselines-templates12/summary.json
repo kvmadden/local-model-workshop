@@ -1,0 +1,158 @@
+{
+  "harness": "eval-sig v3",
+  "suite": {
+    "name": "templates12",
+    "status": "development data: six templates taken from the 25 development lines, each filled in twice",
+    "n": 12
+  },
+  "format": "split (v2: drug, dose, frequency, timing, prn, prn_indication)",
+  "scorer": "sig-v3 (src/eval/sigScoreV3.ts)",
+  "startedAt": "2026-11-03T11:58:31.543Z",
+  "finishedAt": "2026-11-03T11:58:31.551Z",
+  "gitCommit": "381a4b0cf29e9ec24f32b8efea795afa9afdb9ec",
+  "args": [
+    "--baselines-only",
+    "--suite",
+    "templates12",
+    "--out",
+    "eval/results/2026-11-03-baselines-templates12"
+  ],
+  "order": {
+    "mode": "random",
+    "seed": 20261103
+  },
+  "hashes": {
+    "eval/heldout/frozen.json": "dfc3d06a33a8714f258215528833e9feb64fcc81be115799e80707e67f433a00",
+    "eval/sig-extraction/prompt.txt": "a907344facfa66fefdec8ced4451116b8a71f4474668b3481bc42b950edfcf73",
+    "eval/sig-extraction/schema.json": "b427013b4fc9899213d6b900395fc4dbd25fce650680702428624d06bcb3a871",
+    "eval/sig-extraction/models.json": "7a28699a672f483559fbd1b49371fdd4d9b63385744749afe7559a3e6bd1cc3b",
+    "scripts/eval-sig.ts": "85a188dd924c7e2fc9c95c4e25a8e13000aadd1abd97f233a7ba9182977d9d69",
+    "src/eval/harness.ts": "43667eae8713a20e7f4ebc4e1c4864b685d17e4cee22568e5795481538c10890",
+    "src/eval/sigScore.ts": "870eafd716adf453585b4ecea9a61bb2eace30f2898aee91d8d92d0a11dd724d",
+    "src/eval/sigScoreV3.ts": "804c8c4502280476a548d37b55b9bd4b261f69dbb455a7c8318c36f35d1b1d00",
+    "src/eval/legacyScore.ts": "f0cc2b9b149b0a23f4d52ede0b7a68ca4b6847fb0e64f90a8c927f96ea14335a",
+    "src/eval/sigBaselines.ts": "e862e2076429cfa9ab3049671fcca279f1406a03e0a619badefbbbba8602017f",
+    "src/engine/flowRunner.ts": "86d157f38ee029d6a786b98b67a4e7e74b1e1e87c684b3ed10b834a6817bc3eb",
+    "src/engine/modelAdapter.ts": "e785c02dadc4945dac5fe147f97202828ea868ff5fa8e98b78f8faf61c24ccaa",
+    "src/engine/templateResolver.ts": "8c0e2ad1d695f7dd5e788892a6903fc3aaabf7557d6e906f4accc08c1e4973b4"
+  },
+  "hardware": {
+    "cpu": "Apple M1 Max",
+    "cores": 10,
+    "memoryGB": 64,
+    "platform": "darwin 27.2.0",
+    "node": "v24.14.1",
+    "ollama": null
+  },
+  "results": [
+    {
+      "label": "mock (echo)",
+      "kind": "baseline",
+      "provider": "mock",
+      "note": "Echoes the prompt. It fails at JSON parsing, so it only shows that the harness runs.",
+      "counts": {
+        "n": 12,
+        "parsed": 0,
+        "schemaValid": 0,
+        "drug": 0,
+        "dose": 0,
+        "frequency": 0,
+        "timing": 0,
+        "prn": 0,
+        "prn_indication": 0,
+        "allCorrect": 0
+      },
+      "allCorrectInterval95": [
+        0,
+        0.2646
+      ],
+      "parseHow": {
+        "none": 12
+      },
+      "latency": null,
+      "load1m": null
+    },
+    {
+      "label": "baseline: rules",
+      "kind": "baseline",
+      "provider": "baseline",
+      "note": "Deterministic parser in src/eval/sigBaselines.ts, written after its author read the 25 development and 12 template lines. Frozen before any later set exists.",
+      "counts": {
+        "n": 12,
+        "parsed": 12,
+        "schemaValid": 12,
+        "drug": 12,
+        "dose": 12,
+        "frequency": 12,
+        "timing": 12,
+        "prn": 12,
+        "prn_indication": 12,
+        "allCorrect": 12
+      },
+      "allCorrectInterval95": [
+        0.7354,
+        1
+      ],
+      "parseHow": {
+        "direct": 12
+      },
+      "unreadLines": [],
+      "latency": null,
+      "load1m": null
+    },
+    {
+      "label": "baseline: constant",
+      "kind": "baseline",
+      "provider": "baseline",
+      "note": "The same answer for every line.",
+      "counts": {
+        "n": 12,
+        "parsed": 12,
+        "schemaValid": 12,
+        "drug": 0,
+        "dose": 0,
+        "frequency": 4,
+        "timing": 6,
+        "prn": 6,
+        "prn_indication": 6,
+        "allCorrect": 0
+      },
+      "allCorrectInterval95": [
+        0,
+        0.2646
+      ],
+      "parseHow": {
+        "direct": 12
+      },
+      "latency": null,
+      "load1m": null
+    },
+    {
+      "label": "baseline: copy",
+      "kind": "baseline",
+      "provider": "baseline",
+      "note": "Copies the input line into every text field. Checks that copying earns no credit.",
+      "counts": {
+        "n": 12,
+        "parsed": 12,
+        "schemaValid": 12,
+        "drug": 0,
+        "dose": 0,
+        "frequency": 2,
+        "timing": 6,
+        "prn": 6,
+        "prn_indication": 0,
+        "allCorrect": 0
+      },
+      "allCorrectInterval95": [
+        0,
+        0.2646
+      ],
+      "parseHow": {
+        "direct": 12
+      },
+      "latency": null,
+      "load1m": null
+    }
+  ]
+}
