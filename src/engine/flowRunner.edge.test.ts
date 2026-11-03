@@ -80,10 +80,80 @@ describe('FlowRunner edge cases and stress tests', () => {
 
       const result = await runFlow(flow);
 
-      // Verify whether context['input'] was overwritten by step name 'input'
-      // If step.name = 'input', populateStepContext sets context['input'] = 'OVERWRITTEN_BY_STEP1'
-      // But {{initialInput}} should still hold 'ORIGINAL_INPUT'
+      // A step named "input" used to replace {{input}} for every later step.
+      // Both names for the flow input now keep the original text.
       expect(result.flow.steps[1].output).toContain('Original: ORIGINAL_INPUT');
+      expect(result.flow.steps[1].output).toContain('Input key: ORIGINAL_INPUT');
+      expect(result.state.context.input).toBe('ORIGINAL_INPUT');
+    });
+
+    it('does not let a step id of "input" or a step named "step1" hijack reserved references', async () => {
+      const flow = createDefaultFlow('hijack-flow', 'Hijack Flow', 'ORIGINAL');
+      const a = createDefaultStep('input', 'first', 'A');
+      a.modelConfig.mockPattern = 'custom';
+      a.modelConfig.mockCustomResponse = 'OUT-1';
+      const b = createDefaultStep('b', 'second', 'B');
+      b.modelConfig.mockPattern = 'custom';
+      b.modelConfig.mockCustomResponse = 'OUT-2';
+      const c = createDefaultStep('c', 'step1', 'C');
+      c.modelConfig.mockPattern = 'custom';
+      c.modelConfig.mockCustomResponse = 'OUT-3';
+      const d = createDefaultStep('d', 'fourth', 'in={{input}} s1={{step1.output}} s1short={{step1}}');
+      d.modelConfig.mockPattern = 'echo';
+      flow.steps = [a, b, c, d];
+      const result = await runFlow(flow);
+      expect(result.flow.steps[3].output).toBe('[Mock Echo] in=ORIGINAL s1=OUT-1 s1short=OUT-1');
+    });
+
+    it('keeps the first step on a shared name', async () => {
+      const flow = createDefaultFlow('dup-name', 'Dup Name', 'x');
+      const a = createDefaultStep('a', 'summary', 'A');
+      a.modelConfig.mockPattern = 'custom';
+      a.modelConfig.mockCustomResponse = 'FIRST';
+      const b = createDefaultStep('b', 'summary', 'B');
+      b.modelConfig.mockPattern = 'custom';
+      b.modelConfig.mockCustomResponse = 'SECOND';
+      const c = createDefaultStep('c', 'third', '{{summary.output}}');
+      c.modelConfig.mockPattern = 'echo';
+      flow.steps = [a, b, c];
+      const result = await runFlow(flow);
+      expect(result.flow.steps[2].output).toBe('[Mock Echo] FIRST');
+    });
+
+    it('refuses to run a flow whose steps share an id', async () => {
+      const flow = createDefaultFlow('dup-id', 'Dup Id', 'x');
+      flow.steps = [createDefaultStep('a', 'one', 'A'), createDefaultStep('a', 'two', 'B')];
+      const result = await runFlow(flow);
+      expect(result.state.status).toBe('error');
+      expect(result.state.error).toMatch(/share the id 'a'/);
+      expect(result.flow.steps.every((s) => s.status === 'idle')).toBe(true);
+      await expect(runSingleStep(flow, 'a')).resolves.toMatchObject({ state: { status: 'error' } });
+    });
+
+    it('records placeholders with no value as step warnings, and fails the step in strict mode', async () => {
+      const flow = createDefaultFlow('warn', 'Warn', 'LINE');
+      const s1 = createDefaultStep('s1', 'one', 'Line: {{inptu}}');
+      s1.modelConfig.mockPattern = 'echo';
+      s1.modelConfig.mockLatencyMs = 0;
+      flow.steps = [s1];
+      const lenient = await runFlow(flow);
+      expect(lenient.state.status).toBe('completed');
+      expect(lenient.flow.steps[0].warnings).toEqual(['Placeholder {{inptu}} has no value and was replaced with nothing.']);
+      const strict = await runFlow(flow, { strictPlaceholders: true });
+      expect(strict.state.status).toBe('error');
+      expect(strict.flow.steps[0].error).toBe('Unresolved placeholder(s): {{inptu}}');
+    });
+
+    it('clears the previous output when a rerun fails, so a stale answer never looks current', async () => {
+      const flow = createDefaultFlow('stale', 'Stale', 'x');
+      const s1 = createDefaultStep('s1', 'one', 'P');
+      s1.status = 'completed';
+      s1.output = 'OLD ANSWER';
+      s1.modelConfig.model = 'mock-error';
+      flow.steps = [s1];
+      const result = await runFlow(flow);
+      expect(result.flow.steps[0].status).toBe('error');
+      expect(result.flow.steps[0].output).toBe('');
     });
 
     it('handles step ID equal to another step index alias (e.g. step 1 ID is "step2")', async () => {
@@ -174,11 +244,14 @@ describe('FlowRunner edge cases and stress tests', () => {
       expect(result.flow.steps[0].status).toBe('completed');
     });
 
-    it('handles float or invalid numeric string index in runSingleStep', async () => {
+    it('rejects float or partly numeric step selectors instead of guessing an index', async () => {
       const flow = createChainFlow();
-      // "1.9" passes parseInt("1.9", 10) -> 1
-      const result = await runSingleStep(flow, '1.9');
-      expect(result.state.currentStepIndex).toBe(1);
+      // parseInt used to read "1.9" and "1garbage" as index 1 and run the wrong step.
+      await expect(runSingleStep(flow, '1.9')).rejects.toThrow(/not found/i);
+      await expect(runSingleStep(flow, '1garbage')).rejects.toThrow(/not found/i);
+      await expect(runSingleStep(flow, 1.5)).rejects.toThrow(/not found/i);
+      const ok = await runSingleStep(flow, '1');
+      expect(ok.state.currentStepIndex).toBe(1);
     });
 
     it('throws when target step string cannot be found or parsed', async () => {
@@ -326,7 +399,8 @@ describe('FlowRunner edge cases and stress tests', () => {
       expect(result.flow.steps[0].status).toBe('error');
       expect(result.flow.steps[0].error).toBe('Callback exception');
       expect(result.flow.steps[1].status).toBe('idle');
-      expect(result.metrics.completedStepsCount).toBe(1);
+      // A step that ends in error is not counted as completed.
+      expect(result.metrics.completedStepsCount).toBe(0);
       expect(result.metrics.failedStepIndex).toBe(0);
     });
   });
