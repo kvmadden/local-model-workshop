@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "entities",
+    "no_active_instruction"
+  ],
+  "properties": {
+    "no_active_instruction": {
+      "type": "boolean"
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "task",
+          "value",
+          "evidence"
+        ],
+        "properties": {
+          "task": {
+            "type": "string",
+            "enum": [
+              "drug",
+              "dose",
+              "schedule",
+              "timing",
+              "prn",
+              "indication"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "derivation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "operation",
+              "operands",
+              "unit"
+            ],
+            "properties": {
+              "operation": {
+                "const": "multiply"
+              },
+              "operands": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
