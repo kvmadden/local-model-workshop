@@ -47,7 +47,7 @@ Categories:
 20. Noise: misspellings, OCR errors ("5OO mg", "rng"), missing spaces ("500MG"), all capitals.
 21. Spanish or mixed English and Spanish fragments.
 22. Text inside the line that tries to give the model instructions. It must be treated as text, not obeyed.
-23. Contested readings, written on purpose, such as "at bedtime as needed".
+23. Lines that test the conventions on purpose, such as "at bedtime as needed" and "every 6 hours as needed", labeled by the convention sheet.
 
 ## Target and labels
 
@@ -68,9 +68,10 @@ Categories:
 - **Six-field projection.** Each line also gets its projection onto the current six fields (drug, dose per administration, frequency, timing, prn, reason), plus `six_field_representable: true or false`.
   - Lines the six fields cannot hold (tapers, ranges, sliding scales, two drugs, weekday-dependent doses, missing dose) are marked false.
   - On those lines, the only correct behavior under the six-field prompt is to flag the line for review, so the six-field results report them separately.
-- **Convention sheet.** It is written and frozen before any line is labeled.
-  - It must settle the bedtime as-needed rule. Kevin decides this: a once-daily frequency, or no schedule with a once-daily maximum.
-  - It must also settle q12h vs BID, "daily" vs "every 24 hours", and how ranges are written.
+- **Convention sheet.** It is written and frozen before any line is labeled. It starts from two rules Kevin decided on 3 November 2026:
+  - **At bedtime as needed** means no fixed schedule, as needed, and at most once a day. In the full target: no schedule, a bedtime anchor, `as_needed` true and a maximum of one dose per day. In the six-field projection: frequency null, timing bedtime, prn true. The suite file sets `conventions.bedtimeAsNeeded` to `no-schedule`.
+  - **The schedule and the as-needed maximum are separate fields.** In the full target, a schedule goes in `schedule` and an as-needed limit goes in `max_dose_per_period` or the minimum interval, never in both. In the six-field projection, `frequency` holds a schedule only, so an as-needed line with no schedule has frequency null. Its maximum is scored in the full target.
+  - The sheet must also settle q12h vs BID, "daily" vs "every 24 hours", and how ranges are written.
   - Any line whose label still depends on a contested convention is tagged `contested: true`, scored both ways, and left out of the gate.
 - **Critical fields.** Each label marks which fields are critical: drug, dose magnitude, schedule of a scheduled dose, route, and as-needed status. Critical errors are counted on their own.
 

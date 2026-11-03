@@ -78,13 +78,15 @@ An all-fields match on these lines does not mean the whole instruction was kept.
 
 ## The pick depends on one label rule
 
-The split-format gold labels "at bedtime as needed" (s25, h02, h08) as frequency `once_daily`. The extraction audit protocol in this same repository takes the opposite rule: "Bedtime does not imply a daily schedule" (`eval/extraction-audit/AUDIT.md`, challenge c03). Recomputed from the saved replies (`src/eval/decision.test.ts`):
+The split-format gold labels "at bedtime as needed" (s25, h02, h08) as frequency `once_daily`. The extraction audit protocol in this same repository takes the opposite rule: "Bedtime does not imply a daily schedule" (`eval/extraction-audit/AUDIT.md`, challenge c03).
+
+Kevin ruled on 3 November 2026 for the second reading: no fixed schedule, as needed, at most once a day. The split format has no field for the maximum, so here the ruling shows up as frequency null. The committed gold stays as it was scored, and these rows show both readings. Recomputed from the saved replies (`src/eval/decision.test.ts`):
 
 | Rule for "at bedtime as needed" | Lines and runs | Latency gate | All fields right (gpt-oss, gemma, qwen) | Pick |
 |---|---|---|---|---|
 | Frequency `once_daily` (current gold) | 25 lines, 2 runs | Not applied, as published | 24, 25, 25 in each run | qwen3.8:27b, on 1.2 GB less disk |
 | Frequency `once_daily` | 25 lines, 2 runs | Applied to each run | 24, 25, 25 in each run | None. Every p95 was over 10 s |
-| No schedule (the audit's rule) | 25 lines, 2 runs | Not applied | 25, 24, 24 in each run | gpt-oss:20b, the only model with all 25 right |
+| No schedule (Kevin's ruling, and the audit's rule) | 25 lines, 2 runs | Not applied | 25, 24, 24 in each run | gpt-oss:20b, the only model with all 25 right |
 | No schedule | 25 lines, 2 runs | Applied to each run | 25, 24, 24 in each run | None. gpt-oss:20b's p95 was over 10 s |
 | Frequency `once_daily` | 12 template lines, 1 run | Not applied | 10, 12, 12 | qwen3.8:27b, on 1.2 GB less disk |
 | Frequency `once_daily` | 12 template lines, 1 run | Applied to the same run | 10, 12, 12 | gemma4:31b (8.5 s against 12.5 s) |
@@ -96,7 +98,7 @@ Each row scores one set and takes its latency from the same runs. The 12 templat
 Notes:
 
 - **Disk sizes.** The sizes (13.8, 19.4 and 18.2 GB) are from [ORIGINAL-EVALUATION.md](ORIGINAL-EVALUATION.md). The harness of 2026-10-30 did not record them. It now records digest and size.
-- **Which rule.** Which rule is right is a pharmacist's decision, listed in [KEVIN-REVIEW.md](KEVIN-REVIEW.md).
+- **Which rule.** Kevin decided it on 3 November 2026 ([KEVIN-REVIEW.md](KEVIN-REVIEW.md)). Under his ruling, gpt-oss:20b leads on both development sets. These are development results, so no model is chosen until the blind test set runs.
 
 ## Latency: what the saved runs show and do not show
 

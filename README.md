@@ -13,10 +13,10 @@ On 37 short, clean synthetic medication lines, three local models (20.9B to 31.7
 - **Rules do as well.** A short rules parser also gets every field right on 25 of 25 and 12 of 12.
 - **So the sets decide nothing.** They are too regular to rank the models or to show value over rules.
 - **Both sets are development data.** The 25 lines are the lines the answer format was revised on. The 12 lines are six templates taken from those 25.
-- **The pick turns on one label.** Under the label rule the gold uses, the pick is qwen3.8:27b, by 1.2 GB of disk. Under the rule the repository's own audit protocol uses, it is gpt-oss:20b.
+- **One label decided the ranking, and Kevin has ruled on it.** On 3 November 2026 he ruled that "at bedtime as needed" means no fixed schedule, as needed, at most once a day. Under that reading, gpt-oss:20b is the only model with every field right on both sets. Under the rule the gold was first written with, qwen3.8:27b led on disk size. Both are development results.
 - **Speed is unmeasured.** No quiet-machine run exists, so performance against the 10-second budget is unknown.
 
-**No model is chosen.** A fresh blind test set is specified in [docs/FRESH-TEST-PROTOCOL.md](docs/FRESH-TEST-PROTOCOL.md) and has not been written yet.
+**No model is chosen until the new blind test set runs.** That set is specified in [docs/FRESH-TEST-PROTOCOL.md](docs/FRESH-TEST-PROTOCOL.md) and has not been written yet.
 
 ![Every field right on the two development sets, with the rules parser](docs/media/results.png)
 
@@ -33,7 +33,10 @@ The same review shows the decision that remains. The split format's `frequency` 
 - a schedule, for "three times daily"
 - a maximum, for "every 6 hours as needed"
 
-Labeling "at bedtime as needed" as `once_daily` follows the prompt, but the audit protocol in this repository says a bedtime anchor is not a schedule. That rule is now a pharmacist decision ([docs/KEVIN-REVIEW.md](docs/KEVIN-REVIEW.md)), to be settled before the fresh set is labeled.
+Labeling "at bedtime as needed" as `once_daily` follows the prompt, but the audit protocol in this repository says a bedtime anchor is not a schedule. Kevin decided both questions on 3 November 2026 ([docs/KEVIN-REVIEW.md](docs/KEVIN-REVIEW.md)):
+
+- "At bedtime as needed" means no fixed schedule, as needed, at most once a day.
+- The schedule and the as-needed maximum are separate fields. The fresh set is labeled that way.
 
 ## What the pick depends on
 
@@ -41,7 +44,7 @@ Labeling "at bedtime as needed" as `once_daily` follows the prompt, but the audi
 |---|---|---|---|
 | Once daily (current gold) | 25 lines | Not applied, as published | qwen3.8:27b, on 1.2 GB less disk |
 | Once daily | 25 lines | Applied to the same runs | None. Every p95 was over 10 s on a loaded machine |
-| No schedule (the audit protocol's rule) | 25 lines | Not applied | gpt-oss:20b |
+| No schedule (Kevin's ruling, and the audit protocol's rule) | 25 lines | Not applied | gpt-oss:20b |
 | Once daily | 12 template lines | Applied to the same run | gemma4:31b. qwen's only request over 10 s was its first |
 | No schedule | 12 template lines | Applied to the same run | gpt-oss:20b |
 

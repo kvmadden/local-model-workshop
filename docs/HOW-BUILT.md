@@ -36,3 +36,12 @@ GPT and Grok then reviewed the pull request itself. Claude reproduced each findi
 - **Docs.** Claims that no test locked now have tests, including a test that compares every table in `docs/DEVELOPMENT-RESULTS.md` with the evidence. Claims the evidence did not support were narrowed.
 
 The saved replies score the same under the changed scorer and parser, so no model or baseline count changed. One row of the pick table had applied the 12-line latency to the 25-line counts. It now scores the 12 lines with their own latency, which changes the counts shown in that row but not its pick.
+
+## Pharmacist decisions (3 November 2026)
+
+Kevin Madden, PharmD, decided four of the open items in [KEVIN-REVIEW.md](KEVIN-REVIEW.md):
+
+- "At bedtime as needed" means no fixed schedule, as needed, at most once a day.
+- The schedule and the as-needed maximum are separate fields.
+- The 19 label fixes Claude proposed for the public audit excerpts are accepted as a batch. They are saved as labels v2 beside the unchanged v1. No pharmacist has checked them one by one yet.
+- No model is named as chosen until the new blind test set runs.

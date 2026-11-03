@@ -2,19 +2,24 @@
 
 These are clinical or policy calls. The code and documents do not make them. Nothing listed here was changed without Kevin's review.
 
+Kevin Madden, PharmD, decided items 1, 2, 3 and 5 on 3 November 2026. Item 4 is still open.
+
 ## 1. The rule for "at bedtime as needed"
 
 - **The two rules.** The split-format gold labels "Melatonin 3 mg ... at bedtime as needed for sleep" (s25, and template lines h02 and h08) as frequency `once_daily`, timing bedtime, as needed. The extraction audit protocol in this repository says "Bedtime does not imply a daily schedule". Its challenge item c03 ("Doxepin 6 mg at bedtime as needed for insomnia") has no schedule.
 - **The pick depends on which rule is used:**
   - With `once_daily`, gemma4:31b and qwen3.8:27b get every field right, and qwen wins on disk size.
   - With no schedule, only gpt-oss:20b does ([DEVELOPMENT-RESULTS.md](DEVELOPMENT-RESULTS.md)).
-- **Decision needed.** Pick one rule for the fresh set and write down the reason. One option: no schedule, as-needed, and a maximum of once daily. That needs the schedule and the maximum to be separate fields, which the fresh protocol proposes.
+- **Decided, 3 November 2026.** "At bedtime as needed" means no fixed schedule, as needed, and at most once a day.
+  - The fresh set is labeled that way ([FRESH-TEST-PROTOCOL.md](FRESH-TEST-PROTOCOL.md)).
+  - The development sets keep the gold they were scored with, because they are evidence. Their results are also computed under the ruling. Under it, gpt-oss:20b is the only model with every field right on both development sets ([DEVELOPMENT-RESULTS.md](DEVELOPMENT-RESULTS.md)).
+  - That is a development result. No model is chosen until the blind test set runs.
 
 ## 2. What `frequency` means
 
 In the split format, `frequency` is a schedule on scheduled lines ("three times daily") and a maximum rate on as-needed lines ("every 6 hours as needed"). "tid prn itching" is labeled as a standing three-times-daily schedule plus as-needed, though it is usually read as "up to three times a day if needed".
 
-**Decision needed.** Should the fresh set separate the schedule from the as-needed maximum, as FHIR Dosage does (`timing.repeat` against `asNeeded` plus `maxDosePerPeriod`)?
+**Decided, 3 November 2026.** Keep the schedule separate from the as-needed maximum, as FHIR Dosage does (`timing.repeat` against `asNeeded` plus `maxDosePerPeriod`). In the fresh set, a schedule and an as-needed limit are separate fields, and the six-field `frequency` holds a schedule only.
 
 ## 3. Draft labels in the public label audit
 
@@ -59,4 +64,4 @@ Still open: a second reviewer should label at least the final split independentl
 
 ## 5. The case page
 
-Whether the public case page should name any pick before the fresh set is run. The evidence supports "no model is chosen yet".
+**Decided, 3 November 2026.** The interface, the documents and the case page say that no model is chosen until the new blind test set runs.
