@@ -1,8 +1,8 @@
 /**
  * Prose that ships with the repo names no place on the author's machine and no local server
  * address. A reader needs the step, not the address. Prose is every README*.md, SECURITY.md and
- * CONTRIBUTING.md, and the .md, .txt, .json and .py files under docs/. Code, config and tests may
- * still use loopback addresses.
+ * CONTRIBUTING.md, and every plain-text file under docs/: Markdown, text, logs, JSON, YAML, CSV and
+ * Python. Code, config and tests may still use loopback addresses.
  */
 import { describe, it, expect } from 'vitest';
 import { execFileSync } from 'node:child_process';
@@ -12,7 +12,7 @@ import path from 'node:path';
 
 // Vitest runs from the repo root, as the other document tests assume.
 const ROOT = process.cwd();
-const PROSE = /(?:^|\/)(?:README[^/]*\.md|SECURITY\.md|CONTRIBUTING\.md)$|^docs\/.*\.(?:md|txt|json|py)$/i;
+const PROSE = /(?:^|\/)(?:README[^/]*\.md|SECURITY\.md|CONTRIBUTING\.md)$|^docs\/.*\.(?:md|markdown|txt|text|log|json|jsonl|py|ya?ml|csv|tsv)$/i;
 
 const PATTERNS: [string, RegExp][] = [
   ['a home folder', /(?<![\w-])\/Users\//],
