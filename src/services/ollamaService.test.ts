@@ -155,4 +155,34 @@ describe('ollamaService', () => {
       expect(received).toEqual(['Chat ', 'response']);
     });
   });
+
+  describe('stream errors and logging', () => {
+    const streamOf = (lines: string[]) => {
+      const encoder = new TextEncoder();
+      let i = 0;
+      return vi.fn().mockResolvedValue({
+        ok: true,
+        body: { getReader: () => ({ read: async () => (i < lines.length ? { done: false, value: encoder.encode(lines[i++]) } : { done: true, value: undefined }) }) },
+      });
+    };
+
+    it('ends the stream with the error Ollama reports instead of returning a short answer', async () => {
+      vi.stubGlobal('fetch', streamOf([JSON.stringify({ response: 'Partial ' }) + '\n', JSON.stringify({ error: 'out of memory' }) + '\n']));
+      const received: string[] = [];
+      await expect(generateStream('m', 'Hi', (c) => received.push(c))).rejects.toThrow('Ollama stream error: out of memory');
+      expect(received).toEqual(['Partial ']);
+      vi.stubGlobal('fetch', streamOf([JSON.stringify({ error: 'model not found' }) + '\n']));
+      await expect(chatStream('m', [{ role: 'user', content: 'Hi' }], () => undefined)).rejects.toThrow('Ollama stream error: model not found');
+    });
+
+    it('never writes streamed text to the console when a line does not parse', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      vi.stubGlobal('fetch', streamOf(['{"response": "PATIENT TEXT\n', JSON.stringify({ response: 'ok' }) + '\n']));
+      await generateStream('m', 'Hi', () => undefined);
+      const logged = warn.mock.calls.flat().join(' ');
+      expect(logged).not.toContain('PATIENT TEXT');
+      expect(logged).toContain('Skipped 1 stream line');
+      warn.mockRestore();
+    });
+  });
 });
