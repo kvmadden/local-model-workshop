@@ -54,3 +54,40 @@ describe('rules parser reads the whole line, and says what it could not read', (
     for (const c of templates) expect(rulesSig(c.input).unread, c.id).toEqual([]);
   });
 });
+
+// Review round 2 (3 Nov), Grok 16. The parser is a baseline for sets written later, so it must not
+// fail on them for reasons that have nothing to do with reading the instruction.
+describe('rules parser: review round 2', () => {
+  it('keeps a digit that is part of a drug name', () => {
+    expect(rulesSig('Vitamin D3 1000 units by mouth once daily').prediction.drug).toBe('Vitamin D3');
+    expect(rulesSig('Vitamin B12 1000 mcg tablet, take 1 tablet by mouth once daily').prediction.drug).toBe('Vitamin B12');
+  });
+
+  it('does not take a schedule from a negated phrase, and reports the negation as unread', () => {
+    const r = rulesSig('Metformin 500 mg tablet, take 1 tablet by mouth once daily, do not take qid');
+    expect(r.prediction.frequency).toBe('once_daily');
+    expect(r.unread).toEqual(expect.arrayContaining(['not', 'qid']));
+  });
+
+  it('can follow either rule for "at bedtime as needed"', () => {
+    const s25 = dev.find((c) => c.id === 's25')!.input;
+    expect(rulesSig(s25).prediction.frequency).toBe('once_daily');
+    expect(rulesSig(s25, { bedtimeAsNeeded: 'no-schedule' }).prediction.frequency).toBeNull();
+    // A scheduled bedtime dose keeps its schedule under both rules.
+    const s11 = dev.find((c) => c.id === 's11')!.input;
+    expect(rulesSig(s11, { bedtimeAsNeeded: 'no-schedule' }).prediction.frequency).toBe('once_daily');
+  });
+
+  it('still reproduces every committed baseline reply exactly', () => {
+    for (const dir of ['2026-11-03-baselines-dev25', '2026-11-03-baselines-templates12']) {
+      for (const name of BASELINES) {
+        const rows = readJsonl(`eval/results/${dir}/raw-baseline_${name}.jsonl`) as { id: string; input: string; output: string; unread?: string[] }[];
+        for (const row of rows) {
+          const again = runBaseline(name, row.input);
+          expect(again.text, `${dir} ${name} ${row.id}`).toBe(row.output);
+          if (name === 'rules') expect(again.unread, `${dir} ${row.id}`).toEqual(row.unread);
+        }
+      }
+    }
+  });
+});
