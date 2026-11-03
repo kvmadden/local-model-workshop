@@ -29,7 +29,7 @@ None of this changed the prompts, schemas, labels or saved replies of the histor
 GPT and Grok then reviewed the pull request itself. Claude reproduced each finding with a test or a probe before changing anything, and refuted the ones it could not reproduce. The confirmed ones were fixed, each with a test that failed before the fix:
 
 - **Scorer v3.** A salt or release word counts only when it belongs to this drug's own description on the line, spellings of one salt or form count as one, reasons keep their word order, gold units are read like reply units, overflowing doses fail, and a reply with several JSON objects is not scored.
-- **Adapters.** Requests that carry prompt text never follow a redirect, and names under `.localhost` no longer count as this machine.
+- **Adapters.** Requests that carry prompt text never follow a redirect, and subdomains of the loopback name no longer count as this machine.
 - **Eval CLI.** An unknown `--models` name stops the run before anything is written, `OLLAMA_HOST` works without a scheme, warm-up failures are recorded, replies are written as they are scored, an incomplete run still writes a marked summary, and hashes are taken before the first request over every imported source file.
 - **Decision recompute.** Each set is scored with its own latency, stability is not claimed for a single run, and an unstable model no longer crashes the recompute.
 - **Audit evaluator v3.** Malformed derivations no longer crash it, duplicates make a reply inexact, and a failed or empty reply is never a correct abstention.
