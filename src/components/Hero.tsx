@@ -1,30 +1,29 @@
 import React from 'react';
 
 const SPECS: Array<{ testId: string; title: string; detail: string }> = [
-  { testId: 'hero-badge-privacy', title: 'Local by Default', detail: 'Mock or localhost Ollama' },
-  { testId: 'hero-badge-gpu', title: 'Apple Silicon GPU', detail: 'Metal via Ollama or apps' },
-  { testId: 'hero-badge-silicon', title: 'M1–M4 Chips', detail: 'Bandwidth-based estimates' },
-  { testId: 'hero-badge-zero-code', title: 'No Code', detail: 'Point-and-click flows' },
+  { testId: 'hero-badge-privacy', title: 'Local by default', detail: 'The built-in mock, or Ollama on this Mac' },
+  { testId: 'hero-badge-gpu', title: 'Apple Silicon GPU', detail: 'Metal, through Ollama or a desktop app' },
+  { testId: 'hero-badge-silicon', title: 'M1 to M4 chips', detail: 'Speed estimated from memory bandwidth' },
+  { testId: 'hero-badge-zero-code', title: 'No code', detail: 'Point-and-click flows' },
 ];
 
-/** The introduction above the reference tabs: what they are for, and a spec grid instead of badge cards. */
+/** The introduction above the reference tabs: what they are for, and four plain facts. */
 export const Hero: React.FC = () => {
   return (
-    <section data-testid="hero-section" className="grid gap-5 border-b-2 border-ink pb-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-end">
-      <div className="min-w-0 space-y-2">
-        <p className="font-mono text-[12px] text-ink-3">Reference shelf. These tabs are guides, not bench results.</p>
-        <h2 data-testid="hero-headline" className="font-display text-4xl font-bold uppercase leading-[0.95] tracking-[0.01em] text-ink sm:text-5xl">
-          Small Local Models on Your Mac, Without Writing Code
+    <section data-testid="hero-section" className="space-y-6 border-b border-rule pb-8">
+      <div className="max-w-3xl space-y-3">
+        <h2 data-testid="hero-headline" className="text-[28px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[32px]">
+          Small local models on your Mac, without writing code
         </h2>
-        <p data-testid="hero-subtitle" className="max-w-3xl text-[17px] leading-snug text-ink-2">
-          Find small models that fit your Mac, match everyday tasks to desktop apps, and chain prompt steps against a local Ollama or a built-in mock.
+        <p data-testid="hero-subtitle" className="text-[17px] leading-relaxed text-ink-2">
+          Find small models that fit your Mac, match everyday tasks to desktop apps, and chain prompt steps against a local Ollama or a built-in mock. These tabs are guides, not test results.
         </p>
       </div>
-      <dl data-testid="hero-badges-container" className="grid grid-cols-2 gap-px border border-rule-strong bg-rule-strong">
+      <dl data-testid="hero-badges-container" className="grid grid-cols-2 gap-x-8 gap-y-4 lg:grid-cols-4">
         {SPECS.map((s) => (
-          <div key={s.testId} data-testid={s.testId} className="bg-panel px-3.5 py-3">
-            <dt className="font-display text-[16px] font-bold uppercase tracking-[0.03em] text-ink">{s.title}</dt>
-            <dd className="mt-0.5 font-mono text-[12px] text-ink-3">{s.detail}</dd>
+          <div key={s.testId} data-testid={s.testId} className="min-w-0">
+            <dt className="text-[15px] font-semibold text-ink">{s.title}</dt>
+            <dd className="mt-0.5 text-[14px] leading-snug text-ink-3">{s.detail}</dd>
           </div>
         ))}
       </dl>

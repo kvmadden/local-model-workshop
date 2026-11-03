@@ -81,12 +81,11 @@ export const ShortcutsStudio: React.FC = () => {
   return (
     <div data-testid="shortcuts-studio-container" className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-3">
-        <p className="font-mono text-[12px] text-ink-3">macOS Sequoia / macOS 26 Automation & Menu Bar Recipes</p>
-        <h2 data-testid="shortcuts-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
-          1-Click Apple Shortcuts & Global Hotkeys
+      <div className="space-y-3">
+        <h2 data-testid="shortcuts-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">
+          Apple Shortcuts and global hotkeys
         </h2>
-        <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
+        <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
           Trigger local AI models directly from your Mac menu bar, Finder right-click menu, or global hotkeys (like <span className="text-indigo-300 bg-slate-950 px-1.5 py-0.5 rounded font-mono font-bold">⌥⌘V</span>) with zero coding required.
         </p>
       </div>
@@ -94,7 +93,7 @@ export const ShortcutsStudio: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Recipe Selector Chips */}
         <div className="lg:col-span-5 space-y-3">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+          <label className="text-xs font-bold text-slate-300 block">
             Select a macOS Automation Recipe:
           </label>
 
@@ -125,7 +124,7 @@ export const ShortcutsStudio: React.FC = () => {
 
                   <p className="text-xs text-slate-300 leading-relaxed">{bp.description}</p>
 
-                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px]">
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-xs">
                     <span className="text-slate-400">Trigger:</span>
                     <span className="font-mono font-bold text-indigo-300 bg-slate-950 px-2 py-1 rounded border border-slate-800">
                       <StepFlow text={bp.shortcutHotkey} />
@@ -195,7 +194,7 @@ export const ShortcutsStudio: React.FC = () => {
                 <FileCode2 className="w-4 h-4 text-indigo-400" />
                 <span>REST JSON Parameter Note:</span>
               </div>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
+              <p className="text-slate-400 text-xs leading-relaxed">
                 The automation payload sends standard REST JSON parameters (<span className="text-indigo-200 font-mono">"model"</span> and <span className="text-indigo-200 font-mono">"prompt"</span>) directly to your local model endpoint (<span className="text-indigo-200 font-mono">http://localhost:11434/api/generate</span>). The placeholder <span className="text-emerald-300 font-semibold">[Selected Text]</span> is automatically substituted by macOS Shortcuts at execution time.
               </p>
             </div>
@@ -204,7 +203,7 @@ export const ShortcutsStudio: React.FC = () => {
             <div className="space-y-2 pt-2 border-t border-slate-800">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-slate-400 font-medium">
                 <span>Local Execution Payload Command:</span>
-                <span className="text-[10px] text-slate-400">Copy to paste into Shortcuts app</span>
+                <span className="text-xs text-slate-400">Copy to paste into Shortcuts app</span>
               </div>
 
               <div className="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800 gap-2">

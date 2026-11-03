@@ -83,7 +83,7 @@ describe('Hardware advisor and layout stress tests', () => {
       await renderComponent(<HardwareAdvisor />);
 
       expect(getByTestId('hardware-advisor-container')).not.toBeNull();
-      expect(getByTestId('advisor-heading')?.textContent).toContain('Mac VRAM Headroom & Token Speed Calculator');
+      expect(getByTestId('advisor-heading')?.textContent).toContain('Mac VRAM headroom and token speed calculator');
       expect(getByTestId('selected-chip-title')?.textContent).toContain('Apple M4 Pro');
       expect(getByTestId('selected-chip-title')?.textContent).toContain('24 GB Unified RAM');
     });

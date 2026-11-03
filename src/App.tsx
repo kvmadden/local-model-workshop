@@ -212,19 +212,19 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
     <div
       data-testid="app-container"
       data-theme={theme}
-      className="min-h-screen bg-bench bench-grid text-ink flex flex-col font-sans antialiased"
+      className="min-h-screen bg-bench text-ink flex flex-col font-sans antialiased"
     >
       <Header activeTab={activeTab} onTabChange={setActiveTab} theme={theme} onToggleTheme={toggleTheme} />
 
       <ErrorBoundary>
-        <main className="flex-1 max-w-[1840px] w-full mx-auto px-4 py-5 sm:px-6 sm:py-6 space-y-6">
+        <main className="flex-1 max-w-[1680px] w-full mx-auto px-4 pb-16 pt-8 sm:px-6 lg:px-10 lg:pt-12 space-y-10">
           <ErrorTrigger />
           {REFERENCE_TABS.includes(activeTab) && <Hero />}
 
           {REFERENCE_TABS.includes(activeTab) && <OllamaDetector />}
 
           {activeTab === 'compare' && (
-            <Suspense fallback={<p className="font-mono text-[13px] text-ink-3">Loading the saved replies</p>}>
+            <Suspense fallback={<p className="text-[15px] text-ink-3">Loading the saved replies</p>}>
               <RunComparison />
             </Suspense>
           )}
@@ -270,8 +270,8 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
         </main>
       </ErrorBoundary>
 
-      <footer className="border-t-2 border-ink bg-panel">
-        <div className="mx-auto flex max-w-[1840px] flex-wrap gap-x-6 gap-y-1 px-4 py-4 font-mono text-[12px] text-ink-3 sm:px-6">
+      <footer className="border-t border-rule">
+        <div className="mx-auto flex max-w-[1680px] flex-wrap gap-x-6 gap-y-1 px-4 py-6 text-[13px] text-ink-3 sm:px-6 lg:px-10">
           <span>Local Model Workshop</span>
           <span>MIT License</span>
           <span>Synthetic examples and public label excerpts. See the source licenses.</span>

@@ -117,7 +117,7 @@ describe('Workshop component unit tests', () => {
       await renderComponent(<Hero />);
 
       expect(getByTestId('hero-section')).not.toBeNull();
-      expect(getByTestId('hero-headline')?.textContent).toContain('Small Local Models on Your Mac');
+      expect(getByTestId('hero-headline')?.textContent).toContain('Small local models on your Mac');
       expect(getByTestId('hero-subtitle')?.textContent).toContain('Find small models that fit your Mac');
       expect(getByTestId('hero-badge-privacy')).not.toBeNull();
       expect(getByTestId('hero-badge-gpu')).not.toBeNull();

@@ -120,7 +120,7 @@ export const DictationCleanupPlayground: React.FC = () => {
       {/* Preset Ramble Chips & Cleanup Toggle */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+          <label className="text-xs font-bold text-slate-300 block">
             1. Select Spoken Ramble Sample or Type Text:
           </label>
 
@@ -204,7 +204,7 @@ export const DictationCleanupPlayground: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
         {/* Spoken Ramble Box */}
         <div className="space-y-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
+          <span className="text-xs font-bold text-slate-400 block">
             Original Spoken Ramble:
           </span>
           <div
@@ -218,11 +218,11 @@ export const DictationCleanupPlayground: React.FC = () => {
         {/* Polished Memo Output Box */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block flex items-center gap-1.5">
+            <span className="text-xs font-bold text-emerald-400 block flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-emerald-400" />
               Polished Professional Output:
             </span>
-            <span className="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+            <span className="text-xs text-slate-400 font-semibold flex items-center gap-1">
               <ArrowRight className="w-3.5 h-3.5 text-indigo-400" />
               Ready to Send
             </span>
@@ -239,7 +239,7 @@ export const DictationCleanupPlayground: React.FC = () => {
               )}
             </div>
 
-            <div className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-800/80 text-xs text-slate-400 flex items-center justify-between">
               <span>Model: {matchingTag || 'Microsoft Phi-3.5 Mini'}</span>
               <span>Mode: {mode === 'live' ? 'Live Streaming' : 'Clean Executive Prose'}</span>
             </div>

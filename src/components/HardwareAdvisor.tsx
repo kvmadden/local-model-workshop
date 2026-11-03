@@ -31,12 +31,11 @@ export const HardwareAdvisor: React.FC = () => {
   return (
     <div data-testid="hardware-advisor-container" className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-3">
-        <p className="font-mono text-[12px] text-ink-3">Apple Silicon Hardware & Memory Advisor</p>
-        <h2 data-testid="advisor-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
-          Mac VRAM Headroom & Token Speed Calculator
+      <div className="space-y-3">
+        <h2 data-testid="advisor-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">
+          Mac VRAM headroom and token speed calculator
         </h2>
-        <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
+        <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
           Select your Mac chip (M1 through M4) and installed unified memory size to estimate VRAM headroom, token generation speed estimates, and model quantization recommendations.
         </p>
       </div>
@@ -46,7 +45,7 @@ export const HardwareAdvisor: React.FC = () => {
         <div className="lg:col-span-5 space-y-5">
           {/* Generation Filter */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block flex items-center gap-2">
+            <label className="text-xs font-bold text-slate-300 block flex items-center gap-2">
               <Sliders className="w-4 h-4 text-indigo-400" />
               <span>1. Filter Apple Silicon Generation:</span>
             </label>
@@ -89,7 +88,7 @@ export const HardwareAdvisor: React.FC = () => {
                   >
                     <div>
                       <div>{chip.name}</div>
-                      <div className="text-[10px] text-slate-400 font-normal">
+                      <div className="text-xs text-slate-400 font-normal">
                         {chip.memoryBandwidthGBs} GB/s &bull; {chip.gpuCores} GPU Cores
                       </div>
                     </div>
@@ -104,10 +103,10 @@ export const HardwareAdvisor: React.FC = () => {
             {/* RAM Selector Slider / Buttons */}
             <div className="space-y-2 pt-2 border-t border-slate-800">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <label className="text-xs font-bold text-slate-300">
                   2. Installed Unified RAM:
                 </label>
-                <span className="text-xs font-bold text-sky-400 font-mono bg-sky-950/80 px-2.5 py-0.5 rounded border border-sky-800/60">
+                <span className="text-xs font-bold text-sky-400 bg-sky-950/80 px-2.5 py-0.5 rounded border border-sky-800/60">
                   {selectedRamGB} GB RAM
                 </span>
               </div>
@@ -143,7 +142,7 @@ export const HardwareAdvisor: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[11px] font-semibold text-indigo-400 bg-indigo-950/80 border border-indigo-800/60 px-2.5 py-0.5 rounded">
+                  <span className="text-xs font-semibold text-indigo-400 bg-indigo-950/80 border border-indigo-800/60 px-2.5 py-0.5 rounded">
                     {selectedChip.generation} {selectedChip.tier}
                   </span>
                 </div>
@@ -153,8 +152,8 @@ export const HardwareAdvisor: React.FC = () => {
               </div>
 
               <div className="text-right bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 shrink-0">
-                <span className="text-[10px] text-slate-400 block uppercase tracking-wider">Memory Bandwidth</span>
-                <span className="text-sm font-mono font-extrabold text-indigo-300">
+                <span className="text-xs text-slate-400 block">Memory Bandwidth</span>
+                <span className="text-sm font-extrabold text-indigo-300">
                   {selectedChip.memoryBandwidthGBs} GB/s
                 </span>
               </div>
@@ -167,10 +166,10 @@ export const HardwareAdvisor: React.FC = () => {
                   <HardDrive className="w-4 h-4 text-emerald-400" />
                   <span>Metal GPU VRAM</span>
                 </div>
-                <div data-testid="metric-usable-vram" className="text-lg font-extrabold text-emerald-300 font-mono">
+                <div data-testid="metric-usable-vram" className="text-lg font-extrabold text-emerald-300">
                   ~{usableVramGB} GB
                 </div>
-                <div className="text-[10px] text-slate-400">Max RAM allocated for models</div>
+                <div className="text-xs text-slate-400">Max RAM allocated for models</div>
               </div>
 
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
@@ -178,10 +177,10 @@ export const HardwareAdvisor: React.FC = () => {
                   <Zap className="w-4 h-4 text-amber-400" />
                   <span>Neural Engine</span>
                 </div>
-                <div data-testid="metric-neural-engine" className="text-lg font-extrabold text-amber-300 font-mono">
+                <div data-testid="metric-neural-engine" className="text-lg font-extrabold text-amber-300">
                   {selectedChip.neuralEngineTops} TOPS
                 </div>
-                <div className="text-[10px] text-slate-400">On-device AI compute power</div>
+                <div className="text-xs text-slate-400">On-device AI compute power</div>
               </div>
 
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
@@ -189,10 +188,10 @@ export const HardwareAdvisor: React.FC = () => {
                   <ShieldCheck className="w-4 h-4 text-sky-400" />
                   <span>OS System Reserve</span>
                 </div>
-                <div data-testid="metric-system-reserve" className="text-lg font-extrabold text-sky-300 font-mono">
+                <div data-testid="metric-system-reserve" className="text-lg font-extrabold text-sky-300">
                   ~{systemReservedGB} GB
                 </div>
-                <div className="text-[10px] text-slate-400">Reserved for macOS &amp; app UI</div>
+                <div className="text-xs text-slate-400">Reserved for macOS &amp; app UI</div>
               </div>
             </div>
 
@@ -229,25 +228,25 @@ export const HardwareAdvisor: React.FC = () => {
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-slate-100">{model.name}</span>
-                          <span className="text-[10px] text-slate-400 bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded font-mono">
+                          <span className="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded">
                             ~{estModelGB} GB VRAM
                           </span>
                         </div>
-                        <div className="text-[11px] text-slate-400">{model.description}</div>
+                        <div className="text-xs text-slate-400">{model.description}</div>
                       </div>
 
                       <div className="flex items-center gap-3 shrink-0">
                         {canRun ? (
                           <div className="text-left sm:text-right">
-                            <span className="text-xs font-mono font-bold text-emerald-400 block">
+                            <span className="text-xs font-bold text-emerald-400 block">
                               ~{estimatedSpeed} tok/s Estimated Generation Speed
                             </span>
-                            <span className="text-[10px] text-slate-400 font-mono">
+                            <span className="text-xs text-slate-400">
                               +{vramMargin} GB Estimated VRAM Headroom
                             </span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1.5 text-amber-400 font-semibold bg-amber-950/60 border border-amber-800/80 px-2.5 py-1 rounded-lg text-[11px]">
+                          <div className="flex items-center gap-1.5 text-amber-400 font-semibold bg-amber-950/60 border border-amber-800/80 px-2.5 py-1 rounded-lg text-xs">
                             <AlertTriangle className="w-3.5 h-3.5" />
                             <span>Needs {Math.round(estModelGB * 1.3)}GB+ RAM</span>
                           </div>

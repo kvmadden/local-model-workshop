@@ -68,7 +68,7 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     test('T1-03: Task Wizard hero banner renders non-technical zero-code guidance', async ({ page }) => {
       const heading = page.locator('[data-testid="wizard-heading"]');
       await expect(heading).toBeVisible();
-      await expect(heading).toContainText('Match Your Mac Goal to the Perfect Local Model & App');
+      await expect(heading).toContainText('Match your Mac goal to a local model and app');
 
       // Check task options list renders
       const firstOption = page.locator('[data-testid="task-option-transcribe-meetings"]');

@@ -74,7 +74,7 @@ export const EndpointSettings: React.FC<EndpointSettingsProps> = ({
 
   return (
     <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-4 space-y-4">
-      <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+      <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
         <Sliders className="w-3.5 h-3.5 text-indigo-400" />
         <span>Endpoint & Model Settings</span>
       </div>
@@ -122,7 +122,7 @@ export const EndpointSettings: React.FC<EndpointSettingsProps> = ({
         <div className="space-y-1">
           <div className="flex justify-between items-center text-xs text-slate-400 font-medium">
             <label htmlFor={ids.temperature}>Temperature</label>
-            <span className="font-mono text-indigo-400">{(config.temperature ?? 0.7).toFixed(1)}</span>
+            <span className="text-indigo-400">{(config.temperature ?? 0.7).toFixed(1)}</span>
           </div>
           <div className="h-11 min-h-[44px] flex items-center">
             <input

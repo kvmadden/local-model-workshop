@@ -96,7 +96,7 @@ describe('Workshop stress tests', () => {
       await renderComponent(<App initialTab="wizard" />);
 
       expect(getByTestId('task-wizard-container')).not.toBeNull();
-      expect(getByTestId('wizard-heading')?.textContent).toContain('Match Your Mac Goal');
+      expect(getByTestId('wizard-heading')?.textContent).toContain('Match your Mac goal');
       expect(getByTestId('hero-section')).not.toBeNull();
 
       // Switch to catalog then back to wizard via header tabs

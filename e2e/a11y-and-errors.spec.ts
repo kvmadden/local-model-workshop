@@ -15,7 +15,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
     await expect(page.locator('[data-testid="app-container"]')).toBeVisible();
 
     await page.click('[data-testid="tab-hardware-advisor"]');
-    await expect(page.locator('[data-testid="advisor-heading"]')).toContainText('Mac VRAM Headroom & Token Speed Calculator');
+    await expect(page.locator('[data-testid="advisor-heading"]')).toContainText('Mac VRAM headroom and token speed calculator');
 
     // Test M3 Ultra
     await page.click('[data-testid="gen-filter-m3"]');

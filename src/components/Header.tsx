@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { TabType } from '../types/workshop';
 import { useOllamaStatus } from '../hooks/useOllamaStatus';
 
@@ -20,72 +21,64 @@ const TABS: Array<{ id: TabType; testId: string; label: string }> = [
   { id: 'shortcuts', testId: 'tab-shortcuts-studio', label: 'Shortcuts' },
 ];
 
-/** The mark: a printed label with its tape tab and a barcode. */
+/** The mark: a small printed label, its first line in the accent. */
 const LabelMark: React.FC = () => (
-  <svg viewBox="0 0 44 32" width="44" height="32" aria-hidden="true" className="shrink-0 text-ink">
-    <rect x="1" y="1" width="42" height="30" fill="rgb(var(--label))" stroke="currentColor" strokeWidth="2" />
-    <rect x="1" y="1" width="11" height="30" fill="rgb(var(--tape))" stroke="currentColor" strokeWidth="2" />
-    <g fill="rgb(var(--label-ink))">
-      <rect x="16" y="7" width="2" height="18" />
-      <rect x="20" y="7" width="1" height="18" />
-      <rect x="23" y="7" width="3" height="18" />
-      <rect x="28" y="7" width="1" height="18" />
-      <rect x="31" y="7" width="2" height="18" />
-      <rect x="35" y="7" width="1" height="18" />
-      <rect x="38" y="7" width="2" height="18" />
-    </g>
+  <svg viewBox="0 0 32 24" width="32" height="24" aria-hidden="true" className="shrink-0 text-ink-3">
+    <rect x="1" y="1" width="30" height="22" rx="4" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <line x1="7" y1="8" x2="25" y2="8" stroke="rgb(var(--accent-text))" strokeWidth="2" strokeLinecap="round" />
+    <line x1="7" y1="12.5" x2="21" y2="12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="7" y1="16.5" x2="16" y2="16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange, theme = 'dark', onToggleTheme }) => {
   const { available, models, loading } = useOllamaStatus();
+  const nextTheme = theme === 'dark' ? 'Use light theme' : 'Use dark theme';
 
   return (
-    <header data-testid="workshop-header" className="border-b-2 border-ink bg-panel">
-      <div className="mx-auto max-w-[1840px] px-4 sm:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 py-3">
+    <header data-testid="workshop-header" className="border-b border-rule bg-panel">
+      <div className="mx-auto max-w-[1680px] px-4 sm:px-6 lg:px-10">
+        <div className="flex items-center justify-between gap-4 pb-2 pt-3">
           <div className="flex min-w-0 items-center gap-3">
             <LabelMark />
             <div className="min-w-0">
-              <h1 data-testid="workshop-title" className="font-display text-[22px] font-bold uppercase leading-none tracking-[0.04em] text-ink sm:text-[26px]">
+              <h1 data-testid="workshop-title" className="text-[17px] font-semibold leading-tight text-ink">
                 Local Model Workshop
               </h1>
-              <p data-testid="workshop-subtitle" className="mt-1 font-mono text-[12px] leading-tight text-ink-3">
+              <p data-testid="workshop-subtitle" className="hidden text-[13px] leading-snug text-ink-3 sm:block">
                 A test bench for local models reading medication instructions
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Live Ollama status */}
-            <div data-testid="ollama-header-badge" className="flex min-h-[44px] items-center">
-              <span
-                title={available ? `Installed models: ${models.length > 0 ? models.map((m) => m.name).join(', ') : 'none'}` : 'Run Ollama on this Mac for live model execution'}
-                className="flex items-center gap-2 border border-rule-strong bg-bench px-2.5 py-1.5 font-mono text-[12px] text-ink-2"
-              >
-                <span
-                  aria-hidden="true"
-                  className={`inline-block h-2.5 w-2.5 ${loading ? 'bg-tape' : available ? 'bg-stamp-fill' : 'bg-rule-strong'}`}
-                />
-                <span>{loading ? 'Checking engine' : available ? `Ollama: ${models.length} model${models.length !== 1 ? 's' : ''}` : 'Ollama not reached'}</span>
-              </span>
+          <div className="flex shrink-0 items-center gap-1">
+            {/* Live Ollama status, as plain text with a small dot */}
+            <div
+              data-testid="ollama-header-badge"
+              title={available ? `Installed models: ${models.length > 0 ? models.map((m) => m.name).join(', ') : 'none'}` : 'Run Ollama on this Mac for live model execution'}
+              className="hidden min-h-[44px] items-center gap-2 px-2 text-[13px] text-ink-3 sm:flex"
+            >
+              <span aria-hidden="true" className={`inline-block h-2 w-2 rounded-full ${available ? 'bg-accent-fill' : 'bg-slate-600'}`} />
+              <span>{loading ? 'Checking engine' : available ? `Ollama: ${models.length} model${models.length !== 1 ? 's' : ''}` : 'Ollama not reached'}</span>
             </div>
             {onToggleTheme && (
               <button
                 type="button"
                 data-testid="theme-toggle"
                 onClick={onToggleTheme}
-                className="min-h-[44px] border border-rule-strong bg-panel px-3 font-display text-[14px] font-semibold uppercase tracking-[0.04em] text-ink hover:border-ink"
+                aria-label={nextTheme}
+                title={nextTheme}
+                className="flex h-11 w-11 items-center justify-center rounded-lg text-ink-2 transition-colors hover:bg-slate-850 hover:text-ink"
               >
-                {theme === 'dark' ? 'Use light theme' : 'Use dark theme'}
+                {theme === 'dark' ? <Sun className="h-[18px] w-[18px]" aria-hidden="true" /> : <Moon className="h-[18px] w-[18px]" aria-hidden="true" />}
               </button>
             )}
           </div>
         </div>
 
-        {/* Tabs, like printed label tabs: the open one carries the yellow tape and an ink rule. One row from
-            1024 px, a clean grid below that, so no label is ever cut off at the edge of a scrolling strip. */}
-        <nav data-testid="workshop-nav-tabs" aria-label="Workshop Sections" className="-mb-[2px] grid grid-cols-2 gap-0.5 overflow-x-auto pb-0 md:grid-cols-4 lg:flex lg:items-end">
+        {/* Tabs: one row from 1024 px, a clean grid below that, so no label is ever cut off at the
+            edge of a scrolling strip. The open tab is marked by ink text and an accent rule. */}
+        <nav data-testid="workshop-nav-tabs" aria-label="Workshop Sections" className="-mb-px grid grid-cols-2 overflow-x-auto min-[400px]:grid-cols-3 md:grid-cols-4 lg:flex lg:gap-1">
           {TABS.map((t) => {
             const active = activeTab === t.id;
             return (
@@ -95,8 +88,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange, theme = 
                 data-testid={t.testId}
                 aria-current={active ? 'page' : undefined}
                 onClick={() => onTabChange(t.id)}
-                className={`min-h-[44px] min-w-[44px] shrink-0 whitespace-nowrap border-b-[3px] px-3.5 text-left font-display text-[15px] font-semibold uppercase tracking-[0.04em] transition-colors lg:text-center ${
-                  active ? 'border-ink bg-tape text-tape-ink' : 'border-transparent text-ink-2 hover:border-rule-strong hover:text-ink'
+                className={`min-h-[44px] min-w-[44px] shrink-0 whitespace-nowrap border-b-2 px-3 text-left text-[15px] font-medium transition-colors lg:text-center ${
+                  active ? 'border-accent-fill text-ink' : 'border-transparent text-ink-3 hover:text-ink'
                 }`}
               >
                 {t.label}

@@ -192,7 +192,7 @@ export const FileChattingPlayground: React.FC = () => {
     >
       {/* Document Selector Chips */}
       <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+        <label className="text-xs font-bold text-slate-300 block">
           1. Select Local Document to Chat With:
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -241,10 +241,10 @@ export const FileChattingPlayground: React.FC = () => {
       {/* Interactive Local Q&A Feed */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+          <label className="text-xs font-bold text-slate-300 block">
             2. Local Interactive Q&A Feed:
           </label>
-          <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
+          <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5" />
             {mode === 'live' ? `Live Streaming (${matchingTag})` : 'Local Metal Acceleration'}
           </span>
@@ -262,7 +262,7 @@ export const FileChattingPlayground: React.FC = () => {
                   msg.sender === 'user' ? 'items-end' : 'items-start'
                 }`}
               >
-                <div className="text-[11px] text-slate-400 px-1 font-medium">
+                <div className="text-xs text-slate-400 px-1 font-medium">
                   {msg.sender === 'user' ? 'You' : `Local ${matchingTag || 'Qwen 2.5'} Model`}
                 </div>
 
@@ -278,7 +278,7 @@ export const FileChattingPlayground: React.FC = () => {
                   {msg.citation && (
                     <div
                       data-testid="document-citation"
-                      className="mt-2 pt-2 border-t border-slate-800 text-[11px] text-emerald-400 font-semibold flex items-center gap-1.5"
+                      className="mt-2 pt-2 border-t border-slate-800 text-xs text-emerald-400 font-semibold flex items-center gap-1.5"
                     >
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>{msg.citation}</span>
@@ -291,7 +291,7 @@ export const FileChattingPlayground: React.FC = () => {
 
           {isProcessing && (
             <div className="flex flex-col items-start space-y-1">
-              <div className="text-[11px] text-slate-400 px-1 font-medium">
+              <div className="text-xs text-slate-400 px-1 font-medium">
                 Local {matchingTag || 'Qwen 2.5'} Model
               </div>
               <div className="p-3.5 bg-slate-900 border border-slate-800 rounded-2xl rounded-bl-none text-slate-400 text-xs italic flex items-center gap-2">

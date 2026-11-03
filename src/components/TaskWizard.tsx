@@ -56,23 +56,22 @@ export const TaskWizard: React.FC = () => {
   return (
     <div data-testid="task-wizard-container" className="space-y-6">
       {/* Hero Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+      <div className="relative">
         <div className="max-w-3xl space-y-3">
-          <p className="font-mono text-[12px] text-ink-3">Zero-Code Local AI Assistant</p>
-          <h2 data-testid="wizard-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
-            Match Your Mac Goal to the Perfect Local Model &amp; App
+          <h2 data-testid="wizard-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">
+            Match your Mac goal to a local model and app
           </h2>
-          <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
-            Select what you want to accomplish on your Mac today. We match your objective with a desktop app that runs models on this Mac — no coding, terminal scripts, or technical setup required.
+          <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
+            Select what you want to accomplish on your Mac today. We match your objective with a desktop app that runs models on this Mac, with no coding, terminal scripts or technical setup.
           </p>
           <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
             <span className="font-semibold text-slate-300">Supported Mac Apps:</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Jan (jan.ai)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">GPT4All (gpt4all.io)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Msty (msty.app)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Open WebUI (openwebui.com)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">LM Studio</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">AnythingLLM</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Jan (jan.ai)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">GPT4All (gpt4all.io)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Msty (msty.app)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Open WebUI (openwebui.com)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">LM Studio</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">AnythingLLM</span>
           </div>
         </div>
       </div>
@@ -80,7 +79,7 @@ export const TaskWizard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Task Selection List */}
         <section className="lg:col-span-5 space-y-3" aria-label="Task Selection">
-          <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider px-1 flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-300 px-1 flex items-center justify-between">
             <span>Select Your Goal</span>
             <span className="text-xs text-indigo-400 font-normal">{TASKS_DATA.length} Goals Available</span>
           </h3>
@@ -164,7 +163,7 @@ export const TaskWizard: React.FC = () => {
 
             {/* Workflow preview */}
             <div className="bg-slate-950/70 p-4 rounded-xl border border-slate-800/80 space-y-2">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Zero-Code Workflow</span>
+              <span className="text-xs font-semibold text-slate-400 block">Zero-Code Workflow</span>
               <div className="text-sm font-medium text-indigo-300 bg-slate-950 p-3 rounded-lg border border-slate-800">
                 <StepFlow testId="sample-workflow" text={selectedTask.sampleWorkflow} />
               </div>

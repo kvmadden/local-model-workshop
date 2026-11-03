@@ -17,7 +17,7 @@ test.describe('Local Model Workshop - Expansion Features E2E Suite', () => {
      ========================================================================== */
   test('E2E-01: Hardware Advisor calculates VRAM headroom for M1-M4 chips', async ({ page }) => {
     await page.click('[data-testid="tab-hardware-advisor"]');
-    await expect(page.locator('[data-testid="advisor-heading"]')).toContainText('Mac VRAM Headroom & Token Speed Calculator');
+    await expect(page.locator('[data-testid="advisor-heading"]')).toContainText('Mac VRAM headroom and token speed calculator');
 
     // Filter by M4 chip generation
     await page.click('[data-testid="gen-filter-m4"]');
@@ -35,7 +35,7 @@ test.describe('Local Model Workshop - Expansion Features E2E Suite', () => {
      ========================================================================== */
   test('E2E-02: Shortcuts Studio renders 1-click Apple Shortcuts blueprints', async ({ page }) => {
     await page.click('[data-testid="tab-shortcuts-studio"]');
-    await expect(page.locator('[data-testid="shortcuts-heading"]')).toContainText('1-Click Apple Shortcuts & Global Hotkeys');
+    await expect(page.locator('[data-testid="shortcuts-heading"]')).toContainText('Apple Shortcuts and global hotkeys');
 
     // Select Dictation Hotkey Recipe
     await page.click('[data-testid="shortcut-blueprint-btn-dictation-hotkey"]');
@@ -48,7 +48,7 @@ test.describe('Local Model Workshop - Expansion Features E2E Suite', () => {
      ========================================================================== */
   test('E2E-03: Benchmark Studio compares models side-by-side and exports recipe', async ({ page }) => {
     await page.click('[data-testid="tab-benchmark-studio"]');
-    await expect(page.locator('[data-testid="benchmark-heading"]')).toContainText('Benchmark & Compare Local Models');
+    await expect(page.locator('[data-testid="benchmark-heading"]')).toContainText('Benchmark and compare local models');
 
     // Select comparison prompt
     await page.click('[data-testid="benchmark-prompt-btn-0"]');

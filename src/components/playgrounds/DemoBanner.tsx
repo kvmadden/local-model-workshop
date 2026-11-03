@@ -16,7 +16,7 @@ export const DemoBanner: React.FC<DemoBannerProps> = ({ appName, appUrl }) => {
         <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
         <div>
           <span className="text-xs font-semibold text-amber-300">Interactive Demo Preview</span>
-          <p className="text-[11px] text-amber-200 leading-relaxed mt-0.5">
+          <p className="text-xs text-amber-200 leading-relaxed mt-0.5">
             This playground shows a preview of what this workflow produces. To run it for real on your files, download {appName} below.
           </p>
         </div>

@@ -89,7 +89,7 @@ export const StepCard: React.FC<StepCardProps> = ({
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
         <div className="flex flex-wrap items-center gap-2 flex-1">
-          <div className="h-11 w-11 min-h-[44px] min-w-[44px] bg-indigo-950/60 border border-indigo-800/50 rounded-lg text-indigo-400 font-mono text-sm font-bold flex items-center justify-center shrink-0">
+          <div className="h-11 w-11 min-h-[44px] min-w-[44px] bg-indigo-950/60 border border-indigo-800/50 rounded-lg text-indigo-400 text-sm font-bold flex items-center justify-center shrink-0">
             #{index + 1}
           </div>
 
@@ -105,7 +105,7 @@ export const StepCard: React.FC<StepCardProps> = ({
 
           <span
             data-testid={`step-status-badge-${index}`}
-            className={`h-11 min-h-[44px] px-3 py-1 rounded-lg text-xs font-mono font-bold uppercase tracking-wider border inline-flex items-center justify-center shrink-0 ${getStatusBadgeStyle(
+            className={`h-11 min-h-[44px] px-3 py-1 rounded-lg text-xs font-bold border inline-flex items-center justify-center shrink-0 ${getStatusBadgeStyle(
               step.status
             )}`}
           >
@@ -115,7 +115,7 @@ export const StepCard: React.FC<StepCardProps> = ({
           {step.latencyMs !== undefined && (
             <span
               data-testid={`step-latency-badge-${index}`}
-              className="h-11 min-h-[44px] px-3 py-1 bg-slate-950 text-slate-400 border border-slate-800 rounded-lg font-mono text-xs flex items-center gap-1 shrink-0"
+              className="h-11 min-h-[44px] px-3 py-1 bg-slate-950 text-slate-400 border border-slate-800 rounded-lg text-xs flex items-center gap-1 shrink-0"
             >
               <Clock className="w-3.5 h-3.5 text-indigo-400" />
               {step.latencyMs}ms
@@ -176,7 +176,7 @@ export const StepCard: React.FC<StepCardProps> = ({
       {showErrorContainer && (
         <div
           data-testid={`step-error-container-${index}`}
-          className="bg-rose-950/60 border border-rose-800/80 rounded-lg p-3 text-rose-300 text-xs font-mono flex items-start gap-2"
+          className="bg-rose-950/60 border border-rose-800/80 rounded-lg p-3 text-rose-300 text-xs flex items-start gap-2"
         >
           <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
           <div className="flex-1">
