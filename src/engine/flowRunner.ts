@@ -176,10 +176,12 @@ export class FlowRunner {
     const promptCharCount = resolvedPrompt.length;
     const estimatedPromptTokens = Math.ceil(promptCharCount / 4);
 
+    let calledAt: number | null = null;
     try {
       if (warnings.length > 0 && options.strictPlaceholders) {
         throw new Error(`Unresolved placeholder(s): ${unresolved.map((key) => `{{${key}}}`).join(', ')}`);
       }
+      calledAt = performance.now();
       const result = await adapter.executePrompt(resolvedPrompt, step.modelConfig);
 
       step.status = 'completed';
@@ -216,6 +218,11 @@ export class FlowRunner {
 
       stepResult.status = 'error';
       stepResult.error = errorMessage;
+      // A failed request still took time. Keep it, so a timeout is visible as one.
+      if (calledAt !== null) {
+        step.latencyMs = Math.round(performance.now() - calledAt);
+        stepResult.latencyMs = step.latencyMs;
+      }
 
       executionState.status = 'error';
       executionState.error = errorMessage;
@@ -351,11 +358,13 @@ export class FlowRunner {
       return this.refuse(executionState, updatedFlow, options, `Two steps share the id '${duplicate}'. Step ids must be unique.`);
     }
 
-    // Pre-populate context with outputs of preceding steps
+    // Earlier steps count as answered only when they completed. An idle or failed step has an
+    // empty output, and treating it as an answer would hide the missing dependency. A completed
+    // step that answered with empty text is still an answer.
     for (let i = 0; i < targetIndex; i++) {
       const priorStep = updatedFlow.steps[i];
-      if (priorStep.output !== undefined) {
-        populateStepContext(context, priorStep, i, priorStep.output);
+      if (priorStep.status === 'completed') {
+        populateStepContext(context, priorStep, i, priorStep.output ?? '');
       }
     }
 

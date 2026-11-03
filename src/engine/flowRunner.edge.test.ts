@@ -504,3 +504,46 @@ describe('FlowRunner edge cases and stress tests', () => {
     });
   });
 });
+
+// Review round 2 (3 Nov).
+describe('FlowRunner: review round 2', () => {
+  const twoSteps = (firstStatus: 'idle' | 'error' | 'completed', firstOutput: string): Flow => {
+    const flow = createDefaultFlow('r2', 'Round 2', 'Input');
+    const s1 = createDefaultStep('step-1', 'Step One', 'Process: {{input}}');
+    s1.status = firstStatus;
+    s1.output = firstOutput;
+    const s2 = createDefaultStep('step-2', 'Step Two', 'Use: {{step1.output}}');
+    flow.steps = [s1, s2];
+    return flow;
+  };
+  const adapter = () => ({ executePrompt: vi.fn(async (p: string) => ({ text: `answer to ${p}`, latencyMs: 1 })) });
+
+  // GPT 9: an idle step has output "", which used to count as an answer.
+  it.each(['idle', 'error'] as const)('does not treat a %s predecessor as an answered dependency when one step runs alone', async (status) => {
+    const strictAdapter = adapter();
+    const strict = await runSingleStep(twoSteps(status, ''), 1, { adapter: strictAdapter, strictPlaceholders: true });
+    expect(strict.state.status).toBe('error');
+    expect(strict.flow.steps[1].error).toMatch(/Unresolved placeholder\(s\): \{\{step1\.output\}\}/);
+    expect(strictAdapter.executePrompt).not.toHaveBeenCalled();
+
+    const loose = await runSingleStep(twoSteps(status, ''), 1, { adapter: adapter() });
+    expect(loose.flow.steps[1].warnings).toEqual(['Placeholder {{step1.output}} has no value and was replaced with nothing.']);
+  });
+
+  it('keeps a completed predecessor that answered with empty text as a real answer', async () => {
+    const run = adapter();
+    const result = await runSingleStep(twoSteps('completed', ''), 1, { adapter: run, strictPlaceholders: true });
+    expect(result.state.status).toBe('completed');
+    expect(run.executePrompt).toHaveBeenCalledWith('Use: ', expect.anything());
+    expect(result.flow.steps[1].warnings).toBeUndefined();
+  });
+
+  // Grok 11, second part: a failed step used to keep no time at all.
+  it('records how long a failed step took', async () => {
+    const slowFailure = { executePrompt: vi.fn(() => new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timed out after 60 ms')), 60))) };
+    const result = await runFlow(twoSteps('idle', ''), { adapter: slowFailure });
+    expect(result.flow.steps[0].status).toBe('error');
+    expect(result.flow.steps[0].latencyMs).toBeGreaterThanOrEqual(50);
+    expect(result.state.stepResults['step-1'].latencyMs).toBe(result.flow.steps[0].latencyMs);
+  });
+});
