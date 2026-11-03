@@ -12,7 +12,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { scoreCase, SigGold, SIG_FIELDS } from './sigScore';
 import { scoreLegacy, LegacyGold } from './legacyScore';
-import { scoreCaseV3 } from './sigScoreV3';
+import { scoreCaseV3, parsePredictionV3, drugMatches, doseMatchesV3 } from './sigScoreV3';
 
 const runs = [
   { dir: 'eval/results/2026-10-30-v2-run1', format: 'split' },
@@ -60,18 +60,64 @@ describe('committed eval evidence', () => {
     }
   });
 
-  it('scorer v3 gives the same verdicts as v2 on every saved split-format reply', () => {
+  it('scorer v3 gives the same verdicts as v2 on every saved split-format reply, parse status included', () => {
     const changed: string[] = [];
+    let compared = 0;
     for (const { dir } of runs.filter((r) => r.format === 'split')) {
       for (const file of rawFiles(dir)) {
         for (const row of rowsOf(dir, file)) {
           const v3 = scoreCaseV3(row.gold, row.output, row.input);
-          for (const field of [...SIG_FIELDS, 'allCorrect'] as const) {
+          compared++;
+          for (const field of ['parsed', ...SIG_FIELDS, 'allCorrect'] as const) {
             if (v3[field] !== row.score[field]) changed.push(`${dir}/${file} ${row.id} ${field}`);
           }
         }
       }
     }
+    // 3 models and the echo mock, on 25 + 25 + 12 lines.
+    expect(compared).toBe(248);
     expect(changed).toEqual([]);
+  });
+
+  it('scorer v3 drug and dose checks agree with the stored verdicts on every saved first-format reply', () => {
+    const changed: string[] = [];
+    let compared = 0;
+    for (const { dir } of runs.filter((r) => r.format === 'first')) {
+      for (const file of rawFiles(dir)) {
+        for (const row of rowsOf(dir, file)) {
+          const stored = { drug: row.score.medication ?? row.score.drug, dose: row.score.dose };
+          const p = parsePredictionV3(row.output).value as Record<string, unknown> | null;
+          const v3 = p
+            ? { drug: drugMatches(p.medication, row.gold.medication, row.input), dose: doseMatchesV3({ value: p.dose_value, unit: p.dose_unit }, { value: row.gold.dose_value, unit: row.gold.dose_unit }) }
+            : { drug: false, dose: false };
+          compared++;
+          if (v3.drug !== stored.drug) changed.push(`${dir}/${file} ${row.id} drug`);
+          if (v3.dose !== stored.dose) changed.push(`${dir}/${file} ${row.id} dose`);
+        }
+      }
+    }
+    expect(compared).toBe(248);
+    expect(changed).toEqual([]);
+  });
+
+  it('none of the 372 model answers got the drug or the dose wrong, under the stored verdicts and under v3', () => {
+    let answers = 0;
+    const wrong: string[] = [];
+    for (const { dir, format } of runs) {
+      for (const file of rawFiles(dir).filter((f) => !f.includes('mock'))) {
+        for (const row of rowsOf(dir, file)) {
+          answers++;
+          const drug = format === 'split' ? row.score.drug : row.score.medication ?? row.score.drug;
+          if (!drug || !row.score.dose) wrong.push(`${dir}/${file} ${row.id} stored`);
+          const p = parsePredictionV3(row.output).value as Record<string, unknown> | null;
+          const v3 = format === 'split'
+            ? scoreCaseV3(row.gold, row.output, row.input)
+            : { drug: !!p && drugMatches(p.medication, row.gold.medication, row.input), dose: !!p && doseMatchesV3({ value: p.dose_value, unit: p.dose_unit }, { value: row.gold.dose_value, unit: row.gold.dose_unit }) };
+          if (!v3.drug || !v3.dose) wrong.push(`${dir}/${file} ${row.id} v3`);
+        }
+      }
+    }
+    expect(answers).toBe(372);
+    expect(wrong).toEqual([]);
   });
 });
