@@ -115,13 +115,13 @@ describe('scorer v3: dose and units', () => {
 });
 
 describe('scorer v3: parsing and schema', () => {
-  it('finds the answer after prose that contains braces, and takes the last of several objects', () => {
+  it('finds the answer after prose that contains braces, and scores no object when there are several', () => {
     const g = gold('s01');
     expect(parsePredictionV3('Note {see below}: ' + exact(g)).how).toBe('embedded');
     expect(scoreCaseV3(g, 'Note {see below}: ' + exact(g), input('s01')).allCorrect).toBe(true);
     const twice = parsePredictionV3('{"drug":"draft"} Corrected: ' + exact(g));
-    expect(twice.how).toBe('last-of-several');
-    expect(scoreCaseV3(g, '{"drug":"draft"} Corrected: ' + exact(g), input('s01')).allCorrect).toBe(true);
+    expect(twice.how).toBe('several');
+    expect(scoreCaseV3(g, '{"drug":"draft"} Corrected: ' + exact(g), input('s01')).schemaProblems).toEqual(['$: several JSON objects, so none was scored']);
     expect(parsePredictionV3('```json\n' + exact(g) + '\n```').how).toBe('embedded');
     expect(parsePredictionV3('{"drug":"a } b"}').value).toEqual({ drug: 'a } b' });
     expect(parsePredictionV3('no json here').how).toBe('none');
@@ -147,5 +147,89 @@ describe('scorer v3: parsing and schema', () => {
     const g = gold('s01');
     const scores = [scoreCaseV3(g, exact(g), input('s01'), schema), scoreCaseV3(g, exact(g, { extra: 1 }), input('s01'), schema), scoreCaseV3(g, 'nope', input('s01'), schema)];
     expect(summarizeV3(scores)).toMatchObject({ n: 3, parsed: 2, schemaValid: 1, allCorrect: 2 });
+  });
+});
+
+// Review round 2 (3 Nov). Each case below reproduces a reviewer finding against the scorer.
+describe('scorer v3: review round 2', () => {
+  it('never accepts an overflowing or non-finite dose (GPT 1)', () => {
+    expect(doseMatchesV3({ value: 1e308, unit: 'g' }, { value: 10, unit: 'mg' })).toBe(false);
+    expect(doseMatchesV3({ value: '1' + '0'.repeat(400), unit: 'mg' }, { value: 10, unit: 'mg' })).toBe(false);
+    expect(strictNumber('1' + '0'.repeat(400))).toBeNull();
+  });
+
+  it('reads the gold unit the same way as the reply unit, and refuses a gold unit it does not know (Grok 5)', () => {
+    expect(doseMatchesV3({ value: 1, unit: 'g' }, { value: 1000, unit: 'MG' })).toBe(true);
+    expect(doseMatchesV3({ value: 5, unit: 'mL' }, { value: 5, unit: 'ml' })).toBe(true);
+    expect(doseMatchesV3({ value: 400, unit: 'mcg' }, { value: 400, unit: 'µg' })).toBe(true);
+    expect(() => doseMatchesV3({ value: 1, unit: 'mg' }, { value: 1, unit: 'tsp' })).toThrow(/gold unit/);
+  });
+
+  it.each([
+    ['metformin', 'Metformin 500 mg tablet (not ER), take 1 tablet twice daily', 'metformin ER'],
+    ['metformin', 'Metformin 500 mg tablet twice daily, do not use ER', 'metformin ER'],
+    ['metoprolol', 'Metoprolol 50 mg tablet once daily, low sodium diet', 'metoprolol sodium'],
+    ['metoprolol', 'Metoprolol tartrate 25 mg daily, not metoprolol succinate', 'metoprolol succinate'],
+    ['metoprolol tartrate', 'Metoprolol tartrate 25 mg daily, not metoprolol succinate', 'metoprolol tartrate succinate'],
+    ['metoprolol', 'Instead of metoprolol succinate, take metoprolol tartrate 25 mg daily', 'metoprolol succinate'],
+  ])('gold "%s" on "%s" rejects "%s": a salt or release word elsewhere on the line is not this drug\'s (GPT 4, Grok 1)', (g, line, reply) => {
+    expect(drugMatches(reply, g, line)).toBe(false);
+  });
+
+  it.each([
+    ['hydroxyzine', 'Hydroxyzine HCl 25 mg tab 1 po tid prn itching', 'hydroxyzine hydrochloride'],
+    ['hydroxyzine hydrochloride', 'Hydroxyzine hydrochloride 25 mg tablet', 'Hydroxyzine HCl'],
+    ['metformin', 'Metformin ER 500 mg tablet, take 1 tablet daily', 'metformin extended-release'],
+    ['metformin er', 'Metformin extended release 500 mg tablet', 'Metformin ER'],
+    ['ibuprofen', 'Ibuprofen 200 mg tablets, take 3 tablets', 'ibuprofen tablet'],
+    ['metoprolol', 'Instead of metoprolol succinate, take metoprolol tartrate 25 mg daily', 'metoprolol tartrate'],
+  ])('gold "%s" on "%s" accepts "%s": the same salt or form spelled another way (GPT 3, Grok 2)', (g, line, reply) => {
+    expect(drugMatches(reply, g, line)).toBe(true);
+  });
+
+  it.each([
+    ['vitamin d3', 'Vitamin D3 1000 units daily', 'vitamin D-3'],
+    ['vitamin d3', 'Vitamin D-3 1000 units daily', 'Vitamin D3'],
+    ['vitamin b12', 'Vitamin B12 1000 mcg daily', 'vitamin B 12'],
+  ])('gold "%s" on "%s" accepts "%s": a digit in a name matches however it is joined (Grok 3)', (g, line, reply) => {
+    expect(drugMatches(reply, g, line)).toBe(true);
+  });
+
+  it('treats a line that is only a drug name, salt and form as a drug name, and fails any longer copy (Grok 1)', () => {
+    expect(drugMatches('Hydroxyzine HCl tablet', 'hydroxyzine', 'Hydroxyzine HCl tablet')).toBe(true);
+    expect(drugMatches('Hydroxyzine HCl tablet daily', 'hydroxyzine', 'Hydroxyzine HCl tablet daily')).toBe(false);
+  });
+
+  it.each([
+    ['anxiety when driving', 'driving when anxiety'],
+    ['sleep', 'sleep as needed if when'],
+    ['shortness of breath', 'breath shortness'],
+    ['pain', 'pain pain'],
+  ])('gold reason "%s" rejects "%s": order, repetition and inner words count (GPT 5, Grok 4)', (g, reply) => {
+    expect(reasonMatches(reply, g)).toBe(false);
+  });
+
+  it.each([
+    ['nausea and vomiting', 'nausea & vomiting'],
+    ['breakthrough pain', 'break-through pain'],
+    ['pain', 'as needed for pain'],
+    ['pain', 'pain as needed'],
+    ['sleep', 'PRN sleep'],
+    ['itching', 'if itching'],
+  ])('gold reason "%s" accepts "%s": the same reason with wrapper words or another spelling (Grok 4)', (g, reply) => {
+    expect(reasonMatches(reply, g)).toBe(true);
+  });
+
+  it('does not pick one of several JSON objects in a reply (Grok 6)', () => {
+    const g = gold('s01');
+    expect(parsePredictionV3(exact(g) + '\n{}').value).toBeNull();
+    expect(scoreCaseV3(g, exact(g) + '\n{}', input('s01')).parsed).toBe(false);
+    expect(scoreCaseV3(g, '{"drug":"draft"} Corrected: ' + exact(g), input('s01')).parsed).toBe(false);
+  });
+
+  it('scores the echo mock zero only because the prompt it repeats holds no valid JSON object (Grok 6)', () => {
+    for (const file of ['eval/sig-extraction/prompt.txt', 'eval/results/archive/schema-v1/prompt.txt']) {
+      expect(parsePredictionV3(readFileSync(file, 'utf8')).how, file).toBe('none');
+    }
   });
 });
