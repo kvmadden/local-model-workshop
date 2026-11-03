@@ -1,14 +1,16 @@
 /**
- * Visual identity: a pharmacy verification bench.
+ * Visual identity: quiet and readable, like a well-set pharmacy label.
  *
  * Colors come from CSS variables in src/index.css, so one set of class names serves both themes.
- * The light theme is white label stock on a cool steel bench. The dark theme is the same labels
- * on a black epoxy lab bench. Ink is near-black, label tape is yellow, the verification stamp is
- * blue and a miss is red.
+ * The page is neutral, with one blue accent for links, focus and selection. Red marks a missed
+ * field and nothing else on the run comparison.
  *
- * The component code still uses Tailwind's slate, indigo, emerald, amber, rose and sky names.
- * They are mapped onto the bench palette here: slate is the neutral bench and ink scale, indigo,
- * emerald and sky are the stamp blue, amber is the tape and rose is the alert.
+ * Type is Atkinson Hyperlegible Next, a face drawn for low-vision readers, in sentence case. Its
+ * monospace sibling sets the medication instructions themselves, where a misread 1 or l matters.
+ *
+ * The component code still uses Tailwind's slate, indigo, emerald, sky, amber and rose names.
+ * They are mapped here: slate is the neutral scale, indigo, emerald and sky are the accent, amber
+ * is a muted neutral for notes and pending states, and rose is the alert red.
  */
 const v = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
@@ -21,44 +23,50 @@ export default {
     extend: {
       colors: {
         slate: { ...scale('slate'), 850: v('slate-850') },
-        indigo: scale('stamp'),
-        emerald: scale('stamp'),
-        sky: scale('stamp'),
-        amber: scale('tape'),
+        indigo: scale('accent'),
+        emerald: scale('accent'),
+        sky: scale('accent'),
+        amber: { ...scale('muted'), 850: v('slate-850') },
         rose: scale('alert'),
         bench: v('bench'),
         panel: v('panel'),
-        raised: v('raised'),
+        inset: v('slate-950'),
         rule: v('rule'),
         'rule-strong': v('rule-strong'),
+        field: v('field'),
         ink: v('ink'),
         'ink-2': v('ink-2'),
         'ink-3': v('ink-3'),
-        label: v('label'),
-        'label-ink': v('label-ink'),
-        tape: v('tape'),
-        'tape-ink': v('tape-ink'),
-        stamp: v('stamp-text'),
-        'stamp-fill': v('stamp-600'),
+        accent: v('accent-text'),
+        'accent-fill': v('accent-600'),
+        'accent-tint': v('accent-950'),
         alert: v('alert-text'),
-        'alert-fill': v('alert-600'),
         'alert-tint': v('alert-950'),
-        'stamp-tint': v('stamp-950'),
-        'tape-tint': v('tape-950'),
+        selected: v('selected'),
       },
       fontFamily: {
-        sans: ['Barlow', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        display: ['"Barlow Condensed"', 'Barlow', 'system-ui', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        sans: ['"Atkinson Hyperlegible Next"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        mono: ['"Atkinson Hyperlegible Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
+      fontSize: {
+        xs: ['0.8125rem', { lineHeight: '1.25rem' }],
+        sm: ['0.875rem', { lineHeight: '1.375rem' }],
+        base: ['1rem', { lineHeight: '1.625rem' }],
+      },
+      // Bold is set one step lighter everywhere, so headings and labels read calm rather than loud.
+      fontWeight: {
+        bold: '600',
+        extrabold: '700',
+        black: '700',
       },
       borderRadius: {
-        sm: '1px',
-        DEFAULT: '2px',
-        md: '2px',
-        lg: '2px',
-        xl: '3px',
-        '2xl': '3px',
-        '3xl': '4px',
+        sm: '4px',
+        DEFAULT: '6px',
+        md: '6px',
+        lg: '8px',
+        xl: '10px',
+        '2xl': '12px',
+        '3xl': '16px',
       },
       boxShadow: {
         sm: 'none',
@@ -68,9 +76,6 @@ export default {
         xl: 'none',
         '2xl': 'none',
         inner: 'none',
-      },
-      letterSpacing: {
-        label: '0.08em',
       },
     },
   },
