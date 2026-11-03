@@ -1,0 +1,168 @@
+{
+  "labels": "public label excerpts, labels v2",
+  "base": {
+    "path": "eval/extraction-audit/public.json",
+    "sha256": "5c343305b00cd6d86018c7e777f6f2f244b29c548c7d697b59a62fcb7994edf4",
+    "note": "Labels v1. Kept byte for byte as evidence. versions/v1/frozen-input-hashes.json locks it."
+  },
+  "result": {
+    "path": "eval/extraction-audit/public-v2.json",
+    "sha256": "6942d6e0c4f449fe006984243e9292b244327ffa04b0e47cca49435da46a8a1d"
+  },
+  "proposedBy": "Claude, in docs/KEVIN-REVIEW.md section 3",
+  "acceptedBy": "Kevin Madden, PharmD",
+  "acceptedOn": "2026-11-03",
+  "acceptance": "All 19 proposals were accepted as one batch. No pharmacist has checked them one by one yet. For p10, the proposal was taken as written: a conditional repeat dose, not as-needed use.",
+  "rules": "Only the gold entities named below change. Inputs, sources, splits and every other entity stay as in v1. A removed entity must exist in v1. An added entity is the literal text it names, found at its first occurrence after the anchor when an anchor is given, and its value is that text lowercased with whitespace collapsed.",
+  "changes": [
+    {
+      "n": 1,
+      "id": "p01",
+      "proposal": "Keep \"per day\", as p07 keeps \"/day\"",
+      "remove": [{ "task": "dose", "value": "12.5 mg" }, { "task": "dose", "value": "50 mg" }],
+      "add": [
+        { "task": "dose", "text": "12.5 mg per day" },
+        { "task": "dose", "text": "50 mg per day" },
+        { "task": "dose", "text": "50 mg", "after": "6.25 mg to " }
+      ],
+      "note": "The bare 50 mg in \"6.25 mg to 50 mg\" is still a dose mention, so it keeps a label, now with its own span."
+    },
+    {
+      "n": 2,
+      "id": "p03",
+      "proposal": "\"2,000 mg\", and add \"1,000 mg\"",
+      "remove": [{ "task": "dose", "value": "000 mg" }],
+      "add": [{ "task": "dose", "text": "2,000 mg" }, { "task": "dose", "text": "1,000 mg" }]
+    },
+    {
+      "n": 3,
+      "id": "p05",
+      "proposal": "\"0.7 mg per kg\"",
+      "remove": [{ "task": "dose", "value": "0.7 mg" }],
+      "add": [{ "task": "dose", "text": "0.7 mg per kg" }]
+    },
+    {
+      "n": 4,
+      "id": "p05",
+      "proposal": "Titration, not as-needed use. Remove",
+      "remove": [{ "task": "prn", "value": "as needed" }],
+      "add": []
+    },
+    {
+      "n": 5,
+      "id": "p06",
+      "proposal": "Course repetition. Remove",
+      "remove": [{ "task": "prn", "value": "if needed" }],
+      "add": []
+    },
+    {
+      "n": 6,
+      "id": "p07",
+      "proposal": "Titration. Remove",
+      "remove": [{ "task": "prn", "value": "as needed" }],
+      "add": []
+    },
+    {
+      "n": 7,
+      "id": "p10",
+      "proposal": "Decide: a conditional repeat dose or as-needed use",
+      "decision": "A conditional repeat dose, not as-needed use",
+      "remove": [{ "task": "prn", "value": "if needed" }],
+      "add": [],
+      "note": "The six tasks have no label for a conditional repeat dose, so nothing replaces the removed as-needed label."
+    },
+    {
+      "n": 8,
+      "id": "p11",
+      "proposal": "Add \"q.i.d.\" and \"t.i.d.\"",
+      "remove": [],
+      "add": [{ "task": "schedule", "text": "q.i.d." }, { "task": "schedule", "text": "t.i.d." }]
+    },
+    {
+      "n": 9,
+      "id": "p14",
+      "proposal": "Add as-needed use and the repeat interval",
+      "remove": [],
+      "add": [{ "task": "prn", "text": "at the first sign of an acute anginal attack" }, { "task": "schedule", "text": "every 5 minutes" }]
+    },
+    {
+      "n": 10,
+      "id": "p16",
+      "proposal": "Keep the range and \"per day\"",
+      "remove": [{ "task": "dose", "value": "5 mg" }, { "task": "dose", "value": "60 mg" }],
+      "add": [{ "task": "dose", "text": "5 mg to 60 mg of prednisone per day" }],
+      "note": "The range is written once, with one \"per day\", so it is one literal mention."
+    },
+    {
+      "n": 11,
+      "id": "p17",
+      "proposal": "Lab monitoring, not a medication schedule. Remove",
+      "remove": [{ "task": "schedule", "value": "daily" }],
+      "add": []
+    },
+    {
+      "n": 12,
+      "id": "p18",
+      "proposal": "Keep \"/m2\". Add \"once weekly\", \"twice weekly\", \"two to four times per week\"",
+      "remove": [{ "task": "dose", "value": "20 mg" }, { "task": "dose", "value": "10 mg" }],
+      "add": [
+        { "task": "dose", "text": "20 mg/m 2" },
+        { "task": "dose", "text": "10 mg/m 2" },
+        { "task": "schedule", "text": "once weekly" },
+        { "task": "schedule", "text": "twice weekly" },
+        { "task": "schedule", "text": "two to four times per week" }
+      ],
+      "note": "The excerpt writes the superscript 2 as \"m 2\", and literal values keep the text as written."
+    },
+    {
+      "n": 13,
+      "id": "p19",
+      "proposal": "A renal threshold, not a dose. Remove",
+      "remove": [{ "task": "dose", "value": "30 ml" }],
+      "add": []
+    },
+    {
+      "n": 14,
+      "id": "p20",
+      "proposal": "A concentration, not a dose. Add timing \"at the start of a meal\"",
+      "remove": [{ "task": "dose", "value": "600 mg" }, { "task": "dose", "value": "42.9 mg" }, { "task": "dose", "value": "5 ml" }],
+      "add": [{ "task": "timing", "text": "at the start of a meal" }]
+    },
+    {
+      "n": 15,
+      "id": "p21",
+      "proposal": "Add the drug. Note that \"5 mg\" and \"2.5 mg\" are olanzapine doses",
+      "remove": [],
+      "add": [{ "task": "drug", "text": "olanzapine" }],
+      "note": "5 mg and 2.5 mg are olanzapine doses. The entity set cannot link a dose to its drug, a limit listed in eval/extraction-audit/V3.md."
+    },
+    {
+      "n": 16,
+      "id": "p25",
+      "proposal": "Add the timing",
+      "remove": [],
+      "add": [{ "task": "timing", "text": "before bedtime" }]
+    },
+    {
+      "n": 17,
+      "id": "p28",
+      "proposal": "A dose total, not a schedule. Remove",
+      "remove": [{ "task": "schedule", "value": "daily" }],
+      "add": []
+    },
+    {
+      "n": 18,
+      "id": "p29",
+      "proposal": "Remove both",
+      "remove": [{ "task": "dose", "value": "50 mg" }, { "task": "schedule", "value": "daily" }],
+      "add": []
+    },
+    {
+      "n": 19,
+      "id": "p30",
+      "proposal": "Add the timing",
+      "remove": [],
+      "add": [{ "task": "timing", "text": "morning" }]
+    }
+  ]
+}

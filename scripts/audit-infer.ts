@@ -15,15 +15,19 @@ if (evaluator !== 'v2' && evaluator !== 'v3') throw new Error('--evaluator must 
 const host = ollamaBaseUrl(process.env.OLLAMA_HOST)
 if (!isLoopbackUrl(host)) throw new Error(`OLLAMA_HOST ${host} is not this machine. The audit only sends text to a local Ollama.`)
 const promptFile = evaluator === 'v3' ? 'prompt-v3.txt' : 'prompt.txt'
+// Evaluator v3 scores against labels v2, the 19 corrections Kevin accepted on 2026-11-03 (still
+// draft, not checked one by one). The frozen v2 protocol keeps labels v1. The inputs are the same.
+const labelsFile = evaluator === 'v3' ? 'public-v2.json' : 'public.json'
+const scoringCases: typeof cases = evaluator === 'v3' ? [...JSON.parse(read(`${root}/${labelsFile}`)), ...cases.filter(c => c.split === 'challenge')] : cases
 const schemaFile = evaluator === 'v3' ? 'schema-v3.json' : 'schema.json'
 const config = JSON.parse(read('eval/sig-extraction/models.json')) as { models: { model: string, think: ModelConfig['think'] }[] }
 const out = process.argv[process.argv.indexOf('--out') + 1]
 if (!process.argv.includes('--out') || !out || existsSync(out)) throw new Error('Pass a new --out directory, existing runs are never overwritten')
 mkdirSync(out, { recursive: true })
-const files = ['public.json', 'challenge.json', promptFile, schemaFile].map(p => `${root}/${p}`).concat([evaluator === 'v3' ? 'src/eval/extractionAuditV3.ts' : 'src/eval/extractionAudit.ts', 'src/eval/auditInference.ts', 'scripts/audit-infer.ts', 'scripts/audit-report.ts', 'src/engine/flowRunner.ts', 'src/engine/modelAdapter.ts', 'src/engine/templateResolver.ts', 'eval/sig-extraction/models.json'])
+const files = ['public.json', ...(evaluator === 'v3' ? [labelsFile] : []), 'challenge.json', promptFile, schemaFile].map(p => `${root}/${p}`).concat([evaluator === 'v3' ? 'src/eval/extractionAuditV3.ts' : 'src/eval/extractionAudit.ts', 'src/eval/auditInference.ts', 'scripts/audit-infer.ts', 'scripts/audit-report.ts', 'src/engine/flowRunner.ts', 'src/engine/modelAdapter.ts', 'src/engine/templateResolver.ts', 'eval/sig-extraction/models.json'])
 const tags = await fetch(`${host}/api/tags`).then(r => r.json())
 const available = config.models.filter(m => tags.models.some((t: { name: string }) => t.name === m.model))
-const freeze = { createdAt: new Date().toISOString(), hashes: Object.fromEntries(files.map(p => [p, hash(p)])), models: available.map(m => ({ ...m, digest: tags.models.find((t: { name: string }) => t.name === m.model).digest })), missing: config.models.filter(m => !available.includes(m)).map(m => m.model), hardware: { platform: os.platform(), arch: os.arch(), cpus: os.cpus()[0]?.model, memoryBytes: os.totalmem() }, budgetMs: 10000, seed: 20261101, evaluator, review: 'draft', quietMachine: false, note: 'Shared builder machine. Timing is observational and cannot certify a quiet-machine budget.' }
+const freeze = { createdAt: new Date().toISOString(), hashes: Object.fromEntries(files.map(p => [p, hash(p)])), models: available.map(m => ({ ...m, digest: tags.models.find((t: { name: string }) => t.name === m.model).digest })), missing: config.models.filter(m => !available.includes(m)).map(m => m.model), hardware: { platform: os.platform(), arch: os.arch(), cpus: os.cpus()[0]?.model, memoryBytes: os.totalmem() }, budgetMs: 10000, seed: 20261101, evaluator, labels: evaluator === 'v3' ? 'v2 (accepted as a batch, not checked one by one)' : 'v1', review: 'draft', quietMachine: false, note: 'Shared builder machine. Timing is observational and cannot certify a quiet-machine budget.' }
 writeFileSync(`${out}/freeze.json`, JSON.stringify(freeze, null, 2) + '\n', { flag: 'wx' })
 let state = freeze.seed
 const random = () => { state = (Math.imul(state, 1664525) + 1013904223) >>> 0; return state / 4294967296 }
@@ -56,7 +60,7 @@ for (let pass = 1; pass <= 2; pass++) {
     }
     const latencies = rows.filter(r => !r.error && r.latencyMs !== null).map(r => r.latencyMs!).sort((a, b) => a - b)
     const p95 = latencies[Math.ceil(latencies.length * .95) - 1] ?? null
-    const scored = evaluator === 'v3' ? { name: model.model, ...reportV3(cases, rows) } : report(rows, model.model)
+    const scored = evaluator === 'v3' ? { name: model.model, ...reportV3(scoringCases, rows) } : report(rows, model.model)
     const result = { ...scored, modelDigest: freeze.models.find(m => m.model === model.model)!.digest, timing: { start, end: { at: new Date().toISOString(), load: os.loadavg() }, cold, order: ids, p95Ms: p95, successDenominator: latencies.length, requests: rows.length, budgetMs: 10000, observedBudgetMet: rows.every(r => !r.error) && p95 !== null && p95 <= 10000, quietMachineValidated: false } }
     writeFileSync(`${out}/report-pass${pass}-${safe}.json`, JSON.stringify(result) + '\n', { flag: 'wx' })
     await fetch(`${host}/api/generate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: model.model, keep_alive: 0 }) })

@@ -93,9 +93,11 @@ The scorers that produced the committed verdicts are kept, and a test re-derives
 
 A second, unfinished benchmark extracts literal mentions (drug, dose, schedule, timing, as-needed use, reason) from 30 unchanged openFDA dosage sections and 12 synthetic challenge lines, with source and CC0 rights records for each excerpt. Its state:
 
-- **Draft labels.** The labels are AI-drafted and unreviewed. Review flagged at least 14 of the 30 public documents for likely label errors. Examples: methotrexate's weekly schedule is missing, "20 mg/m 2" is labeled "20 mg", and a creatinine clearance threshold is labeled as a dose. They are listed for review in [docs/KEVIN-REVIEW.md](docs/KEVIN-REVIEW.md). No label was changed without that review.
+- **Draft labels, now in two versions.** The labels were AI-drafted. A review flagged 19 likely errors in 18 of the 30 public excerpts, for example methotrexate's missing weekly schedule, "20 mg/m 2" labeled "20 mg", and a creatinine clearance threshold labeled as a dose.
+  - Claude proposed the 19 fixes, and Kevin accepted them as a batch on 3 November 2026. They are saved as labels v2 (`eval/extraction-audit/public-v2.json`) beside the unchanged labels v1.
+  - No pharmacist has checked the fixes one by one yet, so both versions are still drafts. The frozen protocol keeps v1, and evaluator v3 scores against v2 ([docs/KEVIN-REVIEW.md](docs/KEVIN-REVIEW.md)).
 - **The old evaluator measured offsets, not facts.** Evaluator v2 required exact character offsets from the model. On the saved partial run, a line with all five facts right scored 0 of 5 because every offset was one character off.
-- **Evaluator v3 separates the two.** It scores facts and evidence separately and accepts quoted evidence ([eval/extraction-audit/V3.md](eval/extraction-audit/V3.md)).
+- **Evaluator v3 separates the two.** It scores facts and evidence separately and accepts quoted evidence ([eval/extraction-audit/V3.md](eval/extraction-audit/V3.md)). On the saved partial run it finds 92 of 134 gold facts with labels v1 and 99 of 129 with labels v2. Both are development data.
 - **No result yet.** No complete model run exists. The one exploratory run stopped at 23 of 42 requests.
 
 ## Running and testing

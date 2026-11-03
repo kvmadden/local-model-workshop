@@ -18,7 +18,14 @@ In the split format, `frequency` is a schedule on scheduled lines ("three times 
 
 ## 3. Draft labels in the public label audit
 
-The 30 public excerpts in `eval/extraction-audit/public.json` carry AI-drafted labels. A review of the text flagged the items below. They are proposals only. The file is hash-locked evidence and was not edited.
+The 30 public excerpts in `eval/extraction-audit/public.json` carry AI-drafted labels. A review of the text flagged the items below. Claude proposed the changes.
+
+**Decided, 3 November 2026.** Kevin accepted all 19 as one batch. For p10, the proposal was taken as written: a conditional repeat dose, not as-needed use.
+
+- **Where they are.** The changes are saved as labels v2 in `eval/extraction-audit/public-v2.json` (SHA-256 `6942d6e0c4f449fe006984243e9292b244327ffa04b0e47cca49435da46a8a1d`).
+  - `eval/extraction-audit/public-v2-changes.json` lists each change and its provenance, and `src/eval/auditLabels.test.ts` derives v2 from v1 again and checks it byte for byte.
+  - Labels v1 stays byte for byte as evidence, and the frozen protocol still uses it.
+- **Status.** The fixes were proposed by Claude and accepted by Kevin as a batch. No pharmacist has checked them one by one yet, so labels v2 is still a draft.
 
 | Excerpt | Current draft label | What the text says | Proposed |
 |---|---|---|---|
@@ -42,7 +49,7 @@ The 30 public excerpts in `eval/extraction-audit/public.json` carry AI-drafted l
 | p29 | dose "50 mg", schedule "daily" | "cisplatin ... 50 mg/m 2", "total daily dose of 8 mg" | Remove both |
 | p30 | no "morning" | "twice daily (morning and bedtime)" | Add the timing |
 
-A corrected file would be a new evidence version, with v1 and v2 kept. A second reviewer should label at least the final split independently.
+Still open: a second reviewer should label at least the final split independently. The rescored partial run is in [eval/extraction-audit/V3.md](../eval/extraction-audit/V3.md).
 
 ## 4. Fresh test set
 
