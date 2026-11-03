@@ -2,91 +2,204 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * The bench palette. Each value is an RGB triplet so Tailwind's opacity modifiers work.
+ * Dark: printed labels on a black epoxy lab bench. Light: the same labels on a cool steel bench.
+ * Contrast is checked by e2e/accessibility.spec.ts in both themes.
+ */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --slate-50: 247 248 249;
+  --slate-100: 236 238 240;
+  --slate-200: 220 224 228;
+  --slate-300: 194 200 206;
+  --slate-400: 163 171 179;
+  --slate-500: 139 148 157;
+  --slate-600: 107 115 124;
+  --slate-700: 63 70 77;
+  --slate-800: 45 50 55;
+  --slate-850: 35 39 41;
+  --slate-900: 27 30 33;
+  --slate-950: 19 21 23;
+
+  --stamp-50: 238 242 255;
+  --stamp-100: 220 228 255;
+  --stamp-200: 191 205 255;
+  --stamp-300: 166 185 255;
+  --stamp-400: 142 166 255;
+  --stamp-500: 62 95 214;
+  --stamp-600: 52 84 204;
+  --stamp-700: 42 69 173;
+  --stamp-800: 35 58 134;
+  --stamp-900: 26 42 94;
+  --stamp-950: 18 29 64;
+
+  --tape-50: 255 251 234;
+  --tape-100: 255 243 196;
+  --tape-200: 255 229 138;
+  --tape-300: 255 217 90;
+  --tape-400: 255 210 63;
+  --tape-500: 242 184 7;
+  --tape-600: 140 99 0;
+  --tape-700: 110 78 0;
+  --tape-800: 90 67 0;
+  --tape-900: 58 44 0;
+  --tape-950: 38 29 0;
+
+  --alert-50: 255 241 241;
+  --alert-100: 255 224 224;
+  --alert-200: 255 194 194;
+  --alert-300: 255 163 163;
+  --alert-400: 255 133 133;
+  --alert-500: 229 72 77;
+  --alert-600: 196 40 47;
+  --alert-700: 161 31 37;
+  --alert-800: 110 26 29;
+  --alert-900: 69 18 20;
+  --alert-950: 46 12 13;
+
+  --bench: 19 21 23;
+  --panel: 27 30 33;
+  --raised: 45 50 55;
+  --rule: 51 57 63;
+  --rule-strong: 76 84 92;
+  --ink: 236 238 240;
+  --ink-2: 194 200 206;
+  --ink-3: 163 171 179;
+  --label: 244 245 244;
+  --label-ink: 17 20 23;
+  --tape: 255 210 63;
+  --tape-ink: 17 20 23;
+  --stamp-text: 142 166 255;
+  --alert-text: 255 133 133;
+  --focus: 255 210 63;
+  --grid: rgb(255 255 255 / 0.035);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --slate-50: 11 13 15;
+  --slate-100: 17 20 23;
+  --slate-200: 30 35 40;
+  --slate-300: 47 54 61;
+  --slate-400: 68 76 84;
+  --slate-500: 89 98 107;
+  --slate-600: 123 132 141;
+  --slate-700: 154 163 172;
+  --slate-800: 195 202 209;
+  --slate-850: 231 235 238;
+  --slate-900: 255 255 255;
+  --slate-950: 223 228 232;
+
+  --stamp-50: 13 22 51;
+  --stamp-100: 19 32 74;
+  --stamp-200: 26 43 99;
+  --stamp-300: 35 63 170;
+  --stamp-400: 38 69 181;
+  --stamp-500: 45 76 194;
+  --stamp-600: 36 67 176;
+  --stamp-700: 28 54 144;
+  --stamp-800: 174 190 242;
+  --stamp-900: 214 222 250;
+  --stamp-950: 235 239 253;
+
+  --tape-50: 43 32 0;
+  --tape-100: 61 46 0;
+  --tape-200: 80 60 0;
+  --tape-300: 107 76 0;
+  --tape-400: 104 73 0;
+  --tape-500: 181 138 0;
+  --tape-600: 140 99 0;
+  --tape-700: 110 78 0;
+  --tape-800: 233 199 90;
+  --tape-900: 255 239 179;
+  --tape-950: 255 247 217;
+
+  --alert-50: 46 10 11;
+  --alert-100: 69 16 15;
+  --alert-200: 107 23 23;
+  --alert-300: 143 29 34;
+  --alert-400: 150 30 37;
+  --alert-500: 196 40 47;
+  --alert-600: 179 36 31;
+  --alert-700: 143 29 25;
+  --alert-800: 242 184 184;
+  --alert-900: 251 224 224;
+  --alert-950: 253 240 240;
+
+  --bench: 223 228 232;
+  --panel: 255 255 255;
+  --raised: 195 202 209;
+  --rule: 195 202 209;
+  --rule-strong: 128 138 148;
+  --ink: 17 20 23;
+  --ink-2: 47 54 61;
+  --ink-3: 68 76 84;
+  --label: 255 255 255;
+  --label-ink: 17 20 23;
+  --tape: 255 210 63;
+  --tape-ink: 17 20 23;
+  --stamp-text: 38 69 181;
+  --alert-text: 150 30 37;
+  --focus: 36 67 176;
+  --grid: rgb(36 67 176 / 0.06);
+}
+
+html {
+  background-color: rgb(var(--bench));
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Barlow, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  background-color: rgb(var(--bench));
+  color: rgb(var(--ink));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Light equivalents of the existing Slate and Indigo utility palette. */
-[data-theme='light'] {
-  color-scheme: light;
-  background-color: #f8fafc;
-  color: #0f172a;
+/* Numbers line up in every readout and table. */
+.font-mono,
+code,
+pre {
+  font-variant-numeric: tabular-nums;
 }
 
-[data-theme='light'] :is([class~='bg-slate-900'], [class~='bg-slate-900/90']) {
-  background-color: #ffffff;
+/* The bench mat: a faint measuring grid under the labels. */
+.bench-grid {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-[data-theme='light'] :is([class~='bg-slate-950'], [class~='bg-slate-950/80'], [class~='bg-slate-950/60']) {
-  background-color: #f8fafc;
+/* One focus mark for every control: thick enough to see, with at least 3:1 contrast in each theme. */
+:focus-visible {
+  outline: 3px solid rgb(var(--focus));
+  outline-offset: 2px;
 }
 
-[data-theme='light'] [class~='bg-slate-800'] {
-  background-color: #e2e8f0;
+::selection {
+  background: rgb(var(--tape));
+  color: rgb(var(--tape-ink));
 }
 
-[data-theme='light'] :is([class~='text-slate-100'], [class~='text-slate-200']) {
-  color: #0f172a;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-[data-theme='light'] :is([class~='text-slate-300'], [class~='text-slate-400'], [class~='text-slate-500']) {
-  color: #475569;
-}
-
-[data-theme='light'] :is([class~='border-slate-700'], [class~='border-slate-700/80'], [class~='border-slate-800'], [class~='border-slate-800/80'], [class~='border-slate-900']) {
-  border-color: #cbd5e1;
-}
-
-[data-theme='light'] :is([class~='bg-indigo-950/80'], [class~='bg-indigo-950/60']) {
-  background-color: #eef2ff;
-}
-
-[data-theme='light'] :is([class~='text-indigo-300'], [class~='text-indigo-400']) {
-  color: #4338ca;
-}
-
-[data-theme='light'] [class~='bg-emerald-950/80'] {
-  background-color: #ecfdf5;
-}
-
-[data-theme='light'] [class~='text-emerald-400'] {
-  color: #047857;
-}
-
-[data-theme='light'] [class~='bg-amber-950/80'] {
-  background-color: #fffbeb;
-}
-
-[data-theme='light'] [class~='text-amber-400'] {
-  color: #92400e;
-}
-
-[data-theme='light'] :is([class~='bg-rose-950/40'], [class~='bg-rose-950/60'], [class~='bg-rose-950/80']) {
-  background-color: #fff1f2;
-}
-
-[data-theme='light'] :is([class~='text-rose-300'], [class~='text-rose-400']) {
-  color: #be123c;
-}
-
-[data-theme='light'] .shadow-xl {
-  box-shadow: 0 8px 24px rgb(15 23 42 / 5%);
-}
-
-[data-theme='light'] :is(button, input, textarea, select):focus-visible {
-  outline: 2px solid #4f46e5;
-  outline-offset: 3px;
-}
-
-[data-theme='light'] :is([class~='hover:bg-slate-700'], [class~='hover:bg-slate-900/60']):hover {
-  background-color: #cbd5e1;
-}
-
-[data-theme='light'] [class~='hover:text-slate-200']:hover {
-  color: #0f172a;
+/* Section and card titles share the label face: condensed capitals. */
+main h3 {
+  font-family: 'Barlow Condensed', Barlow, system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
