@@ -8,3 +8,4 @@ playwright-report/
 dist/
 coverage/
 eval/results/mock-only/
+eval/results/local-*/
