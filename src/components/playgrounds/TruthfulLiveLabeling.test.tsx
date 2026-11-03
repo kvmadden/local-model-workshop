@@ -44,7 +44,7 @@ import { FileChattingPlayground } from './FileChattingPlayground';
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
 /** Copy that asserts a real model produced what is on screen. */
-const LIVE_CLAIM = /Live Local Ollama Streaming|Live Local Ollama Engine|Live Streaming|Engine: Ollama|via Ollama|Polish Live via Ollama|Run Live Transcribe|Re-run Live Transcription/i;
+const LIVE_CLAIM = /Live Local Ollama Streaming|Live Local Ollama Engine|Local Ollama on this machine|Live Streaming|Engine: Ollama|via Ollama|Polish Live via Ollama|Run Live Transcribe|Re-run Live Transcription/i;
 
 describe('Workshop truthfulness — no synthetic output under live labels', () => {
   let container: HTMLDivElement;

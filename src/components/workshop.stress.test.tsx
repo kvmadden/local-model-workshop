@@ -346,13 +346,36 @@ describe('Workshop stress tests', () => {
         output = getByTestId('transcript-output');
         expect(output?.textContent).toContain('Speaker 1 (Client Lead)');
 
-        // Export button interaction
-        const exportBtn = getByTestId('export-transcript-btn');
-        await act(async () => {
-          exportBtn?.click();
+        // Export writes the transcript on screen to a real .txt file
+        const created: Blob[] = [];
+        const downloads: string[] = [];
+        const origCreate = window.URL.createObjectURL;
+        const origRevoke = window.URL.revokeObjectURL;
+        window.URL.createObjectURL = vi.fn((blob: Blob) => {
+          created.push(blob);
+          return 'blob:transcript';
+        }) as any;
+        window.URL.revokeObjectURL = vi.fn();
+        const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+          downloads.push(this.download);
         });
-
-        expect(exportBtn?.textContent).toContain('Transcript Exported!');
+        try {
+          const exportBtn = getByTestId('export-transcript-btn');
+          await act(async () => {
+            exportBtn?.click();
+          });
+          expect(exportBtn?.textContent).toContain('Transcript Exported!');
+          expect(downloads).toEqual(['transcript.txt']);
+          expect(created).toHaveLength(1);
+          expect(created[0].type).toBe('text/plain');
+          const shown = output?.querySelector('[data-testid="playground-output-container"]')?.textContent ?? '';
+          expect(shown).toContain('Speaker 1 (Client Lead)');
+          expect(created[0].size).toBe(new Blob([shown]).size);
+        } finally {
+          clickSpy.mockRestore();
+          window.URL.createObjectURL = origCreate;
+          window.URL.revokeObjectURL = origRevoke;
+        }
       });
 
       it('handles rapid re-triggering of transcription without crash or unhandled state', async () => {
@@ -382,10 +405,10 @@ describe('Workshop stress tests', () => {
 
         const textarea = getByTestId('doc-input-textarea') as HTMLTextAreaElement;
         const summarizeBtn = getByTestId('summarize-btn') as HTMLButtonElement;
-        const airGappedBadge = getByTestId('air-gapped-badge');
+        const executionBadge = getByTestId('execution-badge');
 
-        expect(airGappedBadge).not.toBeNull();
-        expect(airGappedBadge?.textContent).toContain('100% Air-Gapped');
+        expect(executionBadge).not.toBeNull();
+        expect(executionBadge?.textContent).toContain('Demo output, no model ran');
 
         // Select sample chip 1
         const chip1 = getByTestId('doc-sample-chip-1');
@@ -524,7 +547,7 @@ describe('Workshop stress tests', () => {
 
         await waitMs(450);
 
-        expect(qaFeed?.textContent).toContain('Local model execution keeps 100% of document embeddings');
+        expect(qaFeed?.textContent).toContain('does not check network isolation, storage or logging');
 
         // Empty query disable state
         await changeInputValue(textarea, '');

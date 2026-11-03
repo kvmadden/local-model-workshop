@@ -91,3 +91,43 @@ describe('VramLockManager boundary and stress tests', () => {
     expect(manager.getActiveVram()).toBe(0);
   });
 });
+
+describe('VramLockManager accounting (review fixes)', () => {
+  it('rejects NaN and infinite requests at once instead of queueing them forever', async () => {
+    const m = new VramLockManager(64);
+    await expect(m.acquire('nan', Number.NaN)).rejects.toThrow(/Invalid VRAM requirement/);
+    await expect(m.acquire('inf', Number.POSITIVE_INFINITY)).rejects.toThrow(/Invalid VRAM requirement/);
+    expect(m.getQueuedCount()).toBe(0);
+  });
+
+  it('always releases the granted amount, and refuses a mismatched release', async () => {
+    const m = new VramLockManager(64);
+    await m.acquire('t1', 10);
+    expect(() => m.release('t1', 1)).toThrow(/holds 10GB/);
+    expect(m.getActiveVram()).toBe(10);
+    m.release('t1');
+    expect(m.getActiveVram()).toBe(0);
+  });
+
+  it('rejects a second request for a task that is already waiting', async () => {
+    const m = new VramLockManager(10);
+    await m.acquire('big', 10);
+    const waiting = m.acquire('q', 5);
+    await expect(m.acquire('q', 5)).rejects.toThrow(/already waiting/);
+    m.release('big');
+    await waiting;
+    expect(m.getActiveVram()).toBe(5);
+  });
+
+  it('lets queued tasks in when the head of the queue is cancelled', async () => {
+    const m = new VramLockManager(10);
+    await m.acquire('holder', 6);
+    const head = m.acquire('head', 8);
+    const small = m.acquire('small', 4);
+    head.catch(() => undefined);
+    m.release('head');
+    await expect(head).rejects.toThrow(/cancelled/);
+    await small;
+    expect(m.getActiveTaskIds().sort()).toEqual(['holder', 'small']);
+  });
+});

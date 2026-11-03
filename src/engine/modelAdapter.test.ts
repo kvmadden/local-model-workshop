@@ -113,6 +113,8 @@ describe('ModelAdapters', () => {
         model: 'codellama',
         temperature: 0.2,
         endpointUrl: 'http://192.168.1.100:11434/api/generate',
+        // A server on another machine receives the prompt text, so it must be allowed explicitly.
+        allowRemote: true,
       };
 
       const result = await adapter.executePrompt('Write a function', config);
@@ -185,6 +187,7 @@ describe('ModelAdapters', () => {
         model: 'gpt-4o',
         temperature: 0.7,
         apiKey: 'sk-test-secret-key',
+        allowRemote: true,
         systemPrompt: 'You are a helpful coding assistant.',
         maxTokens: 500,
       };
@@ -227,6 +230,7 @@ describe('ModelAdapters', () => {
         model: 'gpt-3.5-turbo',
         temperature: 0.7,
         apiKey: 'invalid-key',
+        allowRemote: true,
       };
 
       await expect(adapter.executePrompt('Test prompt', config)).rejects.toThrow(
@@ -283,6 +287,7 @@ describe('ModelAdapters', () => {
         provider: 'openai',
         model: 'gpt-3.5-turbo',
         temperature: 0.7,
+        endpointUrl: 'http://127.0.0.1:1234/v1/chat/completions',
       };
 
       const result = await unified.executePrompt('Unified test', config);

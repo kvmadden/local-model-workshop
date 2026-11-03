@@ -367,7 +367,7 @@ describe('Catalog and wizard stress tests', () => {
       expect(getByTestId('doc-input-textarea')).not.toBeNull();
       expect(getByTestId('summarize-btn')).not.toBeNull();
       expect(getByTestId('run-playground-btn')).not.toBeNull();
-      expect(getByTestId('air-gapped-badge')).not.toBeNull();
+      expect(getByTestId('execution-badge')).not.toBeNull();
       expect(getByTestId('summary-output')).not.toBeNull();
       expect(getByTestId('playground-output-container')).not.toBeNull();
     });

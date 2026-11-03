@@ -91,7 +91,7 @@ export class VramLockManager {
    * Blocks in queue if total active VRAM + task VRAM > 64GB until headroom becomes available.
    */
   public async acquire(taskId: string, vramRequired: number): Promise<void> {
-    if (vramRequired <= 0) {
+    if (!Number.isFinite(vramRequired) || vramRequired <= 0) {
       throw new Error(`Invalid VRAM requirement (${vramRequired}GB). Must be greater than 0.`);
     }
 
@@ -103,6 +103,9 @@ export class VramLockManager {
 
     if (this.activeLocks.has(taskId)) {
       throw new Error(`Task '${taskId}' has already acquired a VRAM lock.`);
+    }
+    if (this.queue.some((item) => item.taskId === taskId)) {
+      throw new Error(`Task '${taskId}' is already waiting for a VRAM lock.`);
     }
 
     // Check if headroom is available AND no prior tasks are waiting ahead in the FIFO queue
@@ -125,6 +128,10 @@ export class VramLockManager {
 
   /**
    * Releases VRAM lock for the specified taskId and processes queued tasks.
+   *
+   * The amount released is always the amount that was granted. The optional second argument
+   * is kept for old callers, and a value that disagrees with the grant is refused, because
+   * releasing a different amount used to leave the pool out of step with the locks.
    */
   public release(taskId: string, vramRequired?: number): void {
     const lock = this.activeLocks.get(taskId);
@@ -134,13 +141,17 @@ export class VramLockManager {
       if (qIndex !== -1) {
         const item = this.queue.splice(qIndex, 1)[0];
         item.reject(new Error(`VRAM lock request for task '${taskId}' was cancelled.`));
+        // Removing the head can unblock the tasks behind it.
+        this.processQueue();
       }
       return;
     }
 
-    const releasedAmount = vramRequired ?? lock.vramRequired;
+    if (vramRequired !== undefined && vramRequired !== lock.vramRequired) {
+      throw new Error(`Task '${taskId}' holds ${lock.vramRequired}GB. Releasing ${vramRequired}GB would leave the pool out of step.`);
+    }
     this.activeLocks.delete(taskId);
-    this.activeVram = Math.max(0, this.activeVram - releasedAmount);
+    this.activeVram = Math.max(0, this.activeVram - lock.vramRequired);
 
     this.processQueue();
   }

@@ -34,6 +34,7 @@ export function useOllamaStatus(): UseOllamaStatusReturn {
       available: result.available,
       models: result.models,
       loading: false,
+      reason: result.reason,
     });
   }, []);
 

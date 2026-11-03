@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveTemplate } from './templateResolver';
+import { resolveTemplate, resolveTemplateDetailed } from './templateResolver';
 
 describe('templateResolver stress and edge cases', () => {
   describe('1. Nested & Unclosed Brackets', () => {
@@ -11,28 +11,30 @@ describe('templateResolver stress and edge cases', () => {
       expect(resolveTemplate('{{{', context)).toBe('{{{');
     });
 
-    it('demonstrates unclosed bracket swallowing bug when followed by closed tag', () => {
+    it('keeps an unclosed {{ as written instead of swallowing the text and tag after it', () => {
       const context = { input: 'hello' };
-      // BUG DEMONSTRATION: Non-greedy /\{\{\s*(.*?)\s*\}\}/g starts matching at the FIRST unclosed {{
-      // and consumes everything up to the first closing }}, swallowing intervening text and valid tags.
-      const res = resolveTemplate('Prefix {{input and {{input}}', context);
-      // '{{input and {{input}}' has rawKey 'input and {{input', which resolves to ''
-      expect(res).toBe('Prefix ');
+      // The old pattern matched from the first unclosed {{ to the next }}, so this returned
+      // 'Prefix ' and the medication line vanished from the prompt without any sign.
+      expect(resolveTemplate('Prefix {{input and {{input}}', context)).toBe('Prefix {{input and hello');
+      expect(resolveTemplateDetailed('Prefix {{input and {{input}}', context).unresolved).toEqual([]);
     });
 
-    it('handles nested double curly braces {{ {{input}} }}', () => {
+    it('resolves the inner tag of nested double curly braces {{ {{input}} }} and keeps the outer braces', () => {
       const context = { input: 'inner_value', '{{input': 'nested_key' };
-      // Matches {{input from outer {{ to inner }} -> rawKey: "{{input"
-      const res = resolveTemplate('{{ {{input}} }}', context);
-      expect(res).toBe('nested_key }}');
+      // A key cannot contain a brace, so the outer pair is plain text.
+      expect(resolveTemplate('{{ {{input}} }}', context)).toBe('{{ inner_value }}');
     });
 
-    it('demonstrates Handlebars triple curly brace {{{input}}} resolution behavior', () => {
+    it('keeps the value of a triple curly brace {{{input}}} instead of deleting it', () => {
       const context = { input: 'raw_html' };
-      // {{{input}}} -> matches {{ at index 0: "{{{input}}" -> rawKey: "{input" -> unfulfilled -> ''
-      // Trailing '}' remains -> result is '}'
-      const res = resolveTemplate('{{{input}}}', context);
-      expect(res).toBe('}');
+      // The old pattern read the key as "{input", found nothing, and returned '}'.
+      expect(resolveTemplate('{{{input}}}', context)).toBe('{raw_html}');
+    });
+
+    it('reports placeholders that had no value, in order', () => {
+      const detailed = resolveTemplateDetailed('Line: {{inptu}} and {{input}} and {{ }} and {{missing}}', { input: 'x' });
+      expect(detailed.text).toBe('Line:  and x and  and ');
+      expect(detailed.unresolved).toEqual(['inptu', '', 'missing']);
     });
 
     it('handles extra property access syntax like {{step1.output.extra}}', () => {

@@ -74,13 +74,13 @@ export const FileChattingPlayground: React.FC = () => {
       let citationText = `[Source Citation: ${activeDoc.label}]`;
 
       if (query.toLowerCase().includes('8gb')) {
-        answerText = 'Direct Answer from Local Context:\nBased on the document without exposing sensitive content to public servers, Macs with 8GB RAM run 3B parameter models like Llama 3.2 (3B) and Whisper (Large-v3 Turbo) smoothly.';
+        answerText = 'Demo answer from the sample document (no model ran):\nMacs with 8GB RAM run 3B parameter models like Llama 3.2 (3B) and Whisper (Large-v3 Turbo) smoothly.';
       } else if (query.toLowerCase().includes('mac apps') || query.toLowerCase().includes('apps')) {
-        answerText = 'Direct Answer from Local Context:\nBased on the document without exposing sensitive content to public servers, supported zero-code Mac desktop apps include LM Studio, MacWhisper, AnythingLLM, and Ollama.';
+        answerText = 'Demo answer from the sample document (no model ran):\nSupported zero-code Mac desktop apps include LM Studio, MacWhisper, AnythingLLM, and Ollama.';
       } else if (query.toLowerCase().includes('privacy') || query.toLowerCase().includes('guarantee')) {
-        answerText = 'Direct Answer from Local Context:\nBased on the document without exposing sensitive content to public servers, Local model execution keeps 100% of document embeddings and chat memory inside local Apple Silicon RAM with zero cloud network requests.';
+        answerText = 'Demo answer (no model ran):\nWith a local model installed, this panel sends the question and the document only to the Ollama server on this machine. The workshop does not check network isolation, storage or logging, so it cannot promise that nothing leaves the Mac.';
       } else {
-        answerText = `Direct Answer from Local Context:\nBased on "${activeDoc.label}" without exposing sensitive content to public servers:\n${activeDoc.content}\n\nAll answers are generated 100% on-device on Apple Silicon GPU.`;
+        answerText = `Demo answer from "${activeDoc.label}" (no model ran):\n${activeDoc.content}`;
       }
 
       const assistantMsg: ChatMessage = {
@@ -298,7 +298,7 @@ export const FileChattingPlayground: React.FC = () => {
                 <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
                 {mode === 'live'
                   ? 'Streaming live response tokens from Ollama...'
-                  : 'Retrieving local context & generating on Apple Silicon...'}
+                  : 'Preparing the demo answer...'}
               </div>
             </div>
           )}

@@ -42,6 +42,17 @@ export interface ModelConfig {
    * Omitted from the request when unset.
    */
   think?: boolean | 'low' | 'medium' | 'high';
+  /** Abort the request after this many milliseconds. Defaults to 120000. */
+  timeoutMs?: number;
+  /** Sampling seed, sent to Ollama as options.seed. */
+  seed?: number;
+  /** Context window, sent to Ollama as options.num_ctx. */
+  numCtx?: number;
+  /**
+   * Text is sent to a host other than this machine only when this is true. The OpenAI-compatible
+   * adapter also needs an API key. Otherwise the request is refused before anything is sent.
+   */
+  allowRemote?: boolean;
 }
 
 /**
@@ -56,6 +67,8 @@ export interface Step {
   output: string;
   error?: string;
   latencyMs?: number;
+  /** Placeholders in the prompt that had no value when the step last ran. */
+  warnings?: string[];
 }
 
 /**
@@ -78,6 +91,9 @@ export interface StepExecutionResult {
   output: string;
   error?: string;
   latencyMs?: number;
+  warnings?: string[];
+  /** Provider timing and token counts, when the provider reports them. */
+  meta?: Record<string, number>;
 }
 
 /**
@@ -99,8 +115,14 @@ export interface ExecutionState {
  */
 export interface ModelExecutionResult {
   text: string;
+  /** Wall-clock time from sending the request to having the whole reply body. */
   latencyMs: number;
   error?: string;
+  /**
+   * Provider-reported numbers when available. For Ollama: total_duration, load_duration,
+   * prompt_eval_count, prompt_eval_duration, eval_count and eval_duration (durations in ns).
+   */
+  meta?: Record<string, number>;
 }
 
 /**

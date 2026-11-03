@@ -75,6 +75,19 @@ describe('ollamaService', () => {
       const res = await checkOllamaStatus();
       expect(res.available).toBe(false);
       expect(res.models).toEqual([]);
+      expect(res.reason).toBe('no connection');
+    });
+
+    it('says what blocked the read instead of reporting Ollama as absent', async () => {
+      const timeout = Object.assign(new Error('The operation timed out'), { name: 'TimeoutError' });
+      vi.stubGlobal('fetch', vi.fn().mockRejectedValue(timeout));
+      expect((await checkOllamaStatus()).reason).toBe('no answer within 2 s');
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 403, json: async () => ({}) }));
+      expect(await checkOllamaStatus()).toEqual({ available: false, models: [], reason: 'HTTP 403' });
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ unexpected: true }) }));
+      expect((await checkOllamaStatus()).reason).toBe('the reply was not a model list');
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => { throw new SyntaxError('bad'); } }));
+      expect((await checkOllamaStatus()).reason).toBe('the reply was not JSON');
     });
   });
 
@@ -153,6 +166,45 @@ describe('ollamaService', () => {
       );
 
       expect(received).toEqual(['Chat ', 'response']);
+    });
+  });
+
+  describe('stream errors and logging', () => {
+    const streamOf = (lines: string[]) => {
+      const encoder = new TextEncoder();
+      let i = 0;
+      return vi.fn().mockResolvedValue({
+        ok: true,
+        body: { getReader: () => ({ read: async () => (i < lines.length ? { done: false, value: encoder.encode(lines[i++]) } : { done: true, value: undefined }) }) },
+      });
+    };
+
+    it('ends the stream with the error Ollama reports instead of returning a short answer', async () => {
+      vi.stubGlobal('fetch', streamOf([JSON.stringify({ response: 'Partial ' }) + '\n', JSON.stringify({ error: 'out of memory' }) + '\n']));
+      const received: string[] = [];
+      await expect(generateStream('m', 'Hi', (c) => received.push(c))).rejects.toThrow('Ollama stream error: out of memory');
+      expect(received).toEqual(['Partial ']);
+      vi.stubGlobal('fetch', streamOf([JSON.stringify({ error: 'model not found' }) + '\n']));
+      await expect(chatStream('m', [{ role: 'user', content: 'Hi' }], () => undefined)).rejects.toThrow('Ollama stream error: model not found');
+    });
+
+    // Review round 2 (3 Nov), GPT 2 and Grok 8: a redirect would send the prompt to another host.
+    it('asks fetch to fail on a redirect for every request that carries prompt text', async () => {
+      const fetchSpy = streamOf([JSON.stringify({ response: 'ok', done: true }) + '\n']);
+      vi.stubGlobal('fetch', fetchSpy);
+      await generateStream('m', 'Hi', () => undefined);
+      await chatStream('m', [{ role: 'user', content: 'Hi' }], () => undefined);
+      expect(fetchSpy.mock.calls.map((call) => (call[1] as RequestInit).redirect)).toEqual(['error', 'error']);
+    });
+
+    it('never writes streamed text to the console when a line does not parse', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      vi.stubGlobal('fetch', streamOf(['{"response": "PATIENT TEXT\n', JSON.stringify({ response: 'ok' }) + '\n']));
+      await generateStream('m', 'Hi', () => undefined);
+      const logged = warn.mock.calls.flat().join(' ');
+      expect(logged).not.toContain('PATIENT TEXT');
+      expect(logged).toContain('Skipped 1 stream line');
+      warn.mockRestore();
     });
   });
 });

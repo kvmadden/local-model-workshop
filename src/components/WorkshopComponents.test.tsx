@@ -298,11 +298,11 @@ describe('Workshop component unit tests', () => {
       expect(transcriptOutput?.textContent).toContain('Client Lead');
     });
 
-    it('DocSummarizingPlayground processes document summaries with local air-gapped badge', async () => {
+    it('DocSummarizingPlayground processes document summaries and labels demo output as demo', async () => {
       await renderComponent(<DocSummarizingPlayground />);
 
       expect(getByTestId('doc-summarizing-playground')).not.toBeNull();
-      expect(getByTestId('air-gapped-badge')).not.toBeNull();
+      expect(getByTestId('execution-badge')).not.toBeNull();
 
       const sampleChip0 = getByTestId('doc-sample-chip-0');
       await act(async () => {

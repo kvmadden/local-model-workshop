@@ -6,12 +6,14 @@ import {
   ModelEndpointAdapter,
 } from '../types/flow';
 import { defaultModelAdapter } from './modelAdapter';
-import { resolveTemplate } from './templateResolver';
+import { resolveTemplateDetailed } from './templateResolver';
 
 export interface StepMetrics {
   promptCharCount: number;
   outputCharCount: number;
+  /** Character count divided by 4. A rough proxy, not a tokenizer count. */
   estimatedPromptTokens: number;
+  /** Character count divided by 4. A rough proxy, not a tokenizer count. */
   estimatedOutputTokens: number;
   totalEstimatedTokens: number;
   latencyMs: number;
@@ -20,6 +22,12 @@ export interface StepMetrics {
 export interface FlowRunnerOptions {
   adapter?: ModelEndpointAdapter;
   initialContext?: Record<string, string>;
+  /**
+   * When true, a step whose prompt has a placeholder with no value fails before any model is
+   * called. The eval harness runs with this on. When false, the step runs and the unresolved
+   * placeholders are listed in `step.warnings`.
+   */
+  strictPlaceholders?: boolean;
   onStateChange?: (state: ExecutionState, updatedFlow: Flow) => void;
   onStepStart?: (step: Step, stepIndex: number) => void;
   onStepComplete?: (
@@ -51,8 +59,18 @@ function cloneFlow(flow: Flow): Flow {
   return JSON.parse(JSON.stringify(flow));
 }
 
+/** Context keys that always mean the flow's own input. A step name or id can never claim them. */
+const RESERVED_KEYS: ReadonlySet<string> = new Set(['input', 'initialInput']);
+/** Keys that always mean "the output of step N". Only step N itself writes them. */
+const INDEX_ALIAS = /^step\[?\d+\]?(?:\.output)?$/i;
+
 /**
  * Populates context dictionary with alias keys for step outputs.
+ *
+ * Index aliases ({{step2.output}}, {{step[2]}}) always point at the step in that position.
+ * Id and name aliases are added only when they do not collide: a step named "input" no longer
+ * replaces the flow input, a step named "step1" no longer hijacks {{step1.output}}, and when two
+ * steps share a name the first one keeps it.
  */
 export function populateStepContext(
   context: Record<string, string>,
@@ -68,23 +86,43 @@ export function populateStepContext(
   context[`step${n}`] = output;
   context[`step[${n}]`] = output;
 
-  // Step ID aliases
+  const aliases: string[] = [];
   if (step.id) {
-    context[`step[${step.id}].output`] = output;
-    context[`step_${step.id}.output`] = output;
-    context[`step${step.id}.output`] = output;
-    context[`${step.id}.output`] = output;
-    context[`step[${step.id}]`] = output;
-    context[step.id] = output;
+    aliases.push(
+      `step[${step.id}].output`,
+      `step_${step.id}.output`,
+      `step${step.id}.output`,
+      `${step.id}.output`,
+      `step[${step.id}]`,
+      step.id
+    );
   }
-
-  // Step Name aliases
   if (step.name) {
-    context[`step_${step.name}.output`] = output;
-    context[`${step.name}.output`] = output;
-    context[`step_${step.name}`] = output;
-    context[step.name] = output;
+    aliases.push(`step_${step.name}.output`, `${step.name}.output`, `step_${step.name}`, step.name);
   }
+  for (const key of aliases) {
+    if (RESERVED_KEYS.has(key) || INDEX_ALIAS.test(key)) continue;
+    if (Object.prototype.hasOwnProperty.call(context, key)) continue;
+    context[key] = output;
+  }
+}
+
+/** The first step id that appears twice, or null. */
+export function duplicateStepId(steps: Step[]): string | null {
+  const seen = new Set<string>();
+  for (const step of steps) {
+    if (seen.has(step.id)) return step.id;
+    seen.add(step.id);
+  }
+  return null;
+}
+
+interface StepOutcome {
+  ok: boolean;
+  latencyMs: number;
+  promptCharCount: number;
+  outputCharCount: number;
+  totalTokens: number;
 }
 
 /**
@@ -98,28 +136,148 @@ export class FlowRunner {
   }
 
   /**
+   * Runs one step: resolves its prompt, calls the adapter, records output or error.
+   * Shared by runFlow and runSingleStep so the two paths cannot drift apart.
+   */
+  private async executeStep(
+    step: Step,
+    stepIndex: number,
+    context: Record<string, string>,
+    executionState: ExecutionState,
+    updatedFlow: Flow,
+    options: FlowRunnerOptions,
+    adapter: ModelEndpointAdapter
+  ): Promise<StepOutcome> {
+    executionState.currentStepIndex = stepIndex;
+    step.status = 'running';
+    step.error = undefined;
+    // A rerun must never leave the previous answer on screen looking current.
+    step.output = '';
+    step.latencyMs = undefined;
+    step.warnings = undefined;
+
+    const stepResult: StepExecutionResult = {
+      stepId: step.id,
+      stepName: step.name,
+      status: 'running',
+      output: '',
+    };
+    executionState.stepResults[step.id] = stepResult;
+
+    options.onStepStart?.(step, stepIndex);
+    options.onStateChange?.(executionState, updatedFlow);
+
+    const { text: resolvedPrompt, unresolved } = resolveTemplateDetailed(step.prompt, context);
+    const warnings = unresolved.map((key) => `Placeholder {{${key}}} has no value and was replaced with nothing.`);
+    if (warnings.length > 0) {
+      step.warnings = warnings;
+      stepResult.warnings = warnings;
+    }
+    const promptCharCount = resolvedPrompt.length;
+    const estimatedPromptTokens = Math.ceil(promptCharCount / 4);
+
+    let calledAt: number | null = null;
+    try {
+      if (warnings.length > 0 && options.strictPlaceholders) {
+        throw new Error(`Unresolved placeholder(s): ${unresolved.map((key) => `{{${key}}}`).join(', ')}`);
+      }
+      calledAt = performance.now();
+      const result = await adapter.executePrompt(resolvedPrompt, step.modelConfig);
+
+      step.status = 'completed';
+      step.output = result.text;
+      step.latencyMs = result.latencyMs;
+      step.error = undefined;
+
+      stepResult.status = 'completed';
+      stepResult.output = result.text;
+      stepResult.latencyMs = result.latencyMs;
+      if (result.meta) stepResult.meta = result.meta;
+
+      const outputCharCount = result.text.length;
+      const estimatedOutputTokens = Math.ceil(outputCharCount / 4);
+      const stepTotalTokens = estimatedPromptTokens + estimatedOutputTokens;
+
+      populateStepContext(context, step, stepIndex, result.text);
+
+      options.onStepComplete?.(step, stepIndex, stepResult, {
+        promptCharCount,
+        outputCharCount,
+        estimatedPromptTokens,
+        estimatedOutputTokens,
+        totalEstimatedTokens: stepTotalTokens,
+        latencyMs: result.latencyMs,
+      });
+      options.onStateChange?.(executionState, updatedFlow);
+      return { ok: true, latencyMs: result.latencyMs, promptCharCount, outputCharCount, totalTokens: stepTotalTokens };
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+
+      step.status = 'error';
+      step.error = errorMessage;
+
+      stepResult.status = 'error';
+      stepResult.error = errorMessage;
+      // A failed request still took time. Keep it, so a timeout is visible as one.
+      if (calledAt !== null) {
+        step.latencyMs = Math.round(performance.now() - calledAt);
+        stepResult.latencyMs = step.latencyMs;
+      }
+
+      executionState.status = 'error';
+      executionState.error = errorMessage;
+      executionState.endTime = Date.now();
+
+      options.onStepError?.(step, stepIndex, errorMessage);
+      options.onStateChange?.(executionState, updatedFlow);
+      return { ok: false, latencyMs: 0, promptCharCount, outputCharCount: 0, totalTokens: 0 };
+    }
+  }
+
+  private start(updatedFlow: Flow, options: FlowRunnerOptions, currentStepIndex: number) {
+    const initialInput = updatedFlow.initialInput ?? '';
+    const context: Record<string, string> = {
+      ...(options.initialContext || {}),
+      // The flow input always wins over a custom variable of the same name.
+      input: initialInput,
+      initialInput: initialInput,
+    };
+    const executionState: ExecutionState = {
+      flowId: updatedFlow.id,
+      status: 'running',
+      currentStepIndex,
+      context,
+      stepResults: {},
+      startTime: Date.now(),
+    };
+    return { context, executionState };
+  }
+
+  /** Marks the run as failed before any step starts, for flows that cannot run as written. */
+  private refuse(executionState: ExecutionState, updatedFlow: Flow, options: FlowRunnerOptions, message: string): FlowRunResult {
+    executionState.status = 'error';
+    executionState.error = message;
+    executionState.endTime = Date.now();
+    options.onStateChange?.(executionState, updatedFlow);
+    return {
+      state: executionState,
+      flow: updatedFlow,
+      metrics: { totalLatencyMs: 0, totalPromptCharCount: 0, totalOutputCharCount: 0, totalEstimatedTokens: 0, completedStepsCount: 0 },
+    };
+  }
+
+  /**
    * Executes all steps in a linear flow sequentially.
    */
   async runFlow(flow: Flow, options: FlowRunnerOptions = {}): Promise<FlowRunResult> {
     const activeAdapter = options.adapter || this.adapter;
     const updatedFlow = cloneFlow(flow);
+    const { context, executionState } = this.start(updatedFlow, options, 0);
 
-    const initialInput = updatedFlow.initialInput ?? '';
-    const context: Record<string, string> = {
-      input: initialInput,
-      initialInput: initialInput,
-      ...(options.initialContext || {}),
-    };
-
-    const startTime = Date.now();
-    const executionState: ExecutionState = {
-      flowId: updatedFlow.id,
-      status: 'running',
-      currentStepIndex: 0,
-      context,
-      stepResults: {},
-      startTime,
-    };
+    const duplicate = duplicateStepId(updatedFlow.steps);
+    if (duplicate !== null) {
+      return this.refuse(executionState, updatedFlow, options, `Two steps share the id '${duplicate}'. Step ids must be unique.`);
+    }
 
     let totalLatencyMs = 0;
     let totalPromptCharCount = 0;
@@ -131,81 +289,16 @@ export class FlowRunner {
     options.onStateChange?.(executionState, updatedFlow);
 
     for (let i = 0; i < updatedFlow.steps.length; i++) {
-      const step = updatedFlow.steps[i];
-      executionState.currentStepIndex = i;
-
-      step.status = 'running';
-      step.error = undefined;
-
-      const stepResult: StepExecutionResult = {
-        stepId: step.id,
-        stepName: step.name,
-        status: 'running',
-        output: '',
-      };
-      executionState.stepResults[step.id] = stepResult;
-
-      options.onStepStart?.(step, i);
-      options.onStateChange?.(executionState, updatedFlow);
-
-      const resolvedPrompt = resolveTemplate(step.prompt, context);
-      const promptCharCount = resolvedPrompt.length;
-      const estimatedPromptTokens = Math.ceil(promptCharCount / 4);
-
-      try {
-        const result = await activeAdapter.executePrompt(resolvedPrompt, step.modelConfig);
-
-        step.status = 'completed';
-        step.output = result.text;
-        step.latencyMs = result.latencyMs;
-        step.error = undefined;
-
-        stepResult.status = 'completed';
-        stepResult.output = result.text;
-        stepResult.latencyMs = result.latencyMs;
-
-        const outputCharCount = result.text.length;
-        const estimatedOutputTokens = Math.ceil(outputCharCount / 4);
-        const stepTotalTokens = estimatedPromptTokens + estimatedOutputTokens;
-
-        const stepMetrics: StepMetrics = {
-          promptCharCount,
-          outputCharCount,
-          estimatedPromptTokens,
-          estimatedOutputTokens,
-          totalEstimatedTokens: stepTotalTokens,
-          latencyMs: result.latencyMs,
-        };
-
-        totalLatencyMs += result.latencyMs;
-        totalPromptCharCount += promptCharCount;
-        totalOutputCharCount += outputCharCount;
-        totalEstimatedTokens += stepTotalTokens;
-        completedStepsCount++;
-
-        populateStepContext(context, step, i, result.text);
-
-        options.onStepComplete?.(step, i, stepResult, stepMetrics);
-        options.onStateChange?.(executionState, updatedFlow);
-      } catch (err: unknown) {
-        const errorMessage = err instanceof Error ? err.message : String(err);
-
-        step.status = 'error';
-        step.error = errorMessage;
-
-        stepResult.status = 'error';
-        stepResult.error = errorMessage;
-
-        executionState.status = 'error';
-        executionState.error = errorMessage;
-        executionState.endTime = Date.now();
-
+      const outcome = await this.executeStep(updatedFlow.steps[i], i, context, executionState, updatedFlow, options, activeAdapter);
+      if (!outcome.ok) {
         failedStepIndex = i;
-
-        options.onStepError?.(step, i, errorMessage);
-        options.onStateChange?.(executionState, updatedFlow);
         break;
       }
+      totalLatencyMs += outcome.latencyMs;
+      totalPromptCharCount += outcome.promptCharCount;
+      totalOutputCharCount += outcome.outputCharCount;
+      totalEstimatedTokens += outcome.totalTokens;
+      completedStepsCount++;
     }
 
     if (executionState.status !== 'error') {
@@ -230,6 +323,9 @@ export class FlowRunner {
 
   /**
    * Executes a single step within a flow individually.
+   *
+   * `stepIdOrIndex` is a step id, a 0-based index number, or a string of digits only. A string
+   * such as "1garbage" is not read as index 1.
    */
   async runSingleStep(
     flow: Flow,
@@ -241,16 +337,13 @@ export class FlowRunner {
 
     let targetIndex = -1;
     if (typeof stepIdOrIndex === 'number') {
-      targetIndex = stepIdOrIndex;
+      targetIndex = Number.isInteger(stepIdOrIndex) ? stepIdOrIndex : -1;
     } else {
       const idx = updatedFlow.steps.findIndex((s) => s.id === stepIdOrIndex);
       if (idx !== -1) {
         targetIndex = idx;
-      } else {
-        const numIdx = parseInt(stepIdOrIndex, 10);
-        if (!isNaN(numIdx) && numIdx >= 0 && numIdx < updatedFlow.steps.length) {
-          targetIndex = numIdx;
-        }
+      } else if (/^\d+$/.test(stepIdOrIndex.trim())) {
+        targetIndex = Number(stepIdOrIndex.trim());
       }
     }
 
@@ -258,111 +351,27 @@ export class FlowRunner {
       throw new Error(`Step index/ID '${stepIdOrIndex}' not found in flow.`);
     }
 
-    const initialInput = updatedFlow.initialInput ?? '';
-    const context: Record<string, string> = {
-      input: initialInput,
-      initialInput: initialInput,
-      ...(options.initialContext || {}),
-    };
+    const { context, executionState } = this.start(updatedFlow, options, targetIndex);
 
-    // Pre-populate context with outputs of preceding completed steps
+    const duplicate = duplicateStepId(updatedFlow.steps);
+    if (duplicate !== null) {
+      return this.refuse(executionState, updatedFlow, options, `Two steps share the id '${duplicate}'. Step ids must be unique.`);
+    }
+
+    // Earlier steps count as answered only when they completed. An idle or failed step has an
+    // empty output, and treating it as an answer would hide the missing dependency. A completed
+    // step that answered with empty text is still an answer.
     for (let i = 0; i < targetIndex; i++) {
       const priorStep = updatedFlow.steps[i];
-      if (priorStep.output !== undefined) {
-        populateStepContext(context, priorStep, i, priorStep.output);
+      if (priorStep.status === 'completed') {
+        populateStepContext(context, priorStep, i, priorStep.output ?? '');
       }
     }
 
-    const startTime = Date.now();
-    const executionState: ExecutionState = {
-      flowId: updatedFlow.id,
-      status: 'running',
-      currentStepIndex: targetIndex,
-      context,
-      stepResults: {},
-      startTime,
-    };
-
-    const targetStep = updatedFlow.steps[targetIndex];
-    targetStep.status = 'running';
-    targetStep.error = undefined;
-
-    const stepResult: StepExecutionResult = {
-      stepId: targetStep.id,
-      stepName: targetStep.name,
-      status: 'running',
-      output: '',
-    };
-    executionState.stepResults[targetStep.id] = stepResult;
-
-    options.onStepStart?.(targetStep, targetIndex);
-    options.onStateChange?.(executionState, updatedFlow);
-
-    const resolvedPrompt = resolveTemplate(targetStep.prompt, context);
-    const promptCharCount = resolvedPrompt.length;
-    const estimatedPromptTokens = Math.ceil(promptCharCount / 4);
-
-    let totalLatencyMs = 0;
-    let totalPromptCharCount = 0;
-    let totalOutputCharCount = 0;
-    let totalEstimatedTokens = 0;
-    let completedStepsCount = 0;
-    let failedStepIndex: number | undefined = undefined;
-
-    try {
-      const result = await activeAdapter.executePrompt(resolvedPrompt, targetStep.modelConfig);
-
-      targetStep.status = 'completed';
-      targetStep.output = result.text;
-      targetStep.latencyMs = result.latencyMs;
-      targetStep.error = undefined;
-
-      stepResult.status = 'completed';
-      stepResult.output = result.text;
-      stepResult.latencyMs = result.latencyMs;
-
-      const outputCharCount = result.text.length;
-      const estimatedOutputTokens = Math.ceil(outputCharCount / 4);
-      const stepTotalTokens = estimatedPromptTokens + estimatedOutputTokens;
-
-      const stepMetrics: StepMetrics = {
-        promptCharCount,
-        outputCharCount,
-        estimatedPromptTokens,
-        estimatedOutputTokens,
-        totalEstimatedTokens: stepTotalTokens,
-        latencyMs: result.latencyMs,
-      };
-
-      totalLatencyMs = result.latencyMs;
-      totalPromptCharCount = promptCharCount;
-      totalOutputCharCount = outputCharCount;
-      totalEstimatedTokens = stepTotalTokens;
-      completedStepsCount = 1;
-
-      populateStepContext(context, targetStep, targetIndex, result.text);
-
-      options.onStepComplete?.(targetStep, targetIndex, stepResult, stepMetrics);
-
+    const outcome = await this.executeStep(updatedFlow.steps[targetIndex], targetIndex, context, executionState, updatedFlow, options, activeAdapter);
+    if (outcome.ok) {
       executionState.status = 'completed';
       executionState.endTime = Date.now();
-      options.onStateChange?.(executionState, updatedFlow);
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : String(err);
-
-      targetStep.status = 'error';
-      targetStep.error = errorMessage;
-
-      stepResult.status = 'error';
-      stepResult.error = errorMessage;
-
-      executionState.status = 'error';
-      executionState.error = errorMessage;
-      executionState.endTime = Date.now();
-
-      failedStepIndex = targetIndex;
-
-      options.onStepError?.(targetStep, targetIndex, errorMessage);
       options.onStateChange?.(executionState, updatedFlow);
     }
 
@@ -370,12 +379,12 @@ export class FlowRunner {
       state: executionState,
       flow: updatedFlow,
       metrics: {
-        totalLatencyMs,
-        totalPromptCharCount,
-        totalOutputCharCount,
-        totalEstimatedTokens,
-        completedStepsCount,
-        failedStepIndex,
+        totalLatencyMs: outcome.latencyMs,
+        totalPromptCharCount: outcome.promptCharCount,
+        totalOutputCharCount: outcome.outputCharCount,
+        totalEstimatedTokens: outcome.totalTokens,
+        completedStepsCount: outcome.ok ? 1 : 0,
+        failedStepIndex: outcome.ok ? undefined : targetIndex,
       },
     };
   }

@@ -7,6 +7,9 @@ import {
 import { MockEndpoint } from './mockEndpoint';
 import { ModelConfig } from '../types/flow';
 
+/** A local OpenAI-compatible server (LM Studio's default port). No key is needed on this machine. */
+const LOCAL_OPENAI = 'http://127.0.0.1:1234/v1/chat/completions';
+
 describe('Edge cases: MockEndpoint & ModelAdapters', () => {
   const originalFetch = globalThis.fetch;
 
@@ -227,15 +230,14 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
         }) as any;
 
         const adapter = new OllamaAdapter();
-        // Minimal config with model and temperature omitted
-        const config: ModelConfig = {
-          provider: 'ollama',
-          model: '',
-          temperature: 0.7,
-        };
+        // An empty model name used to be replaced with "llama3" without saying so.
+        await expect(adapter.executePrompt('Minimal prompt', { provider: 'ollama', model: '' })).rejects.toThrow(
+          'Ollama execution failed: Ollama: no model name was given'
+        );
+        expect(capturedBody).toBeNull();
 
-        await adapter.executePrompt('Minimal prompt', config);
-        expect(capturedBody.model).toBe('llama3'); // Fallback model
+        await adapter.executePrompt('Minimal prompt', { provider: 'ollama', model: 'llama3' });
+        expect(capturedBody.model).toBe('llama3');
         expect(capturedBody.options.temperature).toBe(0.7); // Fallback temperature
       });
 
@@ -259,7 +261,11 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
           temperature: 0.7,
         };
 
-        await adapter.executePrompt('Remote prompt', config);
+        // Another machine is refused before anything is sent...
+        await expect(adapter.executePrompt('Remote prompt', config)).rejects.toThrow(/refusing to send this prompt to ollama.internal.net:8443/);
+        expect(capturedUrl).toBe('');
+        // ...unless the step allows it explicitly.
+        await adapter.executePrompt('Remote prompt', { ...config, allowRemote: true });
         expect(capturedUrl).toBe('https://ollama.internal.net:8443/api/generate');
       });
     });
@@ -287,6 +293,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
           model: 'gpt-4o',
           temperature: 0.1,
           apiKey: 'fake-test-key',
+          allowRemote: true,
           systemPrompt: 'Act as a senior TypeScript architect.',
           maxTokens: 1000,
         };
@@ -326,6 +333,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
           provider: 'openai',
           model: 'gpt-3.5-turbo',
           temperature: 0.7,
+          endpointUrl: LOCAL_OPENAI,
         };
 
         await adapter.executePrompt('No key prompt', config);
@@ -349,6 +357,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
           provider: 'openai',
           model: 'gpt-3.5-turbo',
           temperature: 0.7,
+          endpointUrl: LOCAL_OPENAI,
         };
 
         await adapter.executePrompt('User only prompt', config);
@@ -397,7 +406,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
 
       const openai = new OpenAIAdapter();
       await expect(
-        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7 })
+        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7, endpointUrl: LOCAL_OPENAI })
       ).rejects.toThrow('OpenAI execution failed: Failed to fetch');
     });
 
@@ -408,7 +417,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
 
       const openai = new OpenAIAdapter();
       await expect(
-        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-4o', temperature: 0.7 })
+        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-4o', temperature: 0.7, endpointUrl: LOCAL_OPENAI })
       ).rejects.toThrow('OpenAI execution failed: The operation was aborted');
     });
 
@@ -438,7 +447,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
 
       const openai = new OpenAIAdapter();
       await expect(
-        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-4o', temperature: 0.7 })
+        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-4o', temperature: 0.7, endpointUrl: LOCAL_OPENAI })
       ).rejects.toThrow('OpenAI execution failed: OpenAI API returned HTTP 403: Forbidden');
     });
 
@@ -454,7 +463,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
 
       const openai = new OpenAIAdapter();
       await expect(
-        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-4o', temperature: 0.7 })
+        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-4o', temperature: 0.7, endpointUrl: LOCAL_OPENAI })
       ).rejects.toThrow('OpenAI execution failed: OpenAI API returned HTTP 500: Internal Error');
     });
 
@@ -477,7 +486,7 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
 
       const openai = new OpenAIAdapter();
       await expect(
-        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7 })
+        openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7, endpointUrl: LOCAL_OPENAI })
       ).rejects.toThrow(
         'OpenAI execution failed: Unexpected token < in JSON at position 0'
       );
@@ -491,9 +500,12 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
         json: async () => ({ model: 'llama3', done: true }),
       }) as any;
 
+      // A reply with no text used to count as a successful empty answer. It is now an error,
+      // so a broken provider cannot pass for a model that said nothing.
       const ollama = new OllamaAdapter();
-      const resOllama = await ollama.executePrompt('Test', { provider: 'ollama', model: 'llama3', temperature: 0.7 });
-      expect(resOllama.text).toBe('');
+      await expect(ollama.executePrompt('Test', { provider: 'ollama', model: 'llama3', temperature: 0.7 })).rejects.toThrow(
+        'Ollama execution failed: Ollama reply had no response text'
+      );
 
       // OpenAI returns empty choices array
       globalThis.fetch = vi.fn().mockResolvedValue({
@@ -503,8 +515,9 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
       }) as any;
 
       const openai = new OpenAIAdapter();
-      const resOpenAI = await openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7 });
-      expect(resOpenAI.text).toBe('');
+      await expect(openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7, endpointUrl: LOCAL_OPENAI })).rejects.toThrow(
+        'OpenAI execution failed: OpenAI API reply had no message content'
+      );
 
       // OpenAI returns null choices or missing message content
       globalThis.fetch = vi.fn().mockResolvedValue({
@@ -513,8 +526,9 @@ describe('Edge cases: MockEndpoint & ModelAdapters', () => {
         json: async () => ({ choices: [{ message: { content: null } }] }),
       }) as any;
 
-      const resOpenAINull = await openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7 });
-      expect(resOpenAINull.text).toBe('');
+      await expect(openai.executePrompt('Test', { provider: 'openai', model: 'gpt-3.5-turbo', temperature: 0.7, endpointUrl: LOCAL_OPENAI })).rejects.toThrow(
+        'OpenAI execution failed: OpenAI API reply had no message content'
+      );
     });
   });
 

@@ -4,7 +4,7 @@
  * The browser suite used to inherit whatever Ollama happened to be running on
  * the machine. That is not a flake, it is a suite that asserts a different
  * thing per developer: `workshop.spec.ts` T3-02 and T3-04 assert the hardcoded DEMO
- * samples ("Confidential Summary", "Direct Answer from Local Context"), but the
+ * samples ("Confidential Summary", "Demo answer from the sample document"), but the
  * playgrounds correctly switch to LIVE the moment their requested model
  * resolves against a reachable engine. With Ollama up and a llama/qwen tag
  * installed those two tests failed; with Ollama down they passed. Neither

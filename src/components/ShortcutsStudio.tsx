@@ -55,7 +55,7 @@ const SHORTCUTS_DATA: ShortcutBlueprint[] = [
     shortcutHotkey: 'Menu Bar Icon',
     appPairing: 'AnythingLLM / Ollama (macOS Sequoia)',
     modelPairing: 'Llama 3.2 (3B)',
-    description: 'Drag any confidential PDF or report onto your Mac menu bar icon to generate an air-gapped executive summary.',
+    description: 'Drag any confidential PDF or report onto your Mac menu bar icon to generate a summary with a local model.',
     steps: [
       'In macOS Shortcuts app Inspector, check "Pin in Menu Bar".',
       'Add Action: "Extract Text from PDF" from the macOS Sequoia PDF Action category.',
@@ -150,7 +150,7 @@ export const ShortcutsStudio: React.FC = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <span className="text-xs font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2.5 py-0.5 rounded flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>100% Offline macOS Sequoia Native Automation</span>
+                  <span>macOS Shortcuts recipes that call a local model</span>
                 </span>
                 <span className="text-xs font-mono font-bold text-indigo-300 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
                   {selectedBlueprint.shortcutHotkey}

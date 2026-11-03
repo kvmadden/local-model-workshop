@@ -2,21 +2,37 @@ import { OllamaModel } from '../types/workshop';
 
 export const OLLAMA_API = 'http://localhost:11434';
 
-export async function checkOllamaStatus(): Promise<{ available: boolean; models: OllamaModel[] }> {
+export const STATUS_TIMEOUT_MS = 2000;
+
+/**
+ * Asks the local Ollama which models it has. When there is no usable answer, `reason` says
+ * exactly what blocked the read, so the interface never reports a timeout as "not installed".
+ */
+export async function checkOllamaStatus(): Promise<{ available: boolean; models: OllamaModel[]; reason?: string }> {
+  let res: Response;
   try {
-    const res = await fetch(`${OLLAMA_API}/api/tags`, {
-      signal: AbortSignal.timeout(2000),
+    res = await fetch(`${OLLAMA_API}/api/tags`, {
+      signal: AbortSignal.timeout(STATUS_TIMEOUT_MS),
     });
-    if (!res.ok) return { available: false, models: [] };
+  } catch (err) {
+    const name = (err as Error)?.name;
+    const reason = name === 'TimeoutError' || name === 'AbortError'
+      ? `no answer within ${STATUS_TIMEOUT_MS / 1000} s`
+      : 'no connection';
+    return { available: false, models: [], reason };
+  }
+  if (!res.ok) return { available: false, models: [], reason: `HTTP ${res.status}` };
+  try {
     const data = await res.json();
-    const models: OllamaModel[] = (data.models || []).map((m: any) => ({
+    if (!data || !Array.isArray(data.models)) return { available: false, models: [], reason: 'the reply was not a model list' };
+    const models: OllamaModel[] = data.models.map((m: any) => ({
       name: m.name || m.model || 'unknown',
       size: m.size || 0,
       modified_at: m.modified_at || '',
     }));
     return { available: true, models };
   } catch {
-    return { available: false, models: [] };
+    return { available: false, models: [], reason: 'the reply was not JSON' };
   }
 }
 
@@ -277,6 +293,52 @@ export function resolveOllamaModelTag(
   return resolution && resolution.exact ? resolution.tag : null;
 }
 
+/**
+ * Reads an Ollama NDJSON stream. A line carrying `error` ends the stream with that error instead
+ * of being skipped, so a model that fails mid-answer cannot look like a short answer. Lines that
+ * do not parse are counted, not logged, so streamed text never lands in the console.
+ */
+async function readNdjson(
+  response: Response,
+  pick: (json: Record<string, unknown>) => string | undefined,
+  onChunk: (chunk: string) => void
+): Promise<void> {
+  if (!response.body) {
+    throw new Error('Response body is null');
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder('utf-8');
+  let buffer = '';
+  let unparsed = 0;
+
+  const handle = (line: string) => {
+    if (!line.trim()) return;
+    let json: Record<string, unknown>;
+    try {
+      json = JSON.parse(line);
+    } catch {
+      unparsed++;
+      return;
+    }
+    if (typeof json.error === 'string') {
+      throw new Error(`Ollama stream error: ${json.error.slice(0, 300)}`);
+    }
+    const text = pick(json);
+    if (text !== undefined) onChunk(text);
+  };
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop() || ''; // Keep trailing partial line in buffer
+    for (const line of lines) handle(line);
+  }
+  if (buffer.trim()) handle(buffer);
+  if (unparsed > 0) console.warn(`Skipped ${unparsed} stream line(s) that were not valid JSON.`);
+}
+
 export async function generateStream(
   modelTag: string,
   prompt: string,
@@ -294,51 +356,15 @@ export async function generateStream(
       stream: true,
     }),
     signal,
+    // Never follow a redirect: it would send the prompt to a host nobody checked.
+    redirect: 'error',
   });
 
   if (!response.ok) {
     throw new Error(`Ollama generate request failed with status ${response.status}`);
   }
 
-  if (!response.body) {
-    throw new Error('Response body is null');
-  }
-
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder('utf-8');
-  let buffer = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    const lines = buffer.split('\n');
-    buffer = lines.pop() || ''; // Keep trailing partial line in buffer
-
-    for (const line of lines) {
-      if (!line.trim()) continue;
-      try {
-        const json = JSON.parse(line);
-        if (json.response !== undefined) {
-          onChunk(json.response);
-        }
-      } catch (err) {
-        console.warn('Failed to parse NDJSON line:', line);
-      }
-    }
-  }
-
-  if (buffer.trim()) {
-    try {
-      const json = JSON.parse(buffer);
-      if (json.response !== undefined) {
-        onChunk(json.response);
-      }
-    } catch {
-      // Ignore partial incomplete line
-    }
-  }
+  await readNdjson(response, (json) => (typeof json.response === 'string' ? json.response : undefined), onChunk);
 }
 
 export async function chatStream(
@@ -352,55 +378,26 @@ export async function chatStream(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      ...options,
       model: modelTag,
       messages,
       stream: true,
-      ...options,
     }),
     signal,
+    // Never follow a redirect: it would send the prompt to a host nobody checked.
+    redirect: 'error',
   });
 
   if (!response.ok) {
     throw new Error(`Ollama chat request failed with status ${response.status}`);
   }
 
-  if (!response.body) {
-    throw new Error('Response body is null');
-  }
-
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder('utf-8');
-  let buffer = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    const lines = buffer.split('\n');
-    buffer = lines.pop() || '';
-
-    for (const line of lines) {
-      if (!line.trim()) continue;
-      try {
-        const json = JSON.parse(line);
-        if (json.message?.content !== undefined) {
-          onChunk(json.message.content);
-        }
-      } catch (err) {
-        console.warn('Failed to parse NDJSON line:', line);
-      }
-    }
-  }
-
-  if (buffer.trim()) {
-    try {
-      const json = JSON.parse(buffer);
-      if (json.message?.content !== undefined) {
-        onChunk(json.message.content);
-      }
-    } catch {
-      // Ignore
-    }
-  }
+  await readNdjson(
+    response,
+    (json) => {
+      const message = json.message as { content?: unknown } | undefined;
+      return typeof message?.content === 'string' ? message.content : undefined;
+    },
+    onChunk
+  );
 }

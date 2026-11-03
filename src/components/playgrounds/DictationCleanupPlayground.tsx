@@ -185,7 +185,7 @@ export const DictationCleanupPlayground: React.FC = () => {
                 <span>
                   {mode === 'live'
                     ? `Streaming Polished Prose from Ollama (${matchingTag})...`
-                    : 'Polishing Dictation On Apple Silicon GPU...'}
+                    : 'Preparing the demo cleanup...'}
                 </span>
               </>
             ) : (

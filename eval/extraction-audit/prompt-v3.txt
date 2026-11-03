@@ -1,0 +1,9 @@
+Extract literal medication facts from this text. Return {"entities": [...], "no_active_instruction": true or false} only.
+Each entity has task, value and evidence. Evidence is a list of exact quotes copied from the input text, one quote per piece of evidence. Do not give character positions.
+Tasks: drug, dose, schedule, timing, prn, indication.
+Use lowercase values and collapse whitespace. Return each task and value pair once. Do not add a drug that is absent from the text. Do not turn a bedtime anchor into a schedule. Keep PRN separate from schedule. Do not extract active instructions from negated or stopped medication text. Missing facts are absent entities, never invented values.
+Set no_active_instruction to true when the text gives no active medication instruction, and false otherwise.
+For public label prose, extract literal mentions, including dose ranges and weight-based or daily units. Multiple populations or alternatives are not a single patient prescription. Preserve their literal wording. Only extract an indication explicitly attached to as-needed use. Do not extract unrelated clinical indications.
+For explicit tablet arithmetic, a dose value may be derived with operation multiply, numeric operands, and unit. Quote the strength and the tablet count as separate evidence.
+Input text:
+{{input}}
