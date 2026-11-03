@@ -52,6 +52,7 @@ Computed from the saved replies by `src/eval/decision.test.ts`. Each row takes c
 
 ## What the workshop does
 
+- **Run comparison, the opening screen.** The saved replies of the medication-instruction eval, line by line: the three local models and the rules parser, checked field by field on both development sets. A switch scores them under Kevin's ruling or under the gold as first written. The screen says plainly that no model is chosen until the blind test set runs. It reads the committed replies and calls no model.
 - **Flow builder.** Chain prompt steps. A step's prompt can use `{{input}}` or an earlier step's output (`{{step1.output}}`). Each step runs on:
   - a built-in mock, the default, which needs nothing installed
   - a local Ollama
@@ -144,6 +145,8 @@ The historical documents ([docs/ORIGINAL-EVALUATION.md](docs/ORIGINAL-EVALUATION
 
 ## How it was built
 
-Kevin Madden, PharmD, designed the workshop, the task and the schema review. AI coding tools wrote much of the code, tests and documentation, and this revision followed a review by four model families ([docs/HOW-BUILT.md](docs/HOW-BUILT.md)).
+Kevin Madden, PharmD, designed the workshop, the task and the schema review.
+
+The interface is styled as a pharmacy verification bench: printed label stock on a steel bench in the light theme, the same labels on a black lab bench in the dark theme, yellow label tape for the open tab, and a blue verification stamp for a line with every field right. Fonts are bundled, so the page requests nothing from another host. A browser sweep checks every tab at 1920, 1440, 1024, 430 and 390 px wide, in both themes, for text contrast, 44 px targets, room inside every boxed label, step flows that never wrap partway, and no sideways scrolling. AI coding tools wrote much of the code, tests and documentation, and this revision followed a review by four model families ([docs/HOW-BUILT.md](docs/HOW-BUILT.md)).
 
 MIT, Copyright (c) 2026 Kevin Madden. The eval lines are synthetic. The audit excerpts are public openFDA label text with no patient data.
