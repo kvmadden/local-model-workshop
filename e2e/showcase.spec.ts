@@ -1,9 +1,15 @@
 import { test, expect } from './fixtures'
 
+// Start dark, so the test can switch to the light theme by keyboard.
+test.use({ colorScheme: 'dark' })
+
 test('light flow editor works by keyboard at portfolio viewports', async ({ page }) => {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 430, height: 932 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport)
     await page.goto('/')
+    // The theme choice is remembered. Clear it so every viewport starts from the system setting.
+    await page.evaluate(() => localStorage.removeItem('local-model-workshop-theme'))
+    await page.reload()
     await page.getByTestId('tab-flow-builder').click()
     const theme = page.getByRole('button', { name: 'Use light theme' })
     await expect(theme).toBeVisible()

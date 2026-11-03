@@ -1,0 +1,105 @@
+import { test, expect } from './fixtures';
+import { auditContrast, auditTargets } from './audits';
+import { TABS, VIEWPORTS } from './sweep';
+
+/**
+ * Accessibility checks on every tab in both themes: text contrast measured on the rendered page,
+ * 44 px targets, no sideways scrolling, a visible focus mark, and the run comparison worked by
+ * keyboard alone.
+ */
+test.use({ engineMode: 'absent' });
+
+// The audits have to catch what they are meant to catch, or an empty list proves nothing.
+test('the audits flag low contrast and a small target, and pass clean ones', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    host.setAttribute('data-testid', 'audit-controls');
+    host.style.cssText = 'background:#ffffff;padding:8px';
+    host.innerHTML = `
+      <p style="color:#aaaaaa;font-size:14px">Faint grey text</p>
+      <p style="color:#111111;font-size:14px">Dark text</p>
+      <button style="width:30px;height:30px">x</button>
+      <button style="width:48px;height:48px">ok</button>`;
+    document.body.prepend(host);
+  });
+  const contrast = (await page.evaluate(auditContrast)).filter((p) => p.includes('audit-controls'));
+  const targets = (await page.evaluate(auditTargets)).filter((p) => p.includes('audit-controls'));
+  expect(contrast).toHaveLength(1);
+  expect(contrast[0]).toContain('Faint grey text');
+  expect(targets).toEqual(['button audit-controls "x": 30x30']);
+});
+
+for (const colorScheme of ['light', 'dark'] as const) {
+  test.describe(`accessibility, ${colorScheme} theme`, () => {
+    test.use({ colorScheme });
+
+    for (const viewport of [VIEWPORTS[1], VIEWPORTS[4]]) {
+      test(`every tab meets text contrast and 44 px targets at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+        await page.setViewportSize(viewport);
+        await page.goto('/');
+        await expect(page.getByTestId('app-container')).toHaveAttribute('data-theme', colorScheme);
+        const problems: string[] = [];
+        for (const tab of TABS) {
+          await page.getByTestId(tab).click();
+          await page.waitForTimeout(150);
+          problems.push(...(await page.evaluate(auditContrast)).map((p) => `${tab} contrast: ${p}`));
+          problems.push(...(await page.evaluate(auditTargets)).map((p) => `${tab} target: ${p}`));
+        }
+        expect(problems).toEqual([]);
+      });
+    }
+
+    test('no tab scrolls sideways at any size', async ({ page }) => {
+      const problems: string[] = [];
+      for (const viewport of VIEWPORTS) {
+        await page.setViewportSize(viewport);
+        await page.goto('/');
+        for (const tab of TABS) {
+          await page.getByTestId(tab).click();
+          if (!(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))) problems.push(`${tab} at ${viewport.width}x${viewport.height}`);
+        }
+      }
+      expect(problems).toEqual([]);
+    });
+  });
+}
+
+test('keyboard focus is always visible on the run comparison controls', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('run-comparison')).toBeVisible();
+  const unmarked: string[] = [];
+  for (let i = 0; i < 40; i++) {
+    await page.keyboard.press('Tab');
+    const state = await page.evaluate(() => {
+      const el = document.activeElement as HTMLElement | null;
+      if (!el || el === document.body) return null;
+      const cs = getComputedStyle(el);
+      const outline = cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2;
+      const ring = cs.boxShadow !== 'none' && /\d+px/.test(cs.boxShadow);
+      return { name: el.getAttribute('data-testid') ?? el.textContent?.trim().slice(0, 24) ?? el.tagName, marked: outline || ring };
+    });
+    if (state && !state.marked) unmarked.push(state.name);
+  }
+  expect(unmarked).toEqual([]);
+});
+
+test('the run comparison works by keyboard alone', async ({ page }) => {
+  await page.goto('/');
+  const sheet = page.getByTestId('verification-sheet');
+  await expect(page.getByTestId('plate-count-gpt-oss:20b')).toHaveText('25/25');
+  // Switch the reading with the keyboard.
+  await page.getByTestId('reading-first-gold').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('reading-first-gold')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('plate-count-gpt-oss:20b')).toHaveText('24/25');
+  // Pick a verdict cell with the keyboard, and the detail follows.
+  await sheet.getByTestId('cell-s25-gpt-oss:20b').focus();
+  await page.keyboard.press('Space');
+  await expect(page.getByTestId('detail-column-gpt-oss:20b')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('detail-row-frequency')).toContainText('does not match');
+  // And the set.
+  await page.getByTestId('set-templates12').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('plate-count-gpt-oss:20b')).toHaveText('10/12');
+});

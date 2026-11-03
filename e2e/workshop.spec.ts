@@ -13,6 +13,8 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     // Navigate to the workshop
     await page.goto('/');
     await page.waitForSelector('[data-testid="app-container"]');
+    // The workshop opens on the run comparison. These tests start from the Task Wizard.
+    await page.click('[data-testid="tab-task-wizard"]');
     await page.waitForSelector('[data-testid="task-wizard-container"]');
   });
 
@@ -31,9 +33,10 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
       await expect(title).toHaveText(/Local Model Workshop/i);
 
       const subtitle = page.locator('[data-testid="workshop-subtitle"]');
-      await expect(subtitle).toHaveText(/Explore, compare and chain small local models/i);
+      await expect(subtitle).toHaveText(/A test bench for local models reading medication instructions/i);
 
       // Assert Navigation Tabs are present
+      await expect(page.locator('[data-testid="tab-run-comparison"]')).toBeVisible();
       await expect(page.locator('[data-testid="tab-task-wizard"]')).toBeVisible();
       await expect(page.locator('[data-testid="tab-model-catalog"]')).toBeVisible();
       await expect(page.locator('[data-testid="tab-use-case-studio"]')).toBeVisible();

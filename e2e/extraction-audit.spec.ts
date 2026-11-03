@@ -1,10 +1,16 @@
 import { test, expect } from './fixtures'
 
+// Start dark, so the test can switch to the light theme.
+test.use({ colorScheme: 'dark' })
+
 test('saved audit exposes rights, spans and fixed failures by keyboard', async ({ page }) => {
   test.setTimeout(90000)
   for (const viewport of [{ width: 1440, height: 900 }, { width: 430, height: 932 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport)
     await page.goto('/')
+    // The theme choice is remembered. Clear it so every viewport starts from the system setting.
+    await page.evaluate(() => localStorage.removeItem('local-model-workshop-theme'))
+    await page.reload()
     await page.getByTestId('tab-benchmark-studio').click()
     const inspector = page.getByTestId('saved-run-inspector')
     await expect(inspector).toBeVisible()

@@ -67,6 +67,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
      ========================================================================== */
   test('E2E-A11Y-03: TaskWizard and ModelCatalog setup modals adhere to ARIA dialog specs and close on Escape', async ({ page }) => {
     await page.goto('/');
+    await page.click('[data-testid="tab-task-wizard"]');
 
     // TaskWizard Modal Accessibility
     await expect(page.locator('[data-testid="task-wizard-container"]')).toBeVisible();
@@ -101,6 +102,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
      ========================================================================== */
   test('E2E-A11Y-04: TaskWizard and ModelCatalog headers display discovery badges for Mac app clients', async ({ page }) => {
     await page.goto('/');
+    await page.click('[data-testid="tab-task-wizard"]');
 
     // TaskWizard Header Client Pairings Badges
     const wizardContainer = page.locator('[data-testid="task-wizard-container"]');
