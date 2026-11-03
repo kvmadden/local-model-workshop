@@ -14,7 +14,7 @@ Each entry gives the place, what it says, and the correction with its evidence.
    - The harness now makes two warm-ups, shuffles the order and reports the first request apart.
 3. **Line 61: "drug by whole-word name match ... indication by whole-word match".**
    - The description is accurate, but the rule gave credit for copying the input line into the drug field (25 of 25 lines), for a different salt ("metoprolol succinate" for tartrate), and for a broader reason ("chest pain" for "pain").
-   - Scorer v3 closes these (`src/eval/sigScoreV3.test.ts`). It gives the same verdicts on every saved reply.
+   - Scorer v3 closes these (`src/eval/sigScoreV3.test.ts`). It gives the same verdicts on every saved split-format reply, and the same drug and dose verdicts on every first-format reply (`src/eval/evidenceRescore.test.ts`).
 4. **Line 91: "Decision rubric. Fixed before these runs."**
    - This cannot be checked. The first public commit (`9f47fec`, 2026-10-30) already contains the runs.
    - The split-format rubric, prompt and labels were written after the first-format runs on the same 25 lines, which makes those lines development data.
@@ -27,7 +27,7 @@ Each entry gives the place, what it says, and the correction with its evidence.
    - Under the stated correctness gate, gpt-oss:20b is not eligible, so the gate's answer would be "no eligible model".
    - Under the audit protocol's rule for "at bedtime as needed", gpt-oss:20b is the only model that passes the gate (`src/eval/decision.test.ts`).
 7. **Line 110: "... including a case proving it gives no credit to an echo of the prompt."**
-   - The echo scores zero because it is not JSON, so the scorer never sees its content. A JSON reply that copied the line earned drug credit under the v2 scorer.
+   - The echo scores zero because the prompt it repeats holds no valid JSON object, so there is nothing to score. A JSON reply that copied the line earned drug credit under the v2 scorer.
    - The copy control (`eval/results/2026-11-03-baselines-dev25`) is the real test, and it scores 0 under v3.
 8. **Line 111: "Twenty-five lines ... are enough to separate models."**
    - A rules parser also gets every field right on all 25 lines.

@@ -26,6 +26,23 @@ describe('current documents', () => {
     }
   });
 
+  // Review round 2 (3 Nov): claims no test locked, now narrowed to what the tests show.
+  it('do not repeat the claims the second review narrowed', () => {
+    for (const f of [...current, 'docs/CORRECTIONS.md', 'docs/HOW-BUILT.md', 'docs/KEVIN-REVIEW.md', 'eval/extraction-audit/V3.md']) {
+      const text = read(f);
+      // v3 was compared with the stored verdicts on the split-format replies, and on drug and dose for the first format.
+      expect(text, f).not.toMatch(/same verdicts? on every saved reply/i);
+      // Frozen stops retuning. It does not make the parser fair on other lines.
+      expect(text, f).not.toMatch(/fair baseline on any set/i);
+      // The echo scores zero because the prompt it repeats holds no valid JSON object.
+      expect(text, f).not.toMatch(/because it is not JSON/i);
+      // The timing runs were confounded, so the format's cost is an observation.
+      expect(text, f).not.toMatch(/split format costs time/i);
+      // The summary hashes what the eval imports, so "every source file" needs that scope.
+      expect(text, f).not.toMatch(/every source file(?! the eval imports)/i);
+    }
+  });
+
   it('use plain punctuation in prose: no semicolons or em dashes', () => {
     for (const f of [...current, 'docs/CORRECTIONS.md', 'docs/KEVIN-REVIEW.md', 'docs/README.md', 'docs/HOW-BUILT.md', 'eval/extraction-audit/V3.md']) {
       const prose = read(f).replace(/```[\s\S]*?```/g, '').replace(/`[^`]*`/g, '');

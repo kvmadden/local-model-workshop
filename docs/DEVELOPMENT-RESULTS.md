@@ -1,6 +1,6 @@
 # Results on the development sets
 
-Every number here comes from a committed file. No model was run to produce this page. The test named after each table recomputes its numbers from the saved replies, so `npm test` fails if this page and the evidence ever disagree.
+Every number here comes from a committed file. No model was run to produce this page. `src/eval/developmentResultsDoc.test.ts` recomputes every table on this page from the saved replies and compares it with the page, cell by cell, so `npm test` fails if a number here and the evidence disagree. The tests named under each table check the same numbers from the scoring side.
 
 ## Why both sets are development data
 
@@ -26,17 +26,17 @@ Exact 95% binomial intervals are shown in brackets. Models ran through the app's
 | Rules parser (no model) | 25/25 [86.3 to 100%] | 12/12 [73.5 to 100%] | not run | not run |
 | Constant answer | 0/25 | 0/12 | not run | not run |
 | Copy the line into every field | 0/25 | 0/12 | not run | not run |
-| Echo mock | 0/25 | 0/12 | 0/25 and 0/25 | 0/12 |
+| Echo mock | 0/25 and 0/25 | 0/12 | 0/25 and 0/25 | 0/12 |
 
 - **Format and scoring.**
   - The split format scores six fields: drug, dose per administration, frequency, timing, as-needed use and reason.
   - The first format scores three: drug, dose and frequency. It also gave full credit for dropping as-needed use. For example, gemma4:31b answered `three_times_daily` for "tid prn itching" and was scored all correct. So the two formats measure different targets, and the first-format column is not a "before" for the split column.
-  - Model rows use the v2 scorer that produced them. Scorer v3 gives the same verdict on every saved split-format reply (`src/eval/evidenceRescore.test.ts`). Baseline rows use scorer v3.
+  - Model rows use the scorers that produced them. Scorer v3 gives the same verdict on every saved split-format reply, parse status included, and the same drug and dose verdicts on every first-format reply (`src/eval/evidenceRescore.test.ts`). Baseline rows use scorer v3.
 - **Sources.**
   - Model rows: `eval/results/2026-10-30-v2-run1`, `2026-10-30-v2-run2`, `heldout-v2`, `archive/schema-v1/*` and `heldout-v1`.
   - Baseline rows: `eval/results/2026-11-03-baselines-dev25` and `2026-11-03-baselines-templates12`.
-- **Rules parser.** It is `src/eval/sigBaselines.ts`. It was written after its author had read both sets, so its perfect score measures how regular the sets are, not how well rules do on real text. It is frozen now, so it is a fair baseline on any set written later.
-- **Echo mock.** It scores zero because it is not JSON. That only shows the harness runs. The copy row is the real test that copying earns nothing. Under the old v2 scorer, a reply that copied the line into the drug field got drug credit on 25 of 25 lines.
+- **Rules parser.** It is `src/eval/sigBaselines.ts`. It was written after its author had read both sets, so its perfect score measures how regular the sets are, not how well rules do on real text. It is frozen now, so nobody can retune it after a later set is written. Frozen does not make it a strong parser for other lines. It knows the patterns of these sets plus a few general rules: a digit inside a drug name, a schedule word after "not", and either rule for "at bedtime as needed". It reports the words it could not read.
+- **Echo mock.** It scores zero because the prompt it repeats holds no valid JSON object, so there is nothing to score. A test checks that both prompts stay that way. That only shows the harness runs. The copy row is the real test that copying earns nothing. Under the old v2 scorer, a reply that copied the line into the drug field got drug credit on 25 of 25 lines.
 
 ## Per field, against a floor
 
@@ -80,14 +80,18 @@ An all-fields match on these lines does not mean the whole instruction was kept.
 
 The split-format gold labels "at bedtime as needed" (s25, h02, h08) as frequency `once_daily`. The extraction audit protocol in this same repository takes the opposite rule: "Bedtime does not imply a daily schedule" (`eval/extraction-audit/AUDIT.md`, challenge c03). Recomputed from the saved replies (`src/eval/decision.test.ts`):
 
-| Rule for "at bedtime as needed" | Latency gate | All fields right, 25 lines (gpt-oss, gemma, qwen) | Pick |
-|---|---|---|---|
-| Frequency `once_daily` (current gold) | Not applied, as published | 24, 25, 25 in each run | qwen3.8:27b, on 1.2 GB less disk |
-| Frequency `once_daily` | Applied to the 25-line runs | 24, 25, 25 | None. Every p95 was over 10 s |
-| Frequency `once_daily` | Applied to the 12-line split-format run | 24, 25, 25 | gemma4:31b (8.5 s against 12.5 s) |
-| No schedule (the audit's rule) | Not applied | 25, 24, 24 in each run | gpt-oss:20b, the only model with all 25 right |
+| Rule for "at bedtime as needed" | Lines and runs | Latency gate | All fields right (gpt-oss, gemma, qwen) | Pick |
+|---|---|---|---|---|
+| Frequency `once_daily` (current gold) | 25 lines, 2 runs | Not applied, as published | 24, 25, 25 in each run | qwen3.8:27b, on 1.2 GB less disk |
+| Frequency `once_daily` | 25 lines, 2 runs | Applied to each run | 24, 25, 25 in each run | None. Every p95 was over 10 s |
+| No schedule (the audit's rule) | 25 lines, 2 runs | Not applied | 25, 24, 24 in each run | gpt-oss:20b, the only model with all 25 right |
+| No schedule | 25 lines, 2 runs | Applied to each run | 25, 24, 24 in each run | None. gpt-oss:20b's p95 was over 10 s |
+| Frequency `once_daily` | 12 template lines, 1 run | Not applied | 10, 12, 12 | qwen3.8:27b, on 1.2 GB less disk |
+| Frequency `once_daily` | 12 template lines, 1 run | Applied to the same run | 10, 12, 12 | gemma4:31b (8.5 s against 12.5 s) |
+| No schedule | 12 template lines, 1 run | Not applied | 12, 10, 10 | gpt-oss:20b, the only model with all 12 right |
+| No schedule | 12 template lines, 1 run | Applied to the same run | 12, 10, 10 | gpt-oss:20b (7.7 s) |
 
-On the 12 template lines the same split appears: 10, 12 and 12 under the first rule, and 12, 10 and 10 under the second.
+Each row scores one set and takes its latency from the same runs. The 12 template lines had one run per model, so the stability gate (the same answers in every run) could not be tested there and is not applied.
 
 Notes:
 
@@ -107,8 +111,8 @@ None of these runs was on a quiet machine, so none is a latency result. They do 
 | Split format, 12 lines | 166 to 242 | 7.7 / 8.5 / 12.5 s |
 
 1. **The 10-second budget was met in some runs.** In the first-format runs, gemma and qwen met it in run 1 and all three met it in run 2. In the 12-line split-format run, gpt-oss and gemma met it. The earlier statement that no model met the budget holds only for the two split-format runs on the 25 lines.
-2. **The slowest line is usually the first request after warm-up.** For qwen3.8:27b that held in 6 of 6 runs, and for gemma4:31b in 2 of 6. Cases always ran in file order, so this delay always landed on the same line. qwen's 12.5 s on the 12 lines is its first request. Without it, its slowest line took 5.5 s.
-3. **The split format costs time.** It asks for six fields instead of three. On the 12 lines, median time rose from 3.3 to 6.6 s for gpt-oss, 4.9 to 7.1 s for gemma, and 3.9 to 4.6 s for qwen.
+2. **The slowest line is usually the first request after warm-up.** For qwen3.8:27b that held in 6 of 6 runs, for gemma4:31b in 2 of 6, and for gpt-oss:20b in 0 of 6. Cases always ran in file order, so this delay always landed on the same line. qwen's 12.5 s on the 12 lines is its first request. Without it, its slowest line took 5.5 s. `src/eval/harness.test.ts` reads these facts from the saved files.
+3. **Split-format replies were slower in these runs.** On the 12 lines, the p50 (nearest rank) went from 3.3 to 6.6 s for gpt-oss, 4.9 to 7.1 s for gemma, and 3.9 to 4.6 s for qwen. The split format asks for six fields instead of three, which may explain part of it. The two runs were at different times on a shared machine, with a 1-minute load of 201 to 311 for the first format and 166 to 242 for the split format. So this is an observation, not a measured cost.
 
 With 12 lines, the nearest-rank p95 is simply the slowest line. With 25 it is the second slowest. The harness now randomizes case and model order, makes two warm-up requests, reports the first request apart, and counts failed requests at the time they took.
 

@@ -8,7 +8,7 @@ Both sets in the repository are development data.
 
 - The 25 lines ([`eval/sig-extraction/cases.jsonl`](../eval/sig-extraction/README.md)) are the lines the split format, its prompt and its labels were revised on, after the first-format runs.
 - The 12 template lines ([`eval/heldout/frozen.json`](../eval/heldout/README.md)) are six templates copied from those 25 lines, each filled in twice.
-- A 45-line rules parser gets every field right on all 25 and all 12 lines. These sets cannot rank models, cannot show value over rules, and cannot support a headline number.
+- A short rules parser gets every field right on all 25 and all 12 lines. These sets cannot rank models, cannot show value over rules, and cannot support a headline number.
 
 ## Who writes and labels it
 
@@ -85,6 +85,7 @@ Categories:
 
 - **Machine.** A quiet machine: one-minute load average below 2 for five minutes before each model starts, sampled every second during the run. The machine and its memory are recorded.
 - **Command.** `npm run eval -- --suite <locked file> --order random --seed <recorded> --warmups 2 --timeout-ms 60000 --out <new folder>`.
+  - The suite file states the rule for "at bedtime as needed" in `conventions.bedtimeAsNeeded` (`once-daily` or `no-schedule`), and the rules baseline follows it.
   - Three passes per model, with model order shuffled in each pass.
   - Digests and sizes are recorded by the harness.
 - **Candidates.**

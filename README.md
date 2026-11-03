@@ -8,7 +8,7 @@ A browser workshop for chaining prompt steps against a model on your own Mac, pl
 
 On 37 short, clean synthetic medication lines, three local models (20.9B to 31.7B parameters), run through the app's engine at temperature 0 under a JSON schema, got every field right on 24 to 25 of 25 lines and 10 to 12 of 12 lines.
 
-- **No reading errors.** None of 372 scored answers got the drug or the dose wrong.
+- **No reading errors.** None of 372 scored answers got the drug or the dose wrong, under the scorers that produced them and under scorer v3.
 - **One convention behind every miss.** All 10 misses are the same thing: how the answer format encodes "as needed" next to a schedule or a bedtime anchor.
 - **Rules do as well.** A short rules parser also gets every field right on 25 of 25 and 12 of 12.
 - **So the sets decide nothing.** They are too regular to rank the models or to show value over rules.
@@ -37,14 +37,15 @@ Labeling "at bedtime as needed" as `once_daily` follows the prompt, but the audi
 
 ## What the pick depends on
 
-| Rule for "at bedtime as needed" | Latency gate | Pick |
-|---|---|---|
-| Once daily (current gold) | Not applied, as published | qwen3.8:27b, on 1.2 GB less disk |
-| Once daily | Applied to the 25-line runs | None. Every p95 was over 10 s on a loaded machine |
-| Once daily | Applied to the 12-line run | gemma4:31b. qwen's 12.5 s was its first request |
-| No schedule (the audit protocol's rule) | Not applied | gpt-oss:20b |
+| Rule for "at bedtime as needed" | Lines scored | Latency gate | Pick |
+|---|---|---|---|
+| Once daily (current gold) | 25 lines | Not applied, as published | qwen3.8:27b, on 1.2 GB less disk |
+| Once daily | 25 lines | Applied to the same runs | None. Every p95 was over 10 s on a loaded machine |
+| No schedule (the audit protocol's rule) | 25 lines | Not applied | gpt-oss:20b |
+| Once daily | 12 template lines | Applied to the same run | gemma4:31b. qwen's only request over 10 s was its first |
+| No schedule | 12 template lines | Applied to the same run | gpt-oss:20b |
 
-Computed from the saved replies by `src/eval/decision.test.ts`. No model was run for this table.
+Computed from the saved replies by `src/eval/decision.test.ts`. Each row takes correctness and latency from the same runs. No model was run for this table. All eight combinations are in [docs/DEVELOPMENT-RESULTS.md](docs/DEVELOPMENT-RESULTS.md).
 
 ## What the workshop does
 
@@ -52,7 +53,7 @@ Computed from the saved replies by `src/eval/decision.test.ts`. No model was run
   - a built-in mock, the default, which needs nothing installed
   - a local Ollama
   - an OpenAI-compatible server on this Mac, such as LM Studio
-- **Local by default, and enforced.** The adapters refuse to send prompt text to any host that is not this machine unless code explicitly sets `allowRemote` (and, for a hosted OpenAI endpoint, an API key). Running locally does not by itself make anything private or compliant. Storage, logging and network settings still need their own checks.
+- **Local by default, and enforced.** The adapters refuse to send prompt text to any host that is not this machine unless code explicitly sets `allowRemote` (and, for a hosted OpenAI endpoint, an API key). "This machine" means `localhost`, a 127.x.x.x address, `::1` or an IPv4-mapped loopback address. A name that merely ends in `.localhost` does not count. No request that carries prompt text follows a redirect, so a local endpoint cannot pass the prompt on. Running locally does not by itself make anything private or compliant. Storage, logging and network settings still need their own checks.
 - **Reference tabs.** A task wizard, a model catalog, a hardware advisor and four playgrounds. Catalog speeds are bandwidth arithmetic, not measurements. Playground output is labeled demo output unless a matching local model ran.
 - **Saved-run inspector.** Benchmark Studio opens an inspector for the extraction audit on public label text (below).
 
@@ -71,19 +72,22 @@ npm run eval -- --suite path/to/locked-set.json --out eval/results/fresh-run
 What the harness does on every run:
 
 - **Never overwrites.** It refuses an existing output folder.
+- **Checks before it writes.** A `--models` name that is not in `models.json`, or a model the local Ollama does not have, stops the run before the folder is created. `OLLAMA_HOST` can be written the way Ollama accepts it, such as `127.0.0.1:11434`.
 - **Randomizes order.** Case and model order are shuffled from a recorded seed.
-- **Times honestly.** It makes two warm-up requests, reports the first timed request apart, enforces a per-request deadline, and counts failed requests at the time they took.
-- **Records provenance.** Each summary records hashes of the suite, prompt, schema and every source file, plus the git commit, model digest and size, settings and load samples.
+- **Times honestly.** It makes two warm-up requests and records whether they failed, reports the first timed request apart, enforces a per-request deadline, and counts failed requests at the time they took.
+- **Keeps partial evidence.** Each reply is written to disk as soon as it is scored. A run that stops partway, or is interrupted, still writes a summary marked incomplete.
+- **Records provenance.** Before the first request, each summary records hashes of the suite, prompt, schema, model list and every source file the eval imports. At the end it lists any of them that changed during the run, and such a run exits with an error. It also records the git commit, model digest and size, settings and load samples.
 - **Reports intervals.** It prints exact 95% intervals and labels both built-in suites as development data.
 
 Scoring uses scorer v3 (`src/eval/sigScoreV3.ts`):
 
-- **Drug.** It needs every gold drug word, and allows an extra word only if it is a salt or form word the line itself uses. Copying the line, adding a drug, a negation or a different salt all fail.
-- **Reason.** As-needed reasons must match exactly, apart from filler words.
-- **Dose.** Mass units convert, so 1 g equals 1000 mg.
+- **Drug.** It needs every gold drug word. An extra word passes only if it is a salt, release or form word in this drug's own description on the line, so "ER" in "(not ER)" or "sodium" in "low sodium diet" does not count. Spellings of one salt or form count as one word (HCl and hydrochloride, ER and extended release), and a digit in a name matches however it is joined (D3 and D-3). Copying a whole instruction line, adding a drug, a negation or a different salt all fail.
+- **Reason.** As-needed reasons must match word for word, in order. Only wrapper words around the reason, such as "as needed for", are removed.
+- **Dose.** Mass units convert, so 1 g equals 1000 mg. The gold unit is read the same way as the reply unit, and amounts must be finite.
+- **Parsing.** A reply that holds several JSON objects is not scored, because the scorer cannot tell which one is the answer.
 - **Schema problems** are reported apart from correctness.
 
-The v2 scorer that produced the committed verdicts is kept, and a test re-derives every stored verdict from the saved replies.
+The scorers that produced the committed verdicts are kept, and a test re-derives every stored verdict from the saved replies. Scorer v3 gives the same verdicts on every saved split-format reply, and the same drug and dose verdicts on every first-format reply.
 
 ## The extraction audit on public label text
 

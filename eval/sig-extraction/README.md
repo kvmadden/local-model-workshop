@@ -33,4 +33,4 @@ Use these lines to develop and to catch regressions. A headline number needs the
 ## Scoring
 
 - **Historical verdicts.** The v2 scorer (`src/eval/sigScore.ts`) produced the committed verdicts.
-- **New runs.** Scorer v3 (`src/eval/sigScoreV3.ts`) is the default. It gives the same verdicts on every saved reply (`src/eval/evidenceRescore.test.ts`).
+- **New runs.** Scorer v3 (`src/eval/sigScoreV3.ts`) is the default. It gives the same verdicts on every saved split-format reply, and the same drug and dose verdicts on every first-format reply (`src/eval/evidenceRescore.test.ts`).
