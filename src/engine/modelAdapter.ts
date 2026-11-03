@@ -9,11 +9,17 @@ const MAX_ERROR_TEXT = 300;
 
 const truncate = (text: string) => (text.length > MAX_ERROR_TEXT ? `${text.slice(0, MAX_ERROR_TEXT)}...` : text);
 
-/** True when a URL points at this machine (localhost, 127.x.x.x or ::1). */
+/**
+ * True when a URL points at this machine: the name localhost, an address in 127.0.0.0/8, ::1 or
+ * IPv4-mapped loopback. The URL parser rewrites every spelling of an IPv4 address (127.1,
+ * 2130706433, 127.0.0.01) to dotted decimal and rejects invalid ones (127.0.0.256) before this
+ * check runs. Names under .localhost are refused: they reach this machine only if the resolver
+ * implements that special case.
+ */
 export function isLoopbackUrl(url: string): boolean {
   try {
     const host = new URL(url).hostname.replace(/^\[|\]$/g, '').toLowerCase();
-    return host === 'localhost' || host.endsWith('.localhost') || host === '::1' || /^127(?:\.\d{1,3}){3}$/.test(host);
+    return host === 'localhost' || host === '::1' || /^127(?:\.\d{1,3}){3}$/.test(host) || /^::ffff:7f[0-9a-f]{2}:[0-9a-f]{1,4}$/.test(host);
   } catch {
     return false;
   }
@@ -22,6 +28,8 @@ export function isLoopbackUrl(url: string): boolean {
 /**
  * POSTs JSON and reads the whole reply body before stopping the clock. The deadline covers the
  * connection and the body, and applies even if a fetch implementation ignores the abort signal.
+ * Redirects are never followed: a 307 or 308 would send the same prompt to the new location,
+ * which the local-only check never saw.
  */
 async function postJson(
   label: string,
@@ -40,7 +48,7 @@ async function postJson(
     }, timeoutMs);
   });
   const exchange = (async () => {
-    const response = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal: controller.signal });
+    const response = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal: controller.signal, redirect: 'error' });
     if (!response.ok) {
       const errorText = await response.text().catch(() => '');
       throw new Error(`${label} returned HTTP ${response.status}: ${truncate(errorText || response.statusText || 'Request failed')}`);

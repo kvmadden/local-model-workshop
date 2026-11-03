@@ -356,6 +356,8 @@ export async function generateStream(
       stream: true,
     }),
     signal,
+    // Never follow a redirect: it would send the prompt to a host nobody checked.
+    redirect: 'error',
   });
 
   if (!response.ok) {
@@ -382,6 +384,8 @@ export async function chatStream(
       stream: true,
     }),
     signal,
+    // Never follow a redirect: it would send the prompt to a host nobody checked.
+    redirect: 'error',
   });
 
   if (!response.ok) {

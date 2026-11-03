@@ -22,8 +22,32 @@ const capture = (reply: unknown) => {
 
 describe('adapter contract', () => {
   it('knows which endpoints are on this machine', () => {
-    for (const url of ['http://localhost:11434/api/generate', 'http://127.0.0.1:1234/v1', 'http://[::1]:8080', 'http://app.localhost:3000']) expect(isLoopbackUrl(url), url).toBe(true);
+    for (const url of ['http://localhost:11434/api/generate', 'http://127.0.0.1:1234/v1', 'http://[::1]:8080']) expect(isLoopbackUrl(url), url).toBe(true);
     for (const url of ['https://api.openai.com/v1/chat/completions', 'http://192.168.1.100:11434', 'http://10.0.0.5', 'not a url']) expect(isLoopbackUrl(url), url).toBe(false);
+  });
+
+  // Review round 2 (3 Nov), Grok 9. The URL parser decides what an address is before the check runs.
+  it('trusts localhost and loopback addresses only, never a name that merely ends in .localhost', () => {
+    // Names under .localhost reach this machine only if the resolver implements that special case.
+    for (const url of ['http://app.localhost:3000', 'http://evil.localhost:11434/api/generate', 'http://localtest.me:11434', 'http://0.0.0.0:11434']) expect(isLoopbackUrl(url), url).toBe(false);
+    // Not a valid address at all, so the URL parser rejects it and nothing is sent.
+    expect(isLoopbackUrl('http://127.0.0.256/api/generate')).toBe(false);
+    // These are loopback: the URL parser rewrites each of them to 127.0.0.1 before the check.
+    for (const url of ['http://127.0.0.01/api/generate', 'http://127.1:11434', 'http://2130706433:11434']) expect(isLoopbackUrl(url), url).toBe(true);
+    // IPv4-mapped loopback is this machine too.
+    expect(isLoopbackUrl('http://[::ffff:127.0.0.1]:11434')).toBe(true);
+    expect(isLoopbackUrl('http://[::ffff:10.0.0.5]:11434')).toBe(false);
+  });
+
+  it('asks fetch to fail on a redirect instead of following it (GPT 2, Grok 8)', async () => {
+    const inits: RequestInit[] = [];
+    globalThis.fetch = vi.fn(async (_url: string, init: RequestInit) => {
+      inits.push(init);
+      return new Response(JSON.stringify({ response: 'ok', choices: [{ message: { content: 'ok' } }] }), { status: 200 });
+    }) as any;
+    await new OllamaAdapter().executePrompt('p', { provider: 'ollama', model: 'm' });
+    await new OpenAIAdapter().executePrompt('p', { provider: 'openai', model: 'm', endpointUrl: 'http://127.0.0.1:1234/v1/chat/completions' });
+    expect(inits.map((i) => i.redirect)).toEqual(['error', 'error']);
   });
 
   it('refuses to send prompt text off the machine unless explicitly allowed, and sends nothing', async () => {

@@ -49,8 +49,8 @@ export interface ModelConfig {
   /** Context window, sent to Ollama as options.num_ctx. */
   numCtx?: number;
   /**
-   * OpenAI-compatible only. Text is sent to a host other than this machine only when this is
-   * true and an API key is set. Without both, the request is refused before anything is sent.
+   * Text is sent to a host other than this machine only when this is true. The OpenAI-compatible
+   * adapter also needs an API key. Otherwise the request is refused before anything is sent.
    */
   allowRemote?: boolean;
 }

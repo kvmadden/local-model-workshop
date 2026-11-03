@@ -188,6 +188,15 @@ describe('ollamaService', () => {
       await expect(chatStream('m', [{ role: 'user', content: 'Hi' }], () => undefined)).rejects.toThrow('Ollama stream error: model not found');
     });
 
+    // Review round 2 (3 Nov), GPT 2 and Grok 8: a redirect would send the prompt to another host.
+    it('asks fetch to fail on a redirect for every request that carries prompt text', async () => {
+      const fetchSpy = streamOf([JSON.stringify({ response: 'ok', done: true }) + '\n']);
+      vi.stubGlobal('fetch', fetchSpy);
+      await generateStream('m', 'Hi', () => undefined);
+      await chatStream('m', [{ role: 'user', content: 'Hi' }], () => undefined);
+      expect(fetchSpy.mock.calls.map((call) => (call[1] as RequestInit).redirect)).toEqual(['error', 'error']);
+    });
+
     it('never writes streamed text to the console when a line does not parse', async () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
       vi.stubGlobal('fetch', streamOf(['{"response": "PATIENT TEXT\n', JSON.stringify({ response: 'ok' }) + '\n']));
