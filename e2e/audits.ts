@@ -7,8 +7,9 @@
 /**
  * Kevin's rules for boxed text and for step flows.
  *
- * 1. A pill, chip, badge or any other boxed bit of text keeps clear room inside its border: at
- *    least 4 px beside the text and at least 1 px above and below the letters, and nothing clipped.
+ * 1. A pill, chip, badge or any other boxed bit of text keeps clear room inside its border, ring
+ *    or background: at least 4 px beside the text and at least 1 px above and below the letters,
+ *    and nothing clipped.
  * 2. A step flow ([data-step-flow] with [data-step] children) sits on one line, or every step
  *    stacks cleanly, one per line. It never wraps partway. Any other text with an arrow in it
  *    stays on one line.
@@ -28,6 +29,13 @@ export function auditBoxesAndFlows(): { boxes: string[]; flows: string[] } {
   };
   const sides = (cs: CSSStyleDeclaration) =>
     (['Left', 'Right'] as const).every((s) => parseFloat(cs.getPropertyValue(`border-${s.toLowerCase()}-width`)) > 0 && (color(cs.getPropertyValue(`border-${s.toLowerCase()}-color`))?.a ?? 0) > 0);
+  // A ring drawn with box-shadow (no offset, no blur, some spread) frames text the way a border does.
+  const ringed = (cs: CSSStyleDeclaration) =>
+    cs.boxShadow !== 'none' &&
+    cs.boxShadow.split(/,(?![^(]*\))/).some((part) => {
+      const [x = 0, y = 0, blur = 0, spread = 0] = part.replace(/rgba?\([^)]*\)/g, '').trim().split(/\s+/).filter((t) => t.endsWith('px')).map(parseFloat);
+      return x === 0 && y === 0 && blur === 0 && spread > 0 && (color(part)?.a ?? 0) > 0.2;
+    });
   const parentBg = (el: Element) => {
     for (let e = el.parentElement; e; e = e.parentElement) {
       const c = color(getComputedStyle(e).backgroundColor);
@@ -63,7 +71,7 @@ export function auditBoxesAndFlows(): { boxes: string[]; flows: string[] } {
     if (box.height > 64) continue;
     const cs = getComputedStyle(el);
     const bg = color(cs.backgroundColor);
-    const boxed = sides(cs) || (!!bg && bg.a > 0.05 && differs(bg, parentBg(el)));
+    const boxed = sides(cs) || ringed(cs) || (!!bg && bg.a > 0.05 && differs(bg, parentBg(el)));
     if (!boxed) continue;
     const rects = textRects(el);
     if (rects.length === 0) continue;
@@ -186,4 +194,35 @@ export function auditTargets(): string[] {
     }
   }
   return failures;
+}
+
+/**
+ * Kevin's ask for a calm screen, checked on the run comparison: no forced capitals, one sans face
+ * plus its monospace sibling for the medication lines only, no rule heavier than a hairline (the
+ * open answer toggle keeps its 2 px underline), and red text only inside a missed-field mark.
+ */
+export function auditCalm(): { caps: string[]; faces: string[]; mono: string[]; red: string[]; heavy: string[] } {
+  const root = document.querySelector('[data-testid="run-comparison"]');
+  const out = { caps: [] as string[], faces: [] as string[], mono: [] as string[], red: [] as string[], heavy: [] as string[] };
+  if (!root) return out;
+  const alert = `rgb(${getComputedStyle(document.documentElement).getPropertyValue('--alert-text').trim().split(/\s+/).join(', ')})`;
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const el = (n as Text).parentElement;
+    const text = (n as Text).data.trim();
+    if (!el || !text || el.closest('.sr-only, script, style') || el.getBoundingClientRect().width < 1) continue;
+    const cs = getComputedStyle(el);
+    const face = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
+    if (cs.textTransform === 'uppercase') out.caps.push(text.slice(0, 30));
+    if (!out.faces.includes(face)) out.faces.push(face);
+    if (/mono/i.test(face) && !el.closest('.sig')) out.mono.push(text.slice(0, 30));
+    if (root.contains(el) && cs.color === alert && !el.closest('[data-miss]')) out.red.push(text.slice(0, 30));
+  }
+  for (const el of Array.from(root.querySelectorAll('*'))) {
+    const cs = getComputedStyle(el);
+    const widths = ['top', 'right', 'bottom', 'left'].map((s) => parseFloat(cs.getPropertyValue(`border-${s}-width`)));
+    const toggle = el.matches('[data-testid^="detail-column-"]') && widths[0] === 0 && widths[1] === 0 && widths[3] === 0;
+    if (Math.max(...widths) > 1 && !toggle) out.heavy.push([el.tagName.toLowerCase(), el.getAttribute('data-testid'), widths.join('/')].filter(Boolean).join(' '));
+  }
+  return out;
 }

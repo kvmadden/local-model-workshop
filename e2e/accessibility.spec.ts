@@ -86,20 +86,22 @@ test('keyboard focus is always visible on the run comparison controls', async ({
 
 test('the run comparison works by keyboard alone', async ({ page }) => {
   await page.goto('/');
-  const sheet = page.getByTestId('verification-sheet');
-  await expect(page.getByTestId('plate-count-gpt-oss:20b')).toHaveText('25/25');
-  // Switch the reading with the keyboard.
-  await page.getByTestId('reading-first-gold').focus();
+  await expect(page.getByTestId('count-gpt-oss:20b')).toHaveText('25 of 25');
+  // Open the options with the keyboard, then move the reading with the arrow keys.
+  await page.getByTestId('options-toggle').focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByTestId('reading-first-gold')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByTestId('plate-count-gpt-oss:20b')).toHaveText('24/25');
+  await page.getByTestId('reading-ruling').focus();
+  await page.keyboard.press('ArrowDown');
+  await expect(page.getByTestId('reading-first-gold')).toBeChecked();
+  await expect(page.getByTestId('count-gpt-oss:20b')).toHaveText('24 of 25');
   // Pick a verdict cell with the keyboard, and the detail follows.
-  await sheet.getByTestId('cell-s25-gpt-oss:20b').focus();
+  await page.getByTestId('cell-s25-gpt-oss:20b').focus();
   await page.keyboard.press('Space');
   await expect(page.getByTestId('detail-column-gpt-oss:20b')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByTestId('detail-row-frequency')).toContainText('does not match');
   // And the set.
-  await page.getByTestId('set-templates12').focus();
-  await page.keyboard.press('Enter');
-  await expect(page.getByTestId('plate-count-gpt-oss:20b')).toHaveText('10/12');
+  await page.getByTestId('set-dev25').focus();
+  await page.keyboard.press('ArrowDown');
+  await expect(page.getByTestId('set-templates12')).toBeChecked();
+  await expect(page.getByTestId('count-gpt-oss:20b')).toHaveText('10 of 12');
 });

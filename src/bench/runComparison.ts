@@ -159,3 +159,48 @@ export function fieldValue(record: Record<string, unknown> | SigGold | null, fie
   const r = record as Record<string, unknown>;
   return field === 'dose' ? r.dose_per_administration : r[field];
 }
+
+const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const word = (k: number) => NUMBER_WORDS[k] ?? String(k);
+const NOUN: Record<SetId, string> = { dev25: 'development lines', templates12: 'template lines' };
+
+/** The all-fields count of each column in one run. A column with a single run uses it for every run. */
+export function countsAt(view: BenchView, run: number): number[] {
+  return view.columns.map((c) => c.allCorrect[Math.min(run, c.allCorrect.length - 1)]);
+}
+
+/** The headline the screen opens on, written from the counts so it stays true for every set, reading and run. */
+export function headline(view: BenchView, run: number): string {
+  const counts = countsAt(view, run);
+  const lo = Math.min(...counts);
+  const hi = Math.max(...counts);
+  const models = view.columns.filter((c) => c.kind === 'model').length;
+  const noun = NOUN[view.set];
+  const what =
+    lo === hi
+      ? lo === view.n ? `all ${view.n} ${noun}` : `${lo} of the ${view.n} ${noun}`
+      : `${lo} ${hi - lo === 1 ? 'or' : 'to'} ${hi} of the ${view.n} ${noun}`;
+  const who = word(models);
+  return `${who.charAt(0).toUpperCase()}${who.slice(1)} local models and a simple rules parser each read ${what} fully right, so these lines can’t pick a model.`;
+}
+
+/**
+ * What the misses have in common, and whether the other reading of the bedtime line changes who
+ * comes out ahead. Written from the verdicts, so it says nothing the data does not show.
+ */
+export function missNote(view: BenchView, other: BenchView, run: number): string {
+  const misses = view.columns.flatMap((c) =>
+    Object.entries(c.runs[Math.min(run, c.runs.length - 1)]).flatMap(([line, v]) => v.missed.map((field) => ({ line, field }))),
+  );
+  if (misses.length === 0) return 'Nobody misses a single field on these lines.';
+  const fields = [...new Set(misses.map((m) => m.field))];
+  const lines = [...new Set(misses.map((m) => m.line))];
+  const bedtime = lines.every((id) => /at bedtime as needed/i.test(view.lines.find((l) => l.id === id)?.input ?? ''));
+  const flips = view.decision.pick !== null && other.decision.pick !== null && view.decision.pick !== other.decision.pick;
+  if (fields.length === 1 && bedtime) {
+    const where = lines.length === 1 ? 'the one line that says' : `the ${word(lines.length)} lines that say`;
+    const flip = flips ? ` Read ${lines.length === 1 ? 'that line' : 'those lines'} the other way and a different model comes out ahead.` : '';
+    return `Every miss is the same field, the ${FIELD_LABELS[fields[0]].long.toLowerCase()}, on ${where} “at bedtime as needed”.${flip}`;
+  }
+  return `The misses fall on ${word(fields.length)} field${fields.length === 1 ? '' : 's'} across ${word(lines.length)} line${lines.length === 1 ? '' : 's'}, marked in red below.`;
+}

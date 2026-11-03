@@ -1,64 +1,72 @@
 import React, { useMemo, useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, ChevronRight, CircleDashed, X } from 'lucide-react';
 import { SIG_FIELDS, type SigField } from '../eval/sigScore';
 import {
-  buildBench, formatPercentInterval, showValue, fieldValue, DECIDING_LINE, FIELD_LABELS, SET_INFO,
+  buildBench, formatPercentInterval, showValue, fieldValue, headline, missNote, DECIDING_LINE, FIELD_LABELS, SET_INFO,
   type BenchColumn, type Reading, type SetId, type Verdict,
 } from '../bench/runComparison';
 
-const READING_LABEL: Record<Reading, { button: string; long: string }> = {
-  ruling: { button: 'Ruling, 3 Nov', long: 'the ruling of 3 November 2026' },
-  'first-gold': { button: 'Gold as first written', long: 'the gold as first written' },
+const READING: Record<Reading, { name: string; option: string; hint: string }> = {
+  ruling: { name: 'the ruling', option: 'The pharmacist ruling of 3 November 2026', hint: 'No fixed schedule, as needed, at most once a day' },
+  'first-gold': { name: 'the gold as first written', option: 'The gold as first written', hint: 'Once a day, at bedtime' },
 };
 
-/** A two-to-three way switch. Each option is a real button with its pressed state announced. */
-function Switch<T extends string>({ label, value, options, onChange, testIdPrefix }: {
-  label: string;
+const otherReading = (r: Reading): Reading => (r === 'ruling' ? 'first-gold' : 'ruling');
+
+/** A set of radio buttons. The label is the target, so each choice is at least 44 px tall. */
+function Choice<T extends string>({ legend, name, value, options, onChange, testIdPrefix }: {
+  legend: string;
+  name: string;
   value: T;
-  options: Array<{ value: T; label: string }>;
+  options: Array<{ value: T; label: string; hint?: string }>;
   onChange: (v: T) => void;
   testIdPrefix: string;
 }) {
   return (
-    <div role="group" aria-label={label} className="flex flex-col gap-1.5 min-w-0">
-      <span className="font-display text-xs font-semibold uppercase tracking-label text-ink-3">{label}</span>
-      <div className="flex flex-wrap gap-1">
-        {options.map((o) => (
-          <button
-            key={o.value}
-            type="button"
+    <fieldset className="min-w-0">
+      <legend className="mb-1 text-[14px] font-semibold text-ink">{legend}</legend>
+      {options.map((o) => (
+        <label key={o.value} className="flex min-h-[44px] cursor-pointer items-start gap-3 py-2">
+          <input
+            type="radio"
+            name={name}
+            value={o.value}
+            checked={value === o.value}
+            onChange={() => onChange(o.value)}
             data-testid={`${testIdPrefix}-${o.value}`}
-            aria-pressed={value === o.value}
-            onClick={() => onChange(o.value)}
-            className={`min-h-[44px] min-w-[44px] px-3 border font-display text-[15px] font-semibold uppercase tracking-[0.04em] transition-colors ${
-              value === o.value
-                ? 'bg-ink text-bench border-ink'
-                : 'bg-panel text-ink border-rule-strong hover:border-ink'
-            }`}
-          >
-            {o.label}
-          </button>
-        ))}
-      </div>
-    </div>
+            className="mt-[3px] h-4 w-4 shrink-0 accent-indigo-600"
+          />
+          <span className="min-w-0">
+            <span className="block text-[15px] leading-snug text-ink">{o.label}</span>
+            {o.hint && <span className="block text-[13px] leading-snug text-ink-3">{o.hint}</span>}
+          </span>
+        </label>
+      ))}
+    </fieldset>
   );
 }
 
-/** The mark in one verification cell: a blue stamp when all six fields are right, a red sticker per missed field. */
-function Mark({ v }: { v: Verdict }) {
-  if (v.allCorrect) {
-    return (
-      <span className="inline-flex h-7 w-7 items-center justify-center border-2 border-stamp text-stamp" aria-hidden="true">
-        <Check className="h-4 w-4" strokeWidth={3} />
-      </span>
-    );
-  }
+/** A quiet disclosure: a chevron, a title and, on the right, what it currently holds. */
+function Disclosure({ testId, title, aside, children }: { testId: string; title: string; aside?: string; children: React.ReactNode }) {
   return (
-    <span className="flex flex-col items-center gap-0.5" aria-hidden="true">
+    <details data-testid={testId} className="group">
+      <summary data-testid={`${testId}-toggle`} className="flex min-h-[48px] flex-wrap items-center gap-x-2 py-2 text-[15px] font-medium text-ink hover:text-accent">
+        <ChevronRight className="h-4 w-4 shrink-0 text-ink-3 transition-transform group-open:rotate-90" aria-hidden="true" />
+        <span>{title}</span>
+        {aside && <span className="basis-full pl-6 text-[13px] font-normal text-ink-3 sm:ml-auto sm:basis-auto sm:pl-0">{aside}</span>}
+      </summary>
+      <div className="pb-6 pl-6 pt-1">{children}</div>
+    </details>
+  );
+}
+
+/** The mark in one cell of the line sheet: a quiet check when all six fields are right, the missed field in red otherwise. */
+function Mark({ v }: { v: Verdict }) {
+  if (v.allCorrect) return <Check className="h-[18px] w-[18px] text-ink-3" strokeWidth={2} aria-hidden="true" />;
+  return (
+    <span data-miss className="flex flex-col items-center text-[13px] font-semibold leading-tight text-alert" aria-hidden="true">
       {v.missed.map((f) => (
-        <span key={f} className="bg-alert-fill px-1.5 py-0.5 font-display text-[12px] font-bold uppercase leading-4 tracking-[0.04em] text-white">
-          {FIELD_LABELS[f].short}
-        </span>
+        <span key={f}>{FIELD_LABELS[f].long}</span>
       ))}
     </span>
   );
@@ -67,39 +75,6 @@ function Mark({ v }: { v: Verdict }) {
 const verdictText = (v: Verdict) =>
   v.allCorrect ? 'all six fields right' : `${v.missed.map((f) => FIELD_LABELS[f].long.toLowerCase()).join(' and ')} wrong`;
 
-/** One column's nameplate: its name, the all-fields count with its exact interval, and the count per field. */
-function Plate({ c, run, n }: { c: BenchColumn; run: number; n: number }) {
-  const r = Math.min(run, c.runs.length - 1);
-  return (
-    <div data-testid={`plate-${c.id}`} className="border border-rule-strong bg-panel">
-      <div className={`flex items-baseline justify-between gap-2 px-3 py-1.5 ${c.kind === 'model' ? 'bg-ink text-bench' : 'bg-raised text-ink'}`}>
-        <span className="font-display text-[15px] font-bold uppercase tracking-[0.04em]">{c.label}</span>
-        <span className="font-mono text-[11px]">{c.kind === 'model' ? 'local model' : 'no model'}</span>
-      </div>
-      <div className="px-3 py-2.5 space-y-1.5">
-        <div className="flex items-baseline justify-between gap-2">
-          <span className="font-display text-xs font-semibold uppercase tracking-label text-ink-3">All six fields</span>
-          <span data-testid={`plate-count-${c.id}`} className={`font-mono text-2xl font-semibold ${c.allCorrect[r] === n ? 'text-ink' : 'text-alert'}`}>
-            {c.allCorrect[r]}/{n}
-          </span>
-        </div>
-        <div className="font-mono text-[12px] text-ink-3">95% interval {formatPercentInterval(c.intervals[r])}</div>
-        <dl className="grid grid-cols-6 border-y border-rule">
-          {SIG_FIELDS.map((f, i) => (
-            <div key={f} className={`px-1 py-1 text-center ${i > 0 ? 'border-l border-rule' : ''}`}>
-              <dt className="font-display text-[11px] font-semibold uppercase tracking-[0.04em] text-ink-3">{FIELD_LABELS[f].short}</dt>
-              <dd className={`font-mono text-[13px] ${c.perField[r][f] === n ? 'text-ink' : 'text-alert font-semibold'}`}>{c.perField[r][f]}</dd>
-            </div>
-          ))}
-        </dl>
-        <div className="font-mono text-[11px] text-ink-3">
-          {c.stable === null ? (c.kind === 'model' ? 'One run, so stability is not tested' : 'Frozen parser, same answer every time') : c.stable ? 'Same answers in both runs' : 'Answers changed between runs'}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export const RunComparison: React.FC = () => {
   const [set, setSet] = useState<SetId>('dev25');
   const [reading, setReading] = useState<Reading>('ruling');
@@ -107,206 +82,288 @@ export const RunComparison: React.FC = () => {
   const [selected, setSelected] = useState<{ line: string; column: string }>({ line: DECIDING_LINE.dev25, column: 'gemma4:31b' });
 
   const view = useMemo(() => buildBench(set, reading), [set, reading]);
-  const other = useMemo(() => buildBench(set, reading === 'ruling' ? 'first-gold' : 'ruling'), [set, reading]);
+  const other = useMemo(() => buildBench(set, otherReading(reading)), [set, reading]);
   const runIndex = Math.min(run, SET_INFO[set].runs - 1);
   const line = view.lines.find((l) => l.id === selected.line) ?? view.lines[0];
-  const chosenColumn = view.columns.find((c) => c.id === selected.column) ?? view.columns[0];
-  const verdictOf = (c: BenchColumn, lineId: string) => c.runs[Math.min(runIndex, c.runs.length - 1)][lineId];
+  const chosen = view.columns.find((c) => c.id === selected.column) ?? view.columns[0];
+  const at = (c: BenchColumn) => Math.min(runIndex, c.runs.length - 1);
+  const verdictOf = (c: BenchColumn, lineId: string) => c.runs[at(c)][lineId];
+  const models = view.columns.filter((c) => c.kind === 'model');
 
   const changeSet = (next: SetId) => {
     setSet(next);
     setSelected((s) => ({ ...s, line: DECIDING_LINE[next] }));
   };
 
+  const stability =
+    set === 'dev25'
+      ? models.every((c) => c.stable)
+        ? 'Each model gave the same answers in run 1 and run 2.'
+        : `${models.filter((c) => c.stable === false).map((c) => c.label).join(' and ')} changed answers between runs.`
+      : 'One run per model on these lines.';
+
   return (
-    <section data-testid="run-comparison" aria-labelledby="run-comparison-title" className="space-y-5">
-      {/* Title and status */}
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
-        <div className="space-y-1.5 min-w-0 max-w-2xl">
-          <p className="font-mono text-[12px] text-ink-3">Medication instructions, scored from the saved replies</p>
-          <h2 id="run-comparison-title" className="font-display text-4xl sm:text-5xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
-            Run comparison
+    <section data-testid="run-comparison" aria-labelledby="run-comparison-title">
+      {/* The finding first, then the one table that backs it */}
+      <div className="grid gap-x-16 gap-y-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,640px)]">
+        <div data-testid="comparison-intro" className="min-w-0 max-w-[46rem]">
+          <h2 id="run-comparison-title" data-testid="comparison-headline" className="text-balance text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-ink sm:text-[28px] xl:text-[30px]">
+            {headline(view, runIndex)}
           </h2>
-          <p className="text-[17px] leading-snug text-ink-2">
-            Three local models and a rules parser, checked field by field on every line. These lines shaped the answer format and the labels, so every number here is development data.
+          <p data-testid="comparison-lede" className="mt-4 text-[17px] leading-relaxed text-ink-2">
+            {missNote(view, other, runIndex)}
           </p>
-        </div>
-        <div data-testid="no-model-chosen" className="border-2 border-ink bg-tape px-4 py-2.5 text-tape-ink">
-          <div className="font-display text-2xl font-bold uppercase leading-none tracking-[0.03em]">No model chosen</div>
-          <div className="mt-1 font-mono text-[12px]">until the new blind test set runs</div>
-        </div>
-      </div>
-
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_380px] 2xl:grid-cols-[340px_minmax(0,1fr)_400px] lg:items-start">
-      {/* The rail: the ruling, set like a pharmacy label, the switches and the nameplates */}
-      <div data-testid="comparison-rail" className="space-y-4 lg:col-span-2 2xl:col-span-1 2xl:col-start-1 2xl:row-start-1">
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end 2xl:grid-cols-1">
-        <div data-testid="bedtime-ruling" className="border border-rule-strong bg-label text-label-ink">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-dashed border-[#80888f] px-4 py-2">
-            <span className="font-display text-[15px] font-bold uppercase tracking-label">Pharmacist ruling, 3 Nov 2026</span>
-            <span className="font-mono text-[12px]">Kevin Madden, PharmD</span>
-          </div>
-          <div className="px-4 py-3 space-y-1.5">
-            <p className="font-mono text-[15px] font-semibold uppercase leading-snug">
-              At bedtime as needed: no fixed schedule, as needed, at most once a day.
+          <div className="mt-6 space-y-2">
+            <p data-testid="no-model-chosen" className="flex items-start gap-2.5 text-[15px] leading-relaxed text-ink">
+              <CircleDashed className="mt-[3px] h-[18px] w-[18px] shrink-0 text-ink-3" aria-hidden="true" />
+              <span>
+                <span className="font-semibold">No model chosen yet</span>, and none will be until the new blind test set runs.
+              </span>
             </p>
-            <p className="text-[15px] leading-snug">
-              The schedule and the as-needed maximum are separate fields. These six fields have no place for the maximum, so here the ruling shows as frequency none.
+            <p data-testid="bedtime-ruling" className="pl-7 text-[15px] leading-relaxed text-ink-2">
+              {reading === 'ruling'
+                ? 'Scored with the pharmacist ruling of 3 November 2026: “at bedtime as needed” means no fixed schedule, as needed, at most once a day.'
+                : 'Scored with the gold as first written, which read “at bedtime as needed” as once a day. The ruling of 3 November 2026 reads it as no fixed schedule.'}{' '}
+              <a href="#ruling-details" className="text-accent underline decoration-1 underline-offset-[3px] hover:decoration-2">
+                About the ruling
+              </a>
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-x-5 gap-y-3">
-          <Switch label="Lines" value={set} onChange={changeSet} testIdPrefix="set"
-            options={[{ value: 'dev25', label: SET_INFO.dev25.short }, { value: 'templates12', label: SET_INFO.templates12.short }]} />
-          <Switch label="Reading" value={reading} onChange={setReading} testIdPrefix="reading"
-            options={[{ value: 'ruling', label: READING_LABEL.ruling.button }, { value: 'first-gold', label: READING_LABEL['first-gold'].button }]} />
-          {SET_INFO[set].runs > 1 ? (
-            <Switch label="Run" value={String(runIndex)} onChange={(v) => setRun(Number(v))} testIdPrefix="run"
-              options={[{ value: '0', label: 'Run 1' }, { value: '1', label: 'Run 2' }]} />
-          ) : (
-            <div className="flex flex-col gap-1.5">
-              <span className="font-display text-xs font-semibold uppercase tracking-label text-ink-3">Run</span>
-              <span className="flex min-h-[44px] items-center font-mono text-[13px] text-ink-2">One run per model</span>
-            </div>
-          )}
-        </div>
-      </div>
 
-      <p className="font-mono text-[12px] text-ink-3">
-        {SET_INFO[set].label}. {SET_INFO[set].note} Scored under {READING_LABEL[reading].long}.
-      </p>
+        <div data-testid="comparison-results" className="min-w-0 max-w-[640px] xl:pt-1">
+          <table data-testid="results-table" className="w-full text-left">
+            <caption className="sr-only">Lines with all six fields right, by model, on the {SET_INFO[set].label}</caption>
+            <thead>
+              <tr className="border-b border-rule text-[13px] text-ink-3">
+                <th scope="col" className="py-2 pr-4 font-medium">Model</th>
+                <th scope="col" className="py-2 pr-4 font-medium">All six fields right</th>
+                <th scope="col" className="py-2 font-medium">95% interval</th>
+              </tr>
+            </thead>
+            <tbody>
+              {view.columns.map((c) => (
+                <tr key={c.id} data-testid={`result-${c.id}`} className="border-b border-rule">
+                  <th scope="row" className="py-3 pr-4 text-[15px] font-medium text-ink">
+                    {c.kind === 'model' ? c.label : <>Rules parser <span className="block text-[13px] font-normal text-ink-3 sm:ml-1 sm:inline">no model</span></>}
+                  </th>
+                  <td className="whitespace-nowrap py-3 pr-4 text-[15px] text-ink">
+                    <span data-testid={`count-${c.id}`}>{c.allCorrect[at(c)]} of {view.n}</span>
+                  </td>
+                  <td className="whitespace-nowrap py-3 text-[15px] text-ink-2">{formatPercentInterval(c.intervals[at(c)])}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p data-testid="decision-panel" className="mt-3 text-[14px] leading-relaxed text-ink-3">
+            Ahead on these lines: <span className="text-ink-2">{view.decision.pick ?? 'none'}</span> under {READING[reading].name}, and{' '}
+            <span className="text-ink-2">{other.decision.pick ?? 'none'}</span> under {READING[otherReading(reading)].name}.
+          </p>
 
-      {/* Nameplates */}
-      <div data-testid="column-plates" className="grid grid-cols-1 min-[430px]:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-1 gap-3">
-        {view.columns.map((c) => <Plate key={c.id} c={c} run={runIndex} n={view.n} />)}
-      </div>
-      </div>
-
-        {/* The selected line, first in reading order, placed on the right on wide screens */}
-        <aside className="space-y-4 lg:sticky lg:top-4 lg:col-start-2 lg:row-start-2 2xl:col-start-3 2xl:row-start-1" aria-label="Selected line">
-          <div data-testid="line-detail" className="border border-rule-strong bg-panel">
-            <div className="flex items-baseline justify-between gap-2 bg-ink px-4 py-2 text-bench">
-              <span className="font-display text-[15px] font-bold uppercase tracking-label">Line {line.id}</span>
-              <span className="font-mono text-[12px]">{set === 'dev25' ? `run ${runIndex + 1}` : 'one run'}</span>
-            </div>
-            <div className="space-y-3 p-4">
-              <p data-testid="line-detail-sig" className="border border-rule bg-label px-3 py-2 font-mono text-[14px] leading-snug text-label-ink">{line.input}</p>
-              <div role="group" aria-label="Answer to compare with the gold" className="flex flex-wrap gap-1">
-                {view.columns.map((c) => (
-                  <button
-                    key={c.id}
-                    type="button"
-                    data-testid={`detail-column-${c.id}`}
-                    aria-pressed={chosenColumn.id === c.id}
-                    onClick={() => setSelected((s) => ({ ...s, column: c.id }))}
-                    className={`min-h-[44px] px-2.5 border font-display text-[14px] font-semibold uppercase tracking-[0.03em] ${
-                      chosenColumn.id === c.id ? 'bg-ink text-bench border-ink' : 'bg-panel text-ink border-rule-strong hover:border-ink'
-                    }`}
-                  >
-                    {c.short}
-                  </button>
-                ))}
-              </div>
-              <table className="w-full border-collapse text-left">
-                <caption className="sr-only">Gold and {chosenColumn.label} answer for line {line.id}</caption>
+          <div className="mt-6 divide-y divide-rule border-y border-rule">
+            <Disclosure testId="per-field" title="Per field">
+              <table data-testid="per-field-table" className="w-full max-w-[520px] text-left">
+                <caption className="sr-only">Lines with each field right, by model</caption>
                 <thead>
-                  <tr className="border-b border-ink font-display text-[12px] uppercase tracking-label text-ink-3">
-                    <th scope="col" className="py-1.5 pr-2 font-semibold">Field</th>
-                    <th scope="col" className="py-1.5 pr-2 font-semibold">Gold</th>
-                    <th scope="col" className="py-1.5 font-semibold">{chosenColumn.short}</th>
+                  <tr className="border-b border-rule text-[13px] text-ink-3">
+                    <th scope="col" className="py-2 pr-3 font-medium">Field</th>
+                    {view.columns.map((c) => (
+                      <th key={c.id} scope="col" className="px-2 py-2 text-right font-medium">{c.short}</th>
+                    ))}
                   </tr>
                 </thead>
-                <tbody className="font-mono text-[13px]">
-                  {SIG_FIELDS.map((f: SigField) => {
-                    const v = verdictOf(chosenColumn, line.id);
-                    const ok = v.fields[f];
-                    return (
-                      <tr key={f} data-testid={`detail-row-${f}`} className="border-b border-rule align-top">
-                        <th scope="row" className="py-1.5 pr-2 font-sans text-[14px] font-semibold text-ink-2">{FIELD_LABELS[f].long}</th>
-                        <td className="py-1.5 pr-2 text-ink">{showValue(f, fieldValue(line.gold, f))}</td>
-                        <td className={`py-1.5 ${ok ? 'text-ink' : 'text-alert font-semibold'}`}>
-                          {showValue(f, fieldValue(v.answer, f))}
-                          <span className="sr-only">{ok ? ', matches' : ', does not match'}</span>
-                          {!ok && <span aria-hidden="true" className="ml-2 inline-block bg-alert-fill px-1.5 py-0.5 align-middle font-display text-[11px] font-bold uppercase leading-none tracking-[0.04em] text-white">miss</span>}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                <tbody>
+                  {SIG_FIELDS.map((f) => (
+                    <tr key={f} className="border-b border-rule last:border-0">
+                      <th scope="row" className="py-2 pr-3 text-[14px] font-normal text-ink-2">{FIELD_LABELS[f].long}</th>
+                      {view.columns.map((c) => {
+                        const k = c.perField[at(c)][f];
+                        return (
+                          <td key={c.id} data-testid={`field-${c.id}-${f}`} data-miss={k === view.n ? undefined : true} className={`px-2 py-2 text-right text-[14px] ${k === view.n ? 'text-ink-2' : 'font-semibold text-alert'}`}>
+                            {k}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
-            </div>
-          </div>
+              <p className="mt-3 text-[14px] leading-relaxed text-ink-3">
+                Out of {view.n} lines. {stability} The rules parser is frozen and gives the same answer every time.
+              </p>
+            </Disclosure>
 
-          <div data-testid="decision-panel" className="border-2 border-ink bg-panel p-4 space-y-2">
-            <div className="font-display text-xs font-semibold uppercase tracking-label text-ink-3">Under {READING_LABEL[reading].long}</div>
-            <p className="text-[16px] leading-snug text-ink">
-              Leads on development data: <span className="font-mono font-semibold">{view.decision.pick ?? 'none'}</span>. {view.decision.reason}
+            <Disclosure
+              testId="options"
+              title="Options"
+              aside={`${SET_INFO[set].label}, ${READING[reading].name}, ${SET_INFO[set].runs > 1 ? `run ${runIndex + 1}` : 'one run'}`}
+            >
+              <div className="grid gap-x-10 gap-y-5 sm:grid-cols-2">
+                <Choice legend="Lines" name="set" value={set} onChange={changeSet} testIdPrefix="set"
+                  options={[
+                    { value: 'dev25', label: SET_INFO.dev25.label, hint: SET_INFO.dev25.note },
+                    { value: 'templates12', label: SET_INFO.templates12.label, hint: SET_INFO.templates12.note },
+                  ]} />
+                <Choice legend="Reading of “at bedtime as needed”" name="reading" value={reading} onChange={setReading} testIdPrefix="reading"
+                  options={[
+                    { value: 'ruling', label: READING.ruling.option, hint: READING.ruling.hint },
+                    { value: 'first-gold', label: READING['first-gold'].option, hint: READING['first-gold'].hint },
+                  ]} />
+                {SET_INFO[set].runs > 1 ? (
+                  <Choice legend="Run" name="run" value={String(runIndex)} onChange={(v) => setRun(Number(v))} testIdPrefix="run"
+                    options={[{ value: '0', label: 'Run 1' }, { value: '1', label: 'Run 2' }]} />
+                ) : (
+                  <div>
+                    <p className="mb-1 text-[14px] font-semibold text-ink">Run</p>
+                    <p className="py-2 text-[15px] text-ink-2">One run per model on these lines.</p>
+                  </div>
+                )}
+              </div>
+            </Disclosure>
+          </div>
+        </div>
+      </div>
+
+      {/* Every line, with the selected one beside it on wide screens and above it on phones */}
+      <div className="mt-16 grid gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_420px]">
+        <aside aria-label="Selected line" className="min-w-0 lg:sticky lg:top-6 lg:col-start-2 lg:row-start-1 lg:self-start">
+          <div data-testid="line-detail" className="space-y-4">
+            <div className="flex items-baseline justify-between gap-4">
+              <h3 className="text-[18px] font-semibold text-ink">Line {line.id}</h3>
+              <span className="text-[13px] text-ink-3">{set === 'dev25' ? `Run ${runIndex + 1}` : 'One run'}</span>
+            </div>
+            <p data-testid="line-detail-sig" className="sig rounded-lg border border-rule-strong bg-panel px-4 py-3 text-[16px] leading-relaxed text-ink">
+              {line.input}
             </p>
-            <p className="text-[15px] leading-snug text-ink-2">
-              Under {READING_LABEL[reading === 'ruling' ? 'first-gold' : 'ruling'].long}: <span className="font-mono">{other.decision.pick ?? 'none'}</span>.
-            </p>
-            <p className="border-t border-rule pt-2 text-[15px] font-semibold leading-snug text-ink">
-              No model is chosen. The blind test set decides, and it has not been written yet.
-            </p>
-            <p className="font-mono text-[12px] text-ink-3">Speed is not compared here. The saved runs were timed on a shared, loaded machine.</p>
+            <div role="group" aria-label="Answer to compare with the gold" className="flex flex-wrap gap-x-1 border-b border-rule">
+              {view.columns.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  data-testid={`detail-column-${c.id}`}
+                  aria-pressed={chosen.id === c.id}
+                  onClick={() => setSelected((s) => ({ ...s, column: c.id }))}
+                  className={`-mb-px min-h-[44px] border-b-2 px-3 text-[15px] font-medium transition-colors ${
+                    chosen.id === c.id ? 'border-accent-fill text-ink' : 'border-transparent text-ink-3 hover:text-ink'
+                  }`}
+                >
+                  {c.short}
+                </button>
+              ))}
+            </div>
+            <table className="w-full text-left">
+              <caption className="sr-only">Gold and {chosen.label} answer for line {line.id}</caption>
+              <thead>
+                <tr className="text-[13px] text-ink-3">
+                  <th scope="col" className="py-2 pr-3 font-medium">Field</th>
+                  <th scope="col" className="py-2 pr-3 font-medium">Gold</th>
+                  <th scope="col" className="py-2 font-medium">{chosen.short}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {SIG_FIELDS.map((f: SigField) => {
+                  const v = verdictOf(chosen, line.id);
+                  const ok = v.fields[f];
+                  return (
+                    <tr key={f} data-testid={`detail-row-${f}`} className="border-t border-rule align-baseline">
+                      <th scope="row" className="py-2.5 pr-3 text-[14px] font-normal text-ink-3">{FIELD_LABELS[f].long}</th>
+                      <td className="py-2.5 pr-3 text-[15px] text-ink">{showValue(f, fieldValue(line.gold, f))}</td>
+                      <td data-miss={ok ? undefined : true} className={`py-2.5 text-[15px] ${ok ? 'text-ink' : 'font-semibold text-alert'}`}>
+                        {showValue(f, fieldValue(v.answer, f))}
+                        <span className="sr-only">{ok ? ', matches' : ', does not match'}</span>
+                        {!ok && <X className="ml-1.5 inline h-4 w-4 align-[-2px]" strokeWidth={2.5} aria-hidden="true" />}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </aside>
 
-        {/* The verification sheet */}
-        <div role="table" aria-label={`Verification sheet, ${SET_INFO[set].label}`} data-testid="verification-sheet" className="min-w-0 border border-rule-strong bg-panel lg:col-start-1 lg:row-start-2 2xl:col-start-2 2xl:row-start-1">
-          <div role="rowgroup" className="hidden md:block">
-            <div role="row" className="grid grid-cols-[minmax(0,1fr)_repeat(4,76px)] items-end border-b-2 border-ink bg-panel">
-              <div role="columnheader" className="px-3 py-2 font-display text-[13px] font-semibold uppercase tracking-label text-ink-3">Line, as written</div>
-              {view.columns.map((c) => (
-                <div role="columnheader" key={c.id} className="px-1 py-2 text-center font-display text-[13px] font-bold uppercase tracking-[0.03em] text-ink">
-                  {c.short}
-                </div>
-              ))}
+        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <h3 className="text-[18px] font-semibold text-ink">Line by line</h3>
+            <p className="text-[14px] text-ink-3">Select a mark to see that answer beside the gold.</p>
+          </div>
+          <div role="table" aria-label={`Each line, ${SET_INFO[set].label}`} data-testid="line-sheet" className="min-w-0">
+            <div role="rowgroup" className="hidden md:block">
+              <div role="row" className="grid grid-cols-[minmax(0,1fr)_repeat(4,80px)] border-b border-rule text-[13px] text-ink-3">
+                <div role="columnheader" className="py-2 pl-3 font-medium">Line, as written</div>
+                {view.columns.map((c) => (
+                  <div role="columnheader" key={c.id} className="py-2 text-center font-medium">{c.short}</div>
+                ))}
+              </div>
+            </div>
+            <div role="rowgroup">
+              {view.lines.map((l) => {
+                const isSelected = l.id === line.id;
+                return (
+                  <div
+                    role="row"
+                    key={l.id}
+                    data-testid={`sheet-row-${l.id}`}
+                    data-selected={isSelected}
+                    className={`grid grid-cols-4 gap-y-1 border-b border-rule px-3 py-3 md:grid-cols-[minmax(0,1fr)_repeat(4,80px)] md:items-center md:px-0 md:py-1 ${
+                      isSelected ? 'bg-selected shadow-[inset_2px_0_0_rgb(var(--accent-text))]' : ''
+                    }`}
+                  >
+                    <div role="cell" className="col-span-4 min-w-0 md:col-span-1 md:py-2 md:pl-3 md:pr-4">
+                      <div className="flex items-baseline gap-3">
+                        <span className="w-8 shrink-0 text-[13px] text-ink-3">{l.id}</span>
+                        <span className="sig min-w-0 text-[14px] leading-relaxed text-ink">{l.input}</span>
+                      </div>
+                    </div>
+                    {view.columns.map((c) => {
+                      const v = verdictOf(c, l.id);
+                      const active = isSelected && chosen.id === c.id;
+                      return (
+                        <div role="cell" key={c.id} className="flex justify-center">
+                          <button
+                            type="button"
+                            data-testid={`cell-${l.id}-${c.id}`}
+                            aria-label={`${l.id}, ${c.label}: ${verdictText(v)}`}
+                            aria-pressed={active}
+                            onClick={() => setSelected({ line: l.id, column: c.id })}
+                            className={`relative flex min-h-[48px] w-full min-w-[44px] max-w-[80px] flex-col items-center justify-center gap-0.5 rounded-md px-1 pb-2 pt-1 transition-colors hover:bg-slate-850 ${
+                              active ? 'after:absolute after:bottom-1 after:left-1/2 after:h-0.5 after:w-6 after:-translate-x-1/2 after:rounded-full after:bg-accent-fill' : ''
+                            }`}
+                          >
+                            <span className="text-[12px] text-ink-3 md:hidden">{c.short}</span>
+                            <Mark v={v} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div role="rowgroup">
-            {view.lines.map((l) => {
-              const isSelected = l.id === line.id;
-              return (
-                <div
-                  role="row"
-                  key={l.id}
-                  data-testid={`sheet-row-${l.id}`}
-                  data-selected={isSelected}
-                  className={`grid grid-cols-4 md:grid-cols-[minmax(0,1fr)_repeat(4,76px)] items-center gap-y-2 border-b border-rule px-3 py-2.5 md:px-0 md:py-0 ${
-                    isSelected ? 'bg-stamp-tint outline outline-2 -outline-offset-2 outline-ink' : ''
-                  }`}
-                >
-                  <div role="cell" className="col-span-4 md:col-span-1 md:px-3 md:py-2 min-w-0">
-                    <div className="flex items-start gap-2">
-                      <span className="mt-1 shrink-0 font-mono text-[12px] font-semibold text-ink-3">{l.id}</span>
-                      <span className="min-w-0 border border-rule bg-label px-2 py-1 font-mono text-[13px] leading-snug text-label-ink">{l.input}</span>
-                    </div>
-                  </div>
-                  {view.columns.map((c) => {
-                    const v = verdictOf(c, l.id);
-                    const active = isSelected && chosenColumn.id === c.id;
-                    return (
-                      <div role="cell" key={c.id} className="flex justify-center md:py-1">
-                        <button
-                          type="button"
-                          data-testid={`cell-${l.id}-${c.id}`}
-                          aria-label={`${l.id}, ${c.label}: ${verdictText(v)}`}
-                          aria-pressed={active}
-                          onClick={() => setSelected({ line: l.id, column: c.id })}
-                          className={`flex min-h-[48px] w-full min-w-[44px] max-w-[72px] flex-col items-center justify-center gap-0.5 border px-1 ${
-                            active ? 'border-ink bg-panel' : 'border-transparent hover:border-rule-strong'
-                          }`}
-                        >
-                          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.04em] text-ink-3 md:hidden">{c.short}</span>
-                          <Mark v={v} />
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+        </div>
+      </div>
+
+      {/* The details the one-line note links to */}
+      <div id="ruling-details" data-testid="ruling-details" className="mt-16 scroll-mt-6 border-t border-rule pt-10">
+        <h3 className="text-[18px] font-semibold text-ink">About these numbers</h3>
+        <div className="mt-5 grid gap-x-12 gap-y-8 md:grid-cols-3">
+          <div>
+            <h4 className="text-[15px] font-semibold text-ink">The ruling</h4>
+            <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
+              On 3 November 2026 Kevin Madden, PharmD, ruled that “at bedtime as needed” means no fixed schedule, as needed, at most once a day. The schedule and the as-needed maximum are separate fields. These six fields have no place for the maximum, so under the ruling the frequency of that line is none. The gold as first written read it as once a day.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-[15px] font-semibold text-ink">The lines</h4>
+            <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
+              {SET_INFO.dev25.label}: {SET_INFO.dev25.note.charAt(0).toLowerCase()}{SET_INFO.dev25.note.slice(1)} {SET_INFO.templates12.label}: {SET_INFO.templates12.note.charAt(0).toLowerCase()}{SET_INFO.templates12.note.slice(1)} Both sets are development data, so no number here can choose a model.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-[15px] font-semibold text-ink">What is not compared</h4>
+            <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
+              Speed is not compared here. The saved runs were timed on a shared, loaded machine. Each 95% interval is the exact binomial interval for the count of lines with all six fields right.
+            </p>
           </div>
         </div>
       </div>

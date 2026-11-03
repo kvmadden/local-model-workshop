@@ -12,7 +12,7 @@ test.use({ engineMode: 'absent' });
 
 
 // The audit has to catch what it is meant to catch, or an empty list proves nothing.
-test('the audit flags a tight pill, a clipped pill and a flow that wraps partway, and passes clean ones', async ({ page }) => {
+test('the audit flags a tight pill, a clipped pill, a tight ring and a flow that wraps partway, and passes clean ones', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.evaluate(() => {
@@ -23,6 +23,7 @@ test('the audit flags a tight pill, a clipped pill and a flow that wraps partway
       <span style="border:1px solid #000;padding:2px 1px;display:inline-block">TIGHT</span>
       <span style="border:1px solid #000;padding:4px 8px;display:inline-block;width:40px;overflow:hidden;white-space:nowrap">CLIPPED LABEL</span>
       <span style="border:1px solid #000;padding:4px 8px;display:inline-block">ROOMY</span>
+      <span style="box-shadow:inset 0 0 0 1.5px #000;padding:2px 1px;display:inline-block">RINGED</span>
       <ol data-step-flow style="display:flex;flex-wrap:wrap;width:220px;list-style:none;padding:0;margin:8px 0">
         <li data-step style="white-space:nowrap">Assistant</li><li>→</li><li data-step style="white-space:nowrap">Screening</li><li>→</li><li data-step style="white-space:nowrap">Shared knowledge</li>
       </ol>
@@ -37,6 +38,7 @@ test('the audit flags a tight pill, a clipped pill and a flow that wraps partway
   expect(mine(boxes).some((b) => b.includes('"TIGHT"'))).toBe(true);
   expect(mine(boxes).some((b) => b.includes('"CLIPPED LABEL"') && b.includes('clipped'))).toBe(true);
   expect(mine(boxes).some((b) => b.includes('"ROOMY"'))).toBe(false);
+  expect(mine(boxes).some((b) => b.includes('"RINGED"'))).toBe(true);
   expect(mine(flows)).toEqual([
     'ol in audit-controls: steps wrap partway',
     'p in audit-controls: "Open the app → choose a model → run the " wraps an arrow flow across lines',
@@ -60,7 +62,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
         }
         // States past the first view of each tab: other sets and readings, dialogs, a finished run.
         const states: Array<{ name: string; tab: string; act: () => Promise<void>; after?: () => Promise<void> }> = [
-          { name: 'template lines, gold as first written', tab: 'tab-run-comparison', act: async () => {
+          { name: 'per field and options open, template lines, gold as first written', tab: 'tab-run-comparison', act: async () => {
+            await page.getByTestId('per-field-toggle').click();
+            await page.getByTestId('options-toggle').click();
             await page.getByTestId('set-templates12').click();
             await page.getByTestId('reading-first-gold').click();
             await page.getByTestId('cell-h02-gpt-oss:20b').click();

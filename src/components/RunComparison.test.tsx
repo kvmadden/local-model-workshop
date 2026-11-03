@@ -30,29 +30,51 @@ async function render() {
 }
 
 describe('run comparison screen', () => {
-  it('opens on the deciding line under the ruling, and says no model is chosen', async () => {
+  it('opens on one accurate headline, the deciding line and the ruling, and says no model is chosen', async () => {
     const { q } = await render();
-    expect(q('no-model-chosen')!.textContent).toContain('No model chosen');
-    expect(q('bedtime-ruling')!.textContent).toContain('At bedtime as needed: no fixed schedule, as needed, at most once a day.');
-    expect(q('reading-ruling')!.getAttribute('aria-pressed')).toBe('true');
+    expect(q('comparison-headline')!.textContent).toBe(
+      "Three local models and a simple rules parser each read 24 or 25 of the 25 development lines fully right, so these lines can’t pick a model.",
+    );
+    expect(q('comparison-lede')!.textContent).toBe(
+      'Every miss is the same field, the frequency, on the one line that says “at bedtime as needed”. Read that line the other way and a different model comes out ahead.',
+    );
+    expect(q('no-model-chosen')!.textContent).toBe('No model chosen yet, and none will be until the new blind test set runs.');
+    expect(q('bedtime-ruling')!.textContent).toContain('“at bedtime as needed” means no fixed schedule, as needed, at most once a day.');
+    expect(q('ruling-details')!.textContent).toContain('The schedule and the as-needed maximum are separate fields.');
+    expect((q('reading-ruling') as HTMLInputElement).checked).toBe(true);
     expect(q('sheet-row-s25')!.getAttribute('data-selected')).toBe('true');
     expect(q('line-detail-sig')!.textContent).toBe('Melatonin 3 mg tab - take 1 tablet by mouth at bedtime as needed for sleep');
     expect(q('detail-row-frequency')!.textContent).toContain('does not match');
-    expect(q('plate-count-gpt-oss:20b')!.textContent).toBe('25/25');
-    expect(q('plate-count-gemma4:31b')!.textContent).toBe('24/25');
-    expect(q('plate-count-rules')!.textContent).toBe('25/25');
-    expect(q('decision-panel')!.textContent).toContain('Leads on development data: gpt-oss:20b');
-    expect(q('decision-panel')!.textContent).toContain('No model is chosen.');
+    expect(q('count-gpt-oss:20b')!.textContent).toBe('25 of 25');
+    expect(q('count-gemma4:31b')!.textContent).toBe('24 of 25');
+    expect(q('count-rules')!.textContent).toBe('25 of 25');
+    expect(q('result-gemma4:31b')!.textContent).toContain('79.6 to 99.9%');
+    expect(q('decision-panel')!.textContent).toBe('Ahead on these lines: gpt-oss:20b under the ruling, and qwen3.8:27b under the gold as first written.');
   });
 
-  it('flips with the reading and follows the set', async () => {
+  it('keeps the per-field counts and the options behind two closed disclosures', async () => {
+    const { q } = await render();
+    expect((q('per-field') as HTMLDetailsElement).open).toBe(false);
+    expect((q('options') as HTMLDetailsElement).open).toBe(false);
+    expect(q('options-toggle')!.textContent).toContain('25 development lines, the ruling, run 1');
+    expect(q('field-gemma4:31b-frequency')!.textContent).toBe('24');
+    expect(q('field-gemma4:31b-frequency')!.className).toContain('text-alert');
+    expect(q('field-gpt-oss:20b-frequency')!.className).not.toContain('text-alert');
+  });
+
+  it('flips with the reading and follows the set, and the headline stays true', async () => {
     const { q, click } = await render();
     await click('reading-first-gold');
-    expect(q('plate-count-gpt-oss:20b')!.textContent).toBe('24/25');
-    expect(q('plate-count-qwen3.8:27b')!.textContent).toBe('25/25');
-    expect(q('decision-panel')!.textContent).toContain('Leads on development data: qwen3.8:27b');
+    expect(q('count-gpt-oss:20b')!.textContent).toBe('24 of 25');
+    expect(q('count-qwen3.8:27b')!.textContent).toBe('25 of 25');
+    expect(q('bedtime-ruling')!.textContent).toContain('Scored with the gold as first written');
+    expect(q('decision-panel')!.textContent).toBe('Ahead on these lines: qwen3.8:27b under the gold as first written, and gpt-oss:20b under the ruling.');
     await click('set-templates12');
-    expect(q('plate-count-gpt-oss:20b')!.textContent).toBe('10/12');
+    expect(q('count-gpt-oss:20b')!.textContent).toBe('10 of 12');
+    expect(q('comparison-headline')!.textContent).toBe(
+      "Three local models and a simple rules parser each read 10 to 12 of the 12 template lines fully right, so these lines can’t pick a model.",
+    );
+    expect(q('comparison-lede')!.textContent).toContain('on the two lines that say “at bedtime as needed”. Read those lines the other way');
     expect(q('sheet-row-h02')!.getAttribute('data-selected')).toBe('true');
     expect(q('run-1')).toBeNull();
   });
