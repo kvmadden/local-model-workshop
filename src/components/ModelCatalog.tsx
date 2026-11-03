@@ -73,7 +73,7 @@ export const ModelCatalog: React.FC = () => {
       {/* Catalog Header */}
       <div className="space-y-5">
         <div className="space-y-3">
-          <h2 data-testid="catalog-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">
+          <h2 data-testid="catalog-heading" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">
             Small local models for a Mac
           </h2>
           <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">

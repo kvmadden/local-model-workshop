@@ -58,7 +58,7 @@ export const TaskWizard: React.FC = () => {
       {/* Hero Banner */}
       <div className="relative">
         <div className="max-w-3xl space-y-3">
-          <h2 data-testid="wizard-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">
+          <h2 data-testid="wizard-heading" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">
             Match your Mac goal to a local model and app
           </h2>
           <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">

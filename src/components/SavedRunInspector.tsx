@@ -49,7 +49,7 @@ export function SavedRunInspector() {
   const split = run.splits.find(s => s.split === c.split)!
   return <section aria-labelledby="audit-title" className="rounded-2xl border border-slate-700 bg-slate-900 p-4 md:p-6 space-y-5 text-slate-200" data-testid="saved-run-inspector">
     <div className="flex flex-wrap gap-3 items-center justify-between">
-      <div><p className="text-sm text-slate-400">Saved extraction audit</p><h2 id="audit-title" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">Does every fact have evidence?</h2></div>
+      <div><p className="text-sm text-slate-400">Saved extraction audit</p><h2 id="audit-title" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">Does every fact have evidence?</h2></div>
       <span className="rounded-full bg-amber-950/80 text-amber-400 px-3 py-2 text-sm">Draft · pharmacist review pending</span>
     </div>
     <p className="text-slate-300">Inspect the saved controls and acquisition attempts on unchanged public label text, scored by the frozen evaluator that needs exact character offsets. Labels are draft. The quiet-machine 10 second p95 budget has not been validated.</p>

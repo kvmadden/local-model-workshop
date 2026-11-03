@@ -40,7 +40,7 @@ export const FlowCanvas: React.FC<FlowCanvasProps> = ({
   return (
     <div data-testid="flow-canvas" className="space-y-6">
       <div className="space-y-3">
-        <h2 className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">Flow builder</h2>
+        <h2 className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">Flow builder</h2>
         <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
           Chain prompt steps. Each step runs on the built-in mock, a local Ollama or an OpenAI-compatible server on this Mac, and each later step can read an earlier step's output.
         </p>

@@ -35,8 +35,6 @@ function initialTheme(): Theme {
   }
 }
 
-/** Tabs that show the general introduction and the engine panel above their content. */
-const REFERENCE_TABS: TabType[] = ['wizard', 'catalog', 'studio', 'hardware', 'shortcuts'];
 
 function ErrorTrigger() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('triggerError') === 'true') {
@@ -219,9 +217,8 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
       <ErrorBoundary>
         <main className="flex-1 max-w-[1680px] w-full mx-auto px-4 pb-16 pt-8 sm:px-6 lg:px-10 lg:pt-12 space-y-10">
           <ErrorTrigger />
-          {REFERENCE_TABS.includes(activeTab) && <Hero />}
-
-          {REFERENCE_TABS.includes(activeTab) && <OllamaDetector />}
+          {/* A short introduction opens the Try it section. The engine panel follows the model list. */}
+          {activeTab === 'wizard' && <Hero />}
 
           {activeTab === 'compare' && (
             <Suspense fallback={<p className="text-[15px] text-ink-3">Loading the saved replies</p>}>
@@ -232,6 +229,8 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
           {activeTab === 'wizard' && <TaskWizard />}
 
           {activeTab === 'catalog' && <ModelCatalog />}
+
+          {activeTab === 'catalog' && <OllamaDetector />}
 
           {activeTab === 'studio' && <UseCaseStudio />}
 

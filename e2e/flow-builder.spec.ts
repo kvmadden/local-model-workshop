@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { openView } from './sweep';
 
 // Hermetic by default: no test in this file depends on a locally running
 // Ollama, and the fixture's engine-absent state makes that a guarantee rather
@@ -11,8 +12,8 @@ test.describe('Local Model Workshop - E2E Flow Builder Suite', () => {
     // Navigate to the app before each test
     await page.goto('/');
     await expect(page.locator('[data-testid="app-container"]')).toBeVisible();
-    await page.waitForSelector('[data-testid="tab-flow-builder"]');
-    await page.click('[data-testid="tab-flow-builder"]');
+    await page.waitForSelector('[data-testid="app-container"]');
+    await openView(page, 'tab-flow-builder');
   });
 
   // ==========================================

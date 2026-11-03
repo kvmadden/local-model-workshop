@@ -12,7 +12,7 @@ export const UseCaseStudio: React.FC = () => {
     <div data-testid="use-case-studio-container" className="space-y-6">
       {/* Studio Header */}
       <div className="space-y-3">
-        <h2 data-testid="studio-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.01em] text-balance text-ink sm:text-[28px]">
+        <h2 data-testid="studio-heading" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">
           Try small models on everyday tasks
         </h2>
         <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">

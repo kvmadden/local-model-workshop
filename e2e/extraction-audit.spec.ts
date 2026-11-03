@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures'
+import { openView } from './sweep';
 
 // Start dark, so the test can switch to the light theme.
 test.use({ colorScheme: 'dark' })
@@ -11,7 +12,7 @@ test('saved audit exposes rights, spans and fixed failures by keyboard', async (
     // The theme choice is remembered. Clear it so every viewport starts from the system setting.
     await page.evaluate(() => localStorage.removeItem('local-model-workshop-theme'))
     await page.reload()
-    await page.getByTestId('tab-benchmark-studio').click()
+    await openView(page, 'tab-benchmark-studio');
     const inspector = page.getByTestId('saved-run-inspector')
     await expect(inspector).toBeVisible()
     await expect(inspector.getByText('Draft · pharmacist review pending')).toBeVisible()
@@ -54,7 +55,7 @@ test('saved audit exposes rights, spans and fixed failures by keyboard', async (
 
 test('incomplete real acquisition exposes its reply and keeps aggregates unmeasured', async ({ page }) => {
   await page.goto('/')
-  await page.getByTestId('tab-benchmark-studio').click()
+  await openView(page, 'tab-benchmark-studio');
   await page.getByTestId('audit-run').selectOption('versions/v2/local-20261101-corrected/pass1-qwen3_8_27b-inspection.json')
   await page.getByTestId('audit-case').selectOption('p16')
   const inspector = page.getByTestId('saved-run-inspector')
