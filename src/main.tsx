@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 // Fonts are bundled with the app, so the page makes no font request to another host.
+import '@fontsource-variable/bricolage-grotesque/opsz.css'
 import '@fontsource/atkinson-hyperlegible-next/400.css'
 import '@fontsource/atkinson-hyperlegible-next/500.css'
 import '@fontsource/atkinson-hyperlegible-next/600.css'

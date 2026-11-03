@@ -1,16 +1,18 @@
 /**
- * Visual identity: quiet and readable, like a well-set pharmacy label.
+ * Visual identity: a dispensing counter. Warm paper and white cards, a sand header band, and
+ * amber, the color of a prescription vial, for actions, links and focus.
  *
  * Colors come from CSS variables in src/index.css, so one set of class names serves both themes.
- * The page is neutral, with one blue accent for links, focus and selection. Red marks a missed
- * field and nothing else on the run comparison.
+ * Each compared model keeps one hue everywhere it appears (blue, teal, berry, and warm gray for
+ * the rules parser), and red marks a missed field.
  *
- * Type is Atkinson Hyperlegible Next, a face drawn for low-vision readers, in sentence case. Its
- * monospace sibling sets the medication instructions themselves, where a misread 1 or l matters.
+ * Headlines use Bricolage Grotesque. Text is Atkinson Hyperlegible Next, a face drawn for
+ * low-vision readers, in sentence case, and its monospace sibling sets the medication
+ * instructions themselves, where a misread 1 or l matters.
  *
  * The component code still uses Tailwind's slate, indigo, emerald, sky, amber and rose names.
- * They are mapped here: slate is the neutral scale, indigo, emerald and sky are the accent, amber
- * is a muted neutral for notes and pending states, and rose is the alert red.
+ * They are mapped here: slate is the warm neutral scale, indigo, emerald and sky are the amber
+ * accent, amber is a muted neutral for notes and pending states, and rose is the alert red.
  */
 const v = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
@@ -30,6 +32,7 @@ export default {
         rose: scale('alert'),
         bench: v('bench'),
         panel: v('panel'),
+        band: v('band'),
         inset: v('slate-950'),
         rule: v('rule'),
         'rule-strong': v('rule-strong'),
@@ -43,9 +46,14 @@ export default {
         alert: v('alert-text'),
         'alert-tint': v('alert-950'),
         selected: v('selected'),
+        'model-gpt': v('m-gpt'),
+        'model-gemma': v('m-gemma'),
+        'model-qwen': v('m-qwen'),
+        'model-rules': v('m-rules'),
       },
       fontFamily: {
         sans: ['"Atkinson Hyperlegible Next"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        display: ['"Bricolage Grotesque Variable"', '"Atkinson Hyperlegible Next"', 'system-ui', 'sans-serif'],
         mono: ['"Atkinson Hyperlegible Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
