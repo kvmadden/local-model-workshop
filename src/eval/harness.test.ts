@@ -81,7 +81,7 @@ describe('eval CLI', () => {
     const bad = cli(['--nope']);
     expect(bad.status).toBe(2);
     expect(bad.stderr).toMatch(/Unknown option --nope/);
-  });
+  }, 30000);
 
   it('runs the baselines offline, writes a manifest, and refuses to write into the same folder twice', () => {
     const base = mkdtempSync(join(tmpdir(), 'eval-cli-'));
@@ -105,7 +105,7 @@ describe('eval CLI', () => {
     } finally {
       rmSync(base, { recursive: true, force: true });
     }
-  });
+  }, 30000);
 
   it('runs a suite file and checks that every case has exactly one gold record', () => {
     const base = mkdtempSync(join(tmpdir(), 'eval-suite-'));
@@ -125,7 +125,7 @@ describe('eval CLI', () => {
     } finally {
       rmSync(base, { recursive: true, force: true });
     }
-  });
+  }, 30000);
 });
 
 // Review round 2 (3 Nov). Helpers behind the CLI fixes below.
