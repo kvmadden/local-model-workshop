@@ -14,11 +14,14 @@
  *   evidence, at any occurrence.
  * - Comparisons are structural. Span key order, extra keys, span order and the order of
  *   multiplication operands no longer change the score.
- * - Repeating a correct fact costs one duplicate, instead of deleting the fact.
+ * - Repeating a correct fact costs one duplicate, instead of deleting the fact. A reply with a
+ *   duplicate is not exact.
  * - Abstention is not a fact. Saying "no active instruction" on a line with no gold facts is
- *   correct, and it is never counted as an invented fact.
- * - Engine errors are labeled as errors, a missing dose is not called a wrong dose, and malformed
- *   entities are rejected one by one instead of crashing the report.
+ *   correct, and it is never counted as an invented fact. A failed request, an empty reply or an
+ *   unreadable entity is never a correct abstention.
+ * - Engine errors are labeled as errors and never count as successes, a missing dose is not called
+ *   a wrong dose, and malformed entities and derivations are rejected one by one instead of
+ *   crashing the report.
  * - Gold derivations are checked: the operands must multiply to the stated value.
  */
 import { normalize, type AuditCase, type Entity, type Span } from './extractionAudit';
@@ -70,9 +73,17 @@ export function evidenceTexts(input: string, e: PredictedEntityV3): string[] | n
   return null;
 }
 
-const sameDerivation = (a: Entity['derivation'], b: Entity['derivation']) => {
-  if (!a && !b) return true;
-  if (!a || !b) return false;
+type Derivation = NonNullable<Entity['derivation']>;
+
+/** A derivation with a named operation, a unit and finite numeric operands. Anything else is unusable. */
+export const isDerivation = (d: unknown): d is Derivation =>
+  !!d && typeof d === 'object' && typeof (d as Derivation).operation === 'string' && typeof (d as Derivation).unit === 'string' &&
+  Array.isArray((d as Derivation).operands) && (d as Derivation).operands.length > 0 && (d as Derivation).operands.every((x) => typeof x === 'number' && Number.isFinite(x));
+
+/** Same operation, unit and operands in any order. A malformed predicted derivation never matches. */
+const sameDerivation = (a: unknown, b: Entity['derivation']) => {
+  if ((a === undefined || a === null) && !b) return true;
+  if (!isDerivation(a) || !b) return false;
   const sorted = (xs: number[]) => [...xs].sort((x, y) => x - y);
   return a.operation === b.operation && normalize(a.unit) === normalize(b.unit) && JSON.stringify(sorted(a.operands)) === JSON.stringify(sorted(b.operands));
 };
@@ -105,7 +116,7 @@ export interface DocumentScoreV3 {
   /** Predictions that could not be read (unknown task, empty value, unusable evidence). */
   malformed: unknown[];
   abstained: boolean;
-  /** No facts in gold, none predicted or an abstention given. */
+  /** No facts in gold, and a readable reply that predicts none (an empty list or an abstention). */
   correctAbstention: boolean;
   exactFacts: boolean;
   exactEvidence: boolean;
@@ -167,7 +178,8 @@ export function scoreDocumentV3(input: string, gold: Entity[], prediction: unkno
   }
   const foundKeys = new Set(factsFound.map((g) => identity(g.task, g.value)));
   const missing = gold.filter((g) => !foundKeys.has(identity(g.task, g.value)));
-  const correctAbstention = gold.length === 0 && firstByKey.size === 0;
+  const clean = malformed.length === 0 && duplicates.length === 0;
+  const correctAbstention = gold.length === 0 && firstByKey.size === 0 && clean;
   return {
     factsFound,
     supported,
@@ -177,8 +189,8 @@ export function scoreDocumentV3(input: string, gold: Entity[], prediction: unkno
     malformed,
     abstained,
     correctAbstention,
-    exactFacts: missing.length === 0 && extra.length === 0 && malformed.length === 0,
-    exactEvidence: missing.length === 0 && extra.length === 0 && malformed.length === 0 && supported.length === factsFound.length,
+    exactFacts: missing.length === 0 && extra.length === 0 && clean,
+    exactEvidence: missing.length === 0 && extra.length === 0 && clean && supported.length === factsFound.length,
   };
 }
 
@@ -201,9 +213,13 @@ export function failureTypeV3(score: DocumentScoreV3, error?: string | null): Fa
 
 export interface RowV3 { id: string; output: string | null; error: string | null; latencyMs: number | null }
 
-/** Reads a reply into entities. Unreadable output becomes a malformed entry, never a crash. */
+/**
+ * Reads a reply into entities. Unreadable output becomes a malformed entry, never a crash. No
+ * output at all (an empty reply, or a failed request) is malformed too, so it can never pass as
+ * an abstention.
+ */
 export function parseEntitiesV3(output: string | null): unknown[] {
-  if (!output) return [];
+  if (output === null || !output.trim()) return [{ unreadable: true, reason: 'no output' }];
   try {
     const value = JSON.parse(output);
     if (value && Array.isArray(value.entities)) return value.no_active_instruction === true ? [...value.entities, { task: 'abstention', value: 'no active instruction' }] : value.entities;
@@ -216,6 +232,8 @@ export function parseEntitiesV3(output: string | null): unknown[] {
 
 export interface ReportTotals {
   documents: number;
+  /** Requests that failed. Their documents score as unreadable, so they never count as exact. */
+  engineErrors: number;
   goldFacts: number;
   predictedFacts: number;
   factsFound: number;
@@ -239,7 +257,8 @@ export function reportV3(cases: AuditCase[], rows: RowV3[]) {
   const documents = cases.map((c) => {
     const row = byId.get(c.id);
     if (!row) return { id: c.id, split: c.split, measured: false as const };
-    const score = scoreDocumentV3(c.input, c.gold, parseEntitiesV3(row.output));
+    // A failed request is scored as no output, whatever text came with it.
+    const score = scoreDocumentV3(c.input, c.gold, row.error ? parseEntitiesV3(null) : parseEntitiesV3(row.output));
     return { id: c.id, split: c.split, measured: true as const, error: row.error, latencyMs: row.latencyMs, failure: failureTypeV3(score, row.error), ...score };
   });
   const totals = (split?: string): ReportTotals => {
@@ -251,6 +270,7 @@ export function reportV3(cases: AuditCase[], rows: RowV3[]) {
     const supported = sum((d) => d.supported.length);
     return {
       documents: docs.length,
+      engineErrors: docs.filter((d) => d.error).length,
       goldFacts,
       predictedFacts,
       factsFound: found,

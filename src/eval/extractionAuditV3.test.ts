@@ -106,6 +106,51 @@ describe('audit evaluator v3', () => {
     expect([c10.factsFound.length, c10.supported.length, c10.failure]).toEqual([5, 0, 'evidence only']);
   });
 
+  // Review round 2 (3 Nov).
+  it('does not crash on a malformed predicted derivation, and does not count its evidence as supported (GPT 6)', () => {
+    const shapes: unknown[] = [
+      { operation: 'multiply', unit: 'mg' },
+      { operation: 'multiply', operands: 'twelve and a half', unit: 'mg' },
+      { operation: 'multiply', operands: [12.5, 'half'], unit: 'mg' },
+      { operation: 'multiply', operands: [12.5, 0.5], unit: 5 },
+      'multiply',
+    ];
+    for (const derivation of shapes) {
+      const p = copy();
+      p[2].derivation = derivation;
+      const s = scoreDocumentV3(input, gold, p);
+      expect(s.factsFound, JSON.stringify(derivation)).toHaveLength(3);
+      expect(s.supported, JSON.stringify(derivation)).toHaveLength(2);
+      expect(s.exactEvidence).toBe(false);
+    }
+    // A null derivation on a fact that has none is the same as leaving it out.
+    const p = copy();
+    p[0].derivation = null;
+    expect(scoreDocumentV3(input, gold, p).supported).toHaveLength(3);
+  });
+
+  it('a repeated fact means the reply is not exact (GPT 7, Grok 17)', () => {
+    const s = scoreDocumentV3(input, gold, [...copy(), copy()[0]]);
+    expect(s.duplicates).toHaveLength(1);
+    expect(s.exactFacts).toBe(false);
+    expect(s.exactEvidence).toBe(false);
+  });
+
+  it('a failed request, an empty reply or an unreadable reply is never a correct abstention (GPT 8, Grok 18)', () => {
+    const noFacts: AuditCase[] = [{ id: 'z1', split: 'challenge', input: 'Do not take digoxin.', gold: [] } as unknown as AuditCase];
+    const failed = reportV3(noFacts, [{ id: 'z1', output: null, error: 'Ollama execution failed: timed out after 60000 ms', latencyMs: null }]);
+    expect(failed.documents[0]).toMatchObject({ failure: 'engine error', correctAbstention: false, exactFacts: false, exactEvidence: false });
+    expect(failed.all).toMatchObject({ correctAbstentions: 0, exactFacts: 0, exactEvidence: 0 });
+    const empty = reportV3(noFacts, [{ id: 'z1', output: '', error: null, latencyMs: 5 }]);
+    expect(empty.documents[0]).toMatchObject({ correctAbstention: false, exactFacts: false });
+    expect(empty.all.malformed).toBe(1);
+    const unreadable = scoreDocumentV3('Do not take digoxin.', [], [{ task: 'drug' }, { task: 'abstention', value: 'no active instruction' }]);
+    expect(unreadable).toMatchObject({ abstained: true, correctAbstention: false, exactFacts: false });
+    // A valid empty answer and an explicit abstention are still correct on a line with no facts.
+    expect(scoreDocumentV3('Do not take digoxin.', [], []).correctAbstention).toBe(true);
+    expect(reportV3(noFacts, [{ id: 'z1', output: '{"entities":[],"no_active_instruction":true}', error: null, latencyMs: 5 }]).all.correctAbstentions).toBe(1);
+  });
+
   it('keeps the v3 prompt and schema free of corpus names and challenge text', () => {
     const runtime = ['eval/extraction-audit/prompt-v3.txt', 'eval/extraction-audit/schema-v3.json', 'src/eval/extractionAuditV3.ts'].map((p) => readFileSync(p, 'utf8')).join('\n');
     expect(runtime).not.toMatch(/public\.json|challenge\.json|gold\.json/);
