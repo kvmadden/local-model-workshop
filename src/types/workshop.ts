@@ -1,4 +1,4 @@
-export type TabType = 'wizard' | 'catalog' | 'studio' | 'hardware' | 'shortcuts' | 'benchmark' | 'builder';
+export type TabType = 'compare' | 'wizard' | 'catalog' | 'studio' | 'hardware' | 'shortcuts' | 'benchmark' | 'builder';
 
 export interface TaskOption {
   id: string;

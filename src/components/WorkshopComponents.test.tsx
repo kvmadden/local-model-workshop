@@ -88,7 +88,8 @@ describe('Workshop component unit tests', () => {
 
       expect(getByTestId('workshop-header')).not.toBeNull();
       expect(getByTestId('workshop-title')?.textContent).toContain('Local Model Workshop');
-      expect(getByTestId('workshop-subtitle')?.textContent).toContain('Explore, compare and chain');
+      expect(getByTestId('workshop-subtitle')?.textContent).toContain('A test bench for local models reading medication instructions');
+      expect(getByTestId('tab-run-comparison')).not.toBeNull();
       expect(getByTestId('tab-task-wizard')).not.toBeNull();
       expect(getByTestId('tab-model-catalog')).not.toBeNull();
       expect(getByTestId('tab-use-case-studio')).not.toBeNull();

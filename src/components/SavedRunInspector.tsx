@@ -16,6 +16,18 @@ interface InspectorRun {
 const cases = [...publicCases, ...challengeCases] as AuditCase[]
 const reportAssets = import.meta.glob(['../../eval/extraction-audit/versions/v2/reports/*.json', '../../eval/extraction-audit/versions/v2/local-*/report-*.json', '../../eval/extraction-audit/versions/v2/local-*/*-inspection.json'], { query: '?url', import: 'default', eager: true }) as Record<string, string>
 const repo = 'https://github.com/kvmadden/local-model-workshop/blob/main/eval/extraction-audit'
+const MODEL_NAMES: Record<string, string> = { gemma4_31b: 'gemma4:31b', gpt_oss_20b: 'gpt-oss:20b', qwen3_8_27b: 'qwen3.8:27b' }
+/** A plain name for a saved run. The file path stays the option's value, out of sight. */
+export function runLabel(id: string, name?: string | null): string {
+  if (id.endsWith('/reports/empty.json')) return 'Empty control, predicts nothing'
+  if (id.endsWith('/reports/everything.json')) return 'Extract-everything control'
+  if (id.endsWith('/reports/rules.json')) return 'Narrow rules control'
+  const model = MODEL_NAMES[Object.keys(MODEL_NAMES).find(k => id.includes(k)) ?? ''] ?? name ?? 'Saved run'
+  const pass = id.match(/pass(\d)/)?.[1]
+  if (id.includes('local-20261101-corrected')) return `${model}, pass ${pass}, stopped after 23 of 42 requests`
+  if (id.includes('local-20261101/')) return `${model}, pass ${pass}, failed at the endpoint`
+  return name ?? model
+}
 const count = (items: Entity[]) => items.length ? items.map(e => `${e.task}: ${e.value}`).join('\n') : 'None'
 export function SavedRunInspector() {
   const [savedRuns, setSavedRuns] = useState<InspectorRun[] | null>(null)
@@ -40,13 +52,13 @@ export function SavedRunInspector() {
       <div><p className="text-indigo-300 text-sm font-bold">SAVED EXTRACTION AUDIT</p><h2 id="audit-title" className="text-2xl font-bold">Does every fact have evidence?</h2></div>
       <span className="rounded-full bg-amber-950/80 text-amber-400 px-3 py-2 text-sm">Draft · pharmacist review pending</span>
     </div>
-    <p className="text-slate-300">Evaluator v2. Inspect saved controls and acquisition attempts on unchanged public label text. Labels are draft. The quiet-machine 10 second p95 budget has not been validated.</p>
+    <p className="text-slate-300">Inspect the saved controls and acquisition attempts on unchanged public label text, scored by the frozen evaluator that needs exact character offsets. Labels are draft. The quiet-machine 10 second p95 budget has not been validated.</p>
     <div className="grid sm:grid-cols-3 gap-3">
       {[['Source documents', '10 dev · 20 final'], ['Separate challenge', '12 synthetic cases'], ['This set, selected run', split.tp === null ? 'Unmeasured, incomplete acquisition' : `${split.tp}/${split.predicted} supported · ${split.tp}/${split.gold} found`]].map(([label, value]) => <div key={label} className="bg-slate-950 rounded-xl p-4"><p className="text-sm text-slate-400">{label}</p><p className="font-semibold mt-1">{value}</p></div>)}
     </div>
     <label className="block text-sm font-semibold">Saved run
       <select data-testid="audit-run" value={runId} onChange={e => setRunId(e.target.value)} className="block w-full mt-2 min-h-11 bg-slate-950 border border-slate-700 rounded-lg px-3 text-slate-200">
-        {savedRuns.map(r => <option key={r.id} value={r.id}>{r.name} · {r.id}</option>)}
+        {savedRuns.map(r => <option key={r.id} value={r.id}>{runLabel(r.id, r.name)}</option>)}
       </select>
     </label>
     <div className="flex flex-wrap gap-4 items-end">

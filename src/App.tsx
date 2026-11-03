@@ -14,6 +14,28 @@ import { FlowCanvas } from './components/FlowCanvas';
 import { StepCard } from './components/StepCard';
 import { Step, ExecutionStatus } from './types/flow';
 import { FlowRunner } from './engine/flowRunner';
+import { RunComparison } from './components/RunComparison';
+
+type Theme = 'light' | 'dark';
+const THEME_KEY = 'local-model-workshop-theme';
+
+/** The saved choice if there is one, otherwise the system setting. Storage can be missing or blocked. */
+function initialTheme(): Theme {
+  try {
+    const saved = window.localStorage.getItem(THEME_KEY);
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch {
+    // no storage, fall through to the system setting
+  }
+  try {
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  } catch {
+    return 'dark';
+  }
+}
+
+/** Tabs that show the general introduction and the engine panel above their content. */
+const REFERENCE_TABS: TabType[] = ['wizard', 'catalog', 'studio', 'hardware', 'shortcuts'];
 
 function ErrorTrigger() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('triggerError') === 'true') {
@@ -24,7 +46,21 @@ function ErrorTrigger() {
 
 export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
   const [activeTab, setActiveTab] = useState<TabType>(initialTab);
-  const [lightTheme, setLightTheme] = useState(false)
+  const [theme, setTheme] = useState<Theme>(initialTheme);
+  useEffect(() => {
+    // The page background outside the app follows the theme too.
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+  const toggleTheme = () =>
+    setTheme((current) => {
+      const next: Theme = current === 'dark' ? 'light' : 'dark';
+      try {
+        window.localStorage.setItem(THEME_KEY, next);
+      } catch {
+        // the choice still applies for this visit
+      }
+      return next;
+    });
 
   // Flow Builder Canvas state
   const [flowTitle, setFlowTitle] = useState('Linear Model Flow');
@@ -174,26 +210,19 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
   return (
     <div
       data-testid="app-container"
-      data-theme={(activeTab === 'builder' || activeTab === 'benchmark') && lightTheme ? 'light' : 'dark'}
-      className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans antialiased"
+      data-theme={theme}
+      className="min-h-screen bg-bench bench-grid text-ink flex flex-col font-sans antialiased"
     >
-      <Header activeTab={activeTab} onTabChange={setActiveTab} />
-      {(activeTab === 'builder' || activeTab === 'benchmark') && <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-3 flex justify-end">
-        <button
-          type="button"
-          onClick={() => setLightTheme(value => !value)}
-          className="min-h-[44px] px-4 rounded-lg border border-slate-700 bg-slate-800 text-slate-100 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-500"
-        >
-          {lightTheme ? 'Use dark theme' : 'Use light theme'}
-        </button>
-      </div>}
+      <Header activeTab={activeTab} onTabChange={setActiveTab} theme={theme} onToggleTheme={toggleTheme} />
 
       <ErrorBoundary>
-        <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-6">
+        <main className="flex-1 max-w-[1840px] w-full mx-auto px-4 py-5 sm:px-6 sm:py-6 space-y-6">
           <ErrorTrigger />
-          {activeTab !== 'builder' && activeTab !== 'benchmark' && <Hero />}
+          {REFERENCE_TABS.includes(activeTab) && <Hero />}
 
-          {activeTab !== 'builder' && activeTab !== 'benchmark' && <OllamaDetector />}
+          {REFERENCE_TABS.includes(activeTab) && <OllamaDetector />}
+
+          {activeTab === 'compare' && <RunComparison />}
 
           {activeTab === 'wizard' && <TaskWizard />}
 
@@ -236,8 +265,12 @@ export function App({ initialTab = 'builder' }: { initialTab?: TabType } = {}) {
         </main>
       </ErrorBoundary>
 
-      <footer className="border-t border-slate-900 bg-slate-950 py-4 px-6 text-center text-xs text-slate-400">
-        Local Model Workshop &bull; MIT License &bull; Public label excerpts and synthetic examples, see source licenses
+      <footer className="border-t-2 border-ink bg-panel">
+        <div className="mx-auto flex max-w-[1840px] flex-wrap gap-x-6 gap-y-1 px-4 py-4 font-mono text-[12px] text-ink-3 sm:px-6">
+          <span>Local Model Workshop</span>
+          <span>MIT License</span>
+          <span>Synthetic examples and public label excerpts. See the source licenses.</span>
+        </div>
       </footer>
     </div>
   );
