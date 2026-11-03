@@ -75,6 +75,19 @@ describe('ollamaService', () => {
       const res = await checkOllamaStatus();
       expect(res.available).toBe(false);
       expect(res.models).toEqual([]);
+      expect(res.reason).toBe('no connection');
+    });
+
+    it('says what blocked the read instead of reporting Ollama as absent', async () => {
+      const timeout = Object.assign(new Error('The operation timed out'), { name: 'TimeoutError' });
+      vi.stubGlobal('fetch', vi.fn().mockRejectedValue(timeout));
+      expect((await checkOllamaStatus()).reason).toBe('no answer within 2 s');
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 403, json: async () => ({}) }));
+      expect(await checkOllamaStatus()).toEqual({ available: false, models: [], reason: 'HTTP 403' });
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ unexpected: true }) }));
+      expect((await checkOllamaStatus()).reason).toBe('the reply was not a model list');
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => { throw new SyntaxError('bad'); } }));
+      expect((await checkOllamaStatus()).reason).toBe('the reply was not JSON');
     });
   });
 

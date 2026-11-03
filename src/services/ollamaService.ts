@@ -2,21 +2,37 @@ import { OllamaModel } from '../types/workshop';
 
 export const OLLAMA_API = 'http://localhost:11434';
 
-export async function checkOllamaStatus(): Promise<{ available: boolean; models: OllamaModel[] }> {
+export const STATUS_TIMEOUT_MS = 2000;
+
+/**
+ * Asks the local Ollama which models it has. When there is no usable answer, `reason` says
+ * exactly what blocked the read, so the interface never reports a timeout as "not installed".
+ */
+export async function checkOllamaStatus(): Promise<{ available: boolean; models: OllamaModel[]; reason?: string }> {
+  let res: Response;
   try {
-    const res = await fetch(`${OLLAMA_API}/api/tags`, {
-      signal: AbortSignal.timeout(2000),
+    res = await fetch(`${OLLAMA_API}/api/tags`, {
+      signal: AbortSignal.timeout(STATUS_TIMEOUT_MS),
     });
-    if (!res.ok) return { available: false, models: [] };
+  } catch (err) {
+    const name = (err as Error)?.name;
+    const reason = name === 'TimeoutError' || name === 'AbortError'
+      ? `no answer within ${STATUS_TIMEOUT_MS / 1000} s`
+      : 'no connection';
+    return { available: false, models: [], reason };
+  }
+  if (!res.ok) return { available: false, models: [], reason: `HTTP ${res.status}` };
+  try {
     const data = await res.json();
-    const models: OllamaModel[] = (data.models || []).map((m: any) => ({
+    if (!data || !Array.isArray(data.models)) return { available: false, models: [], reason: 'the reply was not a model list' };
+    const models: OllamaModel[] = data.models.map((m: any) => ({
       name: m.name || m.model || 'unknown',
       size: m.size || 0,
       modified_at: m.modified_at || '',
     }));
     return { available: true, models };
   } catch {
-    return { available: false, models: [] };
+    return { available: false, models: [], reason: 'the reply was not JSON' };
   }
 }
 

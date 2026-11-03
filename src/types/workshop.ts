@@ -68,4 +68,9 @@ export interface OllamaStatus {
   available: boolean;
   models: OllamaModel[];
   loading: boolean;
+  /**
+   * Why the probe got no usable answer, when it did not. A failed probe means "not reached",
+   * not "not installed": Ollama may be stopped, busy, on another port, or blocking this page.
+   */
+  reason?: string;
 }

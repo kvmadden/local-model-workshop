@@ -5,7 +5,7 @@ import { MODELS_DATA } from '../data/models';
 import { MISMATCH_LABEL } from '../utils/modelUtils';
 
 export const OllamaDetector: React.FC = () => {
-  const { available, models, loading, refresh, resolveModel } = useOllamaStatus();
+  const { available, models, loading, refresh, resolveModel, reason } = useOllamaStatus();
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleCopy = (cmd: string, id: string) => {
@@ -38,12 +38,12 @@ export const OllamaDetector: React.FC = () => {
                 ? 'Checking for local models…'
                 : available
                   ? 'Ollama is running on your Mac'
-                  : 'Ollama not detected'}
+                  : 'Ollama not reached'}
             </h3>
             <p className="text-xs text-slate-400">
               {available
                 ? `${models.length} model${models.length !== 1 ? 's' : ''} installed locally`
-                : 'Install Ollama from ollama.com to run models locally'}
+                : `No reply from localhost:11434 (${reason ?? 'unknown reason'}). Ollama may be stopped, still starting, busy or blocking this page, or it may not be installed.`}
             </p>
           </div>
         </div>
