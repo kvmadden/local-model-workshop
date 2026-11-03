@@ -8,7 +8,7 @@
  * should apply is a pharmacist's decision, not this code's.
  */
 import type { SigGold } from './sigScore';
-import { scoreCaseV3 } from './sigScoreV3';
+import { scoreCaseV3, parsePredictionV3 } from './sigScoreV3';
 
 export type Convention = 'bedtime-prn-is-once-daily' | 'bedtime-prn-has-no-schedule';
 
@@ -23,7 +23,7 @@ export interface SavedRow { id: string; input: string; gold: SigGold; output: st
 
 export interface ModelEvidence {
   id: string;
-  /** Saved replies per run on the 25 development lines. */
+  /** Saved replies per run, all on the same set of lines. The latency gate must use these same runs. */
   runs: SavedRow[][];
   /** Disk size in GB as written in docs/ORIGINAL-EVALUATION.md. The harness did not record it then. */
   diskGb: number;
@@ -34,6 +34,8 @@ export interface Decision {
   latencyGate: 'not applied' | 'applied';
   allFields: Record<string, number[]>;
   passedCorrectness: string[];
+  /** Stability needs two runs or more. With one run it is not tested, and not used as a gate. */
+  stability: 'tested: 2 runs' | `tested: ${number} runs` | 'not tested: one run';
   passedStability: string[];
   passedLatency: string[] | null;
   pick: string | null;
@@ -43,9 +45,20 @@ export interface Decision {
 const allCorrect = (rows: SavedRow[], convention: Convention) =>
   rows.filter((r) => scoreCaseV3(applyConvention(r.gold, convention), r.output, r.input).allCorrect).length;
 
-/** Parsed answers identical across runs, computed from the saved replies rather than asserted. */
+/** Object keys sorted at every level, so key order alone never makes two answers differ. */
+const canonical = (v: unknown): unknown => {
+  if (Array.isArray(v)) return v.map(canonical);
+  if (v && typeof v === 'object') return Object.fromEntries(Object.keys(v).sort().map((k) => [k, canonical((v as Record<string, unknown>)[k])]));
+  return v;
+};
+
+/**
+ * Parsed answers identical across runs, computed from the saved replies rather than asserted.
+ * A reply that does not parse counts as the answer "no answer", so it never throws.
+ */
 export function stableAcrossRuns(runs: SavedRow[][]): boolean {
-  const key = (rows: SavedRow[]) => JSON.stringify(rows.map((r) => [r.id, JSON.parse(r.output)]).sort());
+  const key = (rows: SavedRow[]) =>
+    JSON.stringify([...rows].sort((a, b) => a.id.localeCompare(b.id)).map((r) => [r.id, canonical(parsePredictionV3(r.output).value)]));
   return runs.every((run) => key(run) === key(runs[0]));
 }
 
@@ -57,12 +70,16 @@ export function nearestRankP95(values: number[]): number {
 /**
  * The published rubric: every field right on every line in every run, the same parsed answers
  * across runs, p95 at or under the budget when the gate is applied, then the smaller disk size.
+ * Correctness, stability and latency all come from the same runs, so a latency gate taken from
+ * one set is never applied to the correctness of another.
  */
 export function decide(models: ModelEvidence[], convention: Convention, latency: { applied: false } | { applied: true; p95ByModel: Record<string, number>; budgetMs: number }): Decision {
   const allFields = Object.fromEntries(models.map((m) => [m.id, m.runs.map((run) => allCorrect(run, convention))]));
   const n = models[0]?.runs[0]?.length ?? 0;
   const correct = models.filter((m) => allFields[m.id].every((count) => count === n));
-  const stable = correct.filter((m) => stableAcrossRuns(m.runs));
+  const runCount = Math.min(...models.map((m) => m.runs.length));
+  const stabilityTested = runCount >= 2;
+  const stable = stabilityTested ? correct.filter((m) => stableAcrossRuns(m.runs)) : correct;
   let remaining = stable;
   let passedLatency: string[] | null = null;
   if (latency.applied) {
@@ -73,7 +90,8 @@ export function decide(models: ModelEvidence[], convention: Convention, latency:
   const pick = ordered[0]?.id ?? null;
   let reason: string;
   if (correct.length === 0) reason = 'No model had every field right on every line in every run.';
-  else if (latency.applied && remaining.length === 0) reason = 'No model that passed correctness met the latency budget.';
+  else if (stable.length === 0) reason = 'No model that passed correctness gave the same parsed answers in every run.';
+  else if (latency.applied && remaining.length === 0) reason = 'No model that passed correctness and stability met the latency budget.';
   else if (remaining.length === 1) reason = `Only ${pick} passed every applied gate.`;
   else reason = `${remaining.map((m) => m.id).join(' and ')} tie on the applied gates. ${pick} wins on disk size (${ordered[0].diskGb} GB against ${ordered[1].diskGb} GB).`;
   return {
@@ -81,6 +99,7 @@ export function decide(models: ModelEvidence[], convention: Convention, latency:
     latencyGate: latency.applied ? 'applied' : 'not applied',
     allFields,
     passedCorrectness: correct.map((m) => m.id),
+    stability: stabilityTested ? `tested: ${runCount} runs` : 'not tested: one run',
     passedStability: stable.map((m) => m.id),
     passedLatency,
     pick,
