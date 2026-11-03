@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildBench, formatPercentInterval, showValue, fieldValue, headline, missNote, countsAt, DECIDING_LINE } from './runComparison';
+import { buildBench, formatPercentInterval, showValue, fieldValue, headline, missNote, countsAt, shortHeadline, whyNote, columnHue, DECIDING_LINE } from './runComparison';
 
 const counts = (set: 'dev25' | 'templates12', reading: 'ruling' | 'first-gold') =>
   Object.fromEntries(buildBench(set, reading).columns.map((c) => [c.id, c.allCorrect]));
@@ -85,5 +85,35 @@ describe('the words on the opening screen', () => {
     expect(missNote(scrambled, view, 0)).toBe('The misses fall on two fields across two lines, marked in red below.');
     const allRight = { ...view, columns: view.columns.map((c) => ({ ...c, allCorrect: c.allCorrect.map(() => 25) })) };
     expect(headline(allRight, 0)).toBe("Three local models and a simple rules parser each read all 25 development lines fully right, so these lines can’t pick a model.");
+  });
+});
+
+describe('the opening headline and its one sentence', () => {
+  it('say the rules parser keeps up with every model only when it does, for every set, reading and run', () => {
+    for (const set of ['dev25', 'templates12'] as const) {
+      for (const reading of ['ruling', 'first-gold'] as const) {
+        const view = buildBench(set, reading);
+        for (const run of [0, 1]) {
+          const counts = countsAt(view, run);
+          const rules = counts[view.columns.findIndex((c) => c.kind === 'baseline')];
+          const best = Math.max(...counts.filter((_, i) => view.columns[i].kind === 'model'));
+          expect(rules).toBeGreaterThanOrEqual(best);
+          expect(shortHeadline(view, run)).toBe('A simple rules parser does as well as every model, so these lines can’t pick one.');
+          expect(whyNote(view, run)).toMatch(new RegExp(`^All four read ${Math.min(...counts)} (or|to) ${Math.max(...counts)} of the ${view.n} (development|template) lines fully right, and every miss is the frequency on the (one line that says|two lines that say) “at bedtime as needed”\\.$`));
+        }
+      }
+    }
+  });
+
+  it('fall back to the plain counts when a model beats the rules parser', () => {
+    const view = buildBench('dev25', 'ruling');
+    const beaten = { ...view, columns: view.columns.map((c) => (c.kind === 'baseline' ? { ...c, allCorrect: [23] } : c)) };
+    expect(shortHeadline(beaten, 0)).toBe(headline(beaten, 0));
+    expect(shortHeadline(beaten, 0)).toContain('23 to 25 of the 25 development lines');
+  });
+
+  it('give every column one hue, and the rules parser its own neutral one', () => {
+    const hues = buildBench('dev25', 'ruling').columns.map((c) => columnHue(c.id));
+    expect(hues).toEqual(['rgb(var(--m-gpt))', 'rgb(var(--m-gemma))', 'rgb(var(--m-qwen))', 'rgb(var(--m-rules))']);
   });
 });

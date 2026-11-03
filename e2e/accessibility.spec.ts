@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 import { auditContrast, auditTargets } from './audits';
-import { TABS, VIEWPORTS } from './sweep';
+import { TABS, VIEWPORTS, openView } from './sweep';
 
 /**
  * Accessibility checks on every tab in both themes: text contrast measured on the rendered page,
@@ -41,11 +41,18 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await expect(page.getByTestId('app-container')).toHaveAttribute('data-theme', colorScheme);
         const problems: string[] = [];
         for (const tab of TABS) {
-          await page.getByTestId(tab).click();
+          await openView(page, tab);
           await page.waitForTimeout(150);
           problems.push(...(await page.evaluate(auditContrast)).map((p) => `${tab} contrast: ${p}`));
           problems.push(...(await page.evaluate(auditTargets)).map((p) => `${tab} target: ${p}`));
         }
+        // The second step of the run comparison, with both disclosures open.
+        await openView(page, 'tab-run-comparison');
+        await page.getByTestId('see-every-line').click();
+        await page.getByTestId('per-field-toggle').click();
+        await page.getByTestId('options-toggle').click();
+        problems.push(...(await page.evaluate(auditContrast)).map((p) => `every line contrast: ${p}`));
+        problems.push(...(await page.evaluate(auditTargets)).map((p) => `every line target: ${p}`));
         expect(problems).toEqual([]);
       });
     }
@@ -56,7 +63,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await page.setViewportSize(viewport);
         await page.goto('/');
         for (const tab of TABS) {
-          await page.getByTestId(tab).click();
+          await openView(page, tab);
           if (!(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))) problems.push(`${tab} at ${viewport.width}x${viewport.height}`);
         }
       }
@@ -65,43 +72,55 @@ for (const colorScheme of ['light', 'dark'] as const) {
   });
 }
 
-test('keyboard focus is always visible on the run comparison controls', async ({ page }) => {
+test('keyboard focus is always visible on both steps of the run comparison', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByTestId('run-comparison')).toBeVisible();
   const unmarked: string[] = [];
-  for (let i = 0; i < 40; i++) {
-    await page.keyboard.press('Tab');
-    const state = await page.evaluate(() => {
-      const el = document.activeElement as HTMLElement | null;
-      if (!el || el === document.body) return null;
-      const cs = getComputedStyle(el);
-      const outline = cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2;
-      const ring = cs.boxShadow !== 'none' && /\d+px/.test(cs.boxShadow);
-      return { name: el.getAttribute('data-testid') ?? el.textContent?.trim().slice(0, 24) ?? el.tagName, marked: outline || ring };
-    });
-    if (state && !state.marked) unmarked.push(state.name);
-  }
+  const walk = async (steps: number) => {
+    for (let i = 0; i < steps; i++) {
+      await page.keyboard.press('Tab');
+      const state = await page.evaluate(() => {
+        const el = document.activeElement as HTMLElement | null;
+        if (!el || el === document.body) return null;
+        const cs = getComputedStyle(el);
+        const outline = cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2;
+        const ring = cs.boxShadow !== 'none' && /\d+px/.test(cs.boxShadow);
+        return { name: el.getAttribute('data-testid') ?? el.textContent?.trim().slice(0, 24) ?? el.tagName, marked: outline || ring };
+      });
+      if (state && !state.marked) unmarked.push(state.name);
+    }
+  };
+  await walk(12);
+  await page.getByTestId('see-every-line').click();
+  await walk(40);
   expect(unmarked).toEqual([]);
 });
 
 test('the run comparison works by keyboard alone', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByTestId('count-gpt-oss:20b')).toHaveText('25 of 25');
+  // The one next step, by keyboard. Focus moves to the new step's title.
+  await page.getByTestId('see-every-line').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('line-sheet')).toBeVisible();
+  await expect(page.locator('#run-comparison-title')).toBeFocused();
   // Open the options with the keyboard, then move the reading with the arrow keys.
   await page.getByTestId('options-toggle').focus();
   await page.keyboard.press('Enter');
   await page.getByTestId('reading-ruling').focus();
   await page.keyboard.press('ArrowDown');
   await expect(page.getByTestId('reading-first-gold')).toBeChecked();
-  await expect(page.getByTestId('count-gpt-oss:20b')).toHaveText('24 of 25');
+  await expect(page.getByTestId('field-gpt-oss:20b-frequency')).toHaveText('24');
   // Pick a verdict cell with the keyboard, and the detail follows.
   await page.getByTestId('cell-s25-gpt-oss:20b').focus();
   await page.keyboard.press('Space');
   await expect(page.getByTestId('detail-column-gpt-oss:20b')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByTestId('detail-row-frequency')).toContainText('does not match');
-  // And the set.
+  // And the set, then back to the overview, which follows both choices.
   await page.getByTestId('set-dev25').focus();
   await page.keyboard.press('ArrowDown');
   await expect(page.getByTestId('set-templates12')).toBeChecked();
+  await page.getByTestId('back-to-overview').focus();
+  await page.keyboard.press('Enter');
   await expect(page.getByTestId('count-gpt-oss:20b')).toHaveText('10 of 12');
 });

@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 import { auditBoxesAndFlows } from './audits';
-import { TABS, VIEWPORTS } from './sweep';
+import { TABS, VIEWPORTS, openView } from './sweep';
 
 /**
  * Kevin's layout rules, checked on every tab in both themes:
@@ -55,14 +55,15 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await expect(page.getByTestId('app-container')).toHaveAttribute('data-theme', colorScheme);
         const problems: string[] = [];
         for (const tab of TABS) {
-          await page.getByTestId(tab).click();
+          await openView(page, tab);
           await page.waitForTimeout(150);
           const { boxes, flows } = await page.evaluate(auditBoxesAndFlows);
           problems.push(...boxes.map((b) => `${tab}: ${b}`), ...flows.map((f) => `${tab}: ${f}`));
         }
         // States past the first view of each tab: other sets and readings, dialogs, a finished run.
         const states: Array<{ name: string; tab: string; act: () => Promise<void>; after?: () => Promise<void> }> = [
-          { name: 'per field and options open, template lines, gold as first written', tab: 'tab-run-comparison', act: async () => {
+          { name: 'every line, per field and options open, template lines, gold as first written', tab: 'tab-run-comparison', act: async () => {
+            await page.getByTestId('see-every-line').click();
             await page.getByTestId('per-field-toggle').click();
             await page.getByTestId('options-toggle').click();
             await page.getByTestId('set-templates12').click();
@@ -81,7 +82,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
           } },
         ];
         for (const state of states) {
-          await page.getByTestId(state.tab).click();
+          await openView(page, state.tab);
           await state.act();
           await page.waitForTimeout(150);
           const { boxes, flows } = await page.evaluate(auditBoxesAndFlows);

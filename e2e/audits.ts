@@ -197,13 +197,14 @@ export function auditTargets(): string[] {
 }
 
 /**
- * Kevin's ask for a calm screen, checked on the run comparison: no forced capitals, one sans face
- * plus its monospace sibling for the medication lines only, no rule heavier than a hairline (the
- * open answer toggle keeps its 2 px underline), and red text only inside a missed-field mark.
+ * Kevin's ask for a calm screen with some character, checked on the run comparison: no forced
+ * capitals, the display face only on headings, the monospace face only on medication lines, no
+ * rule heavier than a hairline (the open answer toggle keeps its 2 px underline), and red text
+ * only inside a missed-field mark.
  */
-export function auditCalm(): { caps: string[]; faces: string[]; mono: string[]; red: string[]; heavy: string[] } {
+export function auditCalm(): { caps: string[]; faces: string[]; display: string[]; mono: string[]; red: string[]; heavy: string[] } {
   const root = document.querySelector('[data-testid="run-comparison"]');
-  const out = { caps: [] as string[], faces: [] as string[], mono: [] as string[], red: [] as string[], heavy: [] as string[] };
+  const out = { caps: [] as string[], faces: [] as string[], display: [] as string[], mono: [] as string[], red: [] as string[], heavy: [] as string[] };
   if (!root) return out;
   const alert = `rgb(${getComputedStyle(document.documentElement).getPropertyValue('--alert-text').trim().split(/\s+/).join(', ')})`;
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -215,6 +216,7 @@ export function auditCalm(): { caps: string[]; faces: string[]; mono: string[]; 
     const face = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
     if (cs.textTransform === 'uppercase') out.caps.push(text.slice(0, 30));
     if (!out.faces.includes(face)) out.faces.push(face);
+    if (/bricolage/i.test(face) && !el.closest('h1, h2, h3, h4')) out.display.push(text.slice(0, 30));
     if (/mono/i.test(face) && !el.closest('.sig')) out.mono.push(text.slice(0, 30));
     if (root.contains(el) && cs.color === alert && !el.closest('[data-miss]')) out.red.push(text.slice(0, 30));
   }

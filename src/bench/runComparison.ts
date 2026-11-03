@@ -204,3 +204,48 @@ export function missNote(view: BenchView, other: BenchView, run: number): string
   }
   return `The misses fall on ${word(fields.length)} field${fields.length === 1 ? '' : 's'} across ${word(lines.length)} line${lines.length === 1 ? '' : 's'}, marked in red below.`;
 }
+
+/** The hue of each compared column, the same in the chart, the line sheet and the detail. */
+const COLUMN_HUE: Record<string, string> = { 'gpt-oss:20b': '--m-gpt', 'gemma4:31b': '--m-gemma', 'qwen3.8:27b': '--m-qwen', [RULES_ID]: '--m-rules' };
+export const columnHue = (id: string) => `rgb(var(${COLUMN_HUE[id] ?? '--m-rules'}))`;
+
+/**
+ * The short headline for the opening screen. When a rules parser with no model does as well as
+ * every model, the lines are too regular to rank the models, and the headline says so. Otherwise
+ * it falls back to the plain counts.
+ */
+export function shortHeadline(view: BenchView, run: number): string {
+  const counts = countsAt(view, run);
+  const rulesAt = view.columns.findIndex((c) => c.kind === 'baseline');
+  const modelCounts = counts.filter((_, i) => view.columns[i].kind === 'model');
+  if (rulesAt >= 0 && modelCounts.every((k) => k <= counts[rulesAt])) {
+    return 'A simple rules parser does as well as every model, so these lines can’t pick one.';
+  }
+  return headline(view, run);
+}
+
+/** The one sentence under the headline: the counts, and what the misses have in common. */
+export function whyNote(view: BenchView, run: number): string {
+  const counts = countsAt(view, run);
+  const lo = Math.min(...counts);
+  const hi = Math.max(...counts);
+  const noun = NOUN[view.set];
+  const who = word(view.columns.length);
+  const what =
+    lo === hi
+      ? lo === view.n ? `all ${view.n} ${noun}` : `${lo} of the ${view.n} ${noun}`
+      : `${lo} ${hi - lo === 1 ? 'or' : 'to'} ${hi} of the ${view.n} ${noun}`;
+  const start = `All ${who} read ${what} fully right`;
+  const misses = view.columns.flatMap((c) =>
+    Object.entries(c.runs[Math.min(run, c.runs.length - 1)]).flatMap(([line, v]) => v.missed.map((field) => ({ line, field }))),
+  );
+  if (misses.length === 0) return `${start}.`;
+  const fields = [...new Set(misses.map((m) => m.field))];
+  const lines = [...new Set(misses.map((m) => m.line))];
+  const bedtime = lines.every((id) => /at bedtime as needed/i.test(view.lines.find((l) => l.id === id)?.input ?? ''));
+  if (fields.length === 1 && bedtime) {
+    const where = lines.length === 1 ? 'the one line that says' : `the ${word(lines.length)} lines that say`;
+    return `${start}, and every miss is the ${FIELD_LABELS[fields[0]].long.toLowerCase()} on ${where} “at bedtime as needed”.`;
+  }
+  return `${start}, and the misses fall on ${word(fields.length)} field${fields.length === 1 ? '' : 's'} across ${word(lines.length)} line${lines.length === 1 ? '' : 's'}.`;
+}
