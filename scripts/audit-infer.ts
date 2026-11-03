@@ -5,12 +5,14 @@ import { ModelConfig } from '../src/types/flow'
 import { root, read, hash, cases, report, SavedRow } from './audit-report'
 import { reportV3 } from '../src/eval/extractionAuditV3'
 import { isLoopbackUrl } from '../src/engine/modelAdapter'
+import { ollamaBaseUrl } from '../src/eval/harness'
 
 // --evaluator v3 asks for quoted evidence and scores facts and evidence separately (src/eval/extractionAuditV3.ts).
 // The default stays v2 so the published protocol can be repeated as it was frozen.
 const evaluator = process.argv.includes('--evaluator') ? process.argv[process.argv.indexOf('--evaluator') + 1] : 'v2'
 if (evaluator !== 'v2' && evaluator !== 'v3') throw new Error('--evaluator must be v2 or v3')
-const host = process.env.OLLAMA_HOST?.replace(/\/$/, '') || 'http://localhost:11434'
+// OLLAMA_HOST is read the way Ollama reads it, so "127.0.0.1:11434" works without a scheme.
+const host = ollamaBaseUrl(process.env.OLLAMA_HOST)
 if (!isLoopbackUrl(host)) throw new Error(`OLLAMA_HOST ${host} is not this machine. The audit only sends text to a local Ollama.`)
 const promptFile = evaluator === 'v3' ? 'prompt-v3.txt' : 'prompt.txt'
 const schemaFile = evaluator === 'v3' ? 'schema-v3.json' : 'schema.json'

@@ -6,6 +6,7 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import path from 'node:path';
 
 export const SUITE_NAMES = ['dev25', 'templates12'] as const;
 export type SuiteName = (typeof SUITE_NAMES)[number];
@@ -222,4 +223,59 @@ export function loadSummary(samples: number[]): { samples: number; min: number |
   const sorted = [...samples].sort((a, b) => a - b);
   const round = (x: number) => Math.round(x * 10) / 10;
   return { samples: samples.length, min: round(sorted[0]), median: round(sorted[Math.floor(sorted.length / 2)]), max: round(sorted[sorted.length - 1]) };
+}
+
+/**
+ * OLLAMA_HOST read the way Ollama reads it: "127.0.0.1:11434", "localhost" and "http://host:port"
+ * all work. A value without a scheme gets http and, without a port, Ollama's port 11434. Unset
+ * means http://localhost:11434.
+ */
+export function ollamaBaseUrl(raw: string | undefined): string {
+  const value = (raw ?? '').trim().replace(/\/+$/, '');
+  if (!value) return 'http://localhost:11434';
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) return value;
+  const hasPort = /^\[[^\]]+\]:\d+$/.test(value) || /^[^:[\]]+:\d+$/.test(value);
+  return `http://${hasPort ? value : `${value}:11434`}`;
+}
+
+/**
+ * The models to run, in models.json order. Every name in --models must be in models.json, so a
+ * typo stops the run before anything is written instead of running no model at all.
+ */
+export function selectModels<T extends { model: string }>(configured: T[], requested: string[] | undefined): T[] {
+  if (configured.length === 0) throw new Error('eval/sig-extraction/models.json lists no models');
+  if (!requested) return configured;
+  const unknown = requested.filter((name) => !configured.some((m) => m.model === name));
+  if (unknown.length) throw new Error(`--models names ${unknown.join(', ')}, which ${unknown.length === 1 ? 'is' : 'are'} not in eval/sig-extraction/models.json (${configured.map((m) => m.model).join(', ')})`);
+  return configured.filter((m) => requested.includes(m.model));
+}
+
+const IMPORT_SPECIFIER = /(?:^|[\s;])(?:import|export)\s[^'"]*?from\s*['"]([^'"]+)['"]|(?:^|[\s;])import\s*\(?\s*['"]([^'"]+)['"]/g;
+
+/**
+ * Every source file that `entry` loads through relative imports, itself included, as paths
+ * relative to `root`, sorted. The eval hashes all of them, so a summary names the exact code that
+ * produced it.
+ */
+export function importClosure(entry: string, root: string): string[] {
+  const seen = new Set<string>();
+  const resolve = (from: string, spec: string): string | null => {
+    const base = path.resolve(path.dirname(from), spec);
+    for (const candidate of [base, `${base}.ts`, `${base}.tsx`, `${base}.js`, `${base}.mjs`, path.join(base, 'index.ts')]) {
+      if (existsSync(candidate) && !candidate.endsWith(path.sep) && /\.(?:ts|tsx|js|mjs)$/.test(candidate)) return candidate;
+    }
+    return null;
+  };
+  const visit = (file: string) => {
+    if (seen.has(file)) return;
+    seen.add(file);
+    for (const m of readFileSync(file, 'utf8').matchAll(IMPORT_SPECIFIER)) {
+      const spec = m[1] ?? m[2];
+      if (!spec || !spec.startsWith('.')) continue;
+      const target = resolve(file, spec);
+      if (target) visit(target);
+    }
+  };
+  visit(path.resolve(root, entry));
+  return [...seen].map((f) => path.relative(root, f)).sort();
 }

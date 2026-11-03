@@ -11,8 +11,12 @@
  *
  * Both built-in suites are development data. A headline number needs a fresh locked set
  * (docs/FRESH-TEST-PROTOCOL.md), passed with --suite <file>.
+ *
+ * Evidence rules: every input and every source file the eval imports is hashed before the first
+ * request and checked again at the end. Each reply is appended to its raw file as soon as it is
+ * scored. A run that stops partway still writes a summary.json, marked incomplete.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, appendFileSync, existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -21,11 +25,12 @@ import { isLoopbackUrl } from '../src/engine/modelAdapter';
 import { Flow, ModelConfig } from '../src/types/flow';
 import { SIG_FIELDS, SigGold, scoreCase, summarize } from '../src/eval/sigScore';
 import { scoreLegacy, LegacyGold } from '../src/eval/legacyScore';
-import { SCORER_VERSION, scoreCaseV3, summarizeV3 } from '../src/eval/sigScoreV3';
-import { BASELINES, runBaseline } from '../src/eval/sigBaselines';
+import { SCORER_VERSION, scoreCaseV3, summarizeV3, normalizeUnitV3 } from '../src/eval/sigScoreV3';
+import { BASELINES, runBaseline, RulesOptions } from '../src/eval/sigBaselines';
 import {
   parseEvalArgs, USAGE, SUITE_NAMES, SUITE_STATUS, SuiteName, assertNewOutputDir, seededShuffle,
   exactInterval, formatInterval, latencySummary, loadSummary, sha256File, TimedRequest,
+  ollamaBaseUrl, selectModels, importClosure,
 } from '../src/eval/harness';
 
 const ROOT = path.resolve(__dirname, '..');
@@ -35,7 +40,8 @@ const rel = (p: string) => {
 };
 const EVAL_DIR = path.join(ROOT, 'eval/sig-extraction');
 const V1_DIR = path.join(ROOT, 'eval/results/archive/schema-v1');
-const OLLAMA = process.env.OLLAMA_HOST?.replace(/\/$/, '') || 'http://localhost:11434';
+const OLLAMA = ollamaBaseUrl(process.env.OLLAMA_HOST);
+const WARMUP_LINE = 'Examplamine 10 mg tablet, take 1 tablet by mouth once daily';
 
 let opts: ReturnType<typeof parseEvalArgs>;
 try {
@@ -62,6 +68,8 @@ let suiteStatus: string;
 let suiteFiles: string[];
 let cases: Case[];
 let golds: AnyGold[];
+// The rule the rules baseline follows for "at bedtime as needed". The built-in gold uses once-daily.
+let rulesOptions: Required<RulesOptions> = { bedtimeAsNeeded: 'once-daily' };
 if ((SUITE_NAMES as readonly string[]).includes(opts.suite)) {
   const name = opts.suite as SuiteName;
   suiteLabel = name;
@@ -82,9 +90,12 @@ if ((SUITE_NAMES as readonly string[]).includes(opts.suite)) {
   if (first) throw new Error('--schema-v1 works with the built-in suites only');
   const file = path.resolve(ROOT, opts.suite);
   suiteFiles = [file];
-  const suite = JSON.parse(readFileSync(file, 'utf8')) as { status?: string; cases: Array<Case & { gold: SigGold }> };
+  const suite = JSON.parse(readFileSync(file, 'utf8')) as { status?: string; conventions?: RulesOptions; cases: Array<Case & { gold: SigGold }> };
   suiteLabel = path.basename(file);
   suiteStatus = suite.status ?? 'status not stated in the suite file';
+  const bedtime = suite.conventions?.bedtimeAsNeeded ?? 'once-daily';
+  if (bedtime !== 'once-daily' && bedtime !== 'no-schedule') throw new Error('conventions.bedtimeAsNeeded must be once-daily or no-schedule');
+  rulesOptions = { bedtimeAsNeeded: bedtime };
   cases = suite.cases.map(({ id, input, tags }) => ({ id, input, tags }));
   golds = suite.cases.map((c) => ({ ...c.gold, id: c.id }));
 }
@@ -94,6 +105,12 @@ const ids = new Set(cases.map((c) => c.id));
 if (ids.size !== cases.length) throw new Error('Two cases share an id');
 for (const c of cases) if (!goldById.has(c.id)) throw new Error(`Case ${c.id} has no gold record`);
 for (const g of golds) if (!ids.has(g.id)) throw new Error(`Gold ${g.id} has no case`);
+if (!first) {
+  // Scorer v3 refuses a gold unit it does not know. Say so now, before anything runs or is written.
+  for (const g of golds as SigGold[]) {
+    if (normalizeUnitV3(g.dose_per_administration?.unit) === null) throw new Error(`Gold ${g.id} has dose unit ${JSON.stringify(g.dose_per_administration?.unit)}. Use mg, mcg, g, units or mL.`);
+  }
+}
 
 const formatDir = first ? V1_DIR : EVAL_DIR;
 const promptFile = path.join(formatDir, 'prompt.txt');
@@ -106,6 +123,36 @@ const config = JSON.parse(readFileSync(path.join(EVAL_DIR, 'models.json'), 'utf8
 };
 const scorerName = first ? 'v1 projection (src/eval/legacyScore.ts)' : opts.scorer === 'v3' ? `${SCORER_VERSION} (src/eval/sigScoreV3.ts)` : 'sig-v2 (src/eval/sigScore.ts)';
 
+// A typo in --models stops here, before anything is written.
+let modelEntries: typeof config.models = [];
+try {
+  if (opts.models || !opts.baselinesOnly) modelEntries = selectModels(config.models, opts.models);
+} catch (err) {
+  process.stderr.write(`eval failed: ${(err as Error).message}\n`);
+  process.exit(2);
+}
+
+// ---------- provenance, taken before any request ----------
+function gitCommit(): string | null {
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch {
+    return null;
+  }
+}
+const sourceFiles = importClosure('scripts/eval-sig.ts', ROOT);
+const hashedFiles = [...suiteFiles, promptFile, schemaFile, path.join(EVAL_DIR, 'models.json'), ...sourceFiles.map((f) => path.join(ROOT, f))];
+const hashNow = (): Record<string, string> =>
+  Object.fromEntries(hashedFiles.map((f) => {
+    try {
+      return [rel(f), sha256File(f)];
+    } catch {
+      return [rel(f), 'missing'];
+    }
+  }));
+const startHashes = hashNow();
+const startCommit = gitCommit();
+
 // ---------- output ----------
 const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const outDir = path.resolve(ROOT, opts.out ?? `eval/results/local-${stamp}-${suiteLabel.replace(/[^a-zA-Z0-9.-]+/g, '_')}${opts.baselinesOnly ? '-baselines' : ''}`);
@@ -115,8 +162,9 @@ try {
   process.stderr.write(`eval failed: ${(err as Error).message}\n`);
   process.exit(1);
 }
-mkdirSync(outDir, { recursive: true });
+// The folder is created only after the Ollama checks pass (see main), so a refused run leaves nothing.
 const writeNew = (file: string, text: string) => writeFileSync(path.join(outDir, file), text, { flag: 'wx' });
+const appendRow = (file: string, row: unknown) => appendFileSync(path.join(outDir, file), JSON.stringify(row) + '\n');
 
 // ---------- scoring ----------
 function score(gold: AnyGold, text: string, input: string) {
@@ -158,6 +206,7 @@ async function ollamaJson(route: string, body?: unknown): Promise<any> {
     headers: { 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
     signal: AbortSignal.timeout(opts.timeoutMs),
+    redirect: 'error',
   });
   if (!r.ok) throw new Error(`${route} -> HTTP ${r.status}`);
   return r.json();
@@ -203,16 +252,16 @@ async function runBaselines(): Promise<ResultSummary[]> {
     echoRows.push({ id: c.id, input: c.input, tags: c.tags, gold, output: r.text, error: r.error, latencyMs: null, wallMs: null, position: i + 1, score: score(gold, r.text, c.input) });
   }
   writeNew(`raw-${slugOf('mock (echo)')}.jsonl`, echoRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  results.push(resultSummary('mock (echo)', 'baseline', echoRows, { provider: 'mock', note: 'Echoes the prompt. It fails at JSON parsing, so it only shows that the harness runs.' }));
+  results.push(resultSummary('mock (echo)', 'baseline', echoRows, { provider: 'mock', note: 'Echoes the prompt. The prompt holds no valid JSON object, so nothing is scored. It only shows that the harness runs.' }));
 
   const notes = {
-    rules: 'Deterministic parser in src/eval/sigBaselines.ts, written after its author read the 25 development and 12 template lines. Frozen before any later set exists.',
+    rules: `Deterministic parser in src/eval/sigBaselines.ts, written after its author read the 25 development and 12 template lines. Frozen before any later set exists, not tuned to one. Rule for "at bedtime as needed": ${rulesOptions.bedtimeAsNeeded}.`,
     constant: 'The same answer for every line.',
     copy: 'Copies the input line into every text field. Checks that copying earns no credit.',
   } as const;
   for (const name of BASELINES) {
     const rows: Row[] = cases.map((c, i) => {
-      const r = runBaseline(name, c.input);
+      const r = runBaseline(name, c.input, rulesOptions);
       const gold = goldById.get(c.id)!;
       return { id: c.id, input: c.input, tags: c.tags, gold, output: r.text, error: null, latencyMs: null, wallMs: null, position: i + 1, unread: name === 'rules' ? r.unread : undefined, score: score(gold, r.text, c.input) };
     });
@@ -222,13 +271,24 @@ async function runBaselines(): Promise<ResultSummary[]> {
   return results;
 }
 
-async function runModels(): Promise<{ results: ResultSummary[]; ollamaVersion: string }> {
-  const results: ResultSummary[] = [];
+interface Preflight { version: string; tags: Array<{ name: string; digest?: string; size?: number }> }
+
+/** Checks the host and that every selected model is installed, before the output folder exists. */
+async function ollamaPreflight(): Promise<Preflight> {
   if (!isLoopbackUrl(OLLAMA) && !opts.allowRemote) throw new Error(`OLLAMA_HOST ${OLLAMA} is not this machine. Pass --allow-remote to send the eval lines there.`);
   const version = (await ollamaJson('/api/version')).version as string;
-  const tags = ((await ollamaJson('/api/tags')).models ?? []) as Array<{ name: string; digest?: string; size?: number }>;
-  const entries = config.models.filter((m) => !opts.models || opts.models.includes(m.model));
-  const modelOrder = opts.order === 'random' ? seededShuffle(entries, opts.seed) : entries;
+  const tags = ((await ollamaJson('/api/tags')).models ?? []) as Preflight['tags'];
+  const missing = modelEntries.filter((m) => !tags.some((t) => t.name === m.model)).map((m) => m.model);
+  if (missing.length) throw new Error(`not installed in this Ollama: ${missing.join(', ')}. Pull ${missing.length === 1 ? 'it' : 'them'} or leave ${missing.length === 1 ? 'it' : 'them'} out with --models.`);
+  return { version, tags };
+}
+
+// What has finished so far. A run that stops partway reports exactly this.
+const results: ResultSummary[] = [];
+let inProgress: { model: string; rowsWritten: number } | null = null;
+
+async function runModels({ tags }: Preflight): Promise<void> {
+  const modelOrder = opts.order === 'random' ? seededShuffle(modelEntries, opts.seed) : modelEntries;
   for (const [modelIndex, m] of modelOrder.entries()) {
     const show = await ollamaJson('/api/show', { model: m.model });
     const tag = tags.find((t) => t.name === m.model);
@@ -250,12 +310,21 @@ async function runModels(): Promise<{ results: ResultSummary[]; ollamaVersion: s
       allowRemote: opts.allowRemote,
     };
     const residentBefore: string[] = ((await ollamaJson('/api/ps')).models ?? []).map((x: { name: string }) => x.name);
-    // Untimed warm-ups on a line that is not in any suite. The first timed request is still
-    // reported on its own, because one warm-up did not remove the first-request delay before.
-    for (let w = 0; w < opts.warmups; w++) await runOne('Examplamine 10 mg tablet, take 1 tablet by mouth once daily', modelConfig);
+    // Untimed warm-ups on a line that is not in any suite. Their outcome is recorded, because a
+    // failed warm-up means the first timed request may include loading the model. The first timed
+    // request is reported on its own as well.
+    const warmups: Array<{ ms: number; error: string | null }> = [];
+    for (let w = 0; w < opts.warmups; w++) {
+      const r = await runOne(WARMUP_LINE, modelConfig);
+      warmups.push({ ms: r.latencyMs ?? r.wallMs, error: r.error });
+      if (r.error) process.stderr.write(`Warning: warm-up ${w + 1} of ${opts.warmups} for ${m.model} failed: ${r.error}\n`);
+    }
     const order = opts.order === 'random' ? seededShuffle(cases, opts.seed + modelIndex + 1) : cases;
     const loads: number[] = [os.loadavg()[0]];
     const sampler = setInterval(() => loads.push(os.loadavg()[0]), 1000);
+    const rawFile = `raw-${slugOf(m.model)}.jsonl`;
+    writeNew(rawFile, '');
+    inProgress = { model: m.model, rowsWritten: 0 };
     const rows: Row[] = [];
     const timed: TimedRequest[] = [];
     try {
@@ -263,7 +332,10 @@ async function runModels(): Promise<{ results: ResultSummary[]; ollamaVersion: s
         const r = await runOne(c.input, modelConfig);
         const gold = goldById.get(c.id)!;
         const s = score(gold, r.text, c.input);
-        rows.push({ id: c.id, input: c.input, tags: c.tags, gold, output: r.text, error: r.error, latencyMs: r.latencyMs, wallMs: r.wallMs, position: i + 1, meta: r.meta, score: s });
+        const row: Row = { id: c.id, input: c.input, tags: c.tags, gold, output: r.text, error: r.error, latencyMs: r.latencyMs, wallMs: r.wallMs, position: i + 1, meta: r.meta, score: s };
+        appendRow(rawFile, row);
+        rows.push(row);
+        inProgress.rowsWritten = rows.length;
         timed.push({ ms: r.latencyMs ?? r.wallMs, error: r.error !== null, position: i + 1 });
         process.stdout.write(`${m.model} ${c.id} ${s.allCorrect ? 'ok  ' : 'MISS'} ${r.latencyMs ?? r.wallMs}ms${r.error ? ` ${r.error}` : ''}\n`);
       }
@@ -271,49 +343,49 @@ async function runModels(): Promise<{ results: ResultSummary[]; ollamaVersion: s
       clearInterval(sampler);
       loads.push(os.loadavg()[0]);
     }
-    writeNew(`raw-${slugOf(m.model)}.jsonl`, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
     results.push(resultSummary(m.model, 'model', rows, {
       provider: 'ollama',
       model: m.model,
       details,
       settings: { temperature: config.temperature, think: m.think ?? null, format: 'JSON schema (constrained decoding)', timeoutMs: opts.timeoutMs, warmups: opts.warmups },
+      warmups,
       otherModelsResident: residentBefore.filter((name) => name !== m.model),
       load1m: loadSummary(loads),
     }, timed));
+    inProgress = null;
     if (!residentBefore.includes(m.model)) await ollamaJson('/api/generate', { model: m.model, keep_alive: 0 }).catch(() => undefined);
   }
-  return { results, ollamaVersion: version };
 }
 
-function gitCommit(): string | null {
-  try {
-    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
-  } catch {
-    return null;
-  }
-}
+const startedAt = new Date().toISOString();
+let ollamaVersion: string | null = null;
+let finished = false;
 
-async function main() {
-  const startedAt = new Date().toISOString();
-  const results: ResultSummary[] = await runBaselines();
-  let ollamaVersion: string | null = null;
-  if (!opts.baselinesOnly) {
-    const run = await runModels();
-    results.push(...run.results);
-    ollamaVersion = run.ollamaVersion;
-  }
-  const sourceFiles = ['scripts/eval-sig.ts', 'src/eval/harness.ts', 'src/eval/sigScore.ts', 'src/eval/sigScoreV3.ts', 'src/eval/legacyScore.ts', 'src/eval/sigBaselines.ts', 'src/engine/flowRunner.ts', 'src/engine/modelAdapter.ts', 'src/engine/templateResolver.ts'];
+/**
+ * Writes summary.json and summary.md for whatever has finished. `stopped` is null for a complete
+ * run, or the reason it stopped. Returns the inputs or source files whose bytes changed during the run.
+ */
+function finish(stopped: string | null): string[] {
+  finished = true;
+  const endHashes = hashNow();
+  const changedDuringRun = Object.keys(startHashes).filter((f) => endHashes[f] !== startHashes[f]);
   const summary = {
     harness: 'eval-sig v3',
+    complete: stopped === null,
+    error: stopped,
+    inProgress,
     suite: { name: suiteLabel, status: suiteStatus, n: cases.length },
     format: first ? 'first (v1: drug, dose, frequency)' : 'split (v2: drug, dose, frequency, timing, prn, prn_indication)',
     scorer: scorerName,
+    conventions: { rulesBaselineBedtimeAsNeeded: rulesOptions.bedtimeAsNeeded },
     startedAt,
     finishedAt: new Date().toISOString(),
-    gitCommit: gitCommit(),
+    gitCommit: startCommit,
     args: process.argv.slice(2),
     order: { mode: opts.order, seed: opts.seed },
-    hashes: Object.fromEntries([...suiteFiles, promptFile, schemaFile, path.join(EVAL_DIR, 'models.json'), ...sourceFiles.map((f) => path.join(ROOT, f))].map((f) => [rel(f), sha256File(f)])),
+    hashesTakenAt: 'before the first request',
+    hashes: startHashes,
+    changedDuringRun,
     hardware: { cpu: os.cpus()[0]?.model ?? 'unknown', cores: os.cpus().length, memoryGB: Math.round(os.totalmem() / 2 ** 30), platform: `${os.platform()} ${os.release()}`, node: process.version, ollama: ollamaVersion },
     results,
   };
@@ -324,6 +396,8 @@ async function main() {
   const lines = [
     `# ${suiteLabel}: ${suiteStatus}`,
     '',
+    ...(stopped ? [`**Incomplete run.** It stopped: ${stopped}. Only the rows below finished.`, ''] : []),
+    ...(changedDuringRun.length ? [`**Files changed during the run:** ${changedDuringRun.join(', ')}. The hashes are from before the first request.`, ''] : []),
     `Format: ${summary.format}. Scorer: ${scorerName}. ${n} lines. Started ${startedAt}.`,
     'Models answer under JSON-schema constrained decoding, so a parseable reply is guaranteed by the decoder, not earned by the model.',
     'Intervals are exact 95% binomial intervals for the all-fields count.',
@@ -353,6 +427,44 @@ async function main() {
   writeNew('summary.md', lines.join('\n'));
   process.stdout.write('\n' + lines.join('\n') + '\n');
   process.stdout.write(`Wrote ${rel(outDir)}\n`);
+  return changedDuringRun;
+}
+
+// An interrupted run keeps the rows already on disk and says it is incomplete.
+for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+  process.on(signal, () => {
+    if (!finished && existsSync(outDir)) {
+      try {
+        finish(`interrupted by ${signal}`);
+      } catch {
+        // The rows already on disk stay there.
+      }
+    }
+    process.exit(130);
+  });
+}
+
+async function main() {
+  // Nothing is written until the host and the models check out.
+  const preflight = opts.baselinesOnly ? null : await ollamaPreflight();
+  if (preflight) ollamaVersion = preflight.version;
+  mkdirSync(outDir, { recursive: true });
+  let stopped: string | null = null;
+  try {
+    results.push(...(await runBaselines()));
+    if (preflight) await runModels(preflight);
+  } catch (err) {
+    stopped = (err as Error).message;
+  }
+  const changed = finish(stopped);
+  if (stopped) {
+    process.stderr.write(`eval stopped: ${stopped}\nsummary.json is marked incomplete.\n`);
+    process.exit(1);
+  }
+  if (changed.length) {
+    process.stderr.write(`eval failed: these files changed during the run: ${changed.join(', ')}. The summary records the hashes from before the first request.\n`);
+    process.exit(1);
+  }
 }
 
 main().catch((err) => {
