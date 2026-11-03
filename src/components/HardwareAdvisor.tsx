@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cpu, HardDrive, Zap, ShieldCheck, CheckCircle2, AlertTriangle, Sliders } from 'lucide-react';
+import { HardDrive, Zap, ShieldCheck, CheckCircle2, AlertTriangle, Sliders } from 'lucide-react';
 import { MAC_CHIPS, RAM_OPTIONS } from '../data/hardwareData';
 import { MODELS_DATA, getModelVramGB } from '../data/models';
 
@@ -32,14 +32,11 @@ export const HardwareAdvisor: React.FC = () => {
     <div data-testid="hardware-advisor-container" className="space-y-6">
       {/* Header Banner */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-3">
-        <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-          <Cpu className="w-4 h-4 text-indigo-400" />
-          <span>Apple Silicon Hardware & Memory Advisor</span>
-        </div>
-        <h2 data-testid="advisor-heading" className="text-2xl font-extrabold text-slate-100 tracking-tight">
+        <p className="font-mono text-[12px] text-ink-3">Apple Silicon Hardware & Memory Advisor</p>
+        <h2 data-testid="advisor-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
           Mac VRAM Headroom & Token Speed Calculator
         </h2>
-        <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+        <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
           Select your Mac chip (M1 through M4) and installed unified memory size to estimate VRAM headroom, token generation speed estimates, and model quantization recommendations.
         </p>
       </div>

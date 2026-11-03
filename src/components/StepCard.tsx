@@ -186,8 +186,8 @@ export const StepCard: React.FC<StepCardProps> = ({
         </div>
       )}
 
-      {/* Editor & Configurations */}
-      <div className="space-y-5">
+      {/* Editor & Configurations. On wide screens the prompt sits beside its settings and output. */}
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] xl:items-start">
         <StepEditor
           index={index}
           step={step}
@@ -195,19 +195,21 @@ export const StepCard: React.FC<StepCardProps> = ({
           disabled={isExecuting}
         />
 
-        <EndpointSettings
-          index={index}
-          config={step.modelConfig}
-          onChange={handleModelConfigChange}
-          disabled={isExecuting}
-        />
+        <div className="min-w-0 space-y-5">
+          <EndpointSettings
+            index={index}
+            config={step.modelConfig}
+            onChange={handleModelConfigChange}
+            disabled={isExecuting}
+          />
 
-        <Inspector
-          index={index}
-          step={step}
-          onUpdateOutput={handleOutputChange}
-          disabled={isExecuting}
-        />
+          <Inspector
+            index={index}
+            step={step}
+            onUpdateOutput={handleOutputChange}
+            disabled={isExecuting}
+          />
+        </div>
       </div>
     </div>
   );

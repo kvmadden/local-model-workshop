@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MODELS_DATA } from '../data/models';
 import { ModelCardData } from '../types/workshop';
-import { Cpu, HardDrive, Zap, CheckCircle, X, AppWindow, ShieldCheck, ExternalLink, Copy, Check } from 'lucide-react';
+import { HardDrive, Zap, CheckCircle, X, AppWindow, ShieldCheck, ExternalLink, Copy, Check } from 'lucide-react';
 import { useOllamaStatus } from '../hooks/useOllamaStatus';
 import { MISMATCH_LABEL } from '../utils/modelUtils';
 
@@ -73,14 +73,11 @@ export const ModelCatalog: React.FC = () => {
       {/* Catalog Header */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-            <Cpu className="w-4 h-4 text-indigo-400" />
-            <span>Curated On-Device Model Catalog</span>
-          </div>
-          <h2 data-testid="catalog-heading" className="text-2xl font-extrabold text-slate-100 tracking-tight">
+          <p className="font-mono text-[12px] text-ink-3">Curated On-Device Model Catalog</p>
+          <h2 data-testid="catalog-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
             Mac-Optimized Small Local AI Models
           </h2>
-          <p className="text-slate-400 text-sm max-w-3xl leading-relaxed">
+          <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
             Five small language and speech models (1.5B to 8B parameters) with approximate RAM requirements and speed ranges for Apple Silicon Macs. Speed ranges are rough guides, not measurements from this app.
           </p>
           <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">

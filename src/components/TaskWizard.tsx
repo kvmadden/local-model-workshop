@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { StepFlow } from './StepFlow';
 import { TASKS_DATA } from '../data/tasks';
 import { TaskOption } from '../types/workshop';
-import { Compass, CheckCircle2, ShieldCheck, Cpu, AppWindow, ExternalLink } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Cpu, AppWindow, ExternalLink } from 'lucide-react';
 
 export const TaskWizard: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<TaskOption>(TASKS_DATA[0]);
@@ -57,14 +58,11 @@ export const TaskWizard: React.FC = () => {
       {/* Hero Banner */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-950/80 border border-indigo-800/60 rounded-full text-xs font-semibold text-indigo-400">
-            <Compass className="w-3.5 h-3.5" />
-            <span>Zero-Code Local AI Assistant</span>
-          </div>
-          <h2 data-testid="wizard-heading" className="text-2xl md:text-3xl font-extrabold text-slate-100 tracking-tight">
+          <p className="font-mono text-[12px] text-ink-3">Zero-Code Local AI Assistant</p>
+          <h2 data-testid="wizard-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
             Match Your Mac Goal to the Perfect Local Model &amp; App
           </h2>
-          <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+          <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
             Select what you want to accomplish on your Mac today. We match your objective with a desktop app that runs models on this Mac — no coding, terminal scripts, or technical setup required.
           </p>
           <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
@@ -167,8 +165,8 @@ export const TaskWizard: React.FC = () => {
             {/* Workflow preview */}
             <div className="bg-slate-950/70 p-4 rounded-xl border border-slate-800/80 space-y-2">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Zero-Code Workflow</span>
-              <div className="text-xs font-medium text-indigo-300 bg-slate-950 p-3 rounded-lg border border-slate-800">
-                {selectedTask.sampleWorkflow}
+              <div className="text-sm font-medium text-indigo-300 bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <StepFlow testId="sample-workflow" text={selectedTask.sampleWorkflow} />
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlaySquare, Mic, FileText, Edit3, MessageSquare } from 'lucide-react';
+import { Mic, FileText, Edit3, MessageSquare } from 'lucide-react';
 import { VoiceTranscriptionPlayground } from './playgrounds/VoiceTranscriptionPlayground';
 import { DocSummarizingPlayground } from './playgrounds/DocSummarizingPlayground';
 import { DictationCleanupPlayground } from './playgrounds/DictationCleanupPlayground';
@@ -12,14 +12,11 @@ export const UseCaseStudio: React.FC = () => {
     <div data-testid="use-case-studio-container" className="space-y-6">
       {/* Studio Header */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-2">
-        <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-          <PlaySquare className="w-4 h-4 text-indigo-400" />
-          <span>Interactive Zero-Code Playgrounds</span>
-        </div>
-        <h2 data-testid="studio-heading" className="text-2xl font-extrabold text-slate-100 tracking-tight">
-          Use Case Studio — Test Small Models Live
+        <p className="font-mono text-[12px] text-ink-3">Interactive Zero-Code Playgrounds</p>
+        <h2 data-testid="studio-heading" className="font-display text-3xl sm:text-4xl font-bold uppercase leading-none tracking-[0.01em] text-ink">
+          Use Case Studio: Test Small Models Live
         </h2>
-        <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+        <p className="max-w-3xl text-[16px] leading-snug text-ink-2">
           Experience real non-technical local workflows. Choose a playground below, pick sample data or enter your own text, and run the processing engine locally on your Mac.
         </p>
       </div>
