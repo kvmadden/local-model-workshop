@@ -16,7 +16,7 @@ One intermediate candidate unit run failed because the test adapter implemented 
 
 ## Untouched main control
 
-A fresh local clone outside the estate checked out the exact base commit in detached mode. The clone had `MFW_UMBRELLA_ROOT` and `OPERATOR_ECOSYSTEM_ROOT` removed from its environment. It used `npm ci` and the unchanged lockfile. The temporary clone was deleted in a Python `finally` block after preserving logs.
+A fresh local clone checked out the exact base commit in detached mode, with the builder's own environment variables removed. It used `npm ci` and the unchanged lockfile. The temporary clone was deleted in a Python `finally` block after preserving logs.
 
 Toolchain for both trees: Node v24.14.1, npm 11.11.0, Vitest 3.2.6, TypeScript 5.9.3, Vite 6.4.3 and Playwright 1.62.1. Candidate dependency versions were checked with `npm ls --depth=0`. Existing hermetic browser fixtures were identical on both trees.
 
