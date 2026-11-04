@@ -81,4 +81,13 @@ These were not settled by the protocol. They are fixed now, before any reply exi
 
 ## Amendments
 
-None yet.
+### A1. 2026-11-03, recorded after the first pass had started
+
+This amendment records facts about the run and clarifies one sentence. It changes no rule that affects scoring.
+
+1. **Order of events.** This folder was merged at 02:06 UTC on 2026-11-04 (18:06 Pacific on 3 November). Before the merge, one smoke test ran all three models on the public 12-line template set only. Nothing from the blind set had been sent to a model before the merge.
+2. **A mechanics check on three real lines.** After the merge, each model ran on the first three lines of the suite file (`w-0001` to `w-0003`) with the placeholder gold, to confirm that the lines finish and the replies parse. All 9 requests finished, none returned an error and all 9 replies parsed. The replies were counted and not read. They are not part of the results.
+3. **Start.** The first pass started at 18:10 Pacific on 3 November, from the commit named in section 1. The launcher printed the commit and the suite file's hash before it started, and the hash matched `lock.json`.
+4. **What the in-run summaries are for.** The correctness columns in the harness summaries come from the placeholder gold and mean nothing, so they are not reported. The latency, request-error and load figures in the same summaries are real and are used for gate 3. Reply text is read only by the scoring run.
+5. **What the memory sampler records.** Every 5 seconds: the resident memory of each Ollama process, the models the server reports as loaded with their sizes, and the one-minute load. Peak resident memory for a model is the largest total resident memory of the Ollama processes while that model is being run. If another job has a different model loaded at the same time, the report says so.
+6. **What is shown while the passes run.** A progress display shows the time, the model, the line id and the latency of each request, and a count every 50 lines. It never shows a reply, a line of text or a score.

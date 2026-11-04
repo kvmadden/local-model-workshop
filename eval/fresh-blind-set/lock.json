@@ -49,7 +49,27 @@
   "suite_file_sha256": "fad881e0a9056140b756eea93c3d702a2476d3e474244203b7bcd0b6c933c587",
   "suite_builder_sha256": "f3c9245645ab8e7d63a62c75301d5b6b75ead5b0259c29de53b8d2e7c8e81f18",
   "suite_source": "lines.jsonl, id and text only, with the same placeholder gold on every line",
-  "suite_cases": 455
+  "suite_cases": 455,
+  "run_scripts_sha256": {
+   "run_passes.sh (launcher for the two passes)": "832ad9a9465da3565deb47c8259b5c1b9536e222a6cbdd0637d5775d58ae9429",
+   "memory_sampler.py": "93c6309c31bd91faa58bbda488deddb1c8f76358b83a4f6726fb96097b1a442a",
+   "progress_filter.py": "dbaafd4ffc86505541847975b1a8504264d62fa67596bc3ccc8e434e798b20ba",
+   "mini_check.sh (three-line mechanics check)": "82ab201ec105c57612f98621315ea46314bafc42170dff2893ed8eef583ba352",
+   "suite-real3.json (the three-line suite, placeholder gold)": "8d88aadcf30006cccaf933e30e166be9a4b4a7a56d83885a0ef436180df85444"
+  },
+  "passes": [
+   {
+    "pass": 1,
+    "seed": 20261104
+   },
+   {
+    "pass": 2,
+    "seed": 20261105
+   }
+  ],
+  "first_pass_started_local": "2026-11-03T18:10:18-0800",
+  "registration_merge_commit": "ea02f45bcd1cd63ea559f72a28b730dc4e5a9fa8",
+  "added_by": "amendment A1 in RUN-PLAN.md"
  },
  "pinned_code": {
   "commit": "b6a013b092f6878cc57d5e5c1b54fc2adc137c2a",
