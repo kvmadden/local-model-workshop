@@ -55,7 +55,8 @@
    "memory_sampler.py": "93c6309c31bd91faa58bbda488deddb1c8f76358b83a4f6726fb96097b1a442a",
    "progress_filter.py": "dbaafd4ffc86505541847975b1a8504264d62fa67596bc3ccc8e434e798b20ba",
    "mini_check.sh (three-line mechanics check)": "82ab201ec105c57612f98621315ea46314bafc42170dff2893ed8eef583ba352",
-   "suite-real3.json (the three-line suite, placeholder gold)": "8d88aadcf30006cccaf933e30e166be9a4b4a7a56d83885a0ef436180df85444"
+   "suite-real3.json (the three-line suite, placeholder gold)": "8d88aadcf30006cccaf933e30e166be9a4b4a7a56d83885a0ef436180df85444",
+   "restart_at_2100.sh (waits for the start time, then runs the launcher)": "01c83b18d560976ee3f73a3a53d4464ee8145f32c47085472d30e67099977077"
   },
   "passes": [
    {
@@ -69,7 +70,9 @@
   ],
   "first_pass_started_local": "2026-11-03T18:10:18-0800",
   "registration_merge_commit": "ea02f45bcd1cd63ea559f72a28b730dc4e5a9fa8",
-  "added_by": "amendment A1 in RUN-PLAN.md"
+  "added_by": "amendments A1 and A2 in RUN-PLAN.md",
+  "first_start_aborted_local": "2026-11-03T18:21:48-0800",
+  "restart_scheduled_local": "2026-11-03T21:00:00-0800 (00:00 Eastern on 2026-11-04)"
  },
  "pinned_code": {
   "commit": "b6a013b092f6878cc57d5e5c1b54fc2adc137c2a",
