@@ -57,7 +57,7 @@ export interface Overrides {
   /** Ids of the reviewed lines, whether or not Kevin changed anything. */
   reviewed?: string[];
   /** Replacement gold for the lines Kevin changed. */
-  lines?: Record<string, { six_field?: SixField | null; six_field_representable?: boolean; critical_fields?: CriticalMark[]; drug_text?: string }>;
+  lines?: Record<string, { six_field?: SixField | null; six_field_representable?: boolean; critical_fields?: CriticalMark[]; drug_text?: string; alt?: { six_field: SixField | null } }>;
 }
 
 export function applyOverrides(labels: FinalLabel[], overrides: Overrides): FinalLabel[] {
@@ -73,6 +73,7 @@ export function applyOverrides(labels: FinalLabel[], overrides: Overrides): Fina
     if (o.six_field_representable !== undefined) next.six_field_representable = o.six_field_representable;
     if (o.critical_fields) next.critical_fields = o.critical_fields;
     if (o.drug_text !== undefined) next.meds = [{ ...(l.meds[0] ?? {}), drug_text: o.drug_text }, ...l.meds.slice(1)];
+    if (o.alt) next.alt = { ...(l.alt ?? { six_field: null }), six_field: o.alt.six_field };
     if (next.six_field_representable && !next.six_field) throw new Error(`line ${l.id} is representable but has no six-field gold`);
     return next;
   });

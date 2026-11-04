@@ -93,9 +93,9 @@
  },
  "scorer": {
   "files": {
-   "src/eval/freshBlind.ts": "57e427f18db35c922591117c5262b50f18be42da02722636278727f196ed91ad",
+   "src/eval/freshBlind.ts": "aa1508b3e790b96e471b5d2fad68c7a390801733b16607ecf74531b724232ab8",
    "scripts/score-fresh-blind.ts": "b83684e9e6d3c5a68786dd1f5c97608ba22f93b90d04fc61603ecda9a88c56c9",
-   "src/eval/freshBlind.test.ts": "702ced702271ba0789367721a3d89c3136125c7bf65f839d61ac4c91333fdd38"
+   "src/eval/freshBlind.test.ts": "d27c3f404f0e02969e4c093595e2acd28336db4d283de1198004ecbd1b7a41c7"
   },
   "uses_pinned": [
    "src/eval/sigScoreV3.ts",

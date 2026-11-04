@@ -72,6 +72,9 @@ describe('overrides', () => {
     expect(() => applyOverrides(labels, { reviewed: ['zzz'] })).toThrow();
     expect(() => applyOverrides(labels, { lines: { a: { six_field: null } } })).toThrow();
     expect(applyOverrides(labels, { lines: { a: { six_field: null, six_field_representable: false } } })[0].six_field_representable).toBe(false);
+    // A contested line's other reading can be replaced too.
+    const c = label('c', { contested: true, contested_convention: 'C2', alt: { six_field: sf({ timing: null }) } });
+    expect(applyOverrides([c], { lines: { c: { alt: { six_field: sf({ timing: 'with_meals' }) } } } })[0].alt?.six_field?.timing).toBe('with_meals');
   });
 });
 
