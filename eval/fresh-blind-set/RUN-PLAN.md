@@ -117,3 +117,11 @@ The critical-error counter and the scoring script now exist, and they are frozen
 8. **Kevin's answers.** They enter as a JSON file with `reviewed` (the ids he answered), `lines` (replacement six-field gold for the lines he changed, with `alt` for the other reading of a contested line) and `decisions`. The scorer refuses an id that is not in the set. The file's hash is recorded with the results.
 9. **The two readings.** Line `w-0193` is one of the lines the six fields cannot hold, so it is not a gate line. The gate results are therefore the same under both readings. Only the number of lines the six fields cannot hold (208 and 207) and the request counts differ.
 10. **Checked before the real run.** The command ran end to end on made-up replies built from the real set's gold, with one planted dose error, to prove the plumbing. The planted error was found as the only critical error and the only difference between the passes. Those numbers mean nothing and were not kept.
+
+### A4. 2026-11-03, machine conditions for the restart
+
+The owner has reserved the machine for this run from 00:00 to 06:00 Eastern (21:00 to 03:00 Pacific). This records what that means for the load, and changes no rule.
+
+1. **Background jobs are paused.** From 20:59 Pacific the admission of new background coding jobs on the machine is set to zero. It is restored when the restart's launcher exits or at 03:00 Pacific, whichever comes first. The other services on the machine, including the continuous-integration runners and the always-on assistant, keep running.
+2. **No local work by the build agent.** From 21:00 to 03:00 Pacific the build agent runs no local tests, builds or model calls on the machine. Its remote work (calls to a hosted API, GitHub checks and pushes) goes on, because it does not load the machine.
+3. **What it means for the latency gate.** The load during the restart is expected to be lower than during the first start. The machine is still not quiet in the protocol's sense (a one-minute load average below 2 for five minutes), so section 5, item 1 still applies. The harness samples the load every second and the sampler records it every 5 seconds, so the report gives the load range next to the latency gate, together with this condition.
