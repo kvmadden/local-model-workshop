@@ -59,6 +59,15 @@ function cloneFlow(flow: Flow): Flow {
   return JSON.parse(JSON.stringify(flow));
 }
 
+/** Clears execution-only fields while preserving each step's prompt and model configuration. */
+function invalidateStepResult(step: Step): void {
+  step.status = 'idle';
+  step.output = '';
+  step.error = undefined;
+  step.latencyMs = undefined;
+  step.warnings = undefined;
+}
+
 /** Context keys that always mean the flow's own input. A step name or id can never claim them. */
 const RESERVED_KEYS: ReadonlySet<string> = new Set(['input', 'initialInput']);
 /** Keys that always mean "the output of step N". Only step N itself writes them. */
@@ -104,6 +113,57 @@ export function populateStepContext(
     if (RESERVED_KEYS.has(key) || INDEX_ALIAS.test(key)) continue;
     if (Object.prototype.hasOwnProperty.call(context, key)) continue;
     context[key] = output;
+  }
+}
+
+/** Returns the earlier step outputs that the prompt actually resolves through current aliases. */
+function referencedStepIndexes(
+  flow: Flow,
+  stepIndex: number,
+  availableStepIndexes: ReadonlySet<number>,
+  initialContext: Record<string, string> = {}
+): Set<number> {
+  const context: Record<string, string> = {
+    ...initialContext,
+    input: flow.initialInput ?? '',
+    initialInput: flow.initialInput ?? '',
+  };
+  let markerPrefix = '\u0000LMW_STEP_OUTPUT_';
+  while (
+    flow.steps.some((step) => step.prompt.includes(markerPrefix)) ||
+    Object.values(context).some((value) => value.includes(markerPrefix))
+  ) markerPrefix += '\u0000';
+  const markers = new Map<number, string>();
+  for (let index = 0; index < stepIndex; index++) {
+    if (!availableStepIndexes.has(index)) continue;
+    const marker = `${markerPrefix}${index}\u0000`;
+    markers.set(index, marker);
+    populateStepContext(context, flow.steps[index], index, marker);
+  }
+
+  const resolved = resolveTemplateDetailed(flow.steps[stepIndex].prompt, context).text;
+  return new Set([...markers].flatMap(([index, marker]) => resolved.includes(marker) ? [index] : []));
+}
+
+/** Clears the target and only later steps whose prompts resolve to its output or descendants. */
+function invalidateSingleStepDependents(
+  flow: Flow,
+  targetIndex: number,
+  initialContext: Record<string, string> = {}
+): void {
+  const invalidated = new Set<number>([targetIndex]);
+  for (let index = targetIndex + 1; index < flow.steps.length; index++) {
+    // Match runSingleStep: only completed predecessors contribute aliases. The target and
+    // already-invalidated descendants are included as prospective fresh outputs for transitivity.
+    const availableStepIndexes = new Set<number>(invalidated);
+    for (let priorIndex = 0; priorIndex < index; priorIndex++) {
+      if (flow.steps[priorIndex].status === 'completed') availableStepIndexes.add(priorIndex);
+    }
+    const dependencies = referencedStepIndexes(flow, index, availableStepIndexes, initialContext);
+    if ([...dependencies].some((dependency) => invalidated.has(dependency))) {
+      invalidateStepResult(flow.steps[index]);
+      invalidated.add(index);
+    }
   }
 }
 
@@ -272,6 +332,8 @@ export class FlowRunner {
   async runFlow(flow: Flow, options: FlowRunnerOptions = {}): Promise<FlowRunResult> {
     const activeAdapter = options.adapter || this.adapter;
     const updatedFlow = cloneFlow(flow);
+    // A full run starts from fresh inputs, so no prior output may remain visible as current.
+    updatedFlow.steps.forEach(invalidateStepResult);
     const { context, executionState } = this.start(updatedFlow, options, 0);
 
     const duplicate = duplicateStepId(updatedFlow.steps);
@@ -357,6 +419,10 @@ export class FlowRunner {
     if (duplicate !== null) {
       return this.refuse(executionState, updatedFlow, options, `Two steps share the id '${duplicate}'. Step ids must be unique.`);
     }
+
+    // Clear only later prompts that resolve to the rerun target or one of its descendants.
+    // Alias resolution and collisions follow the same context population as execution.
+    invalidateSingleStepDependents(updatedFlow, targetIndex, options.initialContext);
 
     // Earlier steps count as answered only when they completed. An idle or failed step has an
     // empty output, and treating it as an answer would hide the missing dependency. A completed
