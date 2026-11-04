@@ -91,3 +91,14 @@ This amendment records facts about the run and clarifies one sentence. It change
 4. **What the in-run summaries are for.** The correctness columns in the harness summaries come from the placeholder gold and mean nothing, so they are not reported. The latency, request-error and load figures in the same summaries are real and are used for gate 3. Reply text is read only by the scoring run.
 5. **What the memory sampler records.** Every 5 seconds: the resident memory of each Ollama process, the models the server reports as loaded with their sizes, and the one-minute load. Peak resident memory for a model is the largest total resident memory of the Ollama processes while that model is being run. If another job has a different model loaded at the same time, the report says so.
 6. **What is shown while the passes run.** A progress display shows the time, the model, the line id and the latency of each request, and a count every 50 lines. It never shows a reply, a line of text or a score.
+
+### A2. 2026-11-03, the first start was aborted and the run restarts from scratch
+
+This amendment records an interruption. It changes no rule that affects scoring.
+
+1. **The first start was aborted** at 18:21 Pacific on 3 November (21:21 Eastern), on the owner's instruction, because the machine was in use. It had started at 18:10 Pacific and had reached the first model of the first pass. The harness was stopped with a termination signal. It wrote its summary marked incomplete, and the launcher stopped the sampler and exited.
+2. **No reply was read and nothing was scored.** The only thing looked at was the number of rows in each raw file: 124 replies from the first model, plus the four baselines on all 455 lines, which need no model.
+3. **The partial outputs are kept but excluded.** The folder of the first start (raw replies, the incomplete summary, the logs and the memory samples) was moved aside, marked aborted and made read-only. It is excluded from every result, including every latency figure. It is published with the rest of the evidence and labeled as aborted.
+4. **The run restarts from scratch** at 00:00 Eastern on 4 November (21:00 Pacific on 3 November). It uses the same commit, the same suite file, the same seeds (20261104 and 20261105), the same models, the same settings and the same launcher as the plan. Nothing carries over from the first start. The seeds fix the order of the models and lines, so the restart repeats the orders the first start used.
+5. **How the restart is scheduled.** A small script waits until the start time, logs the load, and then hands over to the registered launcher. The launcher keeps its load gate as registered: while the one-minute load average is above 150, it waits a minute at a time. It checks again before the second pass. The script's hash is in `lock.json` under `inference`.
+6. **A new progress log.** The restart writes its progress to a new log, so the log of the first start stays as it was.
