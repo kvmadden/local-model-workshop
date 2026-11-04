@@ -63,6 +63,7 @@ These were not settled by the protocol. They are fixed now, before any reply exi
 1. **Two passes, one verdict.** A model passes a gate only if it passes it in both passes. Numbers are reported per pass. Counts are not pooled across passes, because the two passes are not independent at temperature 0. The report also says how many lines got a different parsed answer between the passes.
 2. **Critical errors.** A critical error is a reply that disagrees with the gold on a field marked critical for that line, among the fields a six-field reply can hold: drug, dose magnitude, frequency (for a scheduled dose) and as-needed status. A reply that cannot be parsed counts as a critical error. Route is marked critical on many lines, but the six-field reply has no route, so route is reported as not checkable. The count is made over the lines the six fields can hold and outside the contested set, the same lines as gate 2, because a six-field reply cannot be wrong on a field it has no place for. This is narrower than the protocol's "over all lines" and is a deliberate choice, open to change by amendment.
 3. **C1 lines with a morning or evening anchor.** Contested until Kevin says whether the bedtime ruling holds for other times of day. If he says yes before scoring, they join the gate on the primary reading.
+4. **Drug names written differently from the ingredient.** The frozen prompt asks for the drug name as written, and the gold drug is the ingredient (a brand name gives the ingredient). On the 25 gate lines where the written name lacks the ingredient's words (brand names, abbreviations, misspellings), a reply counts as right for the drug field if it matches either the ingredient or the drug as written. The report gives the count of such lines and also shows the drug field with the ingredient-only reading.
 
 ## 7. Not frozen yet
 
@@ -74,7 +75,7 @@ These were not settled by the protocol. They are fixed now, before any reply exi
 1. This registration is merged.
 2. The two passes run on the test machine (the night of 3 to 4 November). A memory and load sampler runs alongside.
 3. Kevin reviews the 12 disputed lines and the optional 10 (4 November).
-4. The scoring code is written, reviewed, committed and frozen. Hashes are added by amendment.
+4. The scoring code is written, committed and frozen. Its hashes are added by amendment.
 5. The single scoring run produces the tables over 455 and over 454 lines.
 6. The set, the replies and the tables are published together.
 
