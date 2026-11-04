@@ -1,0 +1,71 @@
+{
+ "set": "fresh blind set of medication-instruction lines",
+ "algorithm": "sha256",
+ "registered": "2026-11-03",
+ "item_text_in_repository": false,
+ "counts": {
+  "lines": 455,
+  "lines_without_w_0193": 454,
+  "grok_only_lines_left_out": 109,
+  "six_field_representable": 247,
+  "six_field_not_representable": 208,
+  "contested_lines": 27,
+  "contested_c1": 13,
+  "contested_c1_with_bedtime_anchor": 7,
+  "contested_c2": 14,
+  "kevin_disputed_lines": 12,
+  "kevin_optional_spot_check": 10
+ },
+ "staged_set": {
+  "locked_utc": "2026-11-04T01:27:42Z",
+  "file_count": 2686,
+  "lock_json_sha256": "a235361a4cfbc99b8cb1fd338061a67cc015a552d592318447b8404b37932e86",
+  "manifest_sha256": "d8cada05356a9fb588c832b1604efc99e162428c0659085ed901d14906c0421f",
+  "addendum_1_sha256": "4c3263d4c57791ab2136b7fa912153c6c361ac674e9241ded418e33a5e751527"
+ },
+ "files_note": "SHA-256 of files in the staged set, which is kept outside this repository until scoring. The LOCK-NOTE.md hashed here is the staged version, not the copy in this folder.",
+ "files": {
+  "AMENDMENTS.md": "66121635111383bd82eba8383947691939914b8bc3ae4d276b75f856ae68ed9e",
+  "LOCK-NOTE.md": "763e14197eeb7d9d3ad35996627719f61d0576f9d6b049a64fd00928eb08968f",
+  "MANIFEST.json": "d8cada05356a9fb588c832b1604efc99e162428c0659085ed901d14906c0421f",
+  "agreement.json": "abadc3e39f83855461df8e2d6f542825a2e839440655566241fad7012865e74a",
+  "agreement.md": "0ee6bfb107b08594c497abd4cd5e8ee1621b530015a535bc0f069fe8fa804d0a",
+  "category-counts.json": "dde34085529130d82f393cf45b998782ffe39dad130a7c3cdffb0b8c9591589e",
+  "convention-sheet.md": "3ee4ec0b26491006d629c992213717adba3a1a25826b3323c9778d252e06f9ec",
+  "convention-sheet.sha256.txt": "e56d843cbd1414e229aaa506bdc6b96d1c553c628b5793d22d1490792b05d1db",
+  "dedupe-record.json": "2042b0c87880393c30030395fbb3499bea332bb374ca519fe073b6d6c449872e",
+  "labels-adjudicated.jsonl": "f4a74767893b862fef1698a4934460e555f37d2003b3f7e88ee0febed8f6a731",
+  "labels-adjudication-raw.jsonl": "3f3231d5dc47e929e3ae639d92877d34b4c21a2399ed7ebbb50e560c86fec804",
+  "labels-gemini.jsonl": "08751352d196a8e853abd18dce708e7e21d78c6f6bd178aa88c481c3b4fdda38",
+  "labels-grok.jsonl": "1349a05c4da4676bb33f70afd61ba62e12da080d5e6b019ecdd7d14585714e4c",
+  "lines.jsonl": "53c599a3d1d3ccee281d722da280f711cc5d24ec8fc11db9083ef351d8e04f7b",
+  "validation-report.json": "06937c716fbb2ddf3748b8cf720c24686bc7346ffbaaf839c925834224e1d1cd",
+  "review/kevin-critical-fields.md": "b6dc7f71a750c5350de328e69ed42f3e890b2a8d6c77cc4d70b2ac5a34c05d57"
+ },
+ "added_after_lock": {
+  "review/kevin-critical-fields.json": "66c811aec5b993911914868095cbedffa325f9a22f6159777439c0bc80b2a3a5"
+ },
+ "inference": {
+  "suite_file_sha256": "fad881e0a9056140b756eea93c3d702a2476d3e474244203b7bcd0b6c933c587",
+  "suite_builder_sha256": "f3c9245645ab8e7d63a62c75301d5b6b75ead5b0259c29de53b8d2e7c8e81f18",
+  "suite_source": "lines.jsonl, id and text only, with the same placeholder gold on every line",
+  "suite_cases": 455
+ },
+ "pinned_code": {
+  "commit": "b6a013b092f6878cc57d5e5c1b54fc2adc137c2a",
+  "files": {
+   "scripts/eval-sig.ts": "e3d651bc41597f2909bb71c67f65af6f86ccc748a6c4d26cae739835f88b54e7",
+   "src/eval/harness.ts": "f8642ffbfcabaa86d0aae54dd744d02da66bb010219683cf3fba28045eb73d6b",
+   "src/eval/sigScoreV3.ts": "41fca312819718da69f2b77c8c86ed0c24320cf6bc1da498640066fa1be85ab6",
+   "src/eval/sigScore.ts": "870eafd716adf453585b4ecea9a61bb2eace30f2898aee91d8d92d0a11dd724d",
+   "src/eval/sigBaselines.ts": "eb26cf154f222b9f4e6142905fa14c4abef6ea4ef326ff58eb65418edde7e081",
+   "src/eval/decision.ts": "652db981663fae6567bdda63054ff038e4ebc73b2aed2ba0564c45c79ba49a6b",
+   "eval/sig-extraction/prompt.txt": "a907344facfa66fefdec8ced4451116b8a71f4474668b3481bc42b950edfcf73",
+   "eval/sig-extraction/schema.json": "b427013b4fc9899213d6b900395fc4dbd25fce650680702428624d06bcb3a871",
+   "eval/sig-extraction/models.json": "7a28699a672f483559fbd1b49371fdd4d9b63385744749afe7559a3e6bd1cc3b",
+   "docs/FRESH-TEST-PROTOCOL.md": "0dc39b3f935f590dd9f00b6af3e192f72139b952e36a10648bf511932e022dea",
+   "package.json": "fb8020683a6a979fee8d77ae8bab1cf0a5598ffd45edb381e8c782c7d52250ac",
+   "package-lock.json": "2201aabfb420340955e2ab7da54f0769a1848b0103131036aa079e8023909493"
+  }
+ }
+}
