@@ -90,5 +90,20 @@
    "package.json": "fb8020683a6a979fee8d77ae8bab1cf0a5598ffd45edb381e8c782c7d52250ac",
    "package-lock.json": "2201aabfb420340955e2ab7da54f0769a1848b0103131036aa079e8023909493"
   }
+ },
+ "scorer": {
+  "files": {
+   "src/eval/freshBlind.ts": "57e427f18db35c922591117c5262b50f18be42da02722636278727f196ed91ad",
+   "scripts/score-fresh-blind.ts": "b83684e9e6d3c5a68786dd1f5c97608ba22f93b90d04fc61603ecda9a88c56c9",
+   "src/eval/freshBlind.test.ts": "702ced702271ba0789367721a3d89c3136125c7bf65f839d61ac4c91333fdd38"
+  },
+  "uses_pinned": [
+   "src/eval/sigScoreV3.ts",
+   "src/eval/sigScore.ts",
+   "src/eval/sigBaselines.ts",
+   "src/eval/harness.ts",
+   "eval/sig-extraction/schema.json"
+  ],
+  "added_by": "amendment A3 in RUN-PLAN.md"
  }
 }
