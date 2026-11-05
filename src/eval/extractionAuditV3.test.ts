@@ -65,6 +65,19 @@ describe('audit evaluator v3', () => {
     expect(parseEntitiesV3('{"entities":[],"no_active_instruction":true}')).toEqual([{ task: 'abstention', value: 'no active instruction' }]);
   });
 
+  it('rejects present malformed entity fields while preserving omitted-entities abstention', () => {
+    const noFacts: AuditCase[] = [{ id: 'z1', split: 'challenge', input: 'Do not take digoxin.', gold: [] } as unknown as AuditCase];
+    const malformed = reportV3(noFacts, [{ id: 'z1', output: '{"entities":{"task":"drug","value":"SYNTHETIC_A"},"no_active_instruction":true}', error: null, latencyMs: 5 }]);
+    expect(malformed.documents[0]).toMatchObject({ correctAbstention: false, exactFacts: false, malformed: [{ unreadable: true }] });
+    expect(malformed.all.correctAbstentions).toBe(0);
+
+    const omitted = reportV3(noFacts, [{ id: 'z1', output: '{"no_active_instruction":true}', error: null, latencyMs: 5 }]);
+    expect(omitted.documents[0]).toMatchObject({ correctAbstention: true, exactFacts: true, malformed: [] });
+    expect(parseEntitiesV3('{"entities":[],"no_active_instruction":true}')).toEqual([{ task: 'abstention', value: 'no active instruction' }]);
+    expect(parseEntitiesV3('{"entities":[]}')).toEqual([]);
+    expect(parseEntitiesV3(JSON.stringify({ entities: copy() }))).toEqual(copy());
+  });
+
   it('labels engine errors and missing doses for what they are', () => {
     expect(failureTypeV3(scoreDocumentV3(input, gold, []), 'Ollama execution failed: timed out after 60000 ms')).toBe('engine error');
     expect(failureTypeV3(scoreDocumentV3(input, gold, []), null)).toBe('missing dose');

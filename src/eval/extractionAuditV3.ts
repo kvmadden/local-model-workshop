@@ -223,6 +223,7 @@ export function parseEntitiesV3(output: string | null): unknown[] {
   try {
     const value = JSON.parse(output);
     if (value && Array.isArray(value.entities)) return value.no_active_instruction === true ? [...value.entities, { task: 'abstention', value: 'no active instruction' }] : value.entities;
+    if (value && Object.prototype.hasOwnProperty.call(value, 'entities')) return [{ unreadable: true }];
     if (value && value.no_active_instruction === true) return [{ task: 'abstention', value: 'no active instruction' }];
     return [{ unreadable: true }];
   } catch {

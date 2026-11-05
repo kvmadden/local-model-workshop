@@ -179,6 +179,152 @@ describe('FlowRunner edge cases and stress tests', () => {
   // SECTION 2: Single Step Execution & Intermediate Output Downstream Propagation
   // =========================================================================
   describe('2. Single Step Execution & Intermediate Output Editing', () => {
+    it('clears full-flow results before the first callback and leaves halted downstream steps idle', async () => {
+      const flow = createChainFlow();
+      for (const step of flow.steps) {
+        step.status = 'completed';
+        step.output = `old ${step.id}`;
+        step.error = 'old error';
+        step.latencyMs = 12;
+        step.warnings = ['old warning'];
+      }
+      flow.steps[0].modelConfig.model = 'mock-error';
+      const firstStates: Flow[] = [];
+
+      const result = await runFlow(flow, { onStateChange: (_state, updatedFlow) => firstStates.push(JSON.parse(JSON.stringify(updatedFlow))) });
+
+      expect(firstStates[0].steps[0].status).toBe('idle');
+      expect(firstStates[0].steps.map(({ status, output }) => [status, output])).toEqual([
+        ['idle', ''], ['idle', ''], ['idle', ''],
+      ]);
+      expect(result.flow.steps.slice(1).every((step) => step.status === 'idle' && step.output === '')).toBe(true);
+    });
+
+    it('invalidates downstream results on failed and successful upstream single-step reruns', async () => {
+      const flow = createChainFlow();
+      const initial = await runFlow(flow);
+      expect(initial.flow.steps.every((step) => step.status === 'completed')).toBe(true);
+
+      const failedSource = JSON.parse(JSON.stringify({ ...initial.flow, initialInput: 'changed input' }));
+      failedSource.steps[0].modelConfig.model = 'mock-error';
+      const failed = await runSingleStep(failedSource, 0);
+      expect(failed.flow.steps[0]).toMatchObject({ status: 'error', output: '' });
+      expect(failed.flow.steps.slice(1).every((step) => step.status === 'idle' && step.output === '')).toBe(true);
+
+      const rerun = await runSingleStep({ ...initial.flow, initialInput: 'changed input' }, 0);
+      expect(rerun.flow.steps[0]).toMatchObject({ status: 'completed', output: 'Output Step 1' });
+      expect(rerun.flow.steps.slice(1).every((step) => step.status === 'idle' && step.output === '')).toBe(true);
+    });
+
+    it('preserves edited unrelated later answers and clears direct and transitive alias dependents', async () => {
+      const flow = createDefaultFlow('branch-flow', 'Branch Flow', 'Input');
+      const source = createDefaultStep('source', 'Source', '{{input}}');
+      source.modelConfig.mockPattern = 'custom';
+      source.modelConfig.mockCustomResponse = 'new source';
+      const independent = createDefaultStep('independent', 'Independent', 'A separate prompt');
+      independent.modelConfig.mockPattern = 'custom';
+      independent.modelConfig.mockCustomResponse = 'independent result';
+      const dependent = createDefaultStep('dependent', 'Dependent', '{{step1.output}}');
+      dependent.modelConfig.mockPattern = 'custom';
+      dependent.modelConfig.mockCustomResponse = 'dependent result';
+      const transitive = createDefaultStep('transitive', 'Transitive', '{{step3.output}}');
+      transitive.modelConfig.mockPattern = 'custom';
+      transitive.modelConfig.mockCustomResponse = 'transitive result';
+      flow.steps = [source, independent, dependent, transitive];
+
+      const initial = await runFlow(flow);
+      initial.flow.steps[1].output = 'operator edited independent answer';
+      initial.flow.steps[1].warnings = ['operator note'];
+      const rerun = await runSingleStep(initial.flow, 'source');
+
+      expect(rerun.flow.steps[1]).toMatchObject({
+        status: 'completed',
+        output: 'operator edited independent answer',
+        warnings: ['operator note'],
+      });
+      expect(rerun.flow.steps[2]).toMatchObject({ status: 'idle', output: '' });
+      expect(rerun.flow.steps[3]).toMatchObject({ status: 'idle', output: '' });
+    });
+
+    it('uses the resolved owner when reserved, positional, and duplicate-name aliases collide', async () => {
+      const flow = createDefaultFlow('alias-collision-flow', 'Alias Collision Flow', 'Original input');
+      const source = createDefaultStep('step3', 'input', 'Source prompt');
+      source.modelConfig.mockPattern = 'custom';
+      source.modelConfig.mockCustomResponse = 'source result';
+      const actualStep2 = createDefaultStep('second', 'shared', 'Independent prompt');
+      actualStep2.modelConfig.mockPattern = 'custom';
+      actualStep2.modelConfig.mockCustomResponse = 'second result';
+      const duplicateName = createDefaultStep('third', 'shared', 'Another independent prompt');
+      duplicateName.modelConfig.mockPattern = 'custom';
+      duplicateName.modelConfig.mockCustomResponse = 'third result';
+      const later = createDefaultStep('later', 'Later', '{{step3.output}} {{shared.output}} {{input}}');
+      later.modelConfig.mockPattern = 'custom';
+      later.modelConfig.mockCustomResponse = 'later result';
+      flow.steps = [source, actualStep2, duplicateName, later];
+
+      const initial = await runFlow(flow);
+      const rerun = await runSingleStep(initial.flow, 'step3');
+
+      // {{step3.output}} belongs to position 3, {{shared.output}} to the first shared name,
+      // and {{input}} remains the flow input. None resolves to the rerun source.
+      expect(rerun.flow.steps[3]).toMatchObject({ status: 'completed', output: 'later result' });
+    });
+
+    it('clears a dependent when an idle earlier name does not own the completed target alias', async () => {
+      const flow = createDefaultFlow('idle-alias-owner-flow', 'Idle Alias Owner Flow', 'Input');
+      const idle = createDefaultStep('idle', 'shared', 'Never executed');
+      const target = createDefaultStep('target', 'shared', 'old source');
+      const consumer = createDefaultStep('consumer', 'Consumer', '{{shared.output}}');
+      flow.steps = [idle, target, consumer];
+      const adapter = { executePrompt: async (prompt: string) => ({ text: `answer:${prompt}`, latencyMs: 1 }) };
+
+      const firstTargetRun = await runSingleStep(flow, 'target', { adapter, strictPlaceholders: true });
+      const firstConsumerRun = await runSingleStep(firstTargetRun.flow, 'consumer', { adapter, strictPlaceholders: true });
+      expect(firstConsumerRun.flow.steps[2].output).toBe('answer:answer:old source');
+      firstConsumerRun.flow.steps[1].prompt = 'new source';
+
+      const rerun = await runSingleStep(firstConsumerRun.flow, 'target', { adapter, strictPlaceholders: true });
+
+      expect(rerun.flow.steps[1].output).toBe('answer:new source');
+      expect(rerun.flow.steps[2]).toMatchObject({ status: 'idle', output: '' });
+    });
+
+    it('preserves a dependent owned by an earlier completed duplicate when the later target was idle', async () => {
+      const flow = createDefaultFlow('completed-alias-owner-flow', 'Completed Alias Owner Flow', 'Input');
+      const owner = createDefaultStep('owner', 'shared', 'original source');
+      const target = createDefaultStep('target', 'shared', 'new source');
+      const consumer = createDefaultStep('consumer', 'Consumer', '{{shared.output}}');
+      flow.steps = [owner, target, consumer];
+      const adapter = { executePrompt: async (prompt: string) => ({ text: `answer:${prompt}`, latencyMs: 1 }) };
+
+      const firstOwnerRun = await runSingleStep(flow, 'owner', { adapter, strictPlaceholders: true });
+      const firstConsumerRun = await runSingleStep(firstOwnerRun.flow, 'consumer', { adapter, strictPlaceholders: true });
+      expect(firstConsumerRun.flow.steps[2].output).toBe('answer:answer:original source');
+
+      const rerun = await runSingleStep(firstConsumerRun.flow, 'target', { adapter, strictPlaceholders: true });
+
+      expect(rerun.flow.steps[1].output).toBe('answer:new source');
+      expect(rerun.flow.steps[2]).toMatchObject({
+        status: 'completed',
+        output: 'answer:answer:original source',
+      });
+    });
+
+    it('reruns the complete flow from cleared state and recomputes alias-based outputs', async () => {
+      const flow = createChainFlow();
+      const first = await runFlow(flow);
+      const changed = { ...first.flow, initialInput: 'changed input' };
+      changed.steps[0].modelConfig.mockCustomResponse = 'new upstream';
+      changed.steps[1].modelConfig.mockPattern = 'echo';
+      changed.steps[2].modelConfig.mockPattern = 'echo';
+      const result = await runFlow(changed);
+
+      expect(result.state.status).toBe('completed');
+      expect(result.flow.steps.map((step) => step.status)).toEqual(['completed', 'completed', 'completed']);
+      expect(result.flow.steps[1].output).toContain('new upstream');
+      expect(result.flow.steps[2].output).toContain(result.flow.steps[1].output);
+    });
+
     it('propagates manually edited intermediate output downstream when running single step', async () => {
       const flow = createChainFlow();
 
