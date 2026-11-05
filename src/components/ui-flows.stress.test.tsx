@@ -343,15 +343,17 @@ describe('UI components and data flows stress tests', () => {
   // Task 1d: Header Tab Switching, State Persistence & Responsive Design
   // =========================================================================
   describe('Header & App — Tab Persistence & Responsive Switch Edge Cases', () => {
-    it('switches tabs cleanly when clicked in Header.tsx', async () => {
+    it('switches sections and views cleanly when clicked in Header.tsx', async () => {
       const handleTabChange = vi.fn();
       await renderComponent(<Header activeTab="wizard" onTabChange={handleTabChange} />);
 
+      // A section opens on its first view.
       await act(async () => {
-        getByTestId('tab-model-catalog')?.click();
+        getByTestId('section-reference')?.click();
       });
       expect(handleTabChange).toHaveBeenCalledWith('catalog');
 
+      // The views of the open section, Try it, are one click away.
       await act(async () => {
         getByTestId('tab-use-case-studio')?.click();
       });
@@ -361,6 +363,8 @@ describe('UI components and data flows stress tests', () => {
         getByTestId('tab-flow-builder')?.click();
       });
       expect(handleTabChange).toHaveBeenCalledWith('builder');
+      // Views of other sections wait behind their section.
+      expect(getByTestId('tab-model-catalog')).toBeNull();
     });
 
     it('EMPIRICAL FINDING: App activeTab is in memory only (no localStorage or URL state persistence)', async () => {
@@ -368,9 +372,9 @@ describe('UI components and data flows stress tests', () => {
 
       expect(getByTestId('model-catalog-container')).not.toBeNull();
 
-      // Switch tab to Task Wizard
+      // Switch to the Task Wizard, in the Try it section
       await act(async () => {
-        getByTestId('tab-task-wizard')?.click();
+        getByTestId('section-try')?.click();
       });
 
       expect(getByTestId('task-wizard-container')).not.toBeNull();

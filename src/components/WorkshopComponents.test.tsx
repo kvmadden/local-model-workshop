@@ -82,28 +82,36 @@ describe('Workshop component unit tests', () => {
   // Header & Hero Components
   // =========================================================================
   describe('Header & Hero layout', () => {
-    it('Header renders title, subtitle, and 4 navigation tab buttons', async () => {
+    it('Header renders title, subtitle, three sections and the open section\'s views', async () => {
       const handleTabChange = vi.fn();
       await renderComponent(<Header activeTab="wizard" onTabChange={handleTabChange} />);
 
       expect(getByTestId('workshop-header')).not.toBeNull();
       expect(getByTestId('workshop-title')?.textContent).toContain('Local Model Workshop');
-      expect(getByTestId('workshop-subtitle')?.textContent).toContain('Explore, compare and chain');
+      expect(getByTestId('workshop-subtitle')?.textContent).toContain('A test bench for local models reading medication instructions');
+      expect(getByTestId('section-results')?.textContent).toBe('Results');
+      expect(getByTestId('section-try')?.getAttribute('aria-current')).toBe('page');
+      expect(getByTestId('section-reference')?.textContent).toBe('Reference');
       expect(getByTestId('tab-task-wizard')).not.toBeNull();
-      expect(getByTestId('tab-model-catalog')).not.toBeNull();
       expect(getByTestId('tab-use-case-studio')).not.toBeNull();
       expect(getByTestId('tab-flow-builder')).not.toBeNull();
+      expect(getByTestId('tab-run-comparison')).toBeNull();
+      expect(getByTestId('tab-model-catalog')).toBeNull();
     });
 
-    it('Header tab buttons trigger onTabChange callback', async () => {
+    it('Header section and view buttons trigger onTabChange callback', async () => {
       const handleTabChange = vi.fn();
       await renderComponent(<Header activeTab="wizard" onTabChange={handleTabChange} />);
 
-      const catalogTab = getByTestId('tab-model-catalog');
       await act(async () => {
-        catalogTab?.click();
+        getByTestId('section-reference')?.click();
       });
       expect(handleTabChange).toHaveBeenCalledWith('catalog');
+
+      await act(async () => {
+        getByTestId('section-results')?.click();
+      });
+      expect(handleTabChange).toHaveBeenCalledWith('compare');
 
       const studioTab = getByTestId('tab-use-case-studio');
       await act(async () => {
@@ -116,7 +124,7 @@ describe('Workshop component unit tests', () => {
       await renderComponent(<Hero />);
 
       expect(getByTestId('hero-section')).not.toBeNull();
-      expect(getByTestId('hero-headline')?.textContent).toContain('Small Local Models on Your Mac');
+      expect(getByTestId('hero-headline')?.textContent).toContain('Small local models on your Mac');
       expect(getByTestId('hero-subtitle')?.textContent).toContain('Find small models that fit your Mac');
       expect(getByTestId('hero-badge-privacy')).not.toBeNull();
       expect(getByTestId('hero-badge-gpu')).not.toBeNull();

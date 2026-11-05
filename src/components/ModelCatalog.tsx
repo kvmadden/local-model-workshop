@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MODELS_DATA } from '../data/models';
 import { ModelCardData } from '../types/workshop';
-import { Cpu, HardDrive, Zap, CheckCircle, X, AppWindow, ShieldCheck, ExternalLink, Copy, Check } from 'lucide-react';
+import { HardDrive, Zap, CheckCircle, X, AppWindow, ShieldCheck, ExternalLink, Copy, Check } from 'lucide-react';
 import { useOllamaStatus } from '../hooks/useOllamaStatus';
 import { MISMATCH_LABEL } from '../utils/modelUtils';
 
@@ -71,32 +71,28 @@ export const ModelCatalog: React.FC = () => {
   return (
     <div data-testid="model-catalog-container" className="space-y-6">
       {/* Catalog Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-            <Cpu className="w-4 h-4 text-indigo-400" />
-            <span>Curated On-Device Model Catalog</span>
-          </div>
-          <h2 data-testid="catalog-heading" className="text-2xl font-extrabold text-slate-100 tracking-tight">
-            Mac-Optimized Small Local AI Models
+      <div className="space-y-5">
+        <div className="space-y-3">
+          <h2 data-testid="catalog-heading" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">
+            Small local models for a Mac
           </h2>
-          <p className="text-slate-400 text-sm max-w-3xl leading-relaxed">
+          <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
             Five small language and speech models (1.5B to 8B parameters) with approximate RAM requirements and speed ranges for Apple Silicon Macs. Speed ranges are rough guides, not measurements from this app.
           </p>
           <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
             <span className="font-semibold text-slate-300">App Pairings:</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Jan (jan.ai)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">GPT4All (gpt4all.io)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Msty (msty.app)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Open WebUI (openwebui.com)</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">LM Studio</span>
-            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-indigo-300">Ollama</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Jan (jan.ai)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">GPT4All (gpt4all.io)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Msty (msty.app)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Open WebUI (openwebui.com)</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">LM Studio</span>
+            <span className="bg-slate-950 border border-slate-800 px-2 py-0.5 rounded text-slate-300">Ollama</span>
           </div>
         </div>
 
         {/* RAM Requirement Filter */}
         <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800">
-          <span className="text-xs font-bold text-slate-400 mr-1 uppercase tracking-wider">
+          <span className="text-xs font-bold text-slate-400 mr-1">
             Filter by RAM:
           </span>
           <button
@@ -161,20 +157,20 @@ export const ModelCatalog: React.FC = () => {
                 <div className="flex items-start justify-between gap-2 border-b border-slate-800 pb-3">
                   <div>
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-[11px] font-semibold text-indigo-400 bg-indigo-950/80 border border-indigo-800/60 px-2 py-0.5 rounded">
+                      <span className="text-xs font-semibold text-indigo-400 bg-indigo-950/80 border border-indigo-800/60 px-2 py-0.5 rounded">
                         {model.family}
                       </span>
                       {installedTag ? (
                         <span
                           data-testid={`ollama-status-tag-${model.id}`}
-                          className="text-[11px] font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded flex items-center gap-1"
+                          className="text-xs font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded flex items-center gap-1"
                         >
                           🟢 Installed in Ollama
                         </span>
                       ) : (
                         <span
                           data-testid={`ollama-status-tag-${model.id}`}
-                          className="text-[11px] font-semibold text-slate-400 bg-slate-950 border border-slate-800 px-2 py-0.5 rounded flex items-center gap-1"
+                          className="text-xs font-semibold text-slate-400 bg-slate-950 border border-slate-800 px-2 py-0.5 rounded flex items-center gap-1"
                         >
                           {pullCmd ? '⚪ Available via Ollama' : '⚪ Not served by Ollama'}
                         </span>
@@ -182,7 +178,7 @@ export const ModelCatalog: React.FC = () => {
                       {otherBuild && (
                         <span
                           data-testid={`ollama-other-version-${model.id}`}
-                          className="text-[11px] font-semibold text-amber-400 bg-amber-950/80 border border-amber-800/60 px-2 py-0.5 rounded flex items-center gap-1"
+                          className="text-xs font-semibold text-amber-400 bg-amber-950/80 border border-amber-800/60 px-2 py-0.5 rounded flex items-center gap-1"
                           title={`${otherBuild.tag} is installed, but this card is ${model.name}.`}
                         >
                           <span className="font-mono">{otherBuild.tag}</span> installed —{' '}
@@ -194,7 +190,7 @@ export const ModelCatalog: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <span className="text-xs font-semibold text-slate-400 block">{model.parameters}</span>
-                    <span className="text-[10px] text-slate-400">{model.license}</span>
+                    <span className="text-xs text-slate-400">{model.license}</span>
                   </div>
                 </div>
 
@@ -208,20 +204,20 @@ export const ModelCatalog: React.FC = () => {
                     data-testid={`no-ollama-path-${model.id}`}
                     className="flex items-center justify-between gap-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs"
                   >
-                    <span className="text-[11px] text-slate-400 font-medium shrink-0">Not on Ollama:</span>
-                    <span className="text-[11px] text-slate-300 text-right">
+                    <span className="text-xs text-slate-400 font-medium shrink-0">Not on Ollama:</span>
+                    <span className="text-xs text-slate-300 text-right">
                       Set up through {model.appPairing}
                     </span>
                   </div>
                 )}
                 {!installedTag && pullCmd && (
                   <div className="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs">
-                    <span className="text-[11px] text-slate-400 font-medium">Local Pull:</span>
+                    <span className="text-xs text-slate-400 font-medium">Local Pull:</span>
                     <button
                       type="button"
                       data-testid={`copy-pull-cmd-${model.id}`}
                       onClick={() => handleCopyPull(pullCmd, model.id)}
-                      className="text-[11px] font-mono bg-slate-900 hover:bg-slate-850 border border-slate-700 text-indigo-300 px-3 py-2 rounded-lg flex items-center gap-1.5 cursor-pointer min-h-[44px] min-w-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                      className="text-xs font-mono bg-slate-900 hover:bg-slate-850 border border-slate-700 text-indigo-300 px-3 py-2 rounded-lg flex items-center gap-1.5 cursor-pointer min-h-[44px] min-w-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                       title={`Copy command: ${pullCmd}`}
                     >
                       {copiedId === model.id ? (
@@ -247,7 +243,7 @@ export const ModelCatalog: React.FC = () => {
                 {/* Mac Performance & Memory Metrics */}
                 <div className="grid grid-cols-2 gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
                   <div className="space-y-0.5">
-                    <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
                       <HardDrive className="w-3.5 h-3.5 text-sky-400" />
                       <span>Mac RAM</span>
                     </div>
@@ -260,7 +256,7 @@ export const ModelCatalog: React.FC = () => {
                   </div>
 
                   <div className="space-y-0.5">
-                    <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
                       <Zap className="w-3.5 h-3.5 text-amber-400" />
                       <span>Apple Silicon</span>
                     </div>
@@ -275,14 +271,14 @@ export const ModelCatalog: React.FC = () => {
 
                 {/* Recommended For Badges */}
                 <div className="space-y-1.5">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+                  <span className="text-xs font-semibold text-slate-400 block">
                     Best Used For:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {model.recommendedFor.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] bg-slate-950 text-slate-300 px-2 py-0.5 rounded border border-slate-800"
+                        className="text-xs bg-slate-950 text-slate-300 px-2 py-0.5 rounded border border-slate-800"
                       >
                         {tag}
                       </span>
@@ -293,7 +289,7 @@ export const ModelCatalog: React.FC = () => {
 
               {/* Action Footer */}
               <div className="pt-2 border-t border-slate-800/80 space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-slate-400">
+                <div className="flex items-center justify-between text-xs text-slate-400">
                   <span>App Pairing:</span>
                   <span className="font-semibold text-indigo-300">{model.appPairing}</span>
                 </div>
@@ -360,11 +356,11 @@ export const ModelCatalog: React.FC = () => {
             <div className="grid grid-cols-2 gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
               <div>
                 <span className="text-slate-400 block">Required Mac RAM:</span>
-                <span className="font-bold text-sky-400 font-mono">{selectedModelForModal.macRamRequired}</span>
+                <span className="font-bold text-sky-400">{selectedModelForModal.macRamRequired}</span>
               </div>
               <div>
                 <span className="text-slate-400 block">Performance Rating:</span>
-                <span className="font-bold text-amber-400 font-mono">{selectedModelForModal.appleSiliconScore}</span>
+                <span className="font-bold text-amber-400">{selectedModelForModal.appleSiliconScore}</span>
               </div>
             </div>
 

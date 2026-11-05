@@ -112,7 +112,7 @@ export const DocSummarizingPlayground: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column: Sample Document Chips & Custom Input */}
         <div className="space-y-4">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+          <label className="text-xs font-bold text-slate-300 block">
             1. Select Sample Confidential Document or Type Text:
           </label>
 
@@ -186,12 +186,12 @@ export const DocSummarizingPlayground: React.FC = () => {
         {/* Right Column: Formatted Executive Summary Output */}
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+            <label className="text-xs font-bold text-slate-300 block">
               2. Executive Summary Output:
             </label>
             <span
               data-testid="execution-badge"
-              className="text-[11px] text-emerald-400 font-semibold px-2.5 py-1 bg-emerald-950/80 border border-emerald-800/80 rounded-full flex items-center gap-1.5"
+              className="text-xs text-emerald-400 font-semibold px-2.5 py-1 bg-emerald-950/80 border border-emerald-800/80 rounded-full flex items-center gap-1.5"
             >
               {mode === 'live' ? <Lock className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5 text-emerald-400" />}
               <span>{mode === 'live' ? 'Local Ollama on this machine' : 'Demo output, no model ran'}</span>
@@ -209,7 +209,7 @@ export const DocSummarizingPlayground: React.FC = () => {
               )}
             </div>
 
-            <div className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-800/80 text-xs text-slate-400 flex items-center justify-between">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 Mode: {mode === 'live' ? `Live Streaming (${matchingTag})` : 'Interactive Demo'}

@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { openView } from './sweep';
 
 // Hermetic by default: no test in this file depends on a locally running
 // Ollama, and the fixture's engine-absent state makes that a guarantee rather
@@ -14,8 +15,8 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
     await page.goto('/');
     await expect(page.locator('[data-testid="app-container"]')).toBeVisible();
 
-    await page.click('[data-testid="tab-hardware-advisor"]');
-    await expect(page.locator('[data-testid="advisor-heading"]')).toContainText('Mac VRAM Headroom & Token Speed Calculator');
+    await openView(page, 'tab-hardware-advisor');
+    await expect(page.locator('[data-testid="advisor-heading"]')).toContainText('Mac VRAM headroom and token speed calculator');
 
     // Test M3 Ultra
     await page.click('[data-testid="gen-filter-m3"]');
@@ -67,6 +68,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
      ========================================================================== */
   test('E2E-A11Y-03: TaskWizard and ModelCatalog setup modals adhere to ARIA dialog specs and close on Escape', async ({ page }) => {
     await page.goto('/');
+    await openView(page, 'tab-task-wizard');
 
     // TaskWizard Modal Accessibility
     await expect(page.locator('[data-testid="task-wizard-container"]')).toBeVisible();
@@ -81,7 +83,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
     await expect(taskModal).not.toBeVisible();
 
     // ModelCatalog Modal Accessibility
-    await page.click('[data-testid="tab-model-catalog"]');
+    await openView(page, 'tab-model-catalog');
     await expect(page.locator('[data-testid="model-catalog-container"]')).toBeVisible();
 
     const firstModelSetupBtn = page.locator('[data-testid^="setup-modal-btn-"]').first();
@@ -101,6 +103,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
      ========================================================================== */
   test('E2E-A11Y-04: TaskWizard and ModelCatalog headers display discovery badges for Mac app clients', async ({ page }) => {
     await page.goto('/');
+    await openView(page, 'tab-task-wizard');
 
     // TaskWizard Header Client Pairings Badges
     const wizardContainer = page.locator('[data-testid="task-wizard-container"]');
@@ -111,7 +114,7 @@ test.describe('Error boundary & accessibility E2E Suite', () => {
     await expect(wizardContainer).toContainText('Open WebUI (openwebui.com)');
 
     // ModelCatalog Header Client Pairings Badges & Cards
-    await page.click('[data-testid="tab-model-catalog"]');
+    await openView(page, 'tab-model-catalog');
     const catalogContainer = page.locator('[data-testid="model-catalog-container"]');
     await expect(catalogContainer).toBeVisible();
     await expect(catalogContainer).toContainText('Jan (jan.ai)');

@@ -1,183 +1,127 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { TabType } from '../types/workshop';
-import { Sparkles, Compass, Cpu, PlaySquare, Workflow, Loader2, Command, Columns } from 'lucide-react';
 import { useOllamaStatus } from '../hooks/useOllamaStatus';
+import { SECTIONS, VIEWS, sectionOf, type SectionId } from '../navigation';
 
 interface HeaderProps {
   activeTab: TabType;
   onTabChange: (tab: TabType) => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
+/** The mark: a small printed label, its first line in the amber. */
+const LabelMark: React.FC = () => (
+  <svg viewBox="0 0 32 24" width="32" height="24" aria-hidden="true" className="shrink-0 text-ink-2">
+    <rect x="1" y="1" width="30" height="22" rx="4" fill="rgb(var(--panel))" stroke="currentColor" strokeWidth="1.5" />
+    <line x1="7" y1="8" x2="25" y2="8" stroke="rgb(var(--accent-text))" strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="7" y1="12.5" x2="21" y2="12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="7" y1="16.5" x2="16" y2="16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange, theme = 'dark', onToggleTheme }) => {
   const { available, models, loading } = useOllamaStatus();
+  const nextTheme = theme === 'dark' ? 'Use light theme' : 'Use dark theme';
+  const section = sectionOf(activeTab);
+
+  // A section opens on the view last used in it.
+  const [lastView, setLastView] = useState<Record<SectionId, TabType>>(
+    () => Object.fromEntries(SECTIONS.map((s) => [s.id, s.views[0]])) as Record<SectionId, TabType>,
+  );
+  useEffect(() => {
+    setLastView((m) => (m[section.id] === activeTab ? m : { ...m, [section.id]: activeTab }));
+  }, [activeTab, section.id]);
 
   return (
-    <header
-      data-testid="workshop-header"
-      className="border-b border-slate-800 bg-slate-900/90 px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-20 backdrop-blur-md"
-    >
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-indigo-950/80 border border-indigo-800/50 rounded-xl text-indigo-400 shadow-md">
-            <Sparkles className="w-6 h-6 text-indigo-400" />
+    <header data-testid="workshop-header">
+      <div className="border-b border-rule bg-band">
+        <div className="mx-auto flex max-w-[1680px] flex-wrap items-center gap-x-10 px-4 sm:px-6 lg:px-10">
+          <div className="flex min-h-[60px] min-w-0 flex-1 items-center gap-3 lg:flex-none">
+            <LabelMark />
+            <div className="min-w-0">
+              <h1 data-testid="workshop-title" className="font-display text-[19px] font-semibold leading-tight text-ink">
+                Local Model Workshop
+              </h1>
+              <p data-testid="workshop-subtitle" className="hidden text-[13px] leading-snug text-ink-3 xl:block">
+                A test bench for local models reading medication instructions
+              </p>
+            </div>
           </div>
-          <div>
-            <h1
-              data-testid="workshop-title"
-              className="text-xl font-bold tracking-tight text-slate-100 flex items-center gap-2"
-            >
-              Local Model Workshop
-            </h1>
-            <p
-              data-testid="workshop-subtitle"
-              className="text-xs text-slate-400 font-medium"
-            >
-              Explore, compare and chain small local models
-            </p>
-          </div>
-        </div>
 
-        <div className="flex flex-wrap items-center gap-3 max-w-full overflow-hidden">
-          {/* Navigation Tabs */}
-          <nav
-            data-testid="workshop-nav-tabs"
-            aria-label="Workshop Sections"
-            className="flex items-center gap-1.5 bg-slate-950/80 p-1.5 rounded-xl border border-slate-800/80 overflow-x-auto max-w-full whitespace-nowrap"
-          >
-            <button
-              type="button"
-              data-testid="tab-task-wizard"
-              onClick={() => onTabChange('wizard')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'wizard'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <Compass className="w-4 h-4" />
-              <span>Task Wizard</span>
-            </button>
-
-            <button
-              type="button"
-              data-testid="tab-model-catalog"
-              onClick={() => onTabChange('catalog')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'catalog'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <Cpu className="w-4 h-4" />
-              <span>Model Catalog</span>
-            </button>
-
-            <button
-              type="button"
-              data-testid="tab-use-case-studio"
-              onClick={() => onTabChange('studio')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'studio'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <PlaySquare className="w-4 h-4" />
-              <span>Use Case Studio</span>
-            </button>
-
-            <button
-              type="button"
-              data-testid="tab-hardware-advisor"
-              onClick={() => onTabChange('hardware')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'hardware'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <Cpu className="w-4 h-4 text-emerald-400" />
-              <span>Hardware Advisor</span>
-            </button>
-
-            <button
-              type="button"
-              data-testid="tab-shortcuts-studio"
-              onClick={() => onTabChange('shortcuts')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'shortcuts'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <Command className="w-4 h-4 text-sky-400" />
-              <span>Shortcuts Studio</span>
-            </button>
-
-            <button
-              type="button"
-              data-testid="tab-benchmark-studio"
-              onClick={() => onTabChange('benchmark')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'benchmark'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <Columns className="w-4 h-4 text-indigo-400" />
-              <span>Benchmark Studio</span>
-            </button>
-
-            <button
-              type="button"
-              data-testid="tab-flow-builder"
-              onClick={() => onTabChange('builder')}
-              className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-semibold rounded-lg flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                activeTab === 'builder'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-950/50'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-              }`}
-            >
-              <Workflow className="w-4 h-4" />
-              <span>Flow Builder</span>
-            </button>
+          {/* Three sections. On phones they take their own row under the title. */}
+          <nav data-testid="workshop-sections" aria-label="Sections" className="order-last flex w-full lg:order-none lg:w-auto">
+            {SECTIONS.map((s) => {
+              const active = s.id === section.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  data-testid={s.testId}
+                  aria-current={active ? 'page' : undefined}
+                  onClick={() => onTabChange(lastView[s.id])}
+                  className={`-mb-px min-h-[48px] flex-1 border-b-[3px] px-4 text-[16px] font-medium transition-colors lg:min-h-[64px] lg:flex-none ${
+                    active ? 'border-accent-fill text-ink' : 'border-transparent text-ink-3 hover:text-ink'
+                  }`}
+                >
+                  {s.label}
+                </button>
+              );
+            })}
           </nav>
 
-          {/* Live Ollama Status Badge */}
-          <div
-            data-testid="ollama-header-badge"
-            className="flex items-center min-h-[44px]"
-          >
-            {loading ? (
-              <span className="bg-slate-950/80 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-full flex items-center gap-2">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-400" />
-                <span>Checking...</span>
-              </span>
-            ) : available ? (
-              <span
-                title={`Installed models: ${
-                  models.length > 0
-                    ? models.map((m) => m.name).join(', ')
-                    : 'None'
-                }`}
-                className="bg-emerald-950/80 border border-emerald-800/80 text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm cursor-help"
+          <div className="ml-auto flex shrink-0 items-center gap-1">
+            {/* Live Ollama status, as plain text with a small dot */}
+            <div
+              data-testid="ollama-header-badge"
+              title={available ? `Installed models: ${models.length > 0 ? models.map((m) => m.name).join(', ') : 'none'}` : 'Run Ollama on this Mac for live model execution'}
+              className="hidden min-h-[44px] items-center gap-2 px-2 text-[13px] text-ink-3 sm:flex"
+            >
+              <span aria-hidden="true" className={`inline-block h-2 w-2 rounded-full ${available ? 'bg-accent-fill' : 'bg-slate-600'}`} />
+              <span>{loading ? 'Checking engine' : available ? `Ollama: ${models.length} model${models.length !== 1 ? 's' : ''}` : 'Ollama not reached'}</span>
+            </div>
+            {onToggleTheme && (
+              <button
+                type="button"
+                data-testid="theme-toggle"
+                onClick={onToggleTheme}
+                aria-label={nextTheme}
+                title={nextTheme}
+                className="flex h-11 w-11 items-center justify-center rounded-lg text-ink-2 transition-colors hover:bg-panel hover:text-ink"
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>
-                  ● Ollama Active ({models.length} model{models.length !== 1 ? 's' : ''})
-                </span>
-              </span>
-            ) : (
-              <span
-                title="Install & run Ollama from ollama.com for live model execution"
-                className="bg-slate-950/80 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-full flex items-center gap-2 cursor-help"
-              >
-                <span className="w-2 h-2 rounded-full bg-slate-400" />
-                <span>○ Ollama Offline</span>
-              </span>
+                {theme === 'dark' ? <Sun className="h-[18px] w-[18px]" aria-hidden="true" /> : <Moon className="h-[18px] w-[18px]" aria-hidden="true" />}
+              </button>
             )}
           </div>
         </div>
+      </div>
+
+      {/* The views inside the open section: two or three, on one row at every width. */}
+      <div className="border-b border-rule">
+        <nav
+          data-testid="workshop-nav-tabs"
+          aria-label={`${section.label}: ${section.summary}`}
+          className="mx-auto flex max-w-[1680px] gap-1 overflow-x-auto px-2 sm:px-4 lg:px-8"
+        >
+          {section.views.map((v) => {
+            const active = v === activeTab;
+            return (
+              <button
+                key={v}
+                type="button"
+                data-testid={VIEWS[v].testId}
+                aria-current={active ? 'page' : undefined}
+                onClick={() => onTabChange(v)}
+                className={`-mb-px min-h-[44px] min-w-[44px] shrink-0 whitespace-nowrap border-b-2 px-3 text-[15px] font-medium transition-colors ${
+                  active ? 'border-ink text-ink' : 'border-transparent text-ink-3 hover:text-ink'
+                }`}
+              >
+                {VIEWS[v].label}
+              </button>
+            );
+          })}
+        </nav>
       </div>
     </header>
   );

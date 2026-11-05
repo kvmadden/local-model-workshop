@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlaySquare, Mic, FileText, Edit3, MessageSquare } from 'lucide-react';
+import { Mic, FileText, Edit3, MessageSquare } from 'lucide-react';
 import { VoiceTranscriptionPlayground } from './playgrounds/VoiceTranscriptionPlayground';
 import { DocSummarizingPlayground } from './playgrounds/DocSummarizingPlayground';
 import { DictationCleanupPlayground } from './playgrounds/DictationCleanupPlayground';
@@ -11,15 +11,11 @@ export const UseCaseStudio: React.FC = () => {
   return (
     <div data-testid="use-case-studio-container" className="space-y-6">
       {/* Studio Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-2">
-        <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-          <PlaySquare className="w-4 h-4 text-indigo-400" />
-          <span>Interactive Zero-Code Playgrounds</span>
-        </div>
-        <h2 data-testid="studio-heading" className="text-2xl font-extrabold text-slate-100 tracking-tight">
-          Use Case Studio — Test Small Models Live
+      <div className="space-y-3">
+        <h2 data-testid="studio-heading" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">
+          Try small models on everyday tasks
         </h2>
-        <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+        <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
           Experience real non-technical local workflows. Choose a playground below, pick sample data or enter your own text, and run the processing engine locally on your Mac.
         </p>
       </div>
@@ -42,7 +38,7 @@ export const UseCaseStudio: React.FC = () => {
           <Mic className="w-5 h-5 text-indigo-400 shrink-0" />
           <div>
             <div className="text-xs font-bold">Voice Transcription</div>
-            <div className="text-[10px] text-slate-400 font-normal">Whisper Large-v3</div>
+            <div className="text-xs text-slate-400 font-normal">Whisper Large-v3</div>
           </div>
         </button>
 
@@ -59,7 +55,7 @@ export const UseCaseStudio: React.FC = () => {
           <FileText className="w-5 h-5 text-indigo-400 shrink-0" />
           <div>
             <div className="text-xs font-bold">Confidential Summaries</div>
-            <div className="text-[10px] text-slate-400 font-normal">Llama 3.2 (3B)</div>
+            <div className="text-xs text-slate-400 font-normal">Llama 3.2 (3B)</div>
           </div>
         </button>
 
@@ -76,7 +72,7 @@ export const UseCaseStudio: React.FC = () => {
           <Edit3 className="w-5 h-5 text-indigo-400 shrink-0" />
           <div>
             <div className="text-xs font-bold">Dictation Cleanup</div>
-            <div className="text-[10px] text-slate-400 font-normal">Phi-3.5 (3.8B)</div>
+            <div className="text-xs text-slate-400 font-normal">Phi-3.5 (3.8B)</div>
           </div>
         </button>
 
@@ -93,7 +89,7 @@ export const UseCaseStudio: React.FC = () => {
           <MessageSquare className="w-5 h-5 text-indigo-400 shrink-0" />
           <div>
             <div className="text-xs font-bold">File Chatting</div>
-            <div className="text-[10px] text-slate-400 font-normal">Qwen 2.5 (7B)</div>
+            <div className="text-xs text-slate-400 font-normal">Qwen 2.5 (7B)</div>
           </div>
         </button>
       </div>

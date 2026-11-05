@@ -126,7 +126,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column: Sample Playback & Waveform */}
         <div className="space-y-4">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+          <label className="text-xs font-bold text-slate-300 block">
             1. Select Sample Audio Track:
           </label>
 
@@ -162,7 +162,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
                 <Volume2 className="w-3.5 h-3.5 text-indigo-400" />
                 Audio Waveform Preview
               </span>
-              <span className="text-[11px] font-semibold text-emerald-400">Apple Metal Accelerated</span>
+              <span className="text-xs font-semibold text-emerald-400">Apple Metal Accelerated</span>
             </div>
 
             <div className="h-16 flex items-center justify-center gap-1 bg-slate-900/80 rounded-lg p-3 border border-slate-800/80">
@@ -177,7 +177,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
               ))}
             </div>
 
-            <div className="text-[11px] text-slate-400 text-center">
+            <div className="text-xs text-slate-400 text-center">
               Sample Text Preview: "{currentSample.content}"
             </div>
           </div>
@@ -218,10 +218,10 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
         {/* Right Column: Live Timestamped Output */}
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+            <label className="text-xs font-bold text-slate-300 block">
               2. Timestamped Speaker Transcript:
             </label>
-            <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
+            <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5" />
               {mode === 'live' ? 'Local Ollama on this machine (text only)' : 'Demo sample, no audio processed'}
             </span>
@@ -238,7 +238,7 @@ export const VoiceTranscriptionPlayground: React.FC = () => {
               )}
             </div>
 
-            <div className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-800/80 text-xs text-slate-400 flex items-center justify-between">
               <span>Engine: {mode === 'live' ? `Ollama (${matchingTag}), text cleanup` : 'none, demo sample'}</span>
               <span>Status: {isProcessing ? 'Processing' : 'Complete'}</span>
             </div>

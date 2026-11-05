@@ -28,6 +28,7 @@ import type { Page } from '@playwright/test';
 // version" / "a different size" / "a specialised build"). A literal here would
 // be right for this one case and quietly wrong if the case ever changes.
 import { MISMATCH_LABEL } from '../src/utils/modelUtils';
+import { openView } from './sweep';
 
 type Playground = {
   name: string;
@@ -95,7 +96,7 @@ const LIVE_CLAIM =
 const openPlayground = async (page: Page, tab: string) => {
   await page.goto('/');
   await page.waitForSelector('[data-testid="app-container"]');
-  await page.click('[data-testid="tab-use-case-studio"]');
+  await openView(page, 'tab-use-case-studio');
   await page.waitForSelector('[data-testid="use-case-studio-container"]');
   await page.click(`[data-testid="${tab}"]`);
   await page.waitForSelector('[data-testid="playground-output-container"]');

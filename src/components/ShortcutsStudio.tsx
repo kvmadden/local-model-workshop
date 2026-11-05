@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Command, Mic, FileText, CheckCircle2, Copy, Check, ShieldCheck, Sparkles, AppWindow, FileCode2 } from 'lucide-react';
+import { StepFlow } from './StepFlow';
+import { Mic, FileText, CheckCircle2, Copy, Check, ShieldCheck, Sparkles, AppWindow, FileCode2 } from 'lucide-react';
 
 interface ShortcutBlueprint {
   id: string;
@@ -25,7 +26,7 @@ const SHORTCUTS_DATA: ShortcutBlueprint[] = [
     steps: [
       'Open the macOS Shortcuts app (pre-installed on macOS Sequoia & macOS 26).',
       'Click "+" in the Shortcuts Gallery to create a new Shortcut named "Clean Up Dictation".',
-      'From the macOS Sequoia Action Library, drag in Action: "Get Selected Text" → "Get Contents of URL" (POST request to http://localhost:11434/api/generate).',
+      'From the macOS Sequoia Action Library, drag in the action "Get Selected Text", then "Get Contents of URL" (a POST request to http://localhost:11434/api/generate).',
       'Add Action: "Copy to Clipboard" & "Paste".',
       'In Shortcut Inspector settings under "Quick Actions", check "Use as Quick Action" and assign global hotkey ⌥⌘V.'
     ],
@@ -40,7 +41,7 @@ const SHORTCUTS_DATA: ShortcutBlueprint[] = [
     modelPairing: 'Whisper (Large-v3)',
     description: 'Right-click any MP3, WAV, or MOV file in macOS Finder to transcribe meeting recordings offline in seconds.',
     steps: [
-      'Open macOS Shortcuts app → Click "+" to create a new macOS Sequoia Quick Action.',
+      'Open the macOS Shortcuts app, then click "+" to create a new macOS Sequoia Quick Action.',
       'Set input type to "Audio files & Video files in Finder" in the macOS 26 Action Library.',
       'Add Action: "Run Shell Script" configured with MacWhisper CLI or local whisper binary.',
       'Add Action: "Save File" to your Downloads folder as formatted Markdown.',
@@ -80,15 +81,11 @@ export const ShortcutsStudio: React.FC = () => {
   return (
     <div data-testid="shortcuts-studio-container" className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-3">
-        <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-          <Command className="w-4 h-4 text-indigo-400" />
-          <span>macOS Sequoia / macOS 26 Automation & Menu Bar Recipes</span>
-        </div>
-        <h2 data-testid="shortcuts-heading" className="text-2xl font-extrabold text-slate-100 tracking-tight">
-          1-Click Apple Shortcuts & Global Hotkeys
+      <div className="space-y-3">
+        <h2 data-testid="shortcuts-heading" className="font-display text-[30px] font-semibold leading-[1.1] text-balance text-ink sm:text-[36px]">
+          Apple Shortcuts and global hotkeys
         </h2>
-        <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+        <p className="max-w-3xl text-[17px] leading-relaxed text-ink-2">
           Trigger local AI models directly from your Mac menu bar, Finder right-click menu, or global hotkeys (like <span className="text-indigo-300 bg-slate-950 px-1.5 py-0.5 rounded font-mono font-bold">⌥⌘V</span>) with zero coding required.
         </p>
       </div>
@@ -96,7 +93,7 @@ export const ShortcutsStudio: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Recipe Selector Chips */}
         <div className="lg:col-span-5 space-y-3">
-          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+          <label className="text-xs font-bold text-slate-300 block">
             Select a macOS Automation Recipe:
           </label>
 
@@ -127,10 +124,10 @@ export const ShortcutsStudio: React.FC = () => {
 
                   <p className="text-xs text-slate-300 leading-relaxed">{bp.description}</p>
 
-                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px]">
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-xs">
                     <span className="text-slate-400">Trigger:</span>
-                    <span className="font-mono font-bold text-indigo-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
-                      {bp.shortcutHotkey}
+                    <span className="font-mono font-bold text-indigo-300 bg-slate-950 px-2 py-1 rounded border border-slate-800">
+                      <StepFlow text={bp.shortcutHotkey} />
                     </span>
                   </div>
                 </button>
@@ -153,7 +150,7 @@ export const ShortcutsStudio: React.FC = () => {
                   <span>macOS Shortcuts recipes that call a local model</span>
                 </span>
                 <span className="text-xs font-mono font-bold text-indigo-300 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  {selectedBlueprint.shortcutHotkey}
+                  <StepFlow text={selectedBlueprint.shortcutHotkey} />
                 </span>
               </div>
               <h3 className="text-xl font-bold text-slate-100">{selectedBlueprint.title}</h3>
@@ -197,7 +194,7 @@ export const ShortcutsStudio: React.FC = () => {
                 <FileCode2 className="w-4 h-4 text-indigo-400" />
                 <span>REST JSON Parameter Note:</span>
               </div>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
+              <p className="text-slate-400 text-xs leading-relaxed">
                 The automation payload sends standard REST JSON parameters (<span className="text-indigo-200 font-mono">"model"</span> and <span className="text-indigo-200 font-mono">"prompt"</span>) directly to your local model endpoint (<span className="text-indigo-200 font-mono">http://localhost:11434/api/generate</span>). The placeholder <span className="text-emerald-300 font-semibold">[Selected Text]</span> is automatically substituted by macOS Shortcuts at execution time.
               </p>
             </div>
@@ -206,7 +203,7 @@ export const ShortcutsStudio: React.FC = () => {
             <div className="space-y-2 pt-2 border-t border-slate-800">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-slate-400 font-medium">
                 <span>Local Execution Payload Command:</span>
-                <span className="text-[10px] text-slate-400">Copy to paste into Shortcuts app</span>
+                <span className="text-xs text-slate-400">Copy to paste into Shortcuts app</span>
               </div>
 
               <div className="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800 gap-2">

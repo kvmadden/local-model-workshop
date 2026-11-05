@@ -46,7 +46,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, flowStatus = 'idle' })
               <Layers className="w-4 h-4 text-slate-400" />
               <span>Status:</span>
               <span
-                className={`px-2.5 py-1 rounded-full text-xs font-mono font-medium border uppercase tracking-wider ${getStatusBadgeStyle(
+                className={`px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusBadgeStyle(
                   flowStatus
                 )}`}
               >

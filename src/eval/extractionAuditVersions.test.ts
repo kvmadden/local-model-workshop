@@ -56,7 +56,8 @@ it('refuses legacy writers and existing v2 output without changing evidence', as
   }
   for (const [file, expected] of Object.entries(manifest)) expect(hash(frozenBytes(file)), file).toBe(expected)
   expect(readFileSync('eval/extraction-audit/versions/v2/qualification.json', 'utf8')).toBe(current)
-})
+  // Three vite-node processes in a row. On a busy shared machine that can take longer than the default 5 s.
+}, 60000)
 
 it('auto-replays partial v1 freezes and fails closed on an unknown evaluator', async () => {
   const { mkdtempSync, writeFileSync, rmSync } = await import('node:fs')

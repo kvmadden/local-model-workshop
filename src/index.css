@@ -2,91 +2,227 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * The palette. Each value is an RGB triplet so Tailwind's opacity modifiers work.
+ * Warm paper and white cards, a sand header band, and amber, the color of a prescription vial,
+ * for actions. Each compared model keeps one hue everywhere it appears, and red marks a miss.
+ * The model hues were checked for color-blind separation, and text contrast is checked on the
+ * rendered page by e2e/accessibility.spec.ts in both themes.
+ */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --slate-50: 250 248 244;
+  --slate-100: 242 237 228;
+  --slate-200: 226 219 207;
+  --slate-300: 210 202 189;
+  --slate-400: 181 173 159;
+  --slate-500: 150 142 129;
+  --slate-600: 107 100 90;
+  --slate-700: 62 57 48;
+  --slate-800: 46 42 36;
+  --slate-850: 37 34 29;
+  --slate-900: 28 26 23;
+  --slate-950: 20 19 17;
+
+  --muted-50: 250 248 244;
+  --muted-100: 242 237 228;
+  --muted-200: 226 219 207;
+  --muted-300: 210 202 189;
+  --muted-400: 181 173 159;
+  --muted-500: 79 72 62;
+  --muted-600: 63 57 47;
+  --muted-700: 62 57 48;
+  --muted-800: 46 42 36;
+  --muted-900: 28 26 23;
+  --muted-950: 20 19 17;
+
+  --accent-50: 255 246 232;
+  --accent-100: 253 235 207;
+  --accent-200: 248 214 162;
+  --accent-300: 240 190 116;
+  --accent-400: 232 168 82;
+  --accent-500: 143 86 11;
+  --accent-600: 154 94 14;
+  --accent-700: 127 77 11;
+  --accent-800: 92 57 8;
+  --accent-900: 61 39 6;
+  --accent-950: 42 28 7;
+
+  --alert-50: 255 241 241;
+  --alert-100: 255 224 224;
+  --alert-200: 255 194 194;
+  --alert-300: 255 163 163;
+  --alert-400: 242 139 139;
+  --alert-500: 229 72 77;
+  --alert-600: 201 51 57;
+  --alert-700: 163 42 47;
+  --alert-800: 110 31 34;
+  --alert-900: 69 21 23;
+  --alert-950: 43 16 18;
+
+  --bench: 20 19 17;
+  --panel: 28 26 23;
+  --band: 34 29 21;
+  --rule: 46 42 36;
+  --rule-strong: 62 57 48;
+  --field: 122 114 102;
+  --ink: 242 237 228;
+  --ink-2: 210 202 189;
+  --ink-3: 167 159 146;
+  --accent-text: 232 168 82;
+  --alert-text: 242 139 139;
+  --selected: 42 34 22;
+  --focus: 232 168 82;
+
+  /* One hue per compared column, the same in the chart, the sheet and the detail. */
+  --m-gpt: 57 135 229;
+  --m-gemma: 25 158 112;
+  --m-qwen: 207 90 162;
+  --m-rules: 138 130 117;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --slate-50: 20 17 13;
+  --slate-100: 30 26 21;
+  --slate-200: 47 42 35;
+  --slate-300: 74 67 57;
+  --slate-400: 93 85 73;
+  --slate-500: 106 98 85;
+  --slate-600: 160 151 138;
+  --slate-700: 216 204 182;
+  --slate-800: 231 223 209;
+  --slate-850: 241 235 224;
+  --slate-900: 255 255 255;
+  --slate-950: 250 247 242;
+
+  --muted-50: 20 17 13;
+  --muted-100: 30 26 21;
+  --muted-200: 47 42 35;
+  --muted-300: 74 67 57;
+  --muted-400: 93 85 73;
+  --muted-500: 79 72 62;
+  --muted-600: 63 57 47;
+  --muted-700: 216 204 182;
+  --muted-800: 231 223 209;
+  --muted-900: 255 255 255;
+  --muted-950: 250 247 242;
+
+  --accent-50: 58 34 3;
+  --accent-100: 77 45 4;
+  --accent-200: 99 58 5;
+  --accent-300: 122 71 6;
+  --accent-400: 138 82 8;
+  --accent-500: 160 97 12;
+  --accent-600: 147 88 10;
+  --accent-700: 126 75 8;
+  --accent-800: 233 201 154;
+  --accent-900: 246 227 196;
+  --accent-950: 251 241 225;
+
+  --alert-50: 46 10 11;
+  --alert-100: 69 16 15;
+  --alert-200: 107 23 23;
+  --alert-300: 163 35 41;
+  --alert-400: 180 37 44;
+  --alert-500: 201 51 57;
+  --alert-600: 180 37 44;
+  --alert-700: 143 29 34;
+  --alert-800: 242 189 189;
+  --alert-900: 251 224 224;
+  --alert-950: 253 241 241;
+
+  --bench: 246 242 234;
+  --panel: 255 255 255;
+  --band: 241 232 216;
+  --rule: 231 223 209;
+  --rule-strong: 216 204 182;
+  --field: 142 133 120;
+  --ink: 30 26 21;
+  --ink-2: 74 67 57;
+  --ink-3: 106 98 85;
+  --accent-text: 138 82 8;
+  --alert-text: 180 37 44;
+  --selected: 251 243 228;
+  --focus: 138 82 8;
+
+  --m-gpt: 42 120 214;
+  --m-gemma: 27 175 122;
+  --m-qwen: 196 72 154;
+  --m-rules: 146 138 125;
+}
+
+html {
+  background-color: rgb(var(--bench));
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: rgb(var(--bench));
+  color: rgb(var(--ink));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Light equivalents of the existing Slate and Indigo utility palette. */
-[data-theme='light'] {
-  color-scheme: light;
-  background-color: #f8fafc;
-  color: #0f172a;
+/* Numbers line up in tables and counts. */
+table,
+.font-mono,
+code,
+pre,
+kbd {
+  font-variant-numeric: tabular-nums;
 }
 
-[data-theme='light'] :is([class~='bg-slate-900'], [class~='bg-slate-900/90']) {
-  background-color: #ffffff;
+/* Headlines: the display face, with optical sizing so large sizes take its tighter forms. */
+.font-display {
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
 }
 
-[data-theme='light'] :is([class~='bg-slate-950'], [class~='bg-slate-950/80'], [class~='bg-slate-950/60']) {
-  background-color: #f8fafc;
+/* A medication instruction as written: the light monospace face, the one place it is used for prose. */
+.sig {
+  font-family: 'Atkinson Hyperlegible Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 300;
+  letter-spacing: 0;
 }
 
-[data-theme='light'] [class~='bg-slate-800'] {
-  background-color: #e2e8f0;
+/* Text fields carry a border dark enough to find (3:1 against the page). */
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+select,
+textarea {
+  border-color: rgb(var(--field));
 }
 
-[data-theme='light'] :is([class~='text-slate-100'], [class~='text-slate-200']) {
-  color: #0f172a;
+/* One focus mark for every control, in the amber, with at least 3:1 contrast in each theme. */
+:focus-visible {
+  outline: 2px solid rgb(var(--focus));
+  outline-offset: 2px;
 }
 
-[data-theme='light'] :is([class~='text-slate-300'], [class~='text-slate-400'], [class~='text-slate-500']) {
-  color: #475569;
+::selection {
+  background: rgb(var(--accent-900));
+  color: rgb(var(--ink));
 }
 
-[data-theme='light'] :is([class~='border-slate-700'], [class~='border-slate-700/80'], [class~='border-slate-800'], [class~='border-slate-800/80'], [class~='border-slate-900']) {
-  border-color: #cbd5e1;
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+summary::-webkit-details-marker {
+  display: none;
 }
 
-[data-theme='light'] :is([class~='bg-indigo-950/80'], [class~='bg-indigo-950/60']) {
-  background-color: #eef2ff;
-}
-
-[data-theme='light'] :is([class~='text-indigo-300'], [class~='text-indigo-400']) {
-  color: #4338ca;
-}
-
-[data-theme='light'] [class~='bg-emerald-950/80'] {
-  background-color: #ecfdf5;
-}
-
-[data-theme='light'] [class~='text-emerald-400'] {
-  color: #047857;
-}
-
-[data-theme='light'] [class~='bg-amber-950/80'] {
-  background-color: #fffbeb;
-}
-
-[data-theme='light'] [class~='text-amber-400'] {
-  color: #92400e;
-}
-
-[data-theme='light'] :is([class~='bg-rose-950/40'], [class~='bg-rose-950/60'], [class~='bg-rose-950/80']) {
-  background-color: #fff1f2;
-}
-
-[data-theme='light'] :is([class~='text-rose-300'], [class~='text-rose-400']) {
-  color: #be123c;
-}
-
-[data-theme='light'] .shadow-xl {
-  box-shadow: 0 8px 24px rgb(15 23 42 / 5%);
-}
-
-[data-theme='light'] :is(button, input, textarea, select):focus-visible {
-  outline: 2px solid #4f46e5;
-  outline-offset: 3px;
-}
-
-[data-theme='light'] :is([class~='hover:bg-slate-700'], [class~='hover:bg-slate-900/60']):hover {
-  background-color: #cbd5e1;
-}
-
-[data-theme='light'] [class~='hover:text-slate-200']:hover {
-  color: #0f172a;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

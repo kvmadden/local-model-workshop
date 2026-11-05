@@ -83,7 +83,7 @@ export const SharedPlayground: React.FC<SharedPlaygroundProps> = ({
             >
               <span>🟢 Live Ollama Mode</span>
               {!isLiveAvailable && (
-                <span data-testid="live-unavailable-reason" className="text-[10px] text-slate-400">
+                <span data-testid="live-unavailable-reason" className="text-xs text-slate-400">
                   {engineAvailable ? '(Model not installed)' : '(Offline)'}
                 </span>
               )}

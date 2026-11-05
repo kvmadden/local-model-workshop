@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { openView } from './sweep';
 
 // This file asserts the engine-DOWN surface throughout: the Tier 3 playground
 // tests below check the hardcoded demo samples, which are only what a
@@ -13,6 +14,8 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     // Navigate to the workshop
     await page.goto('/');
     await page.waitForSelector('[data-testid="app-container"]');
+    // The workshop opens on the run comparison. These tests start from the Task Wizard.
+    await openView(page, 'tab-task-wizard');
     await page.waitForSelector('[data-testid="task-wizard-container"]');
   });
 
@@ -31,12 +34,16 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
       await expect(title).toHaveText(/Local Model Workshop/i);
 
       const subtitle = page.locator('[data-testid="workshop-subtitle"]');
-      await expect(subtitle).toHaveText(/Explore, compare and chain small local models/i);
+      await expect(subtitle).toHaveText(/A test bench for local models reading medication instructions/i);
 
       // Assert Navigation Tabs are present
+      // Three sections, and the views of the open one (Try it, where these tests start).
+      await expect(page.locator('[data-testid="section-results"]')).toBeVisible();
+      await expect(page.locator('[data-testid="section-try"]')).toBeVisible();
+      await expect(page.locator('[data-testid="section-reference"]')).toBeVisible();
       await expect(page.locator('[data-testid="tab-task-wizard"]')).toBeVisible();
-      await expect(page.locator('[data-testid="tab-model-catalog"]')).toBeVisible();
       await expect(page.locator('[data-testid="tab-use-case-studio"]')).toBeVisible();
+      await expect(page.locator('[data-testid="tab-flow-builder"]')).toBeVisible();
     });
 
     test('T1-02: Tab navigation switches active view between Wizard, Catalog, Studio, and Builder', async ({ page }) => {
@@ -44,28 +51,28 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
       await expect(page.locator('[data-testid="task-wizard-container"]')).toBeVisible();
 
       // Switch to Model Catalog
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
       await expect(page.locator('[data-testid="model-catalog-container"]')).toBeVisible();
       await expect(page.locator('[data-testid="task-wizard-container"]')).not.toBeVisible();
 
       // Switch to Use Case Studio
-      await page.click('[data-testid="tab-use-case-studio"]');
+      await openView(page, 'tab-use-case-studio');
       await expect(page.locator('[data-testid="use-case-studio-container"]')).toBeVisible();
       await expect(page.locator('[data-testid="model-catalog-container"]')).not.toBeVisible();
 
       // Switch to Flow Builder
-      await page.click('[data-testid="tab-flow-builder"]');
+      await openView(page, 'tab-flow-builder');
       await expect(page.locator('[data-testid="flow-canvas"]')).toBeVisible();
 
       // Return to Task Wizard
-      await page.click('[data-testid="tab-task-wizard"]');
+      await openView(page, 'tab-task-wizard');
       await expect(page.locator('[data-testid="task-wizard-container"]')).toBeVisible();
     });
 
     test('T1-03: Task Wizard hero banner renders non-technical zero-code guidance', async ({ page }) => {
       const heading = page.locator('[data-testid="wizard-heading"]');
       await expect(heading).toBeVisible();
-      await expect(heading).toContainText('Match Your Mac Goal to the Perfect Local Model & App');
+      await expect(heading).toContainText('Match your Mac goal to a local model and app');
 
       // Check task options list renders
       const firstOption = page.locator('[data-testid="task-option-transcribe-meetings"]');
@@ -122,7 +129,7 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     });
 
     test('T2-05: Model Catalog renders cards for Llama 3.2, Qwen 2.5, DeepSeek-R1, Whisper, and Phi-3.5', async ({ page }) => {
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
 
       await expect(page.locator('[data-testid="model-card-llama-3.2-3b"]')).toBeVisible();
       await expect(page.locator('[data-testid="model-card-qwen-2.5-7b"]')).toBeVisible();
@@ -132,7 +139,7 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     });
 
     test('T2-06: Model cards display Mac RAM metrics and Apple Silicon scores accurately', async ({ page }) => {
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
 
       // Verify Llama 3.2 specs
       const llamaRam = page.locator('[data-testid="ram-usage-llama-3.2-3b"]');
@@ -152,7 +159,7 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     });
 
     test('T2-07: Opens and closes 1-Click Zero-Code Setup Steps Modal in Model Catalog', async ({ page }) => {
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
 
       // Click setup button for Whisper
       await page.click('[data-testid="setup-modal-btn-whisper-large-v3"]');
@@ -184,7 +191,7 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     });
 
     test('T2-09: Model Catalog filters model cards by RAM requirements (8 GB vs 16 GB+)', async ({ page }) => {
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
 
       // Filter by 8 GB RAM
       await page.click('[data-testid="ram-filter-8gb"]');
@@ -217,8 +224,8 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
     // because the playgrounds went live and streamed real tokens instead.
 
     test.beforeEach(async ({ page }) => {
-      await page.waitForSelector('[data-testid="tab-use-case-studio"]');
-      await page.click('[data-testid="tab-use-case-studio"]');
+      await page.waitForSelector('[data-testid="app-container"]');
+      await openView(page, 'tab-use-case-studio');
       await page.waitForSelector('[data-testid="use-case-studio-container"]');
     });
 
@@ -280,17 +287,17 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
 
     test('T4-01: Asserts NO raw code blocks (<code> or <pre>) exist in Task Wizard, Model Catalog, or Studio views', async ({ page }) => {
       // Check Task Wizard
-      await page.click('[data-testid="tab-task-wizard"]');
+      await openView(page, 'tab-task-wizard');
       expect(await page.locator('code').count()).toBe(0);
       expect(await page.locator('pre').count()).toBe(0);
 
       // Check Model Catalog
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
       expect(await page.locator('code').count()).toBe(0);
       expect(await page.locator('pre').count()).toBe(0);
 
       // Check Use Case Studio
-      await page.click('[data-testid="tab-use-case-studio"]');
+      await openView(page, 'tab-use-case-studio');
       expect(await page.locator('code').count()).toBe(0);
       expect(await page.locator('pre').count()).toBe(0);
     });
@@ -300,17 +307,17 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
       const rawJsonRegex = /\{"\w+":/i;
 
       // Task Wizard
-      await page.click('[data-testid="tab-task-wizard"]');
+      await openView(page, 'tab-task-wizard');
       let wizardText = await page.locator('[data-testid="app-container"]').innerText();
       expect(wizardText).not.toMatch(rawJsonRegex);
 
       // Model Catalog
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
       let catalogText = await page.locator('[data-testid="app-container"]').innerText();
       expect(catalogText).not.toMatch(rawJsonRegex);
 
       // Use Case Studio
-      await page.click('[data-testid="tab-use-case-studio"]');
+      await openView(page, 'tab-use-case-studio');
       let studioText = await page.locator('[data-testid="app-container"]').innerText();
       expect(studioText).not.toMatch(rawJsonRegex);
     });
@@ -319,17 +326,17 @@ test.describe('Explore, compare and chain small local models E2E Suite', () => {
       const templatePlaceholderRegex = /\{\{\w+\}\}/i;
 
       // Task Wizard
-      await page.click('[data-testid="tab-task-wizard"]');
+      await openView(page, 'tab-task-wizard');
       let wizardText = await page.locator('[data-testid="app-container"]').innerText();
       expect(wizardText).not.toMatch(templatePlaceholderRegex);
 
       // Model Catalog
-      await page.click('[data-testid="tab-model-catalog"]');
+      await openView(page, 'tab-model-catalog');
       let catalogText = await page.locator('[data-testid="app-container"]').innerText();
       expect(catalogText).not.toMatch(templatePlaceholderRegex);
 
       // Use Case Studio
-      await page.click('[data-testid="tab-use-case-studio"]');
+      await openView(page, 'tab-use-case-studio');
       let studioText = await page.locator('[data-testid="app-container"]').innerText();
       expect(studioText).not.toMatch(templatePlaceholderRegex);
     });

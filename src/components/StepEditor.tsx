@@ -53,12 +53,12 @@ export const StepEditor: React.FC<StepEditorProps> = ({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider">
+      <div className="flex items-center justify-between text-xs font-semibold text-slate-400">
         <span className="flex items-center gap-1.5">
           <Code className="w-3.5 h-3.5 text-indigo-400" />
           Prompt Template Editor
         </span>
-        <span className="font-mono text-slate-400">Supports double-curly placeholders</span>
+        <span className="text-slate-400">Supports double-curly placeholders</span>
       </div>
 
       <textarea

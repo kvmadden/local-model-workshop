@@ -61,7 +61,7 @@ export const OllamaDetector: React.FC = () => {
       {/* Installed Models Grid */}
       {available && models.length > 0 && (
         <div className="space-y-2">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+          <span className="text-xs font-semibold text-slate-400">
             Installed Models:
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -76,13 +76,13 @@ export const OllamaDetector: React.FC = () => {
                   <div className="min-w-0">
                     <div className="font-semibold text-slate-200 truncate">{model.name}</div>
                     {model.size > 0 && (
-                      <div className="text-[10px] text-slate-400">{formatModelSize(model.size)}</div>
+                      <div className="text-xs text-slate-400">{formatModelSize(model.size)}</div>
                     )}
                   </div>
                 </div>
                 <span
                   data-testid={`detector-installed-tag-${model.name}`}
-                  className="text-[10px] font-semibold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/60 shrink-0"
+                  className="text-xs font-semibold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/60 shrink-0"
                 >
                   🟢 Installed in Ollama
                 </span>
@@ -94,7 +94,7 @@ export const OllamaDetector: React.FC = () => {
 
       {/* Model Catalog Availability & Quick Pull List */}
       <div className="space-y-2 pt-2 border-t border-slate-800/80">
-        <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+        <span className="text-xs font-semibold text-slate-400">
           Curated Model Catalog Status:
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -109,15 +109,15 @@ export const OllamaDetector: React.FC = () => {
               <div
                 key={catModel.id}
                 data-testid={`detector-catalog-status-${catModel.id}`}
-                className="flex items-center justify-between p-2.5 bg-slate-950/60 rounded-xl border border-slate-800 text-xs gap-2"
+                className="flex flex-wrap items-center justify-between p-2.5 bg-slate-950/60 rounded-xl border border-slate-800 text-xs gap-2"
               >
                 <div className="min-w-0">
                   <div className="font-semibold text-slate-200 truncate">{catModel.name}</div>
-                  <div className="text-[10px] text-slate-400">{catModel.parameters} • {catModel.family}</div>
+                  <div className="text-xs text-slate-400">{catModel.parameters} • {catModel.family}</div>
                   {otherBuild && (
                     <div
                       data-testid={`detector-other-version-${catModel.id}`}
-                      className="text-[10px] text-amber-400 truncate"
+                      className="text-xs text-amber-400 truncate"
                       title={`${otherBuild.tag} is installed, but this row is ${catModel.name}.`}
                     >
                       <span className="font-mono">{otherBuild.tag}</span> installed —{' '}
@@ -129,22 +129,22 @@ export const OllamaDetector: React.FC = () => {
                 {installedTag ? (
                   <span
                     data-testid={`status-badge-installed-${catModel.id}`}
-                    className="text-[10px] font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded shrink-0"
+                    className="text-xs font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded shrink-0"
                   >
                     🟢 Installed in Ollama
                   </span>
                 ) : (
-                  <div className="flex items-center gap-1 shrink-0">
+                  <div className="flex min-w-0 flex-wrap items-center justify-end gap-1">
                     <span
                       data-testid={`status-badge-available-${catModel.id}`}
-                      className="text-[10px] font-semibold text-slate-400 bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded"
+                      className="text-xs font-semibold text-slate-400 bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded"
                     >
                       {pullCmd ? '⚪ Available via Ollama' : '⚪ Not served by Ollama'}
                     </span>
                     {!pullCmd && (
                       <span
                         data-testid={`no-ollama-path-detector-${catModel.id}`}
-                        className="text-[10px] text-slate-300 max-w-[14rem] text-right"
+                        className="text-xs text-slate-300 max-w-[14rem] text-right"
                       >
                         Set up through {catModel.appPairing}
                       </span>
@@ -153,7 +153,7 @@ export const OllamaDetector: React.FC = () => {
                       type="button"
                       data-testid={`copy-pull-detector-${catModel.id}`}
                       onClick={() => handleCopy(pullCmd, catModel.id)}
-                      className="text-[10px] font-mono bg-slate-900 hover:bg-slate-800 border border-slate-700 text-indigo-300 px-2.5 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer min-h-[44px] min-w-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                      className="text-xs font-mono bg-slate-900 hover:bg-slate-800 border border-slate-700 text-indigo-300 px-2.5 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer min-h-[44px] min-w-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                       title={`Copy command: ${pullCmd}`}
                     >
                       {copiedId === catModel.id ? (

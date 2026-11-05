@@ -96,19 +96,19 @@ describe('Workshop stress tests', () => {
       await renderComponent(<App initialTab="wizard" />);
 
       expect(getByTestId('task-wizard-container')).not.toBeNull();
-      expect(getByTestId('wizard-heading')?.textContent).toContain('Match Your Mac Goal');
+      expect(getByTestId('wizard-heading')?.textContent).toContain('Match your Mac goal');
       expect(getByTestId('hero-section')).not.toBeNull();
 
-      // Switch to catalog then back to wizard via header tabs
-      const catalogTabBtn = getByTestId('tab-model-catalog');
+      // Switch to the catalog in Reference, then back to the wizard in Try it, via the header sections
+      const referenceBtn = getByTestId('section-reference');
       await act(async () => {
-        catalogTabBtn?.click();
+        referenceBtn?.click();
       });
       expect(getByTestId('model-catalog-container')).not.toBeNull();
 
-      const wizardTabBtn = getByTestId('tab-task-wizard');
+      const tryBtn = getByTestId('section-try');
       await act(async () => {
-        wizardTabBtn?.click();
+        tryBtn?.click();
       });
       expect(getByTestId('task-wizard-container')).not.toBeNull();
     });

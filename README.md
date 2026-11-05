@@ -52,12 +52,14 @@ Computed from the saved replies by `src/eval/decision.test.ts`. Each row takes c
 
 ## What the workshop does
 
+- **Three sections.** Results holds the run comparison and the label audit. Try it holds the task wizard, the use-case playgrounds and the flow builder. Reference holds the model catalog, the hardware advisor and the Apple Shortcuts recipes. The header shows the three sections and the views of the open one.
+- **Run comparison, the opening screen.** It shows the finding and nothing else. The headline says a simple rules parser does as well as every model, so these lines can't pick one. One sentence gives the counts: all four read 24 or 25 of the 25 development lines fully right, and every miss is the frequency on the one line that says "at bedtime as needed". A status line says no model is chosen until the new blind test set runs. A bar chart shows each column's count with its exact 95% interval as a whisker. One button, See every line, opens the next step: every line checked field by field, the selected line beside the sheet, the ruling, the count for each field, and one Options disclosure for the other set, the other reading and run 2. It reads the committed replies and calls no model.
 - **Flow builder.** Chain prompt steps. A step's prompt can use `{{input}}` or an earlier step's output (`{{step1.output}}`). Each step runs on:
   - a built-in mock, the default, which needs nothing installed
   - a local Ollama
   - an OpenAI-compatible server on this Mac, such as LM Studio
 - **Local by default, and enforced.** The adapters refuse to send prompt text to any host that is not this machine unless code explicitly sets `allowRemote` (and, for a hosted OpenAI endpoint, an API key). "This machine" means loopback addresses only: the loopback name, the IPv4 loopback range, the IPv6 loopback address or an IPv4-mapped loopback address. Subdomains of the loopback name do not count. No request that carries prompt text follows a redirect, so a local endpoint cannot pass the prompt on. Running locally does not by itself make anything private or compliant. Storage, logging and network settings still need their own checks.
-- **Reference tabs.** A task wizard, a model catalog, a hardware advisor and four playgrounds. Catalog speeds are bandwidth arithmetic, not measurements. Playground output is labeled demo output unless a matching local model ran.
+- **Try it and Reference.** A task wizard, four playgrounds, a model catalog and a hardware advisor. Catalog speeds are bandwidth arithmetic, not measurements. Playground output is labeled demo output unless a matching local model ran.
 - **Saved-run inspector.** Benchmark Studio opens an inspector for the extraction audit on public label text (below).
 
 ## The eval
@@ -144,6 +146,8 @@ The historical documents ([docs/ORIGINAL-EVALUATION.md](docs/ORIGINAL-EVALUATION
 
 ## How it was built
 
-Kevin Madden, PharmD, designed the workshop, the task and the schema review. AI coding tools wrote much of the code, tests and documentation, and this revision followed a review by four model families ([docs/HOW-BUILT.md](docs/HOW-BUILT.md)).
+Kevin Madden, PharmD, designed the workshop, the task and the schema review.
+
+The interface is styled like a dispensing counter: warm paper and white cards, a sand header band, and amber, the color of a prescription vial, for actions, links and focus. Each compared column keeps one hue wherever it appears, blue for gpt-oss:20b, teal for gemma4:31b, berry for qwen3.8:27b and warm gray for the rules parser, and red marks a missed field. The three model hues were checked for color-blind separation. Headlines are set in Bricolage Grotesque. Text is Atkinson Hyperlegible Next, a face drawn for low-vision readers, in sentence case, and its monospace sibling sets only the medication instructions themselves, where a misread 1 or l matters. Fonts are bundled, so the page requests nothing from another host. A browser sweep checks every view at 1920, 1440, 1024, 430 and 390 px wide, in both themes, for text contrast, 44 px targets, room inside every boxed label or ring, step flows that never wrap partway, and no sideways scrolling. A further check keeps the run comparison calm: no forced capitals, the display face only on headings, monospace only for the medication lines, no rule heavier than a hairline, and red only for a miss. AI coding tools wrote much of the code, tests and documentation, and this revision followed a review by four model families ([docs/HOW-BUILT.md](docs/HOW-BUILT.md)).
 
 MIT, Copyright (c) 2026 Kevin Madden. The eval lines are synthetic. The audit excerpts are public openFDA label text with no patient data.
