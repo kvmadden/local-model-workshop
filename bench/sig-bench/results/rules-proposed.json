@@ -1,0 +1,1196 @@
+{
+ "label_status": "proposed, not confirmed by a pharmacist",
+ "scorer": "sig-v3 (src/eval/sigScoreV3.ts) on the six fields, through src/eval/sigBenchScore.ts",
+ "baseline": "rules (src/eval/sigBaselines.ts), frozen",
+ "bedtimeAsNeeded": {
+  "ruling": "no-schedule",
+  "prompt": "once-daily"
+ },
+ "tiers": {
+  "clean": {
+   "items": 34,
+   "representable": 34,
+   "sixFieldRight": 23,
+   "sixFieldRightPromptReading": 27,
+   "notRepresentable": 0,
+   "needsClarification": 0,
+   "flagged": 9,
+   "flaggedNeedsClarification": 0,
+   "flaggedNotRepresentable": 0,
+   "flaggedRepresentable": 9
+  },
+  "hard": {
+   "items": 86,
+   "representable": 33,
+   "sixFieldRight": 15,
+   "sixFieldRightPromptReading": 20,
+   "notRepresentable": 53,
+   "needsClarification": 18,
+   "flagged": 76,
+   "flaggedNeedsClarification": 12,
+   "flaggedNotRepresentable": 47,
+   "flaggedRepresentable": 29
+  },
+  "all": {
+   "items": 120,
+   "representable": 67,
+   "sixFieldRight": 38,
+   "sixFieldRightPromptReading": 47,
+   "notRepresentable": 53,
+   "needsClarification": 18,
+   "flagged": 85,
+   "flaggedNeedsClarification": 12,
+   "flaggedNotRepresentable": 47,
+   "flaggedRepresentable": 38
+  }
+ },
+ "lines": [
+  {
+   "id": "sb-001",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-002",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-003",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-004",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-005",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-006",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "timing"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-007",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-008",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-009",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-010",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-011",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 3
+  },
+  {
+   "id": "sb-012",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-013",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "timing"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-014",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-015",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "frequency",
+    "timing"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-016",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 0
+  },
+  {
+   "id": "sb-017",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 0
+  },
+  {
+   "id": "sb-018",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 0
+  },
+  {
+   "id": "sb-019",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": false,
+   "wrongFields": [],
+   "unread": 3
+  },
+  {
+   "id": "sb-020",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-021",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-022",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-023",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-024",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-025",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-026",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-027",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "dose"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-028",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-029",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-030",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-031",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-032",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "timing"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-033",
+   "tier": "clean",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-034",
+   "tier": "clean",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 0
+  },
+  {
+   "id": "sb-035",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 1
+  },
+  {
+   "id": "sb-036",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-037",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 1
+  },
+  {
+   "id": "sb-038",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 1
+  },
+  {
+   "id": "sb-039",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 4
+  },
+  {
+   "id": "sb-040",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-041",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 6
+  },
+  {
+   "id": "sb-042",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-043",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-044",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 6
+  },
+  {
+   "id": "sb-045",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-046",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-047",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-048",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-049",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-050",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-051",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-052",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-053",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 15
+  },
+  {
+   "id": "sb-054",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 9
+  },
+  {
+   "id": "sb-055",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 7
+  },
+  {
+   "id": "sb-056",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 17
+  },
+  {
+   "id": "sb-057",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 16
+  },
+  {
+   "id": "sb-058",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 7
+  },
+  {
+   "id": "sb-059",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 10
+  },
+  {
+   "id": "sb-060",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 9
+  },
+  {
+   "id": "sb-061",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 7
+  },
+  {
+   "id": "sb-062",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 12
+  },
+  {
+   "id": "sb-063",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-064",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-065",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 6
+  },
+  {
+   "id": "sb-066",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 8
+  },
+  {
+   "id": "sb-067",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "prn",
+    "prn_indication"
+   ],
+   "unread": 13
+  },
+  {
+   "id": "sb-068",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 6
+  },
+  {
+   "id": "sb-069",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 6
+  },
+  {
+   "id": "sb-070",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "frequency",
+    "prn_indication"
+   ],
+   "unread": 6
+  },
+  {
+   "id": "sb-071",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 4
+  },
+  {
+   "id": "sb-072",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 1
+  },
+  {
+   "id": "sb-073",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-074",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 4
+  },
+  {
+   "id": "sb-075",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 1
+  },
+  {
+   "id": "sb-076",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 4
+  },
+  {
+   "id": "sb-077",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-078",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-079",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 13
+  },
+  {
+   "id": "sb-080",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 9
+  },
+  {
+   "id": "sb-081",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-082",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 11
+  },
+  {
+   "id": "sb-083",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 7
+  },
+  {
+   "id": "sb-084",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 6
+  },
+  {
+   "id": "sb-085",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 9
+  },
+  {
+   "id": "sb-086",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 10
+  },
+  {
+   "id": "sb-087",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 6
+  },
+  {
+   "id": "sb-088",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 5
+  },
+  {
+   "id": "sb-089",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-090",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 15
+  },
+  {
+   "id": "sb-091",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 3
+  },
+  {
+   "id": "sb-092",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 3
+  },
+  {
+   "id": "sb-093",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 8
+  },
+  {
+   "id": "sb-094",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 6
+  },
+  {
+   "id": "sb-095",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-096",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-097",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-098",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "dose"
+   ],
+   "unread": 2
+  },
+  {
+   "id": "sb-099",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 1
+  },
+  {
+   "id": "sb-100",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 3
+  },
+  {
+   "id": "sb-101",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "frequency",
+    "timing"
+   ],
+   "unread": 9
+  },
+  {
+   "id": "sb-102",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 5
+  },
+  {
+   "id": "sb-103",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "dose"
+   ],
+   "unread": 4
+  },
+  {
+   "id": "sb-104",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 2
+  },
+  {
+   "id": "sb-105",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 3
+  },
+  {
+   "id": "sb-106",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 26
+  },
+  {
+   "id": "sb-107",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 25
+  },
+  {
+   "id": "sb-108",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "prn",
+    "prn_indication"
+   ],
+   "unread": 11
+  },
+  {
+   "id": "sb-109",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 9
+  },
+  {
+   "id": "sb-110",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "timing"
+   ],
+   "unread": 4
+  },
+  {
+   "id": "sb-111",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "timing"
+   ],
+   "unread": 1
+  },
+  {
+   "id": "sb-112",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "frequency",
+    "timing"
+   ],
+   "unread": 2
+  },
+  {
+   "id": "sb-113",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "timing"
+   ],
+   "unread": 6
+  },
+  {
+   "id": "sb-114",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 0
+  },
+  {
+   "id": "sb-115",
+   "tier": "hard",
+   "representable": false,
+   "right": null,
+   "rightPromptReading": null,
+   "wrongFields": [],
+   "unread": 2
+  },
+  {
+   "id": "sb-116",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 3
+  },
+  {
+   "id": "sb-117",
+   "tier": "hard",
+   "representable": true,
+   "right": true,
+   "rightPromptReading": true,
+   "wrongFields": [],
+   "unread": 7
+  },
+  {
+   "id": "sb-118",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "drug",
+    "frequency"
+   ],
+   "unread": 5
+  },
+  {
+   "id": "sb-119",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": true,
+   "wrongFields": [
+    "frequency"
+   ],
+   "unread": 2
+  },
+  {
+   "id": "sb-120",
+   "tier": "hard",
+   "representable": true,
+   "right": false,
+   "rightPromptReading": false,
+   "wrongFields": [
+    "drug",
+    "dose",
+    "timing"
+   ],
+   "unread": 2
+  }
+ ]
+}
