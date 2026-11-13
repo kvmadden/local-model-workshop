@@ -22,7 +22,8 @@
     "audit:rescore": "vite-node scripts/audit-rescore.ts --",
     "audit:qualify:v2": "vite-node scripts/audit-requalify-v2.ts --",
     "eval:baselines": "vite-node scripts/eval-sig.ts -- --baselines-only",
-    "bench:sig": "vite-node scripts/sig-bench.ts --"
+    "bench:sig": "vite-node scripts/sig-bench.ts --",
+    "bench:sig:v2": "vite-node scripts/sig-bench-v2.ts --"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",

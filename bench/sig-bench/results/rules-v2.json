@@ -1,0 +1,2040 @@
+{
+ "labels": "22 confirmed, 27 kevin-notes, 71 proposed",
+ "baseline": "frozen rules parser (src/eval/sigBaselines.ts) through the v2 wrapper (src/eval/sigBaselinesV2.ts)",
+ "scorer": "src/eval/sigBenchV2Score.ts, flag and likely reading scored separately",
+ "buckets": {
+  "clean": {
+   "flag": {
+    "items": 34,
+    "correct": 32,
+    "truePositive": 0,
+    "falsePositive": 2,
+    "falseNegative": 0,
+    "trueNegative": 32,
+    "unanswered": 0,
+    "reasonsExpected": 0,
+    "reasonsNamed": 0
+   },
+   "reading": {
+    "items": 34,
+    "offered": 34,
+    "allCorrect": 0,
+    "fields": {
+     "drug": 34,
+     "dosage_form": 34,
+     "package": 32,
+     "route": 0,
+     "laterality": 33,
+     "concentration": 30,
+     "dose": 34,
+     "quantity": 31,
+     "application_amount": 34,
+     "frequency": 27,
+     "frequency_range": 34,
+     "timing": 30,
+     "prn": 34,
+     "prn_indication": 34,
+     "prn_interval": 30,
+     "max_daily_dose": 34,
+     "max_doses_per_day": 31,
+     "max_doses_in_window": 34,
+     "max_repeats": 34,
+     "duration_days": 34,
+     "weekly": 34,
+     "phases": 34,
+     "sliding_scale": 34
+    },
+    "offeredWithoutGold": 0
+   },
+   "safety": {
+    "expected": 0,
+    "named": 0
+   }
+  },
+  "hard": {
+   "flag": {
+    "items": 86,
+    "correct": 51,
+    "truePositive": 11,
+    "falsePositive": 19,
+    "falseNegative": 16,
+    "trueNegative": 40,
+    "unanswered": 0,
+    "reasonsExpected": 28,
+    "reasonsNamed": 11
+   },
+   "reading": {
+    "items": 79,
+    "offered": 79,
+    "allCorrect": 0,
+    "fields": {
+     "drug": 73,
+     "dosage_form": 79,
+     "package": 74,
+     "route": 1,
+     "laterality": 72,
+     "concentration": 63,
+     "dose": 49,
+     "quantity": 58,
+     "application_amount": 77,
+     "frequency": 45,
+     "frequency_range": 78,
+     "timing": 71,
+     "prn": 77,
+     "prn_indication": 76,
+     "prn_interval": 63,
+     "max_daily_dose": 70,
+     "max_doses_per_day": 74,
+     "max_doses_in_window": 78,
+     "max_repeats": 76,
+     "duration_days": 68,
+     "weekly": 75,
+     "phases": 70,
+     "sliding_scale": 77
+    },
+    "offeredWithoutGold": 7
+   },
+   "safety": {
+    "expected": 11,
+    "named": 0
+   }
+  },
+  "reviewed": {
+   "flag": {
+    "items": 49,
+    "correct": 26,
+    "truePositive": 11,
+    "falsePositive": 7,
+    "falseNegative": 16,
+    "trueNegative": 15,
+    "unanswered": 0,
+    "reasonsExpected": 28,
+    "reasonsNamed": 11
+   },
+   "reading": {
+    "items": 42,
+    "offered": 42,
+    "allCorrect": 0,
+    "fields": {
+     "drug": 39,
+     "dosage_form": 42,
+     "package": 40,
+     "route": 0,
+     "laterality": 37,
+     "concentration": 32,
+     "dose": 21,
+     "quantity": 24,
+     "application_amount": 41,
+     "frequency": 21,
+     "frequency_range": 41,
+     "timing": 41,
+     "prn": 41,
+     "prn_indication": 40,
+     "prn_interval": 28,
+     "max_daily_dose": 33,
+     "max_doses_per_day": 40,
+     "max_doses_in_window": 41,
+     "max_repeats": 41,
+     "duration_days": 37,
+     "weekly": 40,
+     "phases": 33,
+     "sliding_scale": 42
+    },
+    "offeredWithoutGold": 7
+   },
+   "safety": {
+    "expected": 10,
+    "named": 0
+   }
+  },
+  "all": {
+   "flag": {
+    "items": 120,
+    "correct": 83,
+    "truePositive": 11,
+    "falsePositive": 21,
+    "falseNegative": 16,
+    "trueNegative": 72,
+    "unanswered": 0,
+    "reasonsExpected": 28,
+    "reasonsNamed": 11
+   },
+   "reading": {
+    "items": 113,
+    "offered": 113,
+    "allCorrect": 0,
+    "fields": {
+     "drug": 107,
+     "dosage_form": 113,
+     "package": 106,
+     "route": 1,
+     "laterality": 105,
+     "concentration": 93,
+     "dose": 83,
+     "quantity": 89,
+     "application_amount": 111,
+     "frequency": 72,
+     "frequency_range": 112,
+     "timing": 101,
+     "prn": 111,
+     "prn_indication": 110,
+     "prn_interval": 93,
+     "max_daily_dose": 104,
+     "max_doses_per_day": 105,
+     "max_doses_in_window": 112,
+     "max_repeats": 110,
+     "duration_days": 102,
+     "weekly": 109,
+     "phases": 104,
+     "sliding_scale": 111
+    },
+    "offeredWithoutGold": 7
+   },
+   "safety": {
+    "expected": 11,
+    "named": 0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "sb-001",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-002",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-003",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-004",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "quantity"
+   ]
+  },
+  {
+   "id": "sb-005",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-006",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-007",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-008",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-009",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-010",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-011",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-012",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-013",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-014",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-015",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-016",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-017",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-018",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-019",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "quantity",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-020",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-021",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-022",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-023",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-024",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-025",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-026",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "package",
+    "route",
+    "concentration",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-027",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "package",
+    "route",
+    "laterality",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-028",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-029",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-030",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "quantity"
+   ]
+  },
+  {
+   "id": "sb-031",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-032",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-033",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-034",
+   "tier": "clean",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-035",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-036",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-037",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-038",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-039",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-040",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-041",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_duration"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-042",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-043",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-044",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "missing_strength"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-045",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "missing_strength"
+   ],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-046",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose"
+   ]
+  },
+  {
+   "id": "sb-047",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "frequency_range"
+   ]
+  },
+  {
+   "id": "sb-048",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-049",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-050",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "missing_drug",
+    "missing_strength"
+   ],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-051",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": false,
+   "readingAllCorrect": null,
+   "wrongFields": []
+  },
+  {
+   "id": "sb-052",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-053",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_duration"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-054",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_duration"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-055",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "drug",
+    "route",
+    "dose",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-056",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-057",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_frequency",
+    "conflicting_duration"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-058",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-059",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "timing",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-060",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "conflicting_duration"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration",
+    "dose",
+    "quantity",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-061",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-062",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "drug",
+    "package",
+    "route",
+    "concentration",
+    "dose",
+    "frequency",
+    "phases"
+   ]
+  },
+  {
+   "id": "sb-063",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "weekly"
+   ]
+  },
+  {
+   "id": "sb-064",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "weekly"
+   ]
+  },
+  {
+   "id": "sb-065",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-066",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-067",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "prn",
+    "prn_indication",
+    "prn_interval",
+    "max_daily_dose",
+    "max_repeats"
+   ]
+  },
+  {
+   "id": "sb-068",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "drug",
+    "route",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-069",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval",
+    "max_daily_dose",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-070",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_indication",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-071",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-072",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-073",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-074",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "prn_interval",
+    "max_daily_dose"
+   ]
+  },
+  {
+   "id": "sb-075",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-076",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration",
+    "dose",
+    "quantity",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-077",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "package",
+    "route",
+    "concentration",
+    "dose",
+    "quantity",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-078",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "quantity",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-079",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "prn_interval",
+    "max_doses_in_window"
+   ]
+  },
+  {
+   "id": "sb-080",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-081",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "concentration"
+   ]
+  },
+  {
+   "id": "sb-082",
+   "tier": "hard",
+   "label_status": "confirmed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "concentration",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-083",
+   "tier": "hard",
+   "label_status": "kevin-notes",
+   "flagGold": true,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration",
+    "application_amount"
+   ]
+  },
+  {
+   "id": "sb-084",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-085",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "concentration",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-086",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "laterality",
+    "concentration",
+    "application_amount"
+   ]
+  },
+  {
+   "id": "sb-087",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-088",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "prn_interval"
+   ]
+  },
+  {
+   "id": "sb-089",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "package",
+    "route",
+    "concentration",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-090",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "drug",
+    "package",
+    "route",
+    "prn_interval",
+    "max_repeats"
+   ]
+  },
+  {
+   "id": "sb-091",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-092",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-093",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "max_repeats"
+   ]
+  },
+  {
+   "id": "sb-094",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-095",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-096",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-097",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-098",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose"
+   ]
+  },
+  {
+   "id": "sb-099",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-100",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "weekly"
+   ]
+  },
+  {
+   "id": "sb-101",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-102",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-103",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose",
+    "duration_days"
+   ]
+  },
+  {
+   "id": "sb-104",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "weekly"
+   ]
+  },
+  {
+   "id": "sb-105",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency"
+   ]
+  },
+  {
+   "id": "sb-106",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration",
+    "dose",
+    "quantity",
+    "timing",
+    "sliding_scale"
+   ]
+  },
+  {
+   "id": "sb-107",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration",
+    "dose",
+    "quantity",
+    "frequency",
+    "sliding_scale"
+   ]
+  },
+  {
+   "id": "sb-108",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "drug",
+    "package",
+    "prn",
+    "prn_indication"
+   ]
+  },
+  {
+   "id": "sb-109",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "as_directed_without_instructions"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose"
+   ]
+  },
+  {
+   "id": "sb-110",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-111",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-112",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-113",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "timing"
+   ]
+  },
+  {
+   "id": "sb-114",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-115",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "dose"
+   ]
+  },
+  {
+   "id": "sb-116",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-117",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route"
+   ]
+  },
+  {
+   "id": "sb-118",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "drug",
+    "route",
+    "frequency",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-119",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "frequency",
+    "max_doses_per_day"
+   ]
+  },
+  {
+   "id": "sb-120",
+   "tier": "hard",
+   "label_status": "proposed",
+   "flagGold": false,
+   "flagReply": false,
+   "reasons": [],
+   "readingScored": true,
+   "readingAllCorrect": false,
+   "wrongFields": [
+    "route",
+    "concentration",
+    "dose",
+    "quantity",
+    "timing"
+   ]
+  }
+ ]
+}

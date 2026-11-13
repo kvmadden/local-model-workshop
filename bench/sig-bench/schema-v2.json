@@ -1,0 +1,291 @@
+{
+  "$comment": "Sig bench v2. The input is shaped like an e-prescription (drug, strength, form, sig, quantity, days supply). The reply has two tiers: flag (does this need a call to the prescriber) and likely_reading (what a careful pharmacist would act on, with its basis and confidence), plus safety_notes. An item can be flagged and still have a likely reading. v1 (schema.json) is unchanged and scored by its own scorer.",
+  "$defs": {
+    "doseUnit": { "type": "string", "enum": ["mg", "mcg", "g", "units", "mEq"] },
+    "amount": {
+      "type": "object",
+      "properties": { "value": { "type": "number" }, "unit": { "$ref": "#/$defs/doseUnit" } },
+      "required": ["value", "unit"],
+      "additionalProperties": false
+    },
+    "doseRange": {
+      "$comment": "A dose range. A fixed dose has min equal to max.",
+      "type": "object",
+      "properties": { "min": { "type": "number" }, "max": { "type": "number" }, "unit": { "$ref": "#/$defs/doseUnit" } },
+      "required": ["min", "max", "unit"],
+      "additionalProperties": false
+    },
+    "quantityRange": {
+      "$comment": "What is given each time, in the unit the patient counts: tablets, capsules, mL, drops, puffs, sprays, insulin units, applications, patches, suppositories. Per eye, ear or nostril when laterality is both.",
+      "type": "object",
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "unit": { "type": "string", "enum": ["tab", "cap", "mL", "gtt", "puff", "spray", "unit", "application", "patch", "supp"] }
+      },
+      "required": ["min", "max", "unit"],
+      "additionalProperties": false
+    },
+    "concentration": {
+      "$comment": "Amount per measured unit (100 mg per 5 mL, 90 mcg per puff), or a percent (0.5). Lets a volume or a count convert to a mass.",
+      "type": "object",
+      "properties": {
+        "amount": { "type": ["object", "null"], "$ref": "#/$defs/amount" },
+        "per": {
+          "type": ["object", "null"],
+          "properties": { "value": { "type": "number" }, "unit": { "type": "string", "enum": ["mL", "puff", "spray"] } },
+          "required": ["value", "unit"],
+          "additionalProperties": false
+        },
+        "percent": { "type": ["number", "null"] }
+      },
+      "required": ["amount", "per", "percent"],
+      "additionalProperties": false
+    },
+    "frequency": {
+      "type": ["string", "null"],
+      "enum": [
+        "once_daily", "twice_daily", "three_times_daily", "four_times_daily",
+        "every_4_hours", "every_6_hours", "every_8_hours", "every_12_hours", "once_weekly",
+        "every_other_day", "every_72_hours", "twice_weekly", "once_monthly",
+        null
+      ]
+    },
+    "timing": { "type": ["string", "null"], "enum": ["morning", "evening", "bedtime", "with_meals", "before_meals", "after_meals", null] },
+    "weekday": { "type": "string", "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] },
+    "reading": {
+      "type": "object",
+      "properties": {
+        "drug": { "type": ["string", "null"] },
+        "dosage_form": {
+          "type": ["string", "null"],
+          "enum": ["tablet", "orally_disintegrating_tablet", "capsule", "solution", "suspension", "syrup", "powder", "cream", "ointment", "transdermal_patch", "suppository", "inhalation_aerosol", "nasal_spray", "injection", "kit", null]
+        },
+        "package": { "type": ["string", "null"], "enum": ["multidose", "unit_dose", null] },
+        "route": {
+          "type": ["string", "null"],
+          "enum": ["oral", "sublingual", "inhaled", "nasal", "topical", "ophthalmic", "otic", "transdermal", "subcutaneous", "intramuscular", "rectal", null]
+        },
+        "laterality": { "type": ["string", "null"], "enum": ["left", "right", "both", "affected", null] },
+        "concentration": { "type": ["object", "null"], "$ref": "#/$defs/concentration" },
+        "dose": { "type": ["object", "null"], "$ref": "#/$defs/doseRange" },
+        "quantity": { "type": ["object", "null"], "$ref": "#/$defs/quantityRange" },
+        "application_amount": {
+          "$comment": "A coded amount for a topical: thin_layer, or a ribbon with its length.",
+          "type": ["object", "null"],
+          "properties": {
+            "qualifier": { "type": "string", "enum": ["thin_layer", "ribbon"] },
+            "length": {
+              "type": ["object", "null"],
+              "properties": { "value": { "type": "number" }, "unit": { "type": "string", "enum": ["inch", "cm"] } },
+              "required": ["value", "unit"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["qualifier", "length"],
+          "additionalProperties": false
+        },
+        "frequency": { "$ref": "#/$defs/frequency" },
+        "frequency_range": {
+          "$comment": "A range of times a day (1 to 2 times daily). Frequency is null when this is set.",
+          "type": ["object", "null"],
+          "properties": { "min": { "type": "number" }, "max": { "type": "number" }, "per": { "type": "string", "enum": ["day"] } },
+          "required": ["min", "max", "per"],
+          "additionalProperties": false
+        },
+        "timing": { "$ref": "#/$defs/timing" },
+        "prn": { "type": "boolean" },
+        "prn_indication": { "type": ["string", "null"] },
+        "prn_interval": {
+          "type": ["object", "null"],
+          "properties": { "min": { "type": "number" }, "max": { "type": "number" }, "unit": { "type": "string", "enum": ["min", "h"] } },
+          "required": ["min", "max", "unit"],
+          "additionalProperties": false
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "max_daily_dose": { "type": ["object", "null"], "$ref": "#/$defs/amount" },
+            "max_doses_per_day": { "type": ["number", "null"] },
+            "max_doses_in_window": {
+              "$comment": "At most count doses within the window, such as 3 doses in 15 minutes.",
+              "type": ["object", "null"],
+              "properties": {
+                "count": { "type": "number" },
+                "window": {
+                  "type": "object",
+                  "properties": { "value": { "type": "number" }, "unit": { "type": "string", "enum": ["min", "h"] } },
+                  "required": ["value", "unit"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["count", "window"],
+              "additionalProperties": false
+            },
+            "max_repeats": { "$comment": "Repeat doses allowed after the first, as in may repeat once.", "type": ["number", "null"] }
+          },
+          "required": ["max_daily_dose", "max_doses_per_day", "max_doses_in_window", "max_repeats"],
+          "additionalProperties": false
+        },
+        "duration_days": { "type": ["number", "null"] },
+        "days_of_week": { "$comment": "Which weekdays, when the dose is the same on each.", "type": ["array", "null"], "items": { "$ref": "#/$defs/weekday" } },
+        "weekly_schedule": {
+          "$comment": "A weekly pattern where the dose depends on the weekday. Never a sequence: use phases for steps in time. Top-level dose and quantity are null when this is set.",
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "properties": {
+              "days": { "type": "array", "items": { "$ref": "#/$defs/weekday" } },
+              "dose": { "type": ["object", "null"], "$ref": "#/$defs/doseRange" },
+              "quantity": { "type": ["object", "null"], "$ref": "#/$defs/quantityRange" }
+            },
+            "required": ["days", "dose", "quantity"],
+            "additionalProperties": false
+          }
+        },
+        "phases": {
+          "$comment": "Steps in time, in order: a taper or a titration.",
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "properties": {
+              "dose": { "type": ["object", "null"], "$ref": "#/$defs/doseRange" },
+              "quantity": { "type": ["object", "null"], "$ref": "#/$defs/quantityRange" },
+              "frequency": { "$ref": "#/$defs/frequency" },
+              "timing": { "$ref": "#/$defs/timing" },
+              "days": { "type": ["number", "null"] }
+            },
+            "required": ["dose", "quantity", "frequency", "timing", "days"],
+            "additionalProperties": false
+          }
+        },
+        "sliding_scale": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "properties": { "bg_min": { "type": ["number", "null"] }, "bg_max": { "type": ["number", "null"] }, "units": { "type": "number" } },
+            "required": ["bg_min", "bg_max", "units"],
+            "additionalProperties": false
+          }
+        },
+        "basis": {
+          "$comment": "Why this reading. Every entry names its source.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": { "type": "string", "enum": ["as_written", "drug_norm", "quantity_days", "unit_error", "safety_cap", "abbreviation", "reviewer_practice"] },
+              "text": { "type": "string" },
+              "source": { "type": "string", "enum": ["sig_text", "input_fields", "kevin_note", "pharmacy_knowledge"] }
+            },
+            "required": ["kind", "text", "source"],
+            "additionalProperties": false
+          }
+        },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      },
+      "required": [
+        "drug", "dosage_form", "package", "route", "laterality", "concentration", "dose", "quantity", "application_amount",
+        "frequency", "frequency_range", "timing", "prn", "prn_indication", "prn_interval", "limits", "duration_days",
+        "days_of_week", "weekly_schedule", "phases", "sliding_scale", "basis", "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "flagReason": {
+      "type": "string",
+      "enum": [
+        "missing_drug", "missing_strength", "missing_dose", "missing_frequency", "missing_laterality",
+        "missing_taper_steps", "missing_titration_plan", "missing_sliding_scale", "missing_max_daily",
+        "as_directed_without_instructions", "conflicting_frequency", "conflicting_duration", "alternatives_without_rule",
+        "implausible_dose_unit", "exceeds_usual_max", "frequency_product_mismatch", "internal_conflict",
+        "package_unspecified", "dosage_form_unspecified", "error_prone_abbreviation", "reviewer_hold"
+      ]
+    },
+    "reply": {
+      "$comment": "The label format and the reply format are the same.",
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "object",
+          "properties": { "needed": { "type": "boolean" }, "reasons": { "type": "array", "items": { "$ref": "#/$defs/flagReason" } } },
+          "required": ["needed", "reasons"],
+          "additionalProperties": false
+        },
+        "likely_reading": { "type": ["object", "null"], "$ref": "#/$defs/reading" },
+        "safety_notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "max_daily_cap_missing", "basal_with_correction_dosing", "laterality_without_frequency", "weekly_drug_written_daily",
+                  "unit_error", "exceeds_usual_max", "controlled_without_strength", "repeat_limit_conflicts_daily_max",
+                  "dosing_calendar_needed", "error_prone_abbreviation"
+                ]
+              },
+              "text": { "type": "string" }
+            },
+            "required": ["code", "text"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["flag", "likely_reading", "safety_notes"],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tier": { "type": "string", "enum": ["clean", "hard"] },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "label_status": { "type": "string", "enum": ["confirmed", "kevin-notes", "proposed"] },
+        "review": {
+          "type": "object",
+          "properties": { "verdict": { "type": ["string", "null"], "enum": ["ok", "hold", null] }, "note": { "type": ["string", "null"] } },
+          "required": ["verdict", "note"],
+          "additionalProperties": false
+        },
+        "source_line": { "type": "string" },
+        "input": {
+          "type": "object",
+          "properties": {
+            "drug_description": { "type": ["string", "null"] },
+            "strength": { "type": ["string", "null"] },
+            "dosage_form": { "type": ["string", "null"] },
+            "sig": { "type": "string" },
+            "quantity": {
+              "type": "object",
+              "properties": { "value": { "type": "number" }, "unit": { "type": "string", "enum": ["tab", "cap", "mL", "g", "patch", "supp", "each"] } },
+              "required": ["value", "unit"],
+              "additionalProperties": false
+            },
+            "days_supply": { "type": "number" }
+          },
+          "required": ["drug_description", "strength", "dosage_form", "sig", "quantity", "days_supply"],
+          "additionalProperties": false
+        },
+        "quantity_role": {
+          "$comment": "consistent: a clear sig, and quantity and days supply agree with it. supports_one_reading: an unclear sig where quantity and days supply point to one reading. leaves_ambiguous: an unclear sig where they do not resolve the question.",
+          "type": "string",
+          "enum": ["consistent", "supports_one_reading", "leaves_ambiguous"]
+        },
+        "quantity_math": { "type": ["string", "null"] },
+        "label": { "$ref": "#/$defs/reply" },
+        "accept": {
+          "type": "object",
+          "properties": { "drug": { "type": "array", "items": { "type": "string" } }, "prn_indication": { "type": "array", "items": { "type": "string" } } },
+          "additionalProperties": false
+        },
+        "open_questions": { "type": "array", "items": { "type": "string" } },
+        "proposal_note": { "type": ["string", "null"] },
+        "v1_note": { "type": ["string", "null"] }
+      },
+      "required": ["id", "tier", "categories", "label_status", "review", "source_line", "input", "quantity_role", "quantity_math", "label", "open_questions", "proposal_note", "v1_note"],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/reply"
+}

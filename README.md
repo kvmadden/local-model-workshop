@@ -100,6 +100,7 @@ A harder set for the next round, in [bench/sig-bench/](bench/sig-bench/README.md
 
 - **120 synthetic lines** that read like e-prescriptions and pharmacy labels: tapers, daily maximums, ranges, routes and eyes or ears, durations, weekly regimens, sliding scales and split tablets. 18 of them (15%) should be sent back for clarification, not guessed.
 - **Every label is proposed, not confirmed.** Claude wrote the lines and the labels. Kevin confirms them on `bench/sig-bench/confirm.csv` before any model runs.
+- **Version 2 follows Kevin's review of 49 lines.** The input is shaped like an e-prescription (drug, strength, form, sig, quantity, days supply), and each label has two tiers: whether to flag the line, and the reading a careful pharmacist would act on. 22 labels are confirmed, 27 come from his notes and 71 are still proposed. What he still needs to see is in `bench/sig-bench/confirm-v2.json`.
 - **Not blind.** The same family wrote the scorer and the rules parser, so this is development data. It does not replace the fresh blind set.
 - **Rules no longer score everything.** Against the proposed labels, the rules parser gets the six fields right on 23 of 34 clean lines and 15 of 33 hard lines the six fields can hold, and it cannot represent the other 53.
 

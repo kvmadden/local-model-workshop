@@ -1,6 +1,6 @@
 # Sig bench: 120 hard medication instructions (proposed labels)
 
-**Status: every label is PROPOSED and unconfirmed.** Claude wrote the 120 lines and proposed a label for each one. Kevin Madden, PharmD, has not reviewed them yet. No label here is ground truth until he confirms it, and every score against these labels is a score against a proposal.
+**Status: v1 labels are all PROPOSED. v2 has 22 confirmed, 27 from Kevin's notes and 71 proposed.** Claude wrote the 120 lines and proposed a label for each one. On 13 November Kevin Madden, PharmD, reviewed 49 of them, and his review shaped v2 (see [Version 2](#version-2-e-prescription-input-and-two-tier-labels) below). No label here is ground truth until he confirms it, and every score against a proposed label is a score against a proposal.
 
 ## What it is for
 
@@ -92,3 +92,61 @@ The frozen rules parser (`src/eval/sigBaselines.ts`) was run over all 120 lines 
 - **The 53 lines it cannot represent** include all 18 that need clarification. It cannot say "needs clarification". The only signal it has is words it could not read: it left words unread on 12 of the 18 clarification lines, but also on 9 of the 34 clean lines, so that signal is not a flag.
 - **The drug as written counts.** On one hard line (HCTZ) the drug is right only because the written form is accepted. On the ingredient alone, the hard count is 14 of 33.
 - **This is not a result.** The labels are proposed, and the same family wrote the lines, the labels and the parser.
+
+## Version 2: e-prescription input and two-tier labels
+
+Kevin reviewed 49 of the 120 v1 labels on 13 November 2026. He marked 22 correct and 27 "Should be flagged", and left notes on 19. His notes are the requirements for v2. v1 stays as it was: `items.jsonl`, `schema.json` and the v1 scorer are unchanged, and so are the frozen rules parser and scorer v3.
+
+### What changed
+
+- **Input like an e-prescription.** Each item has a drug field, a strength, a dosage form, the sig, a quantity and a days supply ("Sig is usually written in a field separate from drug and dose"). The quantity and days supply let a reader do the division. On a clear line they agree with the reading, and a check proves it by arithmetic on 96 of the 120 items. On an unclear line `quantity_role` says whether they point to one reading (`supports_one_reading`) or leave the question open (`leaves_ambiguous`), and `quantity_math` shows the sum.
+- **Dose as a range** `{min, max, unit}`, with a separate **quantity per dose** in the unit the patient counts (tab, cap, mL, gtt, puff, spray, unit, application, patch, supp). A fixed dose has min equal to max. This holds 1/2 to 1 tab, i to ii tabs and 10 to 20 mL.
+- **Concentration** for liquids, solutions, inhalers and sprays (100 mg/5 mL, 0.5%, 90 mcg per puff), so a volume converts to a mass. The scorer reads 0.5% and 5 mg/mL as the same.
+- **A weekly pattern** (`weekly_schedule`, a dose for each weekday) apart from **steps in time** (`phases`). Warfarin with a half tablet on Tuesday and Friday is a weekly pattern, never "then".
+- **Limits:** a daily maximum, at most N doses a day, at most N doses in a window (nitroglycerin, 3 in 15 minutes) and at most N repeats.
+- **Form and package** (multidose or unit dose) where the line or the product says so, and an **application amount** for topicals (`thin_layer`, or a ribbon with its length).
+- **Two tiers.** `flag` says whether the line needs a call to the prescriber, with reasons. `likely_reading` is what a careful pharmacist would act on, with a `basis` (each entry names its source: the sig, the input fields, Kevin's note or pharmacy knowledge) and a `confidence`. A line can be flagged and still have a likely reading: metoprolol tartrate "qd bid" is flagged, and its likely reading is twice daily. `safety_notes` sit apart from both, such as acetaminophen with no 4 g a day cap.
+
+### Label status
+
+| Status | Items | Meaning |
+|---|---|---|
+| `confirmed` | 22 | Kevin marked the v1 label correct. v2 maps it into the new shape. |
+| `kevin-notes` | 27 | Kevin marked the line "Should be flagged". The flag is set, and the likely reading and safety notes follow his note where he wrote one. |
+| `proposed` | 71 | Not reviewed yet. |
+
+Eight of the held lines (sb-063, sb-064, sb-073, sb-076, sb-078, sb-079, sb-080, sb-083) carry notes about the label rather than a reason to call the prescriber, for example "Why you say then?" or "Variable dose?". They keep the flag his tap asked for, with the reason `reviewer_hold` where no clinical reason was given, and the confirmation sheet asks whether the flag stands. `reviewer_hold` is left out of reason recall.
+
+### Files
+
+| File | What it holds | Edited by hand |
+|---|---|---|
+| `items-v2.jsonl` | The 120 items in v2 shape, with `input`, `label`, `label_status`, Kevin's `review`, and `open_questions` (what v2 adds that his review did not decide) | Yes, the only source |
+| `schema-v2.json` | The reply format (the label has the same shape) and the item format | Yes |
+| `review/kevin-2026-11-13.json` | Kevin's saved review: verdict and note per line | No, his record |
+| `confirm-v2.json` | Only what Kevin still needs to see: the 71 unreviewed lines and 18 reviewed lines where v2 adds something new, held lines with a likely reading first, each with `what_changed` | No, generated |
+| `results/rules-v2.json` | The rules parser in v2 shape, scored on both tiers | No, generated |
+
+`npm run bench:sig:v2` checks the items and regenerates the two generated files. `npm run bench:sig:v2 -- --check` fails if either is out of date. The checks include: the label status matches the saved review, every held line is flagged, a basis cites Kevin only where he wrote a note, and the quantity fits the reading.
+
+### Scoring
+
+- **Flag**, on all 120 items: the reply's `flag.needed` against the label. Reason recall is reported beside it and does not change the verdict.
+- **Likely reading**, on the 113 items whose label has one: every field compared with the label. Mass units convert, a range must match at both ends, weekday patterns may come in any order, and a null field wants a null reply. Basis and confidence are recorded, not scored.
+- The two tiers are scored separately, so a reply can get the flag right and the reading wrong. A likely reading offered where the label has none is counted, not scored.
+
+### The rules parser on v2
+
+The frozen parser is unchanged. A wrapper (`src/eval/sigBaselinesV2.ts`) puts its six fields into a v2 likely reading, copies the dosage form field, reads one count per dose, and flags on plain patterns: a blank drug or strength field, "ud" or "as directed", no schedule, two schedule words, or two durations. It knows no drug norms or maximum doses, and it never fills route, concentration, limits, phases or weekly patterns. It is the floor.
+
+| Items | Flag right | Flagged lines caught | Clear lines flagged | Reading all right | Reading fields right |
+|---|---|---|---|---|---|
+| Clean | 32 of 34 | 0 of 0 | 2 of 34 | 0 of 34 | 720 of 782 |
+| Hard | 51 of 86 | 11 of 27 | 19 of 59 | 0 of 79 | 1544 of 1817 |
+| Reviewed by Kevin | 26 of 49 | 11 of 27 | 7 of 22 | 0 of 42 | 795 of 966 |
+| All | 83 of 120 | 11 of 27 | 21 of 93 | 0 of 113 | 2264 of 2599 |
+
+- **No reading is all right**, because the wrapper never fills route. That is by design, not a finding about the parser.
+- **The field count flatters it.** Most fields are null on most lines, and a null reply to a null field counts as right. The fields that carry the content are lower: across the 113 readings, dose 83, quantity 89, frequency 72 and route 1.
+- **Its flags are patterns, not judgment.** It catches two schedule words, two durations, "ud" and blank fields. It misses every flag that needs knowledge (methotrexate daily, digoxin in mg, metformin over its maximum, acetaminophen with no cap) and every reviewer hold. It flags tapers and weekly regimens it cannot read.
+- **This is not a result.** 71 labels are still proposed, and the same family wrote the lines, the labels, the scorer and the wrapper.

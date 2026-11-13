@@ -1,0 +1,173 @@
+{
+ "reviewer": "Kevin Madden, PharmD",
+ "tool": "sig label review page: Correct (ok), Wrong (bad), Should be flagged (hold), optional note",
+ "updated": "2026-11-13T18:56:29.706Z",
+ "labels": {
+  "sb-035": {
+   "note": "But this drug is almost always twice daily so that would influence how I would read this tbh, even if that might not be clear enough to accept without clarification “technically”",
+   "v": "hold"
+  },
+  "sb-036": {
+   "v": "hold"
+  },
+  "sb-037": {
+   "note": "I would assume it once daily based on this in real life… but maybe that’s not right. Idk. It helps to have other context, like the quantity and especially if the provider includes both qty and days supply so you can kinda do division",
+   "v": "hold"
+  },
+  "sb-038": {
+   "note": "I would assume this would come with a more detailed attached instruction sheet… hopefully",
+   "v": "hold"
+  },
+  "sb-039": {
+   "note": "Why or?",
+   "v": "hold"
+  },
+  "sb-040": {
+   "v": "hold"
+  },
+  "sb-041": {
+   "v": "hold"
+  },
+  "sb-042": {
+   "v": "hold"
+  },
+  "sb-043": {
+   "note": "OD never means once daily? It is missing frequency though",
+   "v": "hold"
+  },
+  "sb-044": {
+   "note": "I would end up dispensing as “affected ear(s)”… but again that might not be appropriate",
+   "v": "hold"
+  },
+  "sb-045": {
+   "v": "hold"
+  },
+  "sb-046": {
+   "note": "I would end up assuming mcg but I’m sure should be confirmed",
+   "v": "hold"
+  },
+  "sb-047": {
+   "note": "I would end up dispensing as “1 to 2 times per day” but yes would be better to get rule for choosing",
+   "v": "hold"
+  },
+  "sb-048": {
+   "v": "hold"
+  },
+  "sb-049": {
+   "note": "Yeah needs to say not to exceed 4g per day",
+   "v": "hold"
+  },
+  "sb-050": {
+   "note": "Sig is usually written in a field separate from drug and dose but yeah",
+   "v": "hold"
+  },
+  "sb-051": {
+   "v": "hold"
+  },
+  "sb-052": {
+   "v": "hold"
+  },
+  "sb-053": {
+   "v": "ok"
+  },
+  "sb-054": {
+   "v": "ok"
+  },
+  "sb-055": {
+   "v": "ok"
+  },
+  "sb-056": {
+   "v": "ok"
+  },
+  "sb-057": {
+   "v": "ok"
+  },
+  "sb-058": {
+   "v": "ok"
+  },
+  "sb-059": {
+   "v": "ok"
+  },
+  "sb-060": {
+   "v": "ok"
+  },
+  "sb-061": {
+   "v": "ok"
+  },
+  "sb-062": {
+   "v": "ok"
+  },
+  "sb-063": {
+   "note": "Why you say “then”? It’s not “then” it is a different “lower” rule for those days",
+   "v": "hold"
+  },
+  "sb-064": {
+   "note": "Why you say “then”? Same issue here as that warfarin one",
+   "v": "hold"
+  },
+  "sb-065": {
+   "v": "ok"
+  },
+  "sb-066": {
+   "v": "ok"
+  },
+  "sb-067": {
+   "note": "Repeating once would make it only 100 mg? So how would you get to 200 mg? Feels unclear",
+   "v": "hold"
+  },
+  "sb-068": {
+   "v": "ok"
+  },
+  "sb-069": {
+   "v": "ok"
+  },
+  "sb-070": {
+   "v": "ok"
+  },
+  "sb-071": {
+   "v": "ok"
+  },
+  "sb-072": {
+   "v": "ok"
+  },
+  "sb-073": {
+   "note": "Dose here is variable, not fixed. Are we accounting for that?",
+   "v": "hold"
+  },
+  "sb-074": {
+   "v": "ok"
+  },
+  "sb-075": {
+   "v": "ok"
+  },
+  "sb-076": {
+   "note": "Dose should be variable. Maybe we need a “concentration” field as well for some formulations?",
+   "v": "hold"
+  },
+  "sb-077": {
+   "v": "ok"
+  },
+  "sb-078": {
+   "note": "Variable dose?",
+   "v": "hold"
+  },
+  "sb-079": {
+   "note": "Is max dose not accounted for?",
+   "v": "hold"
+  },
+  "sb-080": {
+   "note": "Should prob flag multidose packages vs individual packages and should flag suspension vs solution as form",
+   "v": "hold"
+  },
+  "sb-081": {
+   "v": "ok"
+  },
+  "sb-082": {
+   "v": "ok"
+  },
+  "sb-083": {
+   "note": "Should “thin layer” be codified?",
+   "v": "hold"
+  }
+ }
+}
