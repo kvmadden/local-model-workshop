@@ -49,6 +49,30 @@
    "safety": {
     "expected": 0,
     "named": 0
+   },
+   "tier": {
+    "items": 0,
+    "correct": 0,
+    "unanswered": 0,
+    "byGold": {
+     "law": {
+      "items": 0,
+      "correct": 0
+     },
+     "standard": {
+      "items": 0,
+      "correct": 0
+     },
+     "judgment": {
+      "items": 0,
+      "correct": 0
+     }
+    }
+   },
+   "callRequired": {
+    "items": 0,
+    "dispensedWithoutCall": 0,
+    "dispensedWithoutCallGuessRight": 0
    }
   },
   "hard": {
@@ -97,6 +121,30 @@
    "safety": {
     "expected": 11,
     "named": 0
+   },
+   "tier": {
+    "items": 20,
+    "correct": 0,
+    "unanswered": 20,
+    "byGold": {
+     "law": {
+      "items": 17,
+      "correct": 0
+     },
+     "standard": {
+      "items": 1,
+      "correct": 0
+     },
+     "judgment": {
+      "items": 2,
+      "correct": 0
+     }
+    }
+   },
+   "callRequired": {
+    "items": 11,
+    "dispensedWithoutCall": 5,
+    "dispensedWithoutCallGuessRight": 0
    }
   },
   "reviewed": {
@@ -145,6 +193,30 @@
    "safety": {
     "expected": 10,
     "named": 0
+   },
+   "tier": {
+    "items": 20,
+    "correct": 0,
+    "unanswered": 20,
+    "byGold": {
+     "law": {
+      "items": 17,
+      "correct": 0
+     },
+     "standard": {
+      "items": 1,
+      "correct": 0
+     },
+     "judgment": {
+      "items": 2,
+      "correct": 0
+     }
+    }
+   },
+   "callRequired": {
+    "items": 11,
+    "dispensedWithoutCall": 5,
+    "dispensedWithoutCallGuessRight": 0
    }
   },
   "all": {
@@ -193,6 +265,30 @@
    "safety": {
     "expected": 11,
     "named": 0
+   },
+   "tier": {
+    "items": 20,
+    "correct": 0,
+    "unanswered": 20,
+    "byGold": {
+     "law": {
+      "items": 17,
+      "correct": 0
+     },
+     "standard": {
+      "items": 1,
+      "correct": 0
+     },
+     "judgment": {
+      "items": 2,
+      "correct": 0
+     }
+    }
+   },
+   "callRequired": {
+    "items": 11,
+    "dispensedWithoutCall": 5,
+    "dispensedWithoutCallGuessRight": 0
    }
   }
  },

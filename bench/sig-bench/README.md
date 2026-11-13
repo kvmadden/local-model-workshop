@@ -125,7 +125,8 @@ Eight of the held lines (sb-063, sb-064, sb-073, sb-076, sb-078, sb-079, sb-080,
 | `schema-v2.json` | The reply format (the label has the same shape) and the item format | Yes |
 | `review/kevin-2026-11-13.json` | Kevin's saved review: verdict and note per line | No, his record |
 | `confirm-v2.json` | Only what Kevin still needs to see: the 71 unreviewed lines and 18 reviewed lines where v2 adds something new, held lines with a likely reading first, each with `what_changed` | No, generated |
-| `results/rules-v2.json` | The rules parser in v2 shape, scored on both tiers | No, generated |
+| `CLARIFICATION-RULES.md` | 51 cited rules (law, standards, judgment) and the appendix that maps each flag reason to a tier and rule IDs | Yes, the source of every `clarify` block |
+| `results/rules-v2.json` | The rules parser in v2 shape, scored on all three tiers | No, generated |
 
 `npm run bench:sig:v2` checks the items and regenerates the two generated files. `npm run bench:sig:v2 -- --check` fails if either is out of date. The checks include: the label status matches the saved review, every held line is flagged, a basis cites Kevin only where he wrote a note, and the quantity fits the reading.
 
@@ -134,6 +135,19 @@ Eight of the held lines (sb-063, sb-064, sb-073, sb-076, sb-078, sb-079, sb-080,
 - **Flag**, on all 120 items: the reply's `flag.needed` against the label. Reason recall is reported beside it and does not change the verdict.
 - **Likely reading**, on the 113 items whose label has one: every field compared with the label. Mass units convert, a range must match at both ends, weekday patterns may come in any order, and a null field wants a null reply. Basis and confidence are recorded, not scored.
 - The two tiers are scored separately, so a reply can get the flag right and the reading wrong. A likely reading offered where the label has none is counted, not scored.
+- **Clarification tier**, on the 20 flagged items whose label names a tier: the reply's `clarify.tier` against the label. It does not change the flag or reading verdicts.
+
+### Clarification tier
+
+What a pharmacist would dispense can differ from what law or a standard requires before dispensing. So every flagged item has a `clarify` block: `tier` is the strictest primary tier among its flag reasons (law, then standard, then judgment), and `rule_ids` lists the rules behind them. Both come from the appendix of `CLARIFICATION-RULES.md`, and the item check fails if a block differs from that table. Unflagged items have no block. The tiers are an inferred reading of the cited rules with Florida as the baseline, not a legal ruling.
+
+| Law | Standard | Judgment | No tier |
+|---|---|---|---|
+| 17 | 1 | 2 | 7 |
+
+- **No tier** is the seven `reviewer_hold` lines. The table gives that reason no tier, so they are not scored on this tier.
+- **One reason has two tiers.** Dosage form unspecified is judgment for a non-controlled drug and law for a controlled one. Both items with that reason (sb-043, sb-044) are non-controlled, and their other reasons are law anyway.
+- **11 items have a likely reading and a law or standard tier.** A pharmacist might act on the reading, and the guess may well be right (metoprolol twice daily, digoxin in mcg), but a call is still required first. A reply that does not flag one of these has dispensed its best guess, and the report counts it as wrong even when the guess is right.
 
 ### The rules parser on v2
 
@@ -149,4 +163,5 @@ The frozen parser is unchanged. A wrapper (`src/eval/sigBaselinesV2.ts`) puts it
 - **No reading is all right**, because the wrapper never fills route. That is by design, not a finding about the parser.
 - **The field count flatters it.** Most fields are null on most lines, and a null reply to a null field counts as right. The fields that carry the content are lower: across the 113 readings, dose 83, quantity 89, frequency 72 and route 1.
 - **Its flags are patterns, not judgment.** It catches two schedule words, two durations, "ud" and blank fields. It misses every flag that needs knowledge (methotrexate daily, digoxin in mg, metformin over its maximum, acetaminophen with no cap) and every reviewer hold. It flags tapers and weekly regimens it cannot read.
+- **It names no tier, so it gets 0 of 20 on the clarification tier.** Of the 11 items with a likely reading and a law or standard tier, it dispensed without a call on 5 of the 11.
 - **This is not a result.** 71 labels are still proposed, and the same family wrote the lines, the labels, the scorer and the wrapper.

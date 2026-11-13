@@ -8,7 +8,16 @@
  *   likely reading is compared with the label. An item can be flagged and still have a likely
  *   reading, so a reply can get the flag right and the reading wrong, or the other way round.
  *
+ * - Clarification tier. On flagged items whose label names a tier, did the reply name the same one:
+ *   law, standard or judgment (bench/sig-bench/CLARIFICATION-RULES.md). The other two tiers are
+ *   scored the same way with or without it.
+ *
  * Basis and confidence are recorded, not scored. Safety notes are scored as code recall.
+ *
+ * What a pharmacist would dispense can differ from what law or a standard requires before
+ * dispensing. Items with a likely reading and a law or standard tier are counted apart: a reply
+ * that does not flag one has dispensed its best guess where a call was required, even when the
+ * guess is right.
  *
  * The v1 scorer (sigBenchScore.ts) and scorer v3 are unchanged. This file reuses v3's drug, reason,
  * unit and number helpers and edits none of them.
@@ -80,8 +89,15 @@ export interface V2Reading {
   basis: V2Basis[];
   confidence: 'high' | 'medium' | 'low';
 }
+export type ClarifyTier = 'law' | 'standard' | 'judgment';
+export interface V2Clarify {
+  tier: ClarifyTier | null;
+  rule_ids: string[];
+}
 export interface V2Label {
   flag: { needed: boolean; reasons: string[] };
+  /** Only on a flagged line. */
+  clarify?: V2Clarify;
   likely_reading: V2Reading | null;
   safety_notes: Array<{ code: string; text: string }>;
 }
@@ -416,6 +432,23 @@ export interface V2Score {
   /** True when the label has no likely reading and the reply offered one anyway. Reported, not scored. */
   readingOfferedWithoutGold: boolean;
   safety: { expected: number; named: number };
+  /** Tier 3. Null when the label is not flagged or names no tier. */
+  tier: { gold: ClarifyTier; reply: string | null; correct: boolean } | null;
+  /** The label has a likely reading and a law or standard tier: a call is required before dispensing. */
+  callRequiredWithReading: boolean;
+}
+
+/** True when the label has a likely reading but law or a standard requires a call before dispensing. */
+export function callRequiredWithReading(label: V2Label): boolean {
+  return !!label.likely_reading && (label.clarify?.tier === 'law' || label.clarify?.tier === 'standard');
+}
+
+function tierScore(gold: V2Label, reply: Record<string, unknown> | null): V2Score['tier'] {
+  const g = gold.flag.needed ? gold.clarify?.tier ?? null : null;
+  if (!g) return null;
+  const c = reply ? obj(reply.clarify) : null;
+  const t = c && typeof c.tier === 'string' ? c.tier.trim().toLowerCase() : null;
+  return { gold: g, reply: t, correct: t === g };
 }
 
 export function scoreV2Reply(item: V2Item, replyText: string): V2Score {
@@ -433,6 +466,8 @@ export function scoreV2Reply(item: V2Item, replyText: string): V2Score {
       reading: g.likely_reading ? { offered: false, fields: noFields, allCorrect: false } : null,
       readingOfferedWithoutGold: false,
       safety: { expected: goldCodes.size, named: 0 },
+      tier: tierScore(g, null),
+      callRequiredWithReading: callRequiredWithReading(g),
     };
   }
   const f = obj(p.flag);
@@ -459,6 +494,8 @@ export function scoreV2Reply(item: V2Item, replyText: string): V2Score {
     reading,
     readingOfferedWithoutGold: !g.likely_reading && offered,
     safety: { expected: goldCodes.size, named: [...goldCodes].filter((c) => replyCodes.has(c)).length },
+    tier: tierScore(g, p),
+    callRequiredWithReading: callRequiredWithReading(g),
   };
 }
 
@@ -483,10 +520,27 @@ export interface ReadingTally {
   fields: Record<ReadingField, number>;
   offeredWithoutGold: number;
 }
+export interface TierTally {
+  /** Flagged items whose label names a tier. */
+  items: number;
+  correct: number;
+  unanswered: number;
+  byGold: Record<ClarifyTier, { items: number; correct: number }>;
+}
+export interface CallRequiredTally {
+  /** Items with a likely reading where law or a standard requires a call before dispensing. */
+  items: number;
+  /** Of those, replies that did not flag: they dispensed their best guess. */
+  dispensedWithoutCall: number;
+  /** Of those, the ones whose guess was fully right. Still wrong to dispense without the call. */
+  dispensedWithoutCallGuessRight: number;
+}
 export interface V2Summary {
   flag: FlagTally;
   reading: ReadingTally;
   safety: { expected: number; named: number };
+  tier: TierTally;
+  callRequired: CallRequiredTally;
 }
 
 export function emptySummary(): V2Summary {
@@ -494,6 +548,8 @@ export function emptySummary(): V2Summary {
     flag: { items: 0, correct: 0, truePositive: 0, falsePositive: 0, falseNegative: 0, trueNegative: 0, unanswered: 0, reasonsExpected: 0, reasonsNamed: 0 },
     reading: { items: 0, offered: 0, allCorrect: 0, fields: Object.fromEntries(READING_FIELDS.map((f) => [f, 0])) as Record<ReadingField, number>, offeredWithoutGold: 0 },
     safety: { expected: 0, named: 0 },
+    tier: { items: 0, correct: 0, unanswered: 0, byGold: { law: { items: 0, correct: 0 }, standard: { items: 0, correct: 0 }, judgment: { items: 0, correct: 0 } } },
+    callRequired: { items: 0, dispensedWithoutCall: 0, dispensedWithoutCallGuessRight: 0 },
   };
 }
 
@@ -517,4 +573,20 @@ export function addScore(s: V2Summary, x: V2Score): void {
   if (x.readingOfferedWithoutGold) s.reading.offeredWithoutGold++;
   s.safety.expected += x.safety.expected;
   s.safety.named += x.safety.named;
+  if (x.tier) {
+    s.tier.items++;
+    s.tier.byGold[x.tier.gold].items++;
+    if (x.tier.reply === null) s.tier.unanswered++;
+    if (x.tier.correct) {
+      s.tier.correct++;
+      s.tier.byGold[x.tier.gold].correct++;
+    }
+  }
+  if (x.callRequiredWithReading) {
+    s.callRequired.items++;
+    if (x.flag.reply !== true) {
+      s.callRequired.dispensedWithoutCall++;
+      if (x.reading?.allCorrect) s.callRequired.dispensedWithoutCallGuessRight++;
+    }
+  }
 }

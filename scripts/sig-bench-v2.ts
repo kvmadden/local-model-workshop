@@ -6,7 +6,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
-import { V2_SIZE, confirmV2, itemProblemsV2, parseItemsV2, quantityCheck, rulesV2OnBench } from '../src/eval/sigBenchV2';
+import { V2_SIZE, confirmV2, itemProblemsV2, parseItemsV2, parseTierTable, quantityCheck, rulesV2OnBench } from '../src/eval/sigBenchV2';
 import { READING_FIELDS } from '../src/eval/sigBenchV2Score';
 import { parseItems } from '../src/eval/sigBench';
 
@@ -19,7 +19,8 @@ const items = parseItemsV2(read('bench/sig-bench/items-v2.jsonl'));
 const schema = JSON.parse(read('bench/sig-bench/schema-v2.json'));
 const v1 = parseItems(read('bench/sig-bench/items.jsonl'));
 const review = JSON.parse(read('bench/sig-bench/review/kevin-2026-11-13.json')).labels;
-const problems = itemProblemsV2(items, schema, v1, review);
+const tiers = parseTierTable(read('bench/sig-bench/CLARIFICATION-RULES.md'));
+const problems = itemProblemsV2(items, schema, v1, review, tiers);
 if (items.length !== V2_SIZE) problems.push(`expected ${V2_SIZE} items, found ${items.length}`);
 if (problems.length) {
   console.error(`sig bench v2: ${problems.length} problem(s)\n${problems.join('\n')}`);
@@ -66,5 +67,10 @@ for (const b of ['clean', 'hard', 'reviewed', 'all'] as const) {
     `${b.padEnd(9)} ${`${s.flag.correct}/${s.flag.items}`.padStart(10)}   ${[s.flag.truePositive, s.flag.falsePositive, s.flag.falseNegative, s.flag.trueNegative].join(' ')}   ${`${s.reading.allCorrect}/${s.reading.items}`.padStart(17)}   ${fieldsRight}/${s.reading.items * READING_FIELDS.length}`,
   );
 }
+const g = result.buckets.all;
+const tierCount = (t: string | null) => items.filter((i) => i.label.clarify && i.label.clarify.tier === t).length;
+console.log(`\nclarify tiers on flagged items: law ${tierCount('law')}, standard ${tierCount('standard')}, judgment ${tierCount('judgment')}, none ${tierCount(null)}`);
+console.log(`tier named right by the rules parser: ${g.tier.correct}/${g.tier.items}`);
+console.log(`likely reading exists but law or a standard requires a call: ${g.callRequired.items} (rules parser dispensed without a call on ${g.callRequired.dispensedWithoutCall}, guess fully right on ${g.callRequired.dispensedWithoutCallGuessRight})`);
 if (check && stale) process.exit(1);
 console.log(check ? '\ngenerated files are up to date' : '\nwrote confirm-v2.json and results/rules-v2.json');

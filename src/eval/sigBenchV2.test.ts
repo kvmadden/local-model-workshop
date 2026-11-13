@@ -6,8 +6,8 @@
 import { describe, it, expect } from 'vitest';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { V2_SIZE, confirmV2, itemProblemsV2, needsKevin, parseItemsV2, quantityCheck, rulesV2OnBench, schemaProblemsV2 } from './sigBenchV2';
-import { READING_FIELDS, addScore, emptySummary, scoreV2Reply, type V2Item, type V2Label, type V2Reading } from './sigBenchV2Score';
+import { V2_SIZE, confirmV2, deriveClarify, itemProblemsV2, needsKevin, parseItemsV2, parseTierTable, quantityCheck, rulesV2OnBench, schemaProblemsV2 } from './sigBenchV2';
+import { READING_FIELDS, addScore, callRequiredWithReading, emptySummary, scoreV2Reply, type V2Item, type V2Label, type V2Reading } from './sigBenchV2Score';
 import { rulesV2 } from './sigBaselinesV2';
 import { parseItems } from './sigBench';
 
@@ -16,6 +16,7 @@ const items = parseItemsV2(read('bench/sig-bench/items-v2.jsonl'));
 const schema = JSON.parse(read('bench/sig-bench/schema-v2.json'));
 const v1 = parseItems(read('bench/sig-bench/items.jsonl'));
 const review = JSON.parse(read('bench/sig-bench/review/kevin-2026-11-13.json')).labels as Record<string, { v: string; note?: string }>;
+const tiers = parseTierTable(read('bench/sig-bench/CLARIFICATION-RULES.md'));
 const byId = (id: string) => items.find((i) => i.id === id) as V2Item;
 const clone = <T>(x: T): T => JSON.parse(JSON.stringify(x));
 const reading = (id: string) => byId(id).label.likely_reading as V2Reading;
@@ -27,13 +28,13 @@ const withReading = (id: string, change: Partial<V2Reading>, flag?: Partial<V2La
 const problemsWith = (id: string, edit: (it: V2Item) => void): string[] => {
   const changed = items.map((i) => (i.id === id ? clone(i) : i));
   edit(changed.find((i) => i.id === id) as V2Item);
-  return itemProblemsV2(changed, schema, v1, review).filter((p) => p.startsWith(id));
+  return itemProblemsV2(changed, schema, v1, review, tiers).filter((p) => p.startsWith(id));
 };
 
 describe('sig bench v2 items', () => {
   it('has the 120 v1 lines, well formed, with the label status the review gives', () => {
     expect(items.length).toBe(V2_SIZE);
-    expect(itemProblemsV2(items, schema, v1, review)).toEqual([]);
+    expect(itemProblemsV2(items, schema, v1, review, tiers)).toEqual([]);
     const count = (s: string) => items.filter((i) => i.label_status === s).length;
     expect([count('confirmed'), count('kevin-notes'), count('proposed')]).toEqual([22, 27, 71]);
     expect(Object.keys(review).length).toBe(49);
@@ -143,6 +144,49 @@ describe("Kevin's notes, as v2 holds them", () => {
   });
 });
 
+describe('clarification tiers', () => {
+  it('reads all 21 flag reasons from the tier appendix of CLARIFICATION-RULES.md', () => {
+    const reasons = schema.$defs.flagReason.enum as string[];
+    expect(reasons.length).toBe(21);
+    expect([...tiers.keys()].sort()).toEqual([...reasons].sort());
+    expect(tiers.get('missing_max_daily')).toEqual({ tier: 'standard', ruleIds: ['NCPDP-PRN-INDICATION', 'FL-DUR', 'NY-CII-DIRECTIONS'] });
+    expect(tiers.get('dosage_form_unspecified')?.tier).toBe('judgment');
+    expect(tiers.get('internal_conflict')?.tier).toBe('judgment');
+    expect(tiers.get('reviewer_hold')).toEqual({ tier: null, ruleIds: [] });
+    expect(() => parseTierTable('# no appendix')).toThrow(/no tier appendix/);
+  });
+
+  it('gives every flagged item a clarify block from the table, the strictest tier, and no unflagged item one', () => {
+    for (const it of items) {
+      expect(it.label.clarify !== undefined, it.id).toBe(it.label.flag.needed);
+      if (it.label.clarify) expect(it.label.clarify, it.id).toEqual(deriveClarify(it.label.flag.reasons, tiers));
+    }
+    const count = (t: string | null) => items.filter((i) => i.label.clarify && i.label.clarify.tier === t).length;
+    expect([count('law'), count('standard'), count('judgment'), count(null)]).toEqual([17, 1, 2, 7]);
+    expect(byId('sb-043').label.clarify?.tier).toBe('law');
+    expect(deriveClarify(['dosage_form_unspecified'], tiers).tier).toBe('judgment');
+    expect(deriveClarify(['dosage_form_unspecified', 'missing_frequency'], tiers).tier).toBe('law');
+    expect(deriveClarify(['reviewer_hold'], tiers)).toEqual({ tier: null, rule_ids: [] });
+  });
+
+  it('catches a clarify block that disagrees with the table (the checker shown red)', () => {
+    expect(problemsWith('sb-049', (i) => (i.label.clarify!.tier = 'law')).join('\n')).toMatch(/tier table gives standard/);
+    expect(problemsWith('sb-035', (i) => (i.label.clarify!.rule_ids = ['FL-RX-DIRECTIONS'])).join('\n')).toMatch(/rule_ids differ/);
+    expect(problemsWith('sb-035', (i) => delete i.label.clarify).join('\n')).toMatch(/clarify block is required exactly when flagged/);
+    expect(problemsWith('sb-001', (i) => (i.label.clarify = { tier: 'judgment', rule_ids: [] })).join('\n')).toMatch(/clarify block is required exactly when flagged/);
+    const short = new Map(tiers);
+    short.delete('internal_conflict');
+    expect(itemProblemsV2(items, schema, v1, review, short).join('\n')).toMatch(/internal_conflict has no row/);
+  });
+
+  it('counts the items a pharmacist would dispense but law or a standard says to call first', () => {
+    const ids = items.filter((i) => callRequiredWithReading(i.label)).map((i) => i.id);
+    expect(ids).toEqual(['sb-035', 'sb-037', 'sb-039', 'sb-041', 'sb-042', 'sb-043', 'sb-044', 'sb-046', 'sb-047', 'sb-049', 'sb-052']);
+    expect(callRequiredWithReading(byId('sb-067').label)).toBe(false);
+    expect(callRequiredWithReading(byId('sb-036').label)).toBe(false);
+  });
+});
+
 describe('sig bench v2 generated files', () => {
   it('are up to date with items-v2.jsonl', () => {
     expect(read('bench/sig-bench/confirm-v2.json')).toBe(`${JSON.stringify(confirmV2(items), null, 1)}\n`);
@@ -196,6 +240,11 @@ describe('sig bench v2 generated files', () => {
     expect(card).toContain(`by arithmetic on ${items.map(quantityCheck).filter((c) => c.kind !== 'skipped').length} of the 120 items`);
     const reviewedRows = items.filter((i) => i.label_status !== 'proposed' && needsKevin(i)).length;
     expect(card).toContain(`the 71 unreviewed lines and ${reviewedRows} reviewed lines where v2 adds something new`);
+    const tierCount = (t: string | null) => items.filter((i) => i.label.clarify && i.label.clarify.tier === t).length;
+    expect(card).toContain(`| ${tierCount('law')} | ${tierCount('standard')} | ${tierCount('judgment')} | ${tierCount(null)} |`);
+    expect(card).toContain(`${b.all.callRequired.items} items have a likely reading and a law or standard tier`);
+    expect(card).toContain(`It names no tier, so it gets ${b.all.tier.correct} of ${b.all.tier.items}`);
+    expect(card).toContain(`it dispensed without a call on ${b.all.callRequired.dispensedWithoutCall} of the ${b.all.callRequired.items}`);
   });
 });
 
@@ -206,6 +255,7 @@ describe('sig bench v2 scorer', () => {
       expect(s.flag.correct, it.id).toBe(true);
       expect(s.flag.reasonsNamed, it.id).toBe(s.flag.reasonsExpected);
       expect(s.safety.named, it.id).toBe(s.safety.expected);
+      if (s.tier) expect(s.tier.correct, it.id).toBe(true);
       if (it.label.likely_reading) expect(s.reading?.allCorrect, `${it.id} ${READING_FIELDS.filter((f) => !s.reading!.fields[f])}`).toBe(true);
       else expect(s.reading).toBeNull();
     }
@@ -294,6 +344,30 @@ describe('sig bench v2 scorer', () => {
   it('gives an unreadable reply nothing on either tier', () => {
     const s = scoreV2Reply(byId('sb-035'), 'I would call the prescriber.');
     expect(s).toMatchObject({ parsed: false, flag: { reply: null, correct: false }, reading: { offered: false, allCorrect: false } });
+  });
+
+  it('scores the clarification tier on flagged items, apart from the flag and the reading', () => {
+    const it35 = byId('sb-035');
+    const right = scoreV2Reply(it35, JSON.stringify(it35.label));
+    expect(right.tier).toEqual({ gold: 'law', reply: 'law', correct: true });
+    const wrongTier = scoreV2Reply(it35, JSON.stringify({ ...it35.label, clarify: { tier: 'judgment', rule_ids: [] } }));
+    expect([wrongTier.tier?.correct, wrongTier.flag.correct, wrongTier.reading?.allCorrect]).toEqual([false, true, true]);
+    const noTier = scoreV2Reply(it35, JSON.stringify({ ...it35.label, clarify: undefined }));
+    expect(noTier.tier).toEqual({ gold: 'law', reply: null, correct: false });
+    expect(scoreV2Reply(byId('sb-001'), JSON.stringify({ ...byId('sb-001').label, clarify: { tier: 'law', rule_ids: [] } })).tier).toBeNull();
+    expect(scoreV2Reply(byId('sb-063'), JSON.stringify(byId('sb-063').label)).tier).toBeNull();
+    expect(scoreV2Reply(byId('sb-049'), JSON.stringify({ ...byId('sb-049').label, clarify: { tier: 'LAW', rule_ids: [] } })).tier?.correct).toBe(false);
+  });
+
+  it('reports a right guess dispensed without the call law or a standard requires', () => {
+    const sum = emptySummary();
+    const it35 = byId('sb-035');
+    addScore(sum, scoreV2Reply(it35, JSON.stringify({ ...it35.label, flag: { needed: false, reasons: [] }, clarify: undefined })));
+    addScore(sum, scoreV2Reply(byId('sb-046'), JSON.stringify(byId('sb-046').label)));
+    addScore(sum, scoreV2Reply(byId('sb-067'), JSON.stringify({ ...byId('sb-067').label, flag: { needed: false, reasons: [] } })));
+    expect(sum.callRequired).toEqual({ items: 2, dispensedWithoutCall: 1, dispensedWithoutCallGuessRight: 1 });
+    expect(sum.tier).toMatchObject({ items: 3, correct: 2, unanswered: 1 });
+    expect(sum.tier.byGold).toEqual({ law: { items: 2, correct: 1 }, standard: { items: 0, correct: 0 }, judgment: { items: 1, correct: 1 } });
   });
 
   it('tallies the flag confusion matrix and the reading fields', () => {

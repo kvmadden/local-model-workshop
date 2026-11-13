@@ -201,10 +201,21 @@
         "package_unspecified", "dosage_form_unspecified", "error_prone_abbreviation", "reviewer_hold"
       ]
     },
-    "reply": {
-      "$comment": "The label format and the reply format are the same.",
+    "clarify": {
+      "$comment": "On a flagged line: the strictest tier that requires the call (law, standard or judgment), and the rule IDs from CLARIFICATION-RULES.md. Tier is null when the only reason is reviewer_hold. Unflagged lines have no clarify block.",
       "type": "object",
       "properties": {
+        "tier": { "type": ["string", "null"], "enum": ["law", "standard", "judgment", null] },
+        "rule_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["tier", "rule_ids"],
+      "additionalProperties": false
+    },
+    "reply": {
+      "$comment": "The label format and the reply format are the same. clarify is present only on a flagged line.",
+      "type": "object",
+      "properties": {
+        "clarify": { "$ref": "#/$defs/clarify" },
         "flag": {
           "type": "object",
           "properties": { "needed": { "type": "boolean" }, "reasons": { "type": "array", "items": { "$ref": "#/$defs/flagReason" } } },

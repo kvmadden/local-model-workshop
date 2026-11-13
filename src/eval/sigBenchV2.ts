@@ -19,8 +19,10 @@ import {
   quantityUnit,
   renderLine,
   scoreV2Reply,
+  type ClarifyTier,
   type LabelStatus,
   type Range,
+  type V2Clarify,
   type V2Item,
   type V2Reading,
   type V2Summary,
@@ -164,6 +166,47 @@ export function quantityCheck(item: V2Item): QuantityCheck {
   return skip('no schedule');
 }
 
+// ─── Clarification tiers (bench/sig-bench/CLARIFICATION-RULES.md) ─────────────
+
+export type TierTable = Map<string, { tier: ClarifyTier | null; ruleIds: string[] }>;
+
+/**
+ * The "Tier per test sig" appendix of CLARIFICATION-RULES.md: flag reason to its primary tier and
+ * rule IDs. The markdown is the one source. A primary tier written as "JUDGMENT (non-controlled) or
+ * LAW (controlled)" reads as its first tier, because no flagged item with that reason is a
+ * controlled substance. "none" reads as no tier. Notes in parentheses after a rule ID are dropped.
+ */
+export function parseTierTable(markdown: string): TierTable {
+  const at = markdown.indexOf('## Appendix: tier per test sig');
+  if (at === -1) throw new Error('CLARIFICATION-RULES.md has no tier appendix');
+  const table: TierTable = new Map();
+  for (const line of markdown.slice(at).split('\n')) {
+    if (!line.startsWith('| ') || line.startsWith('| Flag reason')) continue;
+    const cells = line.replace(/^\|/, '').replace(/\|\s*$/, '').split('|').map((c) => c.trim());
+    const word = cells[2].split(/\s+/)[0].toLowerCase();
+    const tier = word === 'none' ? null : (word as ClarifyTier);
+    if (tier !== null && !['law', 'standard', 'judgment'].includes(tier)) throw new Error(`unknown tier ${cells[2]} for ${cells[0]}`);
+    const ruleIds = cells[4].split(',').map((x) => x.replace(/\s*\(.*?\)/g, '').trim()).filter((x) => x && x !== 'n/a');
+    table.set(cells[0], { tier, ruleIds });
+  }
+  return table;
+}
+
+const STRICT: Record<ClarifyTier, number> = { law: 3, standard: 2, judgment: 1 };
+
+/** A flagged item's clarify block: the strictest primary tier of its reasons, and their rule IDs in order. */
+export function deriveClarify(reasons: string[], table: TierTable): V2Clarify {
+  let tier: ClarifyTier | null = null;
+  const ruleIds: string[] = [];
+  for (const r of reasons) {
+    const row = table.get(r);
+    if (!row) throw new Error(`no tier row for flag reason ${r}`);
+    if (row.tier && (tier === null || STRICT[row.tier] > STRICT[tier])) tier = row.tier;
+    for (const id of row.ruleIds) if (!ruleIds.includes(id)) ruleIds.push(id);
+  }
+  return { tier, rule_ids: ruleIds };
+}
+
 // ─── Item checks ──────────────────────────────────────────────────────────────
 
 const STATUS_OF: Record<string, LabelStatus> = { ok: 'confirmed', hold: 'kevin-notes' };
@@ -174,8 +217,11 @@ export function itemProblemsV2(
   schema: Schema,
   v1: Array<{ id: string; sig: string; tier: string }>,
   review: Record<string, { v: string; note?: string }>,
+  tiers: TierTable,
 ): string[] {
   const out: string[] = [];
+  const reasonEnum = (schema.$defs?.flagReason?.enum ?? []) as string[];
+  for (const r of reasonEnum) if (!tiers.has(r)) out.push(`flag reason ${r} has no row in the tier table`);
   const itemSchema = schema.$defs?.item as Schema;
   const v1ById = new Map(v1.map((i) => [i.id, i]));
   const seen = new Set<string>();
@@ -198,6 +244,12 @@ export function itemProblemsV2(
     if (k?.v === 'hold' && !l.flag.needed) out.push(`${at}: Kevin marked it Should be flagged, so flag.needed must be true`);
     if (k?.v === 'ok' && l.flag.needed) out.push(`${at}: Kevin marked the unflagged label correct, so flag.needed must be false`);
     if (l.flag.needed !== l.flag.reasons.length > 0) out.push(`${at}: reasons are required exactly when flagged`);
+    if (l.flag.needed !== (l.clarify !== undefined)) out.push(`${at}: a clarify block is required exactly when flagged`);
+    if (l.flag.needed && l.clarify && l.flag.reasons.every((r) => tiers.has(r))) {
+      const want = deriveClarify(l.flag.reasons, tiers);
+      if (l.clarify.tier !== want.tier) out.push(`${at}: clarify tier ${l.clarify.tier}, but the tier table gives ${want.tier}`);
+      if (JSON.stringify(l.clarify.rule_ids) !== JSON.stringify(want.rule_ids)) out.push(`${at}: clarify rule_ids differ from the tier table`);
+    }
     if (it.quantity_role !== 'consistent' && (!l.flag.needed || !it.quantity_math)) out.push(`${at}: an unclear-sig quantity role needs a flag and the arithmetic`);
     if (it.label_status === 'proposed' && it.open_questions.length) out.push(`${at}: a proposed item uses proposal_note, not open_questions`);
     if (it.label_status !== 'proposed' && it.proposal_note !== null) out.push(`${at}: a reviewed item uses open_questions, not proposal_note`);
@@ -293,6 +345,7 @@ export interface SheetRow {
   prescription: string;
   v1_line: string;
   flag: string;
+  clarify: string | null;
   likely_reading: string;
   confidence: string | null;
   basis: string[];
@@ -331,6 +384,7 @@ export function confirmV2(items: V2Item[]): object {
         prescription: renderPrescription(it.input),
         v1_line: it.source_line,
         flag: l.flag.needed ? `yes: ${l.flag.reasons.map((x) => x.replace(/_/g, ' ')).join(', ')}` : 'no',
+        clarify: l.clarify ? `${l.clarify.tier ?? 'no tier (reviewer hold)'}${l.clarify.rule_ids.length ? `: ${l.clarify.rule_ids.join(', ')}` : ''}` : null,
         likely_reading: readingText(r),
         confidence: r ? r.confidence : null,
         basis: r ? r.basis.map((b) => `${b.text} (${b.source.replace(/_/g, ' ')})`) : [],
