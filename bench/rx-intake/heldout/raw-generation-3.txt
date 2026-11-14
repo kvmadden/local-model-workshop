@@ -1,0 +1,104 @@
+```json
+[
+  {
+    "input": {"drug_description": "Torsemide", "strength": "20 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth daily, except take 2 tablets on Mondays and Thursdays", "quantity": {"value": 36, "unit": "tab"}, "days_supply": 28},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Pregabalin", "strength": "300 mg", "dosage_form": "capsule", "sig": "1 cap po TID", "quantity": {"value": 90, "unit": "cap"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["exceeds_usual_max"]}, "tier": "law", "basis": [
+      {"reason": "exceeds_usual_max", "kind": "fda_max", "fact": "1 capsule of 300 mg three times daily is 900 mg a day. The label maximum is 600 mg a day.", "citation": "DailyMed: pregabalin capsules (Lyrica), Dosage and Administration"}
+    ], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "pregabalin", "release": "ir", "form": "capsule", "max_daily": {"value": 600, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "Cefadroxil", "strength": "500 mg", "dosage_form": null, "sig": "take 500 mg po bid x 10 days", "quantity": {"value": 20, "unit": "each"}, "days_supply": 10},
+    "label": {"flag": {"needed": true, "reasons": ["dosage_form_unspecified"]}, "tier": "judgment", "basis": [
+      {"reason": "dosage_form_unspecified", "kind": "missing_element", "fact": "The dosage form field is blank. The sig 'take 500 mg po bid' does not say whether to dispense capsules or oral suspension. Cefadroxil is marketed as 500 mg capsules and as a 500 mg/5 mL oral suspension. Cefadroxil is not a controlled substance.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (dosage_form_unspecified); RxNorm (rxnav.nlm.nih.gov): cefadroxil"}
+    ], "judgment_only": true},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Levetiracetam", "strength": "500 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth twice daily, increase as tolerated", "quantity": {"value": 60, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_titration_plan"]}, "tier": "law", "basis": [
+      {"reason": "missing_titration_plan", "kind": "structure", "fact": "The sig says 'increase as tolerated' but gives no step size, no interval and no ceiling dose.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (missing_titration_plan)"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Ketoconazole", "strength": "2%", "dosage_form": "cream", "sig": "Apply a thin layer to affected area once daily x 2 weeks", "quantity": {"value": 30, "unit": "g"}, "days_supply": 14},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Tirzepatide (Mounjaro)", "strength": "2.5 mg/0.5 mL", "dosage_form": "solution, pen-injector", "sig": "Inject 2.5 mg subcutaneously daily", "quantity": {"value": 2, "unit": "mL"}, "days_supply": 28},
+    "label": {"flag": {"needed": true, "reasons": ["frequency_product_mismatch"]}, "tier": "law", "basis": [
+      {"reason": "frequency_product_mismatch", "kind": "weekly_product", "fact": "The FDA label doses tirzepatide (Mounjaro) once weekly. The sig says to inject it daily.", "citation": "DailyMed: Mounjaro (tirzepatide) injection, Dosage and Administration"}
+    ], "judgment_only": false},
+    "checks": [{"kind": "weekly_product", "generic": "tirzepatide", "form": "injection", "interval": "weekly"}]
+  },
+  {
+    "input": {"drug_description": "Ezetimibe", "strength": "10 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth every day", "quantity": {"value": 90, "unit": "tab"}, "days_supply": 90},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Sulfamethoxazole/trimethoprim DS", "strength": "800 mg/160 mg", "dosage_form": "tablet", "sig": "1 tab po bid x 7 days x 10 days", "quantity": {"value": 20, "unit": "tab"}, "days_supply": 10},
+    "label": {"flag": {"needed": true, "reasons": ["conflicting_duration"]}, "tier": "law", "basis": [
+      {"reason": "conflicting_duration", "kind": "structure", "fact": "The sig gives two durations for the same dose: 'x 7 days' and 'x 10 days'.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (conflicting_duration)"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Glyburide", "strength": "5 mg", "dosage_form": "tablet", "sig": "Take 2 tabs by mouth twice a day with meals", "quantity": {"value": 120, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "glyburide", "release": "ir", "form": "tablet", "max_daily": {"value": 20, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "Benazepril", "strength": "10 mg", "dosage_form": "tablet", "sig": "take by mouth once daily", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_dose"]}, "tier": "law", "basis": [
+      {"reason": "missing_dose", "kind": "missing_element", "fact": "The sig 'take by mouth once daily' gives no number of tablets and no mg per dose. The strength field gives the strength of each tablet, not the dose.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (missing_dose)"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Methylphenidate", "strength": "10 mg", "dosage_form": null, "sig": "Take 10 mg by mouth twice daily, morning and noon", "quantity": {"value": 60, "unit": "each"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["dosage_form_unspecified"]}, "tier": "law", "basis": [
+      {"reason": "dosage_form_unspecified", "kind": "controlled_schedule", "fact": "The dosage form field is blank. The sig does not say whether to dispense tablets, chewable tablets or oral solution. RxNorm lists methylphenidate as DEA Schedule II.", "citation": "RxNorm (rxnav.nlm.nih.gov): methylphenidate; 21 CFR 1306.05(a)"}
+    ], "judgment_only": false},
+    "checks": [{"kind": "controlled_schedule", "generic": "methylphenidate", "schedule": "2"}]
+  },
+  {
+    "input": {"drug_description": "Metronidazole", "strength": "500 mg", "dosage_form": "tablet", "sig": "1 tab po tid x 7d", "quantity": {"value": 21, "unit": "tab"}, "days_supply": 7},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Lansoprazole", "strength": "30 mg", "dosage_form": "capsule, delayed release", "sig": "Take 1 capsule by mouth daily BID before meals", "quantity": {"value": 60, "unit": "cap"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["conflicting_frequency"]}, "tier": "law", "basis": [
+      {"reason": "conflicting_frequency", "kind": "structure", "fact": "The sig gives two schedules for the same dose, 'daily' and 'BID', and both cannot hold.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (conflicting_frequency)"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Liraglutide (Victoza)", "strength": "18 mg/3 mL", "dosage_form": "solution, pen-injector", "sig": "Inject 1.2 mg under the skin once daily", "quantity": {"value": 9, "unit": "mL"}, "days_supply": 30},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Sitagliptin", "strength": null, "dosage_form": "tablet", "sig": "take 1 tablet by mouth daily", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_strength"]}, "tier": "law", "basis": [
+      {"reason": "missing_strength", "kind": "missing_element", "fact": "The strength field is blank, and the sig 'take 1 tablet by mouth daily' does not state a strength.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (missing_strength)"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Budesonide EC", "strength": "3 mg", "dosage_form": "capsule", "sig": "Take 3 capsules (9 mg) by mouth every morning for 8 weeks, then taper", "quantity": {"value": 168, "unit": "cap"}, "days_supply": 56},
+    "label": {"flag": {"needed": true, "reasons": ["missing_taper_steps"]}, "tier": "law", "basis": [
+      {"reason": "missing_taper_steps", "kind": "structure", "fact": "The sig says 'then taper' but gives no taper doses or step durations.", "citation": "bench/sig-bench/CLARIFICATION-RULES.md, tier appendix (missing_taper_steps)"}
+    ], "judgment_only": false},
+    "checks": []
+  }
+]
+```

@@ -1,0 +1,1987 @@
+{
+ "set": "dev",
+ "scoredAt": "2026-11-14T05:21:08.371Z",
+ "config": {
+  "readers": [
+   "opus"
+  ],
+  "combine": "primary",
+  "why": "On the development lines the qwen3.8:27b second reader added no catch and two false alarms under union_structural (iteration 7), and timed out on 23 of 135 lines on the shared machine. The frozen system uses the Opus reading alone."
+ },
+ "frozen": null,
+ "result": {
+  "metrics": {
+   "required": {
+    "n": 42,
+    "caught": 41,
+    "dangerous": 1,
+    "unread": 0,
+    "tierAgrees": 41,
+    "reasonOverlap": 41
+   },
+   "judgment": {
+    "n": 4,
+    "raised": 4,
+    "asRequired": 0
+   },
+   "clean": {
+    "n": 18,
+    "falseAlarms": 0,
+    "advisories": 0,
+    "unread": 0
+   },
+   "hold": {
+    "n": 0,
+    "required": 0,
+    "advisory": 0
+   },
+   "unverified": {
+    "n": 0,
+    "required": 0
+   }
+  },
+  "errors": [
+   {
+    "id": "dv-031",
+    "kind": "MISS",
+    "gold": "flag law [exceeds_usual_max]",
+    "system": "no call  []"
+   }
+  ]
+ },
+ "lines": [
+  {
+   "id": "dv-001",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_drug",
+     "missing_strength"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_drug",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "NABP-RX-CONTENT"
+      ],
+      "kind": "missing_element",
+      "fact": "The drug field is blank and the sig names no drug.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     },
+     {
+      "reason": "missing_strength",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "FED-CII-2007",
+       "NY-CII-ADD-CHANGE",
+       "TX-CII-CHANGES"
+      ],
+      "kind": "missing_element",
+      "fact": "The strength field is blank and the sig gives no strength.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding tablet, sig \"take 1 tab by mouth daily\": Which drug did you intend? What strength did you intend?"
+   }
+  },
+  {
+   "id": "dv-002",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_drug"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_drug",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "NABP-RX-CONTENT"
+      ],
+      "kind": "missing_element",
+      "fact": "The drug field is blank and the sig names no drug.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "60 cap needed for 30 days, 60 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding 10 mg capsule, sig \"1 cap po bid\": Which drug did you intend?"
+   }
+  },
+  {
+   "id": "dv-003",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_strength"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_strength",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "FED-CII-2007",
+       "NY-CII-ADD-CHANGE",
+       "TX-CII-CHANGES"
+      ],
+      "kind": "missing_element",
+      "fact": "The strength field is blank and the sig gives no strength.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding Citalopram tablet, sig \"1 tab po daily\": What strength did you intend?"
+   }
+  },
+  {
+   "id": "dv-004",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_strength"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_strength",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "FED-CII-2007",
+       "NY-CII-ADD-CHANGE",
+       "TX-CII-CHANGES"
+      ],
+      "kind": "missing_element",
+      "fact": "The strength field is blank and the sig gives no strength.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "90 tab needed for 30 days, 90 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding Buspirone tablet, sig \"1 tab po tid\": What strength did you intend?"
+   }
+  },
+  {
+   "id": "dv-005",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_dose"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_dose",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE",
+       "USP-17-AS-DIRECTED"
+      ],
+      "kind": "missing_element",
+      "fact": "Neither the sig nor the fields say how much to take each time.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Allopurinol 100 mg tablet, sig \"take by mouth daily\": How much should the patient take each time?"
+   }
+  },
+  {
+   "id": "dv-006",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_dose"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_dose",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE",
+       "USP-17-AS-DIRECTED"
+      ],
+      "kind": "missing_element",
+      "fact": "Neither the sig nor the fields say how much to take each time.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Loratadine 10 mg tablet, sig \"take po prn allergies\": How much should the patient take each time?"
+   }
+  },
+  {
+   "id": "dv-007",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_frequency"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE"
+      ],
+      "kind": "missing_element",
+      "fact": "The sig gives no schedule, interval or as-needed use.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Rosuvastatin 10 mg tablet, sig \"1 tab po\": How often should the patient take it?"
+   }
+  },
+  {
+   "id": "dv-008",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_frequency"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE"
+      ],
+      "kind": "missing_element",
+      "fact": "The sig gives no schedule, interval or as-needed use.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Finasteride 5 mg tablet, sig \"take one tablet by mouth\": How often should the patient take it?"
+   }
+  },
+  {
+   "id": "dv-009",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_frequency"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE"
+      ],
+      "kind": "missing_element",
+      "fact": "The sig gives no schedule, interval or as-needed use.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     },
+     {
+      "reason": "package_unspecified",
+      "tier": "judgment",
+      "rule_ids": [
+       "FL-PT-RECORD"
+      ],
+      "kind": "judgment",
+      "fact": "No package is given, and DailyMed lists a single-use package (LUMIFY PRESERVATIVE FREE EYE DROPS (BRIMONIDINE TARTRATE) SOLUTION/ DROPS [BAUSCH & LOMB INCORPORATED]) beside the multidose one.",
+      "citation": "Kevin Madden review, 13 November 2026 (timolol), r. 64B16-27.800, F.A.C. (FL-PT-RECORD)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Brimonidine 0.2% solution, sig \"1 gtt OS\": How often should the patient take it? Which package did you intend: multidose bottle or single-use vials?"
+   }
+  },
+  {
+   "id": "dv-010",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_laterality"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_laterality",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "ISMP-OD"
+      ],
+      "kind": "missing_element",
+      "fact": "An eye product with no eye named.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Moxifloxacin ophthalmic 0.5% solution, sig \"1 drop in eye tid x 7 days\": Which side should it be used in: left, right or both?"
+   }
+  },
+  {
+   "id": "dv-011",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_laterality"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_laterality",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "ISMP-OD"
+      ],
+      "kind": "missing_element",
+      "fact": "An ear product with no ear named.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Ciprofloxacin/dexamethasone otic 0.3%/0.1% suspension, sig \"4 drops in ear bid x 7 days\": Which side should it be used in: left, right or both?"
+   }
+  },
+  {
+   "id": "dv-012",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_taper_steps"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_taper_steps",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "FL-DUR"
+      ],
+      "kind": "structure",
+      "fact": "\"then taper\" without the steps.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "12 tab needed for 10 days, 20 written (1.67 times the need).",
+    "daily_total": null,
+    "question": "Regarding Hydrocortisone 10 mg tablet, sig \"2 tabs po bid x 3 days then taper\": What are the taper steps: each dose and how many days at each?"
+   }
+  },
+  {
+   "id": "dv-013",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_taper_steps"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_taper_steps",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "FL-DUR"
+      ],
+      "kind": "structure",
+      "fact": "\"taper off over 2 weeks\" without the steps.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "42 tab needed for 14 days, 30 written (0.71 times the need).",
+    "daily_total": "10 mg x 3 a day = 30 mg. Label maximum 80 mg.",
+    "question": "Regarding Baclofen 10 mg tablet, sig \"1 tab po tid, taper off over 2 weeks\": What are the taper steps: each dose and how many days at each?"
+   }
+  },
+  {
+   "id": "dv-014",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_titration_plan"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_titration_plan",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "FL-DUR"
+      ],
+      "kind": "structure",
+      "fact": "\"titrate up weekly as tolerated\" without the step, interval and ceiling.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 60 written (2 times the need).",
+    "daily_total": "25 mg x 1 a day = 25 mg. Label maximum 400 mg.",
+    "question": "Regarding Topiramate 25 mg tablet, sig \"1 tab po qhs, titrate up weekly as tolerated\": What is the titration plan: the step size, how often to increase, and the maximum dose?"
+   }
+  },
+  {
+   "id": "dv-015",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_titration_plan"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_titration_plan",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "FL-DUR"
+      ],
+      "kind": "structure",
+      "fact": "\"increase as needed for symptoms\" without the step, interval and ceiling.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "0.25 mg x 1 a day = 0.25 mg. Label maximum 24 mg.",
+    "question": "Regarding Ropinirole 0.25 mg tablet, sig \"1 tab po qhs, increase as needed for symptoms\": What is the titration plan: the step size, how often to increase, and the maximum dose?"
+   }
+  },
+  {
+   "id": "dv-016",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_sliding_scale"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_dose",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE",
+       "USP-17-AS-DIRECTED"
+      ],
+      "kind": "missing_element",
+      "fact": "Neither the sig nor the fields say how much to take each time.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     },
+     {
+      "reason": "missing_sliding_scale",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "ISMP-HA-INSULIN",
+       "ISMP-SSI"
+      ],
+      "kind": "structure",
+      "fact": "\"inject per sliding scale\" without the scale.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Insulin regular 100 units/mL injection, sig \"inject per sliding scale before meals\": How much should the patient take each time? What sliding scale should the patient follow: each glucose range and its dose?"
+   }
+  },
+  {
+   "id": "dv-017",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_sliding_scale"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_sliding_scale",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "ISMP-HA-INSULIN",
+       "ISMP-SSI"
+      ],
+      "kind": "structure",
+      "fact": "\"plus correction scale with meals\" without the scale.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Insulin detemir 100 units/mL injection, sig \"inject 12 units subcut qhs plus correction scale with meals\": What sliding scale should the patient follow: each glucose range and its dose?"
+   }
+  },
+  {
+   "id": "dv-018",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_dose",
+     "missing_frequency",
+     "as_directed_without_instructions"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_dose",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE",
+       "USP-17-AS-DIRECTED"
+      ],
+      "kind": "missing_element",
+      "fact": "Neither the sig nor the fields say how much to take each time.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     },
+     {
+      "reason": "missing_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE"
+      ],
+      "kind": "missing_element",
+      "fact": "The sig gives no schedule, interval or as-needed use.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     },
+     {
+      "reason": "as_directed_without_instructions",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "NCPDP-SIG-INCOMPLETE",
+       "USP-17-AS-DIRECTED",
+       "ISMP-UD"
+      ],
+      "kind": "missing_element",
+      "fact": "\"use as directed\" stands in for a missing dose.",
+      "citation": "NCPDP SCRIPT Implementation Recommendations v1.77, section 10 (NCPDP-SIG-INCOMPLETE)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Colchicine 0.6 mg tablet, sig \"use as directed\": How much should the patient take each time? How often should the patient take it? Can you give the full directions in place of \"as directed\"?"
+   }
+  },
+  {
+   "id": "dv-019",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_frequency",
+     "as_directed_without_instructions"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "missing_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "NCPDP-SIG-INCOMPLETE"
+      ],
+      "kind": "missing_element",
+      "fact": "The sig gives no schedule, interval or as-needed use.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     },
+     {
+      "reason": "as_directed_without_instructions",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FED-CS-CONTENT",
+       "NCPDP-SIG-INCOMPLETE",
+       "USP-17-AS-DIRECTED",
+       "ISMP-UD"
+      ],
+      "kind": "missing_element",
+      "fact": "\"ud\" stands in for a missing schedule.",
+      "citation": "NCPDP SCRIPT Implementation Recommendations v1.77, section 10 (NCPDP-SIG-INCOMPLETE)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Famotidine 20 mg tablet, sig \"1 tab ud\": How often should the patient take it? Can you give the full directions in place of \"as directed\"?"
+   }
+  },
+  {
+   "id": "dv-020",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "conflicting_frequency"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "conflicting_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "ISMP-QD"
+      ],
+      "kind": "structure",
+      "fact": "\"daily bid\" gives two schedules for one dose.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "80 mg x 2 a day = 160 mg. Label maximum 320 mg.",
+    "question": "Regarding Valsartan 80 mg tablet, sig \"1 tab po daily bid\": The sig gives two schedules. Which one did you intend?"
+   }
+  },
+  {
+   "id": "dv-021",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "conflicting_frequency"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "conflicting_frequency",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "ISMP-QD"
+      ],
+      "kind": "structure",
+      "fact": "\"qd tid\" gives two schedules for one dose.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Fexofenadine 180 mg tablet, sig \"1 tab po qd tid\": The sig gives two schedules. Which one did you intend?"
+   }
+  },
+  {
+   "id": "dv-022",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "conflicting_duration"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "conflicting_duration",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "FL-DUR"
+      ],
+      "kind": "structure",
+      "fact": "\"x 10 days x 5 days\" gives two durations for one step.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "20 cap needed for 10 days, 20 written (1 times the need).",
+    "daily_total": "300 mg x 2 a day = 600 mg. Label maximum 600 mg.",
+    "question": "Regarding Cefdinir 300 mg capsule, sig \"1 cap po bid x 10 days x 5 days\": The sig gives two durations. Which one did you intend?"
+   }
+  },
+  {
+   "id": "dv-023",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "conflicting_duration"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "conflicting_duration",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER",
+       "FL-DUR"
+      ],
+      "kind": "structure",
+      "fact": "\"for 7 days for 10 days\" gives two durations for one step.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "21 tab needed for 7 days, 21 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding Valacyclovir 1 g tablet, sig \"1 tab po tid for 7 days for 10 days\": The sig gives two durations. Which one did you intend?"
+   }
+  },
+  {
+   "id": "dv-024",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "alternatives_without_rule"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "alternatives_without_rule",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER"
+      ],
+      "kind": "structure",
+      "fact": "\"bid or tid\" leaves the choice open.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": "90 tab needed for 30 days, 90 written (1 times the need).",
+    "daily_total": "25 mg x 3 a day = 75 mg. Label maximum 300 mg.",
+    "question": "Regarding Hydralazine 25 mg tablet, sig \"1 tab po bid or tid\": The sig offers a choice. Which should the patient use, or what decides it?"
+   }
+  },
+  {
+   "id": "dv-025",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "alternatives_without_rule"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "alternatives_without_rule",
+      "tier": "law",
+      "rule_ids": [
+       "FL-RX-DIRECTIONS",
+       "FL-NO-ALTER"
+      ],
+      "kind": "structure",
+      "fact": "\"tid or as needed for tremor\" leaves the choice open.",
+      "citation": "s. 456.42(1), F.S. (FL-RX-DIRECTIONS)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": "10 mg x 3 a day = 30 mg. Label maximum 640 mg.",
+    "question": "Regarding Propranolol 10 mg tablet, sig \"1 tab po tid or as needed for tremor\": The sig offers a choice. Which should the patient use, or what decides it?"
+   }
+  },
+  {
+   "id": "dv-026",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "implausible_dose_unit"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "implausible_dose_unit",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-NO-ALTER",
+       "FDA-DIGOXIN-STRENGTH",
+       "ISMP-MCG",
+       "ISMP-HA-DIGOXIN"
+      ],
+      "kind": "unit_strength",
+      "fact": "25 mg is not a marketed strength, but 25 mcg is (RxNorm lists 0.005, 0.02, 0.025, 0.05 mg).",
+      "citation": "RxNorm clinical drugs (rxnav.nlm.nih.gov), FDA labels on DailyMed"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding Liothyronine 25 mg tablet, sig \"1 tab po daily\": The strength is not made in that unit. Did you intend the other unit?"
+   }
+  },
+  {
+   "id": "dv-027",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "implausible_dose_unit"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "implausible_dose_unit",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-NO-ALTER",
+       "FDA-DIGOXIN-STRENGTH",
+       "ISMP-MCG",
+       "ISMP-HA-DIGOXIN"
+      ],
+      "kind": "unit_strength",
+      "fact": "0.25 mg is not a marketed strength, but 0.25 mcg is (RxNorm lists 0, 0.001 mg).",
+      "citation": "RxNorm clinical drugs (rxnav.nlm.nih.gov), FDA labels on DailyMed"
+     }
+    ],
+    "quantity_math": "30 cap needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding Calcitriol 0.25 mg capsule, sig \"1 cap po daily\": The strength is not made in that unit. Did you intend the other unit?"
+   }
+  },
+  {
+   "id": "dv-028",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "implausible_dose_unit"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "implausible_dose_unit",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-NO-ALTER",
+       "FDA-DIGOXIN-STRENGTH",
+       "ISMP-MCG",
+       "ISMP-HA-DIGOXIN"
+      ],
+      "kind": "unit_strength",
+      "fact": "100 mg is not a marketed strength, but 100 mcg is (RxNorm lists 0.025, 0.05, 0.1, 0.17, 0.2, 0.3 mg).",
+      "citation": "RxNorm clinical drugs (rxnav.nlm.nih.gov), FDA labels on DailyMed"
+     }
+    ],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": null,
+    "question": "Regarding Clonidine 100 mg tablet, sig \"1 tab po bid\": The strength is not made in that unit. Did you intend the other unit?"
+   }
+  },
+  {
+   "id": "dv-029",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "exceeds_usual_max"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "exceeds_usual_max",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR"
+      ],
+      "kind": "fda_max",
+      "fact": "80 mg x 1 a day = 80 mg. Label maximum 40 mg.",
+      "citation": "FDA label on DailyMed: CITALOPRAM TABLET [PD-RX PHARMACEUTICALS, INC.], \"after one week may increase to maximum dosage of 40 mg once daily\""
+     }
+    ],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "80 mg x 1 a day = 80 mg. Label maximum 40 mg.",
+    "question": "Regarding Citalopram 40 mg tablet, sig \"2 tabs po daily\": The daily total is above the labeled maximum. Can you confirm the intended dose?"
+   }
+  },
+  {
+   "id": "dv-030",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "exceeds_usual_max"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "exceeds_usual_max",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR"
+      ],
+      "kind": "fda_max",
+      "fact": "900 mg x 1 a day = 900 mg. Label maximum 800 mg.",
+      "citation": "FDA label on DailyMed: ALLOPURINOL TABLET ALLOPURINOL TABLET [ACCORD HEALTHCARE INC.], \"the maximal recommended dosage is 800 mg daily\""
+     }
+    ],
+    "quantity_math": "90 tab needed for 30 days, 90 written (1 times the need).",
+    "daily_total": "900 mg x 1 a day = 900 mg. Label maximum 800 mg.",
+    "question": "Regarding Allopurinol 300 mg tablet, sig \"3 tabs po daily\": The daily total is above the labeled maximum. Can you confirm the intended dose?"
+   }
+  },
+  {
+   "id": "dv-031",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "exceeds_usual_max"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-032",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "exceeds_usual_max"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "exceeds_usual_max",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR"
+      ],
+      "kind": "fda_max",
+      "fact": "60 mg x 3 a day = 180 mg. Label maximum 120 mg.",
+      "citation": "FDA label on DailyMed: DULOXETINE CAPSULE, DELAYED RELEASE [ST MARY'S MEDICAL PARK PHARMACY], \"Adults 60 mg/day 60 mg/day (once daily) 120 mg/day\""
+     }
+    ],
+    "quantity_math": "90 cap needed for 30 days, 90 written (1 times the need).",
+    "daily_total": "60 mg x 3 a day = 180 mg. Label maximum 120 mg.",
+    "question": "Regarding Duloxetine 60 mg capsule, sig \"1 cap po tid\": The daily total is above the labeled maximum. Can you confirm the intended dose?"
+   }
+  },
+  {
+   "id": "dv-033",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "frequency_product_mismatch"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "frequency_product_mismatch",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-NO-ALTER",
+       "ISMP-HA-MTX",
+       "ISMP-TMSBP-MTX"
+      ],
+      "kind": "weekly_product",
+      "fact": "The label gives the 35 mg dose only weekly, and the sig says 1 time a day. The quantity fits weekly use: 28 tab needed for 28 days, 4 written (0.14 times the need).",
+      "citation": "FDA label on DailyMed: ACTONEL (RISEDRONATE SODIUM) TABLET, FILM COATED [ALLERGAN, INC.]"
+     }
+    ],
+    "quantity_math": "28 tab needed for 28 days, 4 written (0.14 times the need).",
+    "daily_total": null,
+    "question": "Regarding Risedronate 35 mg tablet, sig \"1 tab po daily\": This product is labeled for less frequent dosing. Can you confirm the intended schedule?"
+   }
+  },
+  {
+   "id": "dv-034",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "frequency_product_mismatch"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "frequency_product_mismatch",
+      "tier": "law",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-NO-ALTER",
+       "ISMP-HA-MTX",
+       "ISMP-TMSBP-MTX"
+      ],
+      "kind": "weekly_product",
+      "fact": "The label gives this product only weekly, and the sig says 1 time a day.",
+      "citation": "FDA label on DailyMed: TRULICITY (DULAGLUTIDE) INJECTION, SOLUTION [ELI LILLY AND COMPANY]"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Dulaglutide 1.5 mg/0.5 mL injection, sig \"inject 1.5 mg subcut daily\": This product is labeled for less frequent dosing. Can you confirm the intended schedule?"
+   }
+  },
+  {
+   "id": "dv-035",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_max_daily"
+    ],
+    "tier": "standard",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "missing_max_daily",
+      "tier": "standard",
+      "rule_ids": [
+       "NCPDP-PRN-INDICATION",
+       "FL-DUR",
+       "NY-CII-DIRECTIONS"
+      ],
+      "kind": "fda_max",
+      "fact": "5 mg up to 6 times a day allows 30 mg. Label maximum 20 mg. No daily maximum is written.",
+      "citation": "FDA label on DailyMed: OXYBUTYNIN CHLORIDE TABLET [PD-RX PHARMACEUTICALS, INC.], \"The maximum recommended dose is one 5-mg tablet four times a day.\""
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": "5 mg up to 6 times a day allows 30 mg. Label maximum 20 mg. No daily maximum is written.",
+    "question": "Regarding Oxybutynin 5 mg tablet, sig \"1 tab po q4h prn bladder spasm\": As written, the patient could take more than the labeled daily maximum. What daily maximum should the label carry?"
+   }
+  },
+  {
+   "id": "dv-036",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_max_daily"
+    ],
+    "tier": "standard",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "missing_max_daily",
+      "tier": "standard",
+      "rule_ids": [
+       "NCPDP-PRN-INDICATION",
+       "FL-DUR",
+       "NY-CII-DIRECTIONS"
+      ],
+      "kind": "fda_max",
+      "fact": "2 tablets up to 6 times a day allows 12 tablets. Label maximum 8 tablets. No daily maximum is written.",
+      "citation": "FDA label on DailyMed: HYDROCODONE BITARTRATE AND ACETAMINOPHEN TABLET [GRANULES PHARMACEUTICALS INC.], \"The total daily dosage should not exceed 8 tablets.\""
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": "2 tablets up to 6 times a day allows 12 tablets. Label maximum 8 tablets. No daily maximum is written.",
+    "question": "Regarding Hydrocodone/acetaminophen 10 mg/325 mg tablet, sig \"1-2 tabs po q4h prn pain\": As written, the patient could take more than the labeled daily maximum. What daily maximum should the label carry?"
+   }
+  },
+  {
+   "id": "dv-037",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "missing_max_daily"
+    ],
+    "tier": "standard",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "missing_max_daily",
+      "tier": "standard",
+      "rule_ids": [
+       "NCPDP-PRN-INDICATION",
+       "FL-DUR",
+       "NY-CII-DIRECTIONS"
+      ],
+      "kind": "fda_max",
+      "fact": "2 tablets up to 6 times a day allows 12 tablets. Label maximum 6 tablets. No daily maximum is written.",
+      "citation": "FDA label on DailyMed: BUTALBITAL, ACETAMINOPHEN, AND CAFFEINE TABLET [ACTAVIS PHARMA, INC.], \"Total daily dosage should not exceed 6 tablets.\""
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": "2 tablets up to 6 times a day allows 12 tablets. Label maximum 6 tablets. No daily maximum is written.",
+    "question": "Regarding Butalbital/acetaminophen/caffeine 50 mg/325 mg/40 mg tablet, sig \"2 tabs po q4h prn headache\": As written, the patient could take more than the labeled daily maximum. What daily maximum should the label carry?"
+   }
+  },
+  {
+   "id": "dv-038",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "error_prone_abbreviation"
+    ],
+    "tier": "standard",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "error_prone_abbreviation",
+      "tier": "standard",
+      "rule_ids": [
+       "ISMP-QD",
+       "ISMP-QOD",
+       "ISMP-OD",
+       "ISMP-U",
+       "ISMP-TRAILING-ZERO",
+       "ISMP-MCG",
+       "ISMP-UD",
+       "ISMP-CLARIFY",
+       "NCPDP-FREE-TEXT"
+      ],
+      "kind": "ismp",
+      "fact": "\"0 U\" abbreviates units, which can be read as 0, 4 or cc",
+      "citation": "ISMP List of Error-Prone Abbreviations, Symbols, and Dose Designations (2024) (ISMP-U)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Insulin degludec 100 units/mL injection, sig \"inject 20 U subcut daily\": The sig uses an error-prone abbreviation. Can you confirm the intended dose or meaning?"
+   }
+  },
+  {
+   "id": "dv-039",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "error_prone_abbreviation"
+    ],
+    "tier": "standard",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "error_prone_abbreviation",
+      "tier": "standard",
+      "rule_ids": [
+       "ISMP-QD",
+       "ISMP-QOD",
+       "ISMP-OD",
+       "ISMP-U",
+       "ISMP-TRAILING-ZERO",
+       "ISMP-MCG",
+       "ISMP-UD",
+       "ISMP-CLARIFY",
+       "NCPDP-FREE-TEXT"
+      ],
+      "kind": "ismp",
+      "fact": "\"1.0\" has a trailing zero and can be read as ten times the dose",
+      "citation": "ISMP List of Error-Prone Abbreviations, Symbols, and Dose Designations (2024) (ISMP-TRAILING-ZERO)"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "1 mg x 1 a day = 1 mg. Label maximum 10 mg.",
+    "question": "Regarding Bumetanide 1 mg tablet, sig \"take 1.0 mg po daily\": The sig uses an error-prone abbreviation. Can you confirm the intended dose or meaning?"
+   }
+  },
+  {
+   "id": "dv-040",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "error_prone_abbreviation"
+    ],
+    "tier": "standard",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "error_prone_abbreviation",
+      "tier": "standard",
+      "rule_ids": [
+       "ISMP-QD",
+       "ISMP-QOD",
+       "ISMP-OD",
+       "ISMP-U",
+       "ISMP-TRAILING-ZERO",
+       "ISMP-MCG",
+       "ISMP-UD",
+       "ISMP-CLARIFY",
+       "NCPDP-FREE-TEXT"
+      ],
+      "kind": "ismp",
+      "fact": "\".5\" has no leading zero and can be read as a whole number",
+      "citation": "ISMP List of Error-Prone Abbreviations, Symbols, and Dose Designations (2024) (ISMP-TRAILING-ZERO)"
+     }
+    ],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "0.5 mg x 2 a day = 1 mg. Label maximum 100 mg.",
+    "question": "Regarding Haloperidol .5 mg tablet, sig \"1 tab po bid\": The sig uses an error-prone abbreviation. Can you confirm the intended dose or meaning?"
+   }
+  },
+  {
+   "id": "dv-041",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "dosage_form_unspecified",
+      "tier": "law",
+      "rule_ids": [
+       "FED-CS-CONTENT",
+       "NABP-RX-CONTENT",
+       "ISMP-OD"
+      ],
+      "kind": "controlled_schedule",
+      "fact": "No dosage form, and RxNorm lists this drug in DEA schedule 4.",
+      "citation": "21 CFR 1306.05(a) (FED-CS-CONTENT), RxNorm"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Zolpidem 10 mg, sig \"take 1 po qhs prn sleep\": Which dosage form did you intend?"
+   }
+  },
+  {
+   "id": "dv-042",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "law",
+    "bucket": "required"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "law",
+    "findings": [
+     {
+      "reason": "dosage_form_unspecified",
+      "tier": "law",
+      "rule_ids": [
+       "FED-CS-CONTENT",
+       "NABP-RX-CONTENT",
+       "ISMP-OD"
+      ],
+      "kind": "controlled_schedule",
+      "fact": "No dosage form, and RxNorm lists this drug in DEA schedule 4.",
+      "citation": "21 CFR 1306.05(a) (FED-CS-CONTENT), RxNorm"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Alprazolam 0.5 mg, sig \"1 po tid prn anxiety\": Which dosage form did you intend?"
+   }
+  },
+  {
+   "id": "dv-043",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "judgment",
+    "bucket": "judgment"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": true,
+    "tier": "judgment",
+    "findings": [
+     {
+      "reason": "dosage_form_unspecified",
+      "tier": "judgment",
+      "rule_ids": [
+       "FED-CS-CONTENT",
+       "NABP-RX-CONTENT",
+       "ISMP-OD"
+      ],
+      "kind": "missing_element",
+      "fact": "No dosage form is given.",
+      "citation": "NABP Model Rules (NABP-RX-CONTENT)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Loratadine 10 mg, sig \"take 1 daily\": Which dosage form did you intend?"
+   }
+  },
+  {
+   "id": "dv-044",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "package_unspecified"
+    ],
+    "tier": "judgment",
+    "bucket": "judgment"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": true,
+    "tier": "judgment",
+    "findings": [
+     {
+      "reason": "package_unspecified",
+      "tier": "judgment",
+      "rule_ids": [
+       "FL-PT-RECORD"
+      ],
+      "kind": "judgment",
+      "fact": "No package is given, and DailyMed lists a single-use package (DORZOLAMIDE HYDROCHLORIDE AND TIMOLOL MALEATE PRESERVATIVE FREE SOLUTION/ DROPS [AUROBINDO PHARMA LIMITED]) beside the multidose one.",
+      "citation": "Kevin Madden review, 13 November 2026 (timolol), r. 64B16-27.800, F.A.C. (FL-PT-RECORD)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Dorzolamide/timolol 2%/0.5% solution, sig \"1 gtt OU bid\": Which package did you intend: multidose bottle or single-use vials?"
+   }
+  },
+  {
+   "id": "dv-045",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "internal_conflict"
+    ],
+    "tier": "judgment",
+    "bucket": "judgment"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": true,
+    "tier": "judgment",
+    "findings": [
+     {
+      "reason": "internal_conflict",
+      "tier": "judgment",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-PT-RECORD"
+      ],
+      "kind": "judgment",
+      "fact": "The repeat limit allows 20 mg a day, below the written maximum of 30 mg. The stricter limit can be followed.",
+      "citation": "Florida DUR rule, r. 64B16-27.810, F.A.C. (FL-DUR)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": "Written maximum 30 mg a day. Label maximum 30 mg.",
+    "question": "Regarding Rizatriptan 10 mg tablet, sig \"1 tab po at onset of migraine, may repeat once after 2 hours, max 30 mg/day\": Parts of the prescription disagree. Can you confirm the intended directions?"
+   }
+  },
+  {
+   "id": "dv-046",
+   "gold": {
+    "needed": true,
+    "reasons": [
+     "internal_conflict"
+    ],
+    "tier": "judgment",
+    "bucket": "judgment"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": true,
+    "tier": "judgment",
+    "findings": [
+     {
+      "reason": "internal_conflict",
+      "tier": "judgment",
+      "rule_ids": [
+       "FL-DUR",
+       "FL-PT-RECORD"
+      ],
+      "kind": "arithmetic",
+      "fact": "Quantity and days supply disagree with the sig. 30 tab needed for 30 days, 90 written (3 times the need).",
+      "citation": "Florida DUR rule, r. 64B16-27.810, F.A.C. (FL-DUR)"
+     }
+    ],
+    "quantity_math": "30 tab needed for 30 days, 90 written (3 times the need).",
+    "daily_total": "40 mg x 1 a day = 40 mg. Label maximum 80 mg.",
+    "question": "Regarding Pravastatin 40 mg tablet, sig \"1 tab po daily\": Parts of the prescription disagree. Can you confirm the intended directions?"
+   }
+  },
+  {
+   "id": "dv-047",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "20 mg x 1 a day = 20 mg. Label maximum 40 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-048",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "20 mg x 1 a day = 20 mg. Label maximum 40 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-049",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "300 mg x 1 a day = 300 mg. Label maximum 800 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-050",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-051",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "5 mg up to 3 times a day allows 15 mg. Label maximum 20 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-052",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "1 tablets up to 4 times a day allows 4 tablets. Label maximum 8 tablets. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-053",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "4 tab needed for 28 days, 4 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-054",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "53 tab needed for 30 days, 53 written (1 times the need).",
+    "daily_total": "25 mg x 2 a day = 50 mg. Label maximum 400 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-055",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-056",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-057",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "10 mg x 2 a day = 20 mg. Label maximum 60 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-058",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "4 tab needed for 1 days, 4 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-059",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "dv-060",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "5 mg up to 1 times a day allows 5 mg. Label maximum 10 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-061",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "50 mg up to 4 times a day allows 200 mg. Label maximum 300 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-062",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "90 tab needed for 30 days, 90 written (1 times the need).",
+    "daily_total": "25 mg x 3 a day = 75 mg. Label maximum 300 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-063",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "160 mg x 1 a day = 160 mg. Label maximum 320 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "dv-064",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "0.1 mg x 2 a day = 0.2 mg. Label maximum 2.4 mg.",
+    "question": null
+   }
+  }
+ ]
+}

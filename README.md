@@ -13,14 +13,14 @@ On 37 short, clean synthetic medication lines, three local models (20.9B to 31.7
 - **Rules do as well.** A short rules parser also gets every field right on 25 of 25 and 12 of 12.
 - **So the sets decide nothing.** They are too regular to rank the models or to show value over rules.
 - **Both sets are development data.** The 25 lines are the lines the answer format was revised on. The 12 lines are six templates taken from those 25.
-- **One label decided the ranking, and Kevin has ruled on it.** On 3 November 2026 he ruled that "at bedtime as needed" means no fixed schedule, as needed, at most once a day. Under that reading, gpt-oss:20b is the only model with every field right on both sets. Under the rule the gold was first written with, qwen3.8:27b led on disk size. Both are development results.
+- **One label decided the ranking, and Kevin has ruled on it.** On 3 November 2026 he ruled that "at bedtime as needed" means no fixed schedule, as needed, at most once a day. Under that reading, gpt-oss:20b is the only model with every field right on both sets. Under the rule the gold was first written with, qwen3.8:27b would have led on disk size. Neither is a pick. Both are development results.
 - **Speed is unmeasured.** No quiet-machine run exists, so performance against the 10-second budget is unknown.
 
-**No model is chosen until the new blind test set runs.** That set is specified in [docs/FRESH-TEST-PROTOCOL.md](docs/FRESH-TEST-PROTOCOL.md) and has not been written yet.
+**No model is chosen.** The development lines cannot separate the three models, and a rules parser does as well. A fresh blind set of 455 lines was written and locked on 4 November 2026 under [docs/FRESH-TEST-PROTOCOL.md](docs/FRESH-TEST-PROTOCOL.md) (see [eval/fresh-blind-set/LOCK-NOTE.md](eval/fresh-blind-set/LOCK-NOTE.md)). No result from it is in this repository yet, and no timing run on an idle machine exists.
 
 ![Every field right on the two development sets, with the rules parser](docs/media/results.png)
 
-Full tables, intervals, the per-field floor, every miss, the latency facts and the sensitivity of the pick: [docs/DEVELOPMENT-RESULTS.md](docs/DEVELOPMENT-RESULTS.md).
+Full tables, intervals, the per-field floor, every miss, the latency facts and how the lead changes with one rule: [docs/DEVELOPMENT-RESULTS.md](docs/DEVELOPMENT-RESULTS.md).
 
 ## The pharmacist's contribution
 
@@ -38,9 +38,11 @@ Labeling "at bedtime as needed" as `once_daily` follows the prompt, but the audi
 - "At bedtime as needed" means no fixed schedule, as needed, at most once a day.
 - The schedule and the as-needed maximum are separate fields. The fresh set is labeled that way.
 
-## What the pick depends on
+## Why the development sets cannot choose
 
-| Rule for "at bedtime as needed" | Lines scored | Latency gate | Pick |
+No model is chosen. The model that leads on the development lines changes with one labeling rule and with the latency gate:
+
+| Rule for "at bedtime as needed" | Lines scored | Latency gate | Development lead |
 |---|---|---|---|
 | Once daily (current gold) | 25 lines | Not applied, as published | qwen3.8:27b, on 1.2 GB less disk |
 | Once daily | 25 lines | Applied to the same runs | None. Every p95 was over 10 s on a loaded machine |
@@ -92,6 +94,16 @@ Scoring uses scorer v3 (`src/eval/sigScoreV3.ts`):
 
 The scorers that produced the committed verdicts are kept, and a test re-derives every stored verdict from the saved replies. Scorer v3 gives the same verdicts on every saved split-format reply, and the same drug and dose verdicts on every first-format reply.
 
+## The sig bench (proposed labels)
+
+A harder set for the next round, in [bench/sig-bench/](bench/sig-bench/README.md). Its state:
+
+- **120 synthetic lines** that read like e-prescriptions and pharmacy labels: tapers, daily maximums, ranges, routes and eyes or ears, durations, weekly regimens, sliding scales and split tablets. 18 of them (15%) should be sent back for clarification, not guessed.
+- **Every label is proposed, not confirmed.** Claude wrote the lines and the labels. Kevin confirms them on `bench/sig-bench/confirm.csv` before any model runs.
+- **Version 2 follows Kevin's review of 49 lines.** The input is shaped like an e-prescription (drug, strength, form, sig, quantity, days supply), and each label has two tiers: whether to flag the line, and the reading a careful pharmacist would act on. 22 labels are confirmed, 27 come from his notes and 71 are still proposed. What he still needs to see is in `bench/sig-bench/confirm-v2.json`.
+- **Not blind.** The same family wrote the scorer and the rules parser, so this is development data. It does not replace the fresh blind set.
+- **Rules no longer score everything.** Against the proposed labels, the rules parser gets the six fields right on 23 of 34 clean lines and 15 of 33 hard lines the six fields can hold, and it cannot represent the other 53.
+
 ## The extraction audit on public label text
 
 A second, unfinished benchmark extracts literal mentions (drug, dose, schedule, timing, as-needed use, reason) from 30 unchanged openFDA dosage sections and 12 synthetic challenge lines, with source and CC0 rights records for each excerpt. Its state:
@@ -138,6 +150,7 @@ CI runs the unit tests, the build, the offline audit check, a baselines run and 
 - [docs/KEVIN-REVIEW.md](docs/KEVIN-REVIEW.md): decisions that need the pharmacist.
 - [docs/CORRECTIONS.md](docs/CORRECTIONS.md): claims in the older documents that the evidence does not support, with corrections.
 - [eval/sig-extraction/README.md](eval/sig-extraction/README.md) and [eval/heldout/README.md](eval/heldout/README.md): data cards.
+- [bench/sig-bench/README.md](bench/sig-bench/README.md): the sig bench and its proposed labels.
 - [docs/README.md](docs/README.md): an index of current and historical documents.
 
 The historical documents ([docs/ORIGINAL-EVALUATION.md](docs/ORIGINAL-EVALUATION.md), [docs/EVALUATION.md](docs/EVALUATION.md), [docs/RESULTS.md](docs/RESULTS.md), [docs/MISSES.md](docs/MISSES.md), [docs/VERIFICATION.md](docs/VERIFICATION.md)) are kept byte for byte, because a test checks them against a hash manifest. Read them with [docs/CORRECTIONS.md](docs/CORRECTIONS.md).

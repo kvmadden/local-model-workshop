@@ -1,0 +1,66 @@
+{
+  "$comment": "Label and reply format for the sig bench. The first six properties are the six fields of eval/sig-extraction/schema.json with the same names. The rest extend them for tapers, ranges, caps, routes, durations, sliding scales and lines that need clarification. Units and frequencies added beyond the six-field lists make a line not representable in the six fields.",
+  "type": "object",
+  "properties": {
+    "drug": { "type": ["string", "null"] },
+    "dose_per_administration": {
+      "type": ["object", "null"],
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "enum": ["mg", "mcg", "g", "units", "mL", "mEq", "drop", "patch"] }
+      },
+      "required": ["value", "unit"],
+      "additionalProperties": false
+    },
+    "frequency": {
+      "type": ["string", "null"],
+      "enum": [
+        "once_daily", "twice_daily", "three_times_daily", "four_times_daily",
+        "every_4_hours", "every_6_hours", "every_8_hours", "every_12_hours", "once_weekly",
+        "every_other_day", "every_72_hours", "twice_weekly", "once_monthly",
+        null
+      ]
+    },
+    "timing": { "type": ["string", "null"], "enum": ["morning", "evening", "bedtime", "with_meals", "before_meals", "after_meals", null] },
+    "prn": { "type": "boolean" },
+    "prn_indication": { "type": ["string", "null"] },
+    "route": {
+      "type": ["string", "null"],
+      "enum": ["oral", "sublingual", "inhaled", "nasal", "topical", "ophthalmic", "otic", "transdermal", "subcutaneous", "intramuscular", "rectal", null]
+    },
+    "laterality": { "type": ["string", "null"], "enum": ["left", "right", "both", null] },
+    "dose_high": { "type": ["number", "null"] },
+    "prn_interval": {
+      "type": ["object", "null"],
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "unit": { "type": "string", "enum": ["min", "h"] }
+      },
+      "required": ["min", "max", "unit"],
+      "additionalProperties": false
+    },
+    "max_doses_per_day": { "type": ["number", "null"] },
+    "max_daily_dose": {
+      "type": ["object", "null"],
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "enum": ["mg", "mcg", "g", "units", "mL", "mEq"] }
+      },
+      "required": ["value", "unit"],
+      "additionalProperties": false
+    },
+    "duration_days": { "type": ["number", "null"] },
+    "days_of_week": { "type": ["array", "null"] },
+    "phases": { "type": ["array", "null"] },
+    "sliding_scale": { "type": ["array", "null"] },
+    "needs_clarification": { "type": "boolean" },
+    "clarification_reason": { "type": ["string", "null"] }
+  },
+  "required": [
+    "drug", "dose_per_administration", "frequency", "timing", "prn", "prn_indication",
+    "route", "laterality", "dose_high", "prn_interval", "max_doses_per_day", "max_daily_dose",
+    "duration_days", "days_of_week", "phases", "sliding_scale", "needs_clarification", "clarification_reason"
+  ],
+  "additionalProperties": false
+}

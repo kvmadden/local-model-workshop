@@ -1,0 +1,5 @@
+{
+  "readers": ["opus"],
+  "combine": "primary",
+  "why": "On the development lines the qwen3.8:27b second reader added no catch and two false alarms under union_structural (iteration 7), and timed out on 23 of 135 lines on the shared machine. The frozen system uses the Opus reading alone."
+}

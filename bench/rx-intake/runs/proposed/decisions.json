@@ -1,0 +1,1351 @@
+{
+ "set": "proposed",
+ "scoredAt": "2026-11-14T05:21:10.246Z",
+ "config": {
+  "readers": [
+   "opus"
+  ],
+  "combine": "primary",
+  "why": "On the development lines the qwen3.8:27b second reader added no catch and two false alarms under union_structural (iteration 7), and timed out on 23 of 135 lines on the shared machine. The frozen system uses the Opus reading alone."
+ },
+ "frozen": null,
+ "result": {
+  "metrics": {
+   "required": {
+    "n": 0,
+    "caught": 0,
+    "dangerous": 0,
+    "unread": 0,
+    "tierAgrees": 0,
+    "reasonOverlap": 0
+   },
+   "judgment": {
+    "n": 0,
+    "raised": 0,
+    "asRequired": 0
+   },
+   "clean": {
+    "n": 71,
+    "falseAlarms": 1,
+    "advisories": 0,
+    "unread": 0
+   },
+   "hold": {
+    "n": 0,
+    "required": 0,
+    "advisory": 0
+   },
+   "unverified": {
+    "n": 0,
+    "required": 0
+   }
+  },
+  "errors": [
+   {
+    "id": "sb-120",
+    "kind": "FALSE_ALARM",
+    "gold": "no flag  []",
+    "system": "CALL standard [error_prone_abbreviation]"
+   }
+  ]
+ },
+ "lines": [
+  {
+   "id": "sb-001",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "20 mg x 1 a day = 20 mg. Label maximum 40 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-002",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "20 mg x 1 a day = 20 mg. Label maximum 80 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-003",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "850 mg x 2 a day = 1700 mg. Label maximum 2550 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-004",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "5 mg x 1 a day = 5 mg. Label maximum 10 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-005",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "50 mg x 1 a day = 50 mg. Label maximum 200 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-006",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 cap needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "20 mg x 2 a day = 40 mg. Label maximum 360 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-007",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "50 mg x 1 a day = 50 mg. Label maximum 100 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-008",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "25 mg x 1 a day = 25 mg. Label maximum 400 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-009",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "90 cap needed for 30 days, 90 written (1 times the need).",
+    "daily_total": "300 mg x 3 a day = 900 mg. Label maximum 3600 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-010",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "20 tab needed for 10 days, 20 written (1 times the need).",
+    "daily_total": "875 mg x 2 a day = 1750 mg. Label maximum 3000 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-011",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "80 cap needed for 10 days, 80 written (1 times the need).",
+    "daily_total": "500 mg x 4 a day = 2000 mg. Label maximum 4000 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-012",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-013",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "25 mg x 1 a day = 25 mg. Label maximum 100 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-014",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 cap needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "0.4 mg x 1 a day = 0.4 mg. Label maximum 0.8 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-015",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-016",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-017",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "600 mg up to 4 times a day allows 2400 mg. Label maximum 3200 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-018",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "10 mg up to 1 times a day allows 10 mg. Label maximum 10 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-019",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "10 mg up to 3 times a day allows 30 mg. Label maximum 400 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-020",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 cap needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "1 capsules x 2 a day = 2 capsules. Label maximum 3 capsules.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-021",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "10 tab needed for 5 days, 10 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-022",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "10 mg x 1 a day = 10 mg. Label maximum 20 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-023",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "40 mg x 1 a day = 40 mg. Label maximum 240 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-024",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "20 mg x 1 a day = 20 mg. Label maximum 40 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-025",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-026",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-027",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-028",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-029",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "10 mg up to 1 times a day allows 10 mg. Label maximum 30 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-030",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-031",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "12.5 mg x 2 a day = 25 mg. Label maximum 50 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-032",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "5 mg x 2 a day = 10 mg. Label maximum 40 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-033",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "50 mg x 1 a day = 50 mg. Label maximum 600 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-034",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-084",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-085",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-086",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-087",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-088",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-089",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-090",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-091",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 cap needed for 10 days, 30 written (1 times the need).",
+    "daily_total": "500 mg x 3 a day = 1500 mg. Label maximum 3000 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-092",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "10 cap needed for 5 days, 10 written (1 times the need).",
+    "daily_total": "100 mg x 2 a day = 200 mg. Label maximum 400 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-093",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-094",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "28 cap needed for 14 days, 28 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-095",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "15 tab needed for 30 days, 15 written (1 times the need).",
+    "daily_total": "5 mg x 1 a day = 5 mg. Label maximum 20 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-096",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "12.5 mg x 2 a day = 25 mg. Label maximum 450 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-097",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "45 tab needed for 30 days, 45 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-098",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "15 tab needed for 30 days, 15 written (1 times the need).",
+    "daily_total": "0.25 mg x 1 a day = 0.25 mg. Label maximum 20 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-099",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "7.5 tab needed for 30 days, 8 written (1.07 times the need).",
+    "daily_total": "12.5 mg x 0.5 a day = 6.25 mg. Label maximum 400 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-100",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "24 tab needed for 28 days, 24 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-101",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "4 tab needed for 28 days, 4 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-102",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-103",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "8 cap needed for 56 days, 8 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-104",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "16 tab needed for 28 days, 16 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-105",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "15 tab needed for 30 days, 15 written (1 times the need).",
+    "daily_total": "40 mg x 0.5 a day = 20 mg. Label maximum 600 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-106",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-107",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-108",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-109",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "28 patch needed for 28 days, 28 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-110",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 cap needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "40 mg x 1 a day = 40 mg. Label maximum 360 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-111",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 tab needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "7.5 mg x 1 a day = 7.5 mg. Label maximum 15 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-112",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "1000 mg x 1 a day = 1000 mg. Label maximum 2000 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-113",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 cap needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "0.4 mg x 1 a day = 0.4 mg. Label maximum 0.8 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-114",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "30 cap needed for 30 days, 30 written (1 times the need).",
+    "daily_total": "12.5 mg x 1 a day = 12.5 mg. Label maximum 50 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-115",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": null,
+    "question": null
+   }
+  },
+  {
+   "id": "sb-116",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "1 capsules up to 2 times a day allows 2 capsules. Label maximum 3 capsules. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-117",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": "60 tab needed for 30 days, 60 written (1 times the need).",
+    "daily_total": "50 mg x 2 a day = 100 mg. Label maximum 450 mg.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-118",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "17000 mg up to 1 times a day allows 17000 mg. Label maximum 17000 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-119",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": false,
+    "advisory": false,
+    "tier": null,
+    "findings": [],
+    "quantity_math": null,
+    "daily_total": "100 mg up to 3 times a day allows 300 mg. Label maximum 600 mg. No daily maximum is written.",
+    "question": null
+   }
+  },
+  {
+   "id": "sb-120",
+   "gold": {
+    "needed": false,
+    "reasons": [],
+    "tier": null,
+    "bucket": "clean"
+   },
+   "decision": {
+    "required_call": true,
+    "advisory": false,
+    "tier": "standard",
+    "findings": [
+     {
+      "reason": "error_prone_abbreviation",
+      "tier": "standard",
+      "rule_ids": [
+       "ISMP-QD",
+       "ISMP-QOD",
+       "ISMP-OD",
+       "ISMP-U",
+       "ISMP-TRAILING-ZERO",
+       "ISMP-MCG",
+       "ISMP-UD",
+       "ISMP-CLARIFY",
+       "NCPDP-FREE-TEXT"
+      ],
+      "kind": "ismp",
+      "fact": "\"8u\" abbreviates units, which can be read as 0, 4 or cc",
+      "citation": "ISMP List of Error-Prone Abbreviations, Symbols, and Dose Designations (2024) (ISMP-U)"
+     }
+    ],
+    "quantity_math": null,
+    "daily_total": null,
+    "question": "Regarding Insulin lispro 100 units/mL injection, sig \"inject 8u subcut tid ac\": The sig uses an error-prone abbreviation. Can you confirm the intended dose or meaning?"
+   }
+  }
+ ]
+}

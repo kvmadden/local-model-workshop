@@ -1,0 +1,1804 @@
+{
+ "status": "Sig bench v2. Every row here is a label Kevin has not yet seen in the v2 shape: the 71 lines he has not reviewed, and the reviewed lines where v2 adds something his review did not decide.",
+ "how_to_answer": "In kevin, write ok when the row is right, or the correction (for example flag=no, likely=twice daily). For a held row, say whether the flag stands.",
+ "counts": {
+  "rows": 89,
+  "held, with a likely reading": 15,
+  "held, no likely reading": 2,
+  "marked correct, one new field": 1,
+  "not reviewed yet": 71
+ },
+ "rows": [
+  {
+   "id": "sb-039",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Insulin glargine\nStrength: 100 units/mL\nDosage form: injection\nSig: inject 10 units subcut qhs or per sliding scale\nQuantity: 3 mL\nDays supply: 30",
+   "v1_line": "Insulin glargine 100 units/mL: inject 10 units subcut qhs or per sliding scale",
+   "flag": "yes: alternatives without rule, missing sliding scale",
+   "clarify": "law: FL-RX-DIRECTIONS, FL-NO-ALTER, ISMP-HA-INSULIN, ISMP-SSI",
+   "likely_reading": "insulin glargine, (injection), 100 units/mL, 10 units, subcutaneous, once daily, timing bedtime",
+   "confidence": "medium",
+   "basis": [
+    "Insulin glargine is a basal insulin given as a fixed daily dose, not by sliding scale. (pharmacy knowledge)",
+    "3 mL = 300 units / 30 days = 10 units a day. (input fields)"
+   ],
+   "safety_notes": [
+    "The sig mixes basal dosing with sliding-scale correction dosing, and no scale is given."
+   ],
+   "quantity_role": "supports_one_reading",
+   "quantity_math": "3 mL x 100 units/mL = 300 units / 30 days = 10 units a day, the fixed dose",
+   "your_note": "Why or?",
+   "what_changed": "The likely reading (10 units at bedtime, the fixed dose) is proposed. Your note asked why the sig says or, and did not pick a reading.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-041",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Amoxicillin\nStrength: 500 mg\nDosage form: capsule\nSig: 1 cap po tid x 7 days x 10 days\nQuantity: 30 cap\nDays supply: 10",
+   "v1_line": "Amoxicillin 500 mg cap 1 cap po tid x 7 days x 10 days",
+   "flag": "yes: conflicting duration",
+   "clarify": "law: FL-RX-DIRECTIONS, FL-NO-ALTER, FL-DUR",
+   "likely_reading": "amoxicillin, (capsule), 500 mg = 1 cap, oral, three times daily, for 10 days",
+   "confidence": "medium",
+   "basis": [
+    "30 cap / 3 a day = 10 days, and days supply is 10. (input fields)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "supports_one_reading",
+   "quantity_math": "30 cap / 3 cap a day = 10 days",
+   "your_note": null,
+   "what_changed": "The likely reading (10 days, from quantity and days supply) is proposed. You held it with no note.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-042",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Gabapentin\nStrength: 300 mg\nDosage form: capsule\nSig: 1 cap po qhs, increase as tolerated\nQuantity: 30 cap\nDays supply: 30",
+   "v1_line": "Gabapentin 300 mg 1 cap po qhs, increase as tolerated",
+   "flag": "yes: missing titration plan",
+   "clarify": "law: FL-RX-DIRECTIONS, FL-NO-ALTER, FL-DUR",
+   "likely_reading": "gabapentin, (capsule), 300 mg = 1 cap, oral, once daily, timing bedtime",
+   "confidence": "medium",
+   "basis": [
+    "The start dose is written: 300 mg at bedtime. (sig text)",
+    "30 cap / 30 days = 1 a day, so this fill covers the start dose only. (input fields)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "leaves_ambiguous",
+   "quantity_math": "30 cap / 30 days = 1 cap a day. It covers the start dose and says nothing about the steps",
+   "your_note": null,
+   "what_changed": "The likely reading (the start dose only, titration unresolved) is proposed. You held it with no note.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-043",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Timolol\nStrength: 0.25%\nDosage form: (blank)\nSig: 1 gtt OD\nQuantity: 5 mL\nDays supply: 30",
+   "v1_line": "Timolol 0.25% 1 gtt OD",
+   "flag": "yes: missing frequency, dosage form unspecified",
+   "clarify": "law: FL-RX-DIRECTIONS, FL-NO-ALTER, NCPDP-SIG-INCOMPLETE, FED-CS-CONTENT, NABP-RX-CONTENT, ISMP-OD",
+   "likely_reading": "timolol, 0.25%, 1 gtt, ophthalmic, right side",
+   "confidence": "low",
+   "basis": [
+    "OD is the right eye. It does not mean once daily. (kevin note)"
+   ],
+   "safety_notes": [
+    "OD means the right eye, and the frequency is missing."
+   ],
+   "quantity_role": "leaves_ambiguous",
+   "quantity_math": "5 mL / 30 days fits once or twice daily, so it does not supply the missing frequency",
+   "your_note": "OD never means once daily? It is missing frequency though",
+   "what_changed": "A second flag reason is added: the form is not stated, and timolol 0.25% comes as a solution and as a gel-forming solution. This applies your sb-080 note about form, which you did not say for this line.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-044",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Neomycin/polymyxin B/hydrocortisone otic\nStrength: (blank)\nDosage form: (blank)\nSig: 4 drops in ear tid x 7 days\nQuantity: 10 mL\nDays supply: 7",
+   "v1_line": "Neomycin/polymyxin B/hydrocortisone otic: 4 drops in ear tid x 7 days",
+   "flag": "yes: missing laterality, dosage form unspecified",
+   "clarify": "law: FL-RX-DIRECTIONS, FL-NO-ALTER, ISMP-OD, FED-CS-CONTENT, NABP-RX-CONTENT",
+   "likely_reading": "neomycin/polymyxin B/hydrocortisone, 4 gtt, otic, affected side(s), three times daily, for 7 days",
+   "confidence": "medium",
+   "basis": [
+    "Dispense to the affected ear(s). (kevin note)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "leaves_ambiguous",
+   "quantity_math": "One 10 mL bottle covers one ear or both for 7 days",
+   "your_note": "I would end up dispensing as “affected ear(s)”… but again that might not be appropriate",
+   "what_changed": "A second flag reason is added: the form is not stated, and this otic combination comes as a solution and as a suspension. This applies your sb-080 note about form, which you did not say for this line.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-052",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Alendronate\nStrength: 70 mg\nDosage form: tablet\nSig: 1 tab po daily\nQuantity: 4 tab\nDays supply: 28",
+   "v1_line": "Alendronate 70 mg 1 tab po daily",
+   "flag": "yes: frequency product mismatch",
+   "clarify": "law: FL-DUR, FL-NO-ALTER, ISMP-HA-MTX, ISMP-TMSBP-MTX",
+   "likely_reading": "alendronate, (tablet), 70 mg = 1 tab, oral, once weekly",
+   "confidence": "high",
+   "basis": [
+    "Alendronate 70 mg is a once-weekly strength. (pharmacy knowledge)",
+    "4 tab / 28 days = 1 a week. (input fields)"
+   ],
+   "safety_notes": [
+    "The 70 mg strength is taken once a week. Daily dosing would be seven times the dose."
+   ],
+   "quantity_role": "supports_one_reading",
+   "quantity_math": "4 tab / 28 days = 1 tab a week",
+   "your_note": null,
+   "what_changed": "The likely reading (once weekly, from the strength and the quantity) is proposed. You held it with no note.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-063",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Warfarin\nStrength: 5 mg\nDosage form: tablet\nSig: 1 tab daily except 1/2 tab on Tues and Fri\nQuantity: 24 tab\nDays supply: 28",
+   "v1_line": "Warfarin 5 mg: 1 tab daily except 1/2 tab on Tues and Fri",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "warfarin, (tablet), oral, weekly pattern: 5 mg on mon wed thu sat sun, 2.5 mg on tue fri, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Why you say “then”? It’s not “then” it is a different “lower” rule for those days",
+   "what_changed": "Your note says Tue and Fri are a lower dose on those days, not a later step. v2 holds it as a weekly pattern (5 mg on five days, 2.5 mg on Tue and Fri), never as then. Your tap was Should be flagged. Keep the flag, or was the hold about the then?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-064",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Levothyroxine\nStrength: 100 mcg\nDosage form: tablet\nSig: 1 tab po daily Mon-Sat, 1/2 tab on Sunday\nQuantity: 26 tab\nDays supply: 28",
+   "v1_line": "Levothyroxine 100 mcg: 1 tab po daily Mon-Sat, 1/2 tab on Sunday",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "levothyroxine, (tablet), oral, weekly pattern: 100 mcg on mon tue wed thu fri sat, 50 mcg on sun, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Why you say “then”? Same issue here as that warfarin one",
+   "what_changed": "Your note says the Sunday half tab is a weekly pattern, not a later step. v2 holds it as a weekly pattern (100 mcg Mon to Sat, 50 mcg Sun). Your tap was Should be flagged. Keep the flag, or was the hold about the then?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-067",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Sumatriptan\nStrength: 50 mg\nDosage form: tablet\nSig: 1 tab po at onset of migraine, may repeat once after 2 hours. Max 200 mg/day\nQuantity: 9 tab\nDays supply: 30",
+   "v1_line": "Sumatriptan 50 mg tab 1 tab po at onset of migraine, may repeat once after 2 hours. Max 200 mg/day",
+   "flag": "yes: internal conflict",
+   "clarify": "judgment: FL-DUR, FL-PT-RECORD",
+   "likely_reading": "sumatriptan, (tablet), 50 mg = 1 tab, oral, as needed for migraine, every 2 h, max 200 mg a day, at most 1 repeat",
+   "confidence": "medium",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [
+    "May repeat once caps one migraine at 100 mg. The 200 mg a day maximum is only reachable over two separate attacks, and the sig does not say that."
+   ],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Repeating once would make it only 100 mg? So how would you get to 200 mg? Feels unclear",
+   "what_changed": "Kept as written, plus at most 1 repeat, at medium confidence. The safety note explains how 200 mg could be reached (two attacks in a day). Your note said it feels unclear and did not pick a reading.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-073",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Lorazepam\nStrength: 0.5 mg\nDosage form: tablet\nSig: 1/2-1 tab po bid prn anxiety\nQuantity: 30 tab\nDays supply: 15",
+   "v1_line": "Lorazepam 0.5 mg 1/2-1 tab po bid prn anxiety",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "lorazepam, (tablet), 0.25 to 0.5 mg = 0.5 to 1 tab, oral, as needed for anxiety, at most 2 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Dose here is variable, not fixed. Are we accounting for that?",
+   "what_changed": "Your note asked whether the variable dose is held. v2 holds it as a range: 0.25 to 0.5 mg, 1/2 to 1 tab. You marked the same shape correct on sb-071 and sb-074. Keep the flag, or was the hold about the range?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-076",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Guaifenesin\nStrength: 100 mg/5 mL\nDosage form: syrup\nSig: 10-20 mL po q4h prn cough\nQuantity: 120 mL\nDays supply: 5",
+   "v1_line": "Guaifenesin 100 mg/5 mL syrup: 10-20 mL po q4h prn cough",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "guaifenesin, (syrup), 100 mg/5 mL, 200 to 400 mg = 10 to 20 mL, oral, as needed for cough, every 4 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Dose should be variable. Maybe we need a “concentration” field as well for some formulations?",
+   "what_changed": "Your note asked for a variable dose and a concentration. v2 holds 100 mg/5 mL, 10 to 20 mL, and 200 to 400 mg. Keep the flag, or was the hold about those fields?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-078",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: APAP\nStrength: 500 mg\nDosage form: tablet\nSig: i-ii tabs po q6h prn HA\nQuantity: 40 tab\nDays supply: 5",
+   "v1_line": "APAP 500 mg i-ii tabs po q6h prn HA",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "acetaminophen, (tablet), 500 to 1000 mg = 1 to 2 tab, oral, as needed for headache, every 6 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Variable dose?",
+   "what_changed": "Your note asked about the variable dose. v2 holds 1 to 2 tab, 500 to 1000 mg. You marked the same shape correct on sb-071. Keep the flag, or was the hold about the range?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-079",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Nitroglycerin\nStrength: 0.4 mg\nDosage form: tablet\nSig: 1 tab SL q5min prn chest pain, max 3 doses in 15 min. Call 911 if pain persists\nQuantity: 25 tab\nDays supply: 30",
+   "v1_line": "Nitroglycerin 0.4 mg SL tab: 1 tab SL q5min prn chest pain, max 3 doses in 15 min. Call 911 if pain persists",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "nitroglycerin, (tablet), 0.4 mg = 1 tab, sublingual, as needed for chest pain, every 5 min, at most 3 doses in 15 min",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Is max dose not accounted for?",
+   "what_changed": "Your note asked about the maximum. v2 holds it as at most 3 doses in 15 minutes. Keep the flag, or was the hold about the missing limit?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-080",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Timolol\nStrength: 0.5%\nDosage form: solution\nSig: instill 1 gtt in left eye bid\nQuantity: 5 mL\nDays supply: 30",
+   "v1_line": "Timolol 0.5% ophth soln: instill 1 gtt in left eye bid",
+   "flag": "yes: package unspecified",
+   "clarify": "judgment: FL-PT-RECORD",
+   "likely_reading": "timolol, (solution), 0.5%, 1 gtt, ophthalmic, left side, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Should prob flag multidose packages vs individual packages and should flag suspension vs solution as form",
+   "what_changed": "Flag reason package_unspecified comes from your note: multidose bottle or single-use vials is not stated. The form (solution) is stated on this line. Should package_unspecified also flag the other eye drops (sb-081, sb-085)? This sheet does not do that.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-083",
+   "group": "held, with a likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Triamcinolone\nStrength: 0.1%\nDosage form: cream\nSig: apply a thin layer to affected area bid\nQuantity: 30 g\nDays supply: 30",
+   "v1_line": "Triamcinolone 0.1% cream: apply a thin layer to affected area bid",
+   "flag": "yes: reviewer hold",
+   "clarify": "no tier (reviewer hold)",
+   "likely_reading": "triamcinolone, (cream), 0.1%, thin layer, topical, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": "Should “thin layer” be codified?",
+   "what_changed": "Your note asked whether thin layer should be coded. v2 codes it as an application amount, thin_layer. Keep the flag, or was the hold about the code?",
+   "kevin": ""
+  },
+  {
+   "id": "sb-036",
+   "group": "held, no likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: Methotrexate\nStrength: 2.5 mg\nDosage form: tablet\nSig: take 4 tabs po daily\nQuantity: 120 tab\nDays supply: 30",
+   "v1_line": "Methotrexate 2.5 mg tab: take 4 tabs po daily",
+   "flag": "yes: frequency product mismatch",
+   "clarify": "law: FL-DUR, FL-NO-ALTER, ISMP-HA-MTX, ISMP-TMSBP-MTX",
+   "likely_reading": "none: do not act on this line until the prescriber answers",
+   "confidence": null,
+   "basis": [],
+   "safety_notes": [
+    "Oral methotrexate for most uses is taken once weekly. Daily dosing is a known fatal error, so no reading is acted on before the prescriber confirms."
+   ],
+   "quantity_role": "leaves_ambiguous",
+   "quantity_math": "120 tab / 30 days = 4 tab a day. It matches the daily sig, so it cannot tell a weekly intent from a daily error",
+   "your_note": null,
+   "what_changed": "No likely reading is proposed. A methotrexate sig is never acted on from inference. Your hold did not say this.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-050",
+   "group": "held, no likely reading",
+   "label_status": "kevin-notes",
+   "prescription": "Drug: (blank)\nStrength: (blank)\nDosage form: (blank)\nSig: Take 1 tablet by mouth twice daily\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "Take 1 tablet by mouth twice daily",
+   "flag": "yes: missing drug, missing strength",
+   "clarify": "law: FL-RX-DIRECTIONS, FED-CS-CONTENT, NABP-RX-CONTENT, FED-CII-2007, NY-CII-ADD-CHANGE, TX-CII-CHANGES",
+   "likely_reading": "none: do not act on this line until the prescriber answers",
+   "confidence": null,
+   "basis": [],
+   "safety_notes": [],
+   "quantity_role": "leaves_ambiguous",
+   "quantity_math": "60 tab / 30 days = 2 a day, which matches the sig and names no drug",
+   "your_note": "Sig is usually written in a field separate from drug and dose but yeah",
+   "what_changed": "In a real e-prescription the drug sits in its own field, as your note says, so this line arrives with that field blank. Keep it as a test of a blank drug field, or drop it.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-062",
+   "group": "marked correct, one new field",
+   "label_status": "confirmed",
+   "prescription": "Drug: Semaglutide pen\nStrength: 0.25 mg/0.5 mL\nDosage form: injection\nSig: inject 0.25 mg subcut once weekly x 4 weeks, then 0.5 mg weekly\nQuantity: 1 each\nDays supply: 28",
+   "v1_line": "Semaglutide 0.25 mg/0.5 mL pen: inject 0.25 mg subcut once weekly x 4 weeks, then 0.5 mg weekly",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "semaglutide, (injection, multidose package), 0.25 mg/0.5 mL, subcutaneous, steps: 0.25 mg once weekly x 28 d, then 0.5 mg once weekly ongoing",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Package multidose (a pen holds several weekly doses). This is the one field your ok did not cover.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-001",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Lisinopril\nStrength: 20 mg\nDosage form: tablet\nSig: 1 tab po qd\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Lisinopril 20 mg tab: 1 tab po qd",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "lisinopril, (tablet), 20 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-002",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: atorvastatin\nStrength: 20mg\nDosage form: tablet\nSig: 1 tab PO QHS\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "atorvastatin 20mg 1 tab PO QHS",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "atorvastatin, (tablet), 20 mg = 1 tab, oral, once daily, timing bedtime",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-003",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: METFORMIN\nStrength: 850 MG\nDosage form: tablet\nSig: 1 TAB PO BID WITH MEALS\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "METFORMIN 850 MG TAB. 1 TAB PO BID WITH MEALS",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "metformin, (tablet), 850 mg = 1 tab, oral, twice daily, timing with meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 60 tab for 30 days (60 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-004",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Amlodipine\nStrength: 5 mg\nDosage form: tablet\nSig: 1 po daily\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Amlodipine 5 mg 1 po daily",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "amlodipine, (tablet), 5 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-005",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Sertraline\nStrength: 50 mg\nDosage form: tablet\nSig: take 1 tab po qam\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Sertraline 50 mg tab, take 1 tab po qam",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "sertraline, (tablet), 50 mg = 1 tab, oral, once daily, timing morning",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-006",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Omeprazole\nStrength: 20 mg\nDosage form: capsule\nSig: take 1 cap po bid ac\nQuantity: 60 cap\nDays supply: 30",
+   "v1_line": "Omeprazole 20 mg cap: take 1 cap po bid ac",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "omeprazole, (capsule), 20 mg = 1 cap, oral, twice daily, timing before meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 60 cap for 30 days (60 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-007",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Losartan\nStrength: 50 mg\nDosage form: tablet\nSig: 1 tab by mouth once a day\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Losartan 50 mg 1 tab by mouth once a day",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "losartan, (tablet), 50 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-008",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Metoprolol succinate ER\nStrength: 25 mg\nDosage form: tablet\nSig: 1 tab po daily\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Metoprolol succinate ER 25 mg 1 tab po daily",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "metoprolol succinate, (tablet), 25 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-009",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Gabapentin\nStrength: 300 mg\nDosage form: capsule\nSig: 1 cap po tid\nQuantity: 90 cap\nDays supply: 30",
+   "v1_line": "Gabapentin 300 mg cap 1 cap po tid",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "gabapentin, (capsule), 300 mg = 1 cap, oral, three times daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 90 cap for 30 days (90 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-010",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Amoxicillin\nStrength: 875 mg\nDosage form: tablet\nSig: 1 tab po q12h\nQuantity: 20 tab\nDays supply: 10",
+   "v1_line": "Amoxicillin 875 mg tab 1 tab po q12h",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "amoxicillin, (tablet), 875 mg = 1 tab, oral, every 12 hours",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 20 tab for 10 days (20 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-011",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Cephalexin\nStrength: 250 mg\nDosage form: capsule\nSig: take 2 caps by mouth four times a day\nQuantity: 80 cap\nDays supply: 10",
+   "v1_line": "Cephalexin 250 mg cap: take 2 caps by mouth four times a day",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "cephalexin, (capsule), 500 mg = 2 cap, oral, four times daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 2 cap per dose. Quantity 80 cap for 10 days (80 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-012",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Levothyroxine\nStrength: 112 mcg\nDosage form: tablet\nSig: take 1 tablet every morning on an empty stomach\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Levothyroxine 112 mcg tab, take 1 tablet every morning on an empty stomach",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "levothyroxine, (tablet), 112 mcg = 1 tab, oral, once daily, timing morning",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-013",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Hydrochlorothiazide\nStrength: 25 mg\nDosage form: tablet\nSig: 1 tab po daily in the morning\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Hydrochlorothiazide 25 mg 1 tab po daily in the morning",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "hydrochlorothiazide, (tablet), 25 mg = 1 tab, oral, once daily, timing morning",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-014",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Tamsulosin\nStrength: 0.4 mg\nDosage form: capsule\nSig: 1 cap po qhs\nQuantity: 30 cap\nDays supply: 30",
+   "v1_line": "Tamsulosin 0.4 mg cap 1 cap po qhs",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "tamsulosin, (capsule), 0.4 mg = 1 cap, oral, once daily, timing bedtime",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 30 cap for 30 days (30 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-015",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Montelukast\nStrength: 10 mg\nDosage form: tablet\nSig: 1 tab po qpm\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Montelukast 10 mg 1 tab po qpm",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "montelukast, (tablet), 10 mg = 1 tab, oral, once daily, timing evening",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-016",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Ondansetron\nStrength: 4 mg\nDosage form: tablet\nSig: 1 tab po q8h prn nausea\nQuantity: 15 tab\nDays supply: 5",
+   "v1_line": "Ondansetron 4 mg tab 1 tab po q8h prn nausea",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "ondansetron, (tablet), 4 mg = 1 tab, oral, as needed for nausea, every 8 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 15 tab for 5 days (at most 15 tab can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-017",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Ibuprofen\nStrength: 600 mg\nDosage form: tablet\nSig: 1 tab po q6h prn pain\nQuantity: 20 tab\nDays supply: 5",
+   "v1_line": "Ibuprofen 600 mg 1 tab po q6h prn pain",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "ibuprofen, (tablet), 600 mg = 1 tab, oral, as needed for pain, every 6 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 20 tab for 5 days (at most 20 tab can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-018",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Cetirizine\nStrength: 10 mg\nDosage form: tablet\nSig: 1 tab po daily prn allergies\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Cetirizine 10 mg 1 tab po daily prn allergies",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "cetirizine, (tablet), 10 mg = 1 tab, oral, as needed for allergies, at most 1 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (at most 30 tab can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-019",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: hydroxyzine HCl\nStrength: 10 mg\nDosage form: tablet\nSig: take one tablet by mouth three times a day as needed for anxiety\nQuantity: 90 tab\nDays supply: 30",
+   "v1_line": "hydroxyzine HCl 10 mg: take one tablet by mouth three times a day as needed for anxiety",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "hydroxyzine, (tablet), 10 mg = 1 tab, oral, as needed for anxiety, at most 3 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 90 tab for 30 days (at most 90 tab can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-020",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Docusate sodium\nStrength: 100 mg\nDosage form: capsule\nSig: 1 cap po bid\nQuantity: 60 cap\nDays supply: 30",
+   "v1_line": "Docusate sodium 100 mg cap 1 cap po bid",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "docusate, (capsule), 100 mg = 1 cap, oral, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 60 cap for 30 days (60 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-021",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Prednisone\nStrength: 20 mg\nDosage form: tablet\nSig: take 2 tabs po qd\nQuantity: 10 tab\nDays supply: 5",
+   "v1_line": "Prednisone 20 mg tab: take 2 tabs po qd",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "prednisone, (tablet), 40 mg = 2 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 2 tab per dose. Quantity 10 tab for 5 days (10 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-022",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Escitalopram\nStrength: 10 mg\nDosage form: tablet\nSig: 1 tab po qd\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Escitalopram 10 mg 1 tab po qd",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "escitalopram, (tablet), 10 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-023",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Pantoprazole DR\nStrength: 40 mg\nDosage form: tablet\nSig: 1 tab po qd\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Pantoprazole 40 mg DR tab 1 tab po qd",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "pantoprazole, (tablet), 40 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-024",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Simvastatin\nStrength: 20 mg\nDosage form: tablet\nSig: 1 tab PO every evening\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Simvastatin 20 mg 1 tab PO every evening",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "simvastatin, (tablet), 20 mg = 1 tab, oral, once daily, timing evening",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-025",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Insulin glargine\nStrength: 100 units/mL\nDosage form: injection\nSig: inject 22 units subcut qhs\nQuantity: 15 mL\nDays supply: 68",
+   "v1_line": "Insulin glargine 100 units/mL: inject 22 units subcut qhs",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "insulin glargine, (injection), 100 units/mL, 22 units, subcutaneous, once daily, timing bedtime",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Dose 22 units and quantity 22 units (what is dialed). 15 mL is 1,500 units, 68 days at 22 units a day.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-026",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Albuterol HFA\nStrength: 90 mcg/actuation\nDosage form: inhalation_aerosol\nSig: 2 puffs inh q4h prn wheezing\nQuantity: 1 each\nDays supply: 30",
+   "v1_line": "Albuterol HFA 90 mcg/actuation 2 puffs inh q4h prn wheezing",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "albuterol, (inhalation aerosol, multidose package), 90 mcg/puff, 180 mcg = 2 puff, inhaled, as needed for wheezing, every 4 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Concentration 90 mcg per puff, quantity 2 puffs, dose 180 mcg. Package multidose (an inhaler).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-027",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: FLUTICASONE PROP\nStrength: 50 MCG\nDosage form: nasal_spray\nSig: USE 1 SPRAY PER NOSTRIL ONCE A DAY\nQuantity: 16 g\nDays supply: 60",
+   "v1_line": "FLUTICASONE PROP 50 MCG NASAL SPRAY: USE 1 SPRAY PER NOSTRIL ONCE A DAY",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "fluticasone propionate, (nasal spray, multidose package), 50 mcg/spray, 50 mcg = 1 spray, nasal, each side, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Dose is now per nostril, 50 mcg, with laterality both, like the per-eye dose you confirmed on sb-081. It was 100 mcg in v1.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-028",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Amoxicillin\nStrength: 250 mg/5 mL\nDosage form: suspension\nSig: give 7.5 mL by mouth twice daily\nQuantity: 150 mL\nDays supply: 10",
+   "v1_line": "Amoxicillin 250 mg/5 mL suspension: give 7.5 mL by mouth twice daily",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "amoxicillin, (suspension), 250 mg/5 mL, 375 mg = 7.5 mL, oral, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Concentration 250 mg/5 mL, quantity 7.5 mL, dose 375 mg.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-029",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Cyclobenzaprine\nStrength: 10 mg\nDosage form: tablet\nSig: 1 tab po qhs prn muscle spasm\nQuantity: 10 tab\nDays supply: 10",
+   "v1_line": "Cyclobenzaprine 10 mg tab 1 tab po qhs prn muscle spasm",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "cyclobenzaprine, (tablet), 10 mg = 1 tab, oral, timing bedtime, as needed for muscle spasm, at most 1 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 10 tab for 10 days (at most 10 tab can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-030",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Clopidogrel\nStrength: 75 mg\nDosage form: tablet\nSig: take one tablet by mouth daily\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Clopidogrel 75 mg tablet take one tablet by mouth daily",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "clopidogrel, (tablet), 75 mg = 1 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-031",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Carvedilol\nStrength: 12.5 mg\nDosage form: tablet\nSig: 1 tab po bid with meals\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "Carvedilol 12.5 mg 1 tab po bid with meals",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "carvedilol, (tablet), 12.5 mg = 1 tab, oral, twice daily, timing with meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 60 tab for 30 days (60 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-032",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Glipizide\nStrength: 5 mg\nDosage form: tablet\nSig: 1 tab po bid ac\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "Glipizide 5 mg 1 tab po bid ac",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "glipizide, (tablet), 5 mg = 1 tab, oral, twice daily, timing before meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 60 tab for 30 days (60 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-033",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Trazodone\nStrength: 50 mg\nDosage form: tablet\nSig: 1 tab po qhs\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Trazodone 50 mg 1 tab po qhs",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "trazodone, (tablet), 50 mg = 1 tab, oral, once daily, timing bedtime",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-034",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Acetaminophen\nStrength: 325 mg\nDosage form: tablet\nSig: 2 tabs po q6h prn fever\nQuantity: 40 tab\nDays supply: 5",
+   "v1_line": "Acetaminophen 325 mg 2 tabs po q6h prn fever",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "acetaminophen, (tablet), 650 mg = 2 tab, oral, as needed for fever, every 6 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 2 tab per dose. Quantity 40 tab for 5 days (at most 40 tab can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-084",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Fentanyl\nStrength: 25 mcg/hr\nDosage form: transdermal_patch\nSig: apply 1 patch q72h\nQuantity: 10 patch\nDays supply: 30",
+   "v1_line": "Fentanyl 25 mcg/hr transdermal patch: apply 1 patch q72h",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "fentanyl, (transdermal patch), 1 patch, transdermal, every 72 hours",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Dose is null and quantity is 1 patch. The 25 mcg/hr is a delivery rate in the strength field, not a concentration.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-085",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Ketorolac\nStrength: 0.5%\nDosage form: solution\nSig: 1 drop OS qid x 1 week\nQuantity: 5 mL\nDays supply: 7",
+   "v1_line": "Ketorolac 0.5% ophth: 1 drop OS qid x 1 week",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "ketorolac, (solution), 0.5%, 1 gtt, ophthalmic, left side, four times daily, for 7 days",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 gtt per dose, concentration. Quantity 5 mL for 7 days.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-086",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Erythromycin\nStrength: 0.5%\nDosage form: ointment\nSig: apply 1/2 inch ribbon to right eye qid\nQuantity: 3.5 g\nDays supply: 10",
+   "v1_line": "Erythromycin 0.5% ophth oint: apply 1/2 inch ribbon to right eye qid",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "erythromycin, (ointment), 0.5%, ribbon of 0.5 inch, ophthalmic, right side, four times daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Application amount: a ribbon of 0.5 inch. Dose and quantity are null.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-087",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Estradiol\nStrength: 0.1 mg/day\nDosage form: transdermal_patch\nSig: apply 1 patch twice weekly\nQuantity: 8 patch\nDays supply: 28",
+   "v1_line": "Estradiol 0.1 mg/day patch: apply 1 patch twice weekly",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "estradiol, (transdermal patch), 1 patch, transdermal, twice weekly",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Dose is null and quantity is 1 patch. 8 patches cover 28 days at twice weekly.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-088",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Acetaminophen\nStrength: 650 mg\nDosage form: suppository\nSig: insert 1 supp PR q6h prn fever\nQuantity: 12 supp\nDays supply: 3",
+   "v1_line": "Acetaminophen 650 mg supp: insert 1 supp PR q6h prn fever",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "acetaminophen, (suppository), 650 mg = 1 supp, rectal, as needed for fever, every 6 h",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 supp per dose. Quantity 12 supp for 3 days (at most 12 supp can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-089",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Enoxaparin\nStrength: 40 mg/0.4 mL\nDosage form: injection\nSig: inject 40 mg subcut qd x 10 days\nQuantity: 4 mL\nDays supply: 10",
+   "v1_line": "Enoxaparin 40 mg/0.4 mL: inject 40 mg subcut qd x 10 days",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "enoxaparin, (injection, unit dose package), 40 mg/0.4 mL, 40 mg, subcutaneous, once daily, for 10 days",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Package unit_dose (40 mg/0.4 mL is a prefilled syringe). Quantity per dose is null because the sig gives mg only.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-090",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Epinephrine auto-injector\nStrength: 0.3 mg\nDosage form: injection\nSig: inject 0.3 mg IM into outer thigh prn anaphylaxis, may repeat once in 5-15 min\nQuantity: 2 each\nDays supply: 30",
+   "v1_line": "Epinephrine 0.3 mg auto-injector: inject 0.3 mg IM into outer thigh prn anaphylaxis, may repeat once in 5-15 min",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "epinephrine, (injection, unit dose package), 0.3 mg, intramuscular, as needed for anaphylaxis, every 5 to 15 min, at most 1 repeat",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Package unit_dose (an auto-injector). Limit: at most 1 repeat.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-091",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Amoxicillin\nStrength: 500 mg\nDosage form: capsule\nSig: 1 cap po tid x 10 days\nQuantity: 30 cap\nDays supply: 10",
+   "v1_line": "Amoxicillin 500 mg cap 1 cap po tid x 10 days",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "amoxicillin, (capsule), 500 mg = 1 cap, oral, three times daily, for 10 days",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 30 cap for 10 days (30 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-092",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Nitrofurantoin\nStrength: 100 mg\nDosage form: capsule\nSig: 1 cap po q12h x 5 days\nQuantity: 10 cap\nDays supply: 5",
+   "v1_line": "Nitrofurantoin 100 mg cap: 1 cap po q12h x 5 days",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "nitrofurantoin, (capsule), 100 mg = 1 cap, oral, every 12 hours, for 5 days",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 10 cap for 5 days (10 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-093",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Fluconazole\nStrength: 150 mg\nDosage form: tablet\nSig: 1 tab po once, may repeat in 72 hours if symptoms persist\nQuantity: 2 tab\nDays supply: 4",
+   "v1_line": "Fluconazole 150 mg 1 tab po once, may repeat in 72 hours if symptoms persist",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "fluconazole, (tablet), 150 mg = 1 tab, oral, at most 1 repeat",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Limit: at most 1 repeat. Still not as-needed use, as you decided for audit item p10.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-094",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Doxycycline hyclate\nStrength: 100 mg\nDosage form: capsule\nSig: 1 cap po bid x 14 days, take with a full glass of water\nQuantity: 28 cap\nDays supply: 14",
+   "v1_line": "Doxycycline hyclate 100 mg cap 1 cap po bid x 14 days, take with a full glass of water",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "doxycycline, (capsule), 100 mg = 1 cap, oral, twice daily, for 14 days",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 28 cap for 14 days (28 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-095",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Escitalopram\nStrength: 10 mg\nDosage form: tablet\nSig: take 1/2 tab po daily\nQuantity: 15 tab\nDays supply: 30",
+   "v1_line": "Escitalopram 10 mg tab: take 1/2 tab po daily",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "escitalopram, (tablet), 5 mg = 0.5 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 0.5 tab per dose. Quantity 15 tab for 30 days (15 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-096",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Metoprolol tartrate\nStrength: 25 mg\nDosage form: tablet\nSig: 1/2 tab po bid\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Metoprolol tartrate 25 mg: 1/2 tab po bid",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "metoprolol tartrate, (tablet), 12.5 mg = 0.5 tab, oral, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 0.5 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-097",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Warfarin\nStrength: 5 mg\nDosage form: tablet\nSig: take 1.5 tabs po qd\nQuantity: 45 tab\nDays supply: 30",
+   "v1_line": "Warfarin 5 mg tab: take 1.5 tabs po qd",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "warfarin, (tablet), 7.5 mg = 1.5 tab, oral, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1.5 tab per dose. Quantity 45 tab for 30 days (45 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-098",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Clonazepam\nStrength: 0.5 mg\nDosage form: tablet\nSig: take ½ tab po qhs\nQuantity: 15 tab\nDays supply: 30",
+   "v1_line": "Clonazepam 0.5 mg: take ½ tab po qhs",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "clonazepam, (tablet), 0.25 mg = 0.5 tab, oral, once daily, timing bedtime",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 0.5 tab per dose. Quantity 15 tab for 30 days (15 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-099",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Spironolactone\nStrength: 25 mg\nDosage form: tablet\nSig: 1/2 tab po qod\nQuantity: 8 tab\nDays supply: 30",
+   "v1_line": "Spironolactone 25 mg tab, 1/2 tab po qod",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "spironolactone, (tablet), 12.5 mg = 0.5 tab, oral, every other day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 0.5 tab per dose. Quantity 8 tab for 30 days (7.5 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-100",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Methotrexate\nStrength: 2.5 mg\nDosage form: tablet\nSig: take 6 tabs (15 mg) po once weekly on Mondays\nQuantity: 24 tab\nDays supply: 28",
+   "v1_line": "Methotrexate 2.5 mg tab: take 6 tabs (15 mg) po once weekly on Mondays",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "methotrexate, (tablet), 15 mg = 6 tab, oral, once weekly, on monday",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 6 tab per dose. Quantity 24 tab for 28 days (24 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-101",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Alendronate\nStrength: 70 mg\nDosage form: tablet\nSig: 1 tab po q week, 30 min before breakfast with water, remain upright\nQuantity: 4 tab\nDays supply: 28",
+   "v1_line": "Alendronate 70 mg tab 1 tab po q week, 30 min before breakfast with water, remain upright",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "alendronate, (tablet), 70 mg = 1 tab, oral, once weekly, timing before meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 4 tab for 28 days (4 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-102",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Ibandronate\nStrength: 150 mg\nDosage form: tablet\nSig: 1 tab po once monthly on the same day each month\nQuantity: 1 tab\nDays supply: 30",
+   "v1_line": "Ibandronate 150 mg 1 tab po once monthly on the same day each month",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "ibandronate, (tablet), 150 mg = 1 tab, oral, once monthly",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 1 tab for 30 days (1 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-103",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Ergocalciferol\nStrength: 50,000 units\nDosage form: capsule\nSig: 1 cap po once weekly x 8 weeks\nQuantity: 8 cap\nDays supply: 56",
+   "v1_line": "Ergocalciferol 50,000 units cap: 1 cap po once weekly x 8 weeks",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "ergocalciferol, (capsule), 50000 units = 1 cap, oral, once weekly, for 56 days",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 8 cap for 56 days (8 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-104",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Methotrexate\nStrength: 2.5 mg\nDosage form: tablet\nSig: take 4 tabs po every Saturday\nQuantity: 16 tab\nDays supply: 28",
+   "v1_line": "Methotrexate 2.5 mg: take 4 tabs po every Saturday",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "methotrexate, (tablet), 10 mg = 4 tab, oral, once weekly, on saturday",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 4 tab per dose. Quantity 16 tab for 28 days (16 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-105",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Furosemide\nStrength: 40 mg\nDosage form: tablet\nSig: 1 tab po every other day\nQuantity: 15 tab\nDays supply: 30",
+   "v1_line": "Furosemide 40 mg 1 tab po every other day",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "furosemide, (tablet), 40 mg = 1 tab, oral, every other day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 15 tab for 30 days (15 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-106",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Insulin lispro\nStrength: 100 units/mL\nDosage form: injection\nSig: inject subcut tid ac per sliding scale: BG 150-200 = 2 units, 201-250 = 4 units, 251-300 = 6 units, 301-350 = 8 units, >350 = 10 units and call MD\nQuantity: 10 mL\nDays supply: 30",
+   "v1_line": "Insulin lispro 100 units/mL: inject subcut tid ac per sliding scale: BG 150-200 = 2 units, 201-250 = 4 units, 251-300 = 6 units, 301-350 = 8 units, >350 = 10 units and call MD",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "insulin lispro, (injection), 100 units/mL, subcutaneous, three times daily, timing before meals, scale: 150 to 200 = 2 units, 201 to 250 = 4 units, 251 to 300 = 6 units, 301 to 350 = 8 units, 351 and up = 10 units",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Concentration 100 units/mL from the strength field. Dose is null because the scale sets it.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-107",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Insulin aspart\nStrength: 100 units/mL\nDosage form: injection\nSig: sliding scale, inject subcut ac and hs: BG 150 or less 0 units, 151-200 1 unit, 201-250 2 units, 251-300 3 units, 301-350 4 units, over 350 5 units and call provider\nQuantity: 10 mL\nDays supply: 30",
+   "v1_line": "Insulin aspart sliding scale, inject subcut ac and hs: BG 150 or less 0 units, 151-200 1 unit, 201-250 2 units, 251-300 3 units, 301-350 4 units, over 350 5 units and call provider",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "insulin aspart, (injection), 100 units/mL, subcutaneous, four times daily, scale: up to 150 = 0 units, 151 to 200 = 1 units, 201 to 250 = 2 units, 251 to 300 = 3 units, 301 to 350 = 4 units, 351 and up = 5 units",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "The e-prescription strength field now says 100 units/mL. The v1 line had no strength.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-108",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Glucagon emergency kit\nStrength: 1 mg\nDosage form: kit\nSig: inject 1 mg subcut or IM ud for severe low blood sugar\nQuantity: 1 each\nDays supply: 30",
+   "v1_line": "Glucagon 1 mg emergency kit: inject 1 mg subcut or IM ud for severe low blood sugar",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "glucagon, (kit, unit dose package), 1 mg, as needed for severe low blood sugar",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Package unit_dose (an emergency kit). Route stays null because subcut or IM are both written.",
+   "kevin": ""
+  },
+  {
+   "id": "sb-109",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Nicotine\nStrength: 21 mg/24 hr\nDosage form: transdermal_patch\nSig: apply 1 patch daily as directed, remove old patch\nQuantity: 28 patch\nDays supply: 28",
+   "v1_line": "Nicotine 21 mg/24 hr patch: apply 1 patch daily as directed, remove old patch",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "nicotine, (transdermal patch), 1 patch, transdermal, once daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 patch per dose. Quantity 28 patch for 28 days (28 patch needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-110",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Omeprazole\nStrength: 40 mg\nDosage form: capsule\nSig: 1 cap po qd 30 min before breakfast\nQuantity: 30 cap\nDays supply: 30",
+   "v1_line": "Omeprazole 40 mg cap 1 cap po qd 30 min before breakfast",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "omeprazole, (capsule), 40 mg = 1 cap, oral, once daily, timing before meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 30 cap for 30 days (30 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-111",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Meloxicam\nStrength: 7.5 mg\nDosage form: tablet\nSig: 1 tab po qd with food\nQuantity: 30 tab\nDays supply: 30",
+   "v1_line": "Meloxicam 7.5 mg 1 tab po qd with food",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "meloxicam, (tablet), 7.5 mg = 1 tab, oral, once daily, timing with meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 30 tab for 30 days (30 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-112",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Metformin ER\nStrength: 500 mg\nDosage form: tablet\nSig: 2 tabs po with evening meal\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "Metformin ER 500 mg tab: 2 tabs po with evening meal",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "metformin ER, (tablet), 1000 mg = 2 tab, oral, once daily, timing evening",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 2 tab per dose. Quantity 60 tab for 30 days (60 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-113",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Tamsulosin\nStrength: 0.4 mg\nDosage form: capsule\nSig: 1 cap po 1/2 hr pc same meal qd\nQuantity: 30 cap\nDays supply: 30",
+   "v1_line": "Tamsulosin 0.4 mg 1 cap po 1/2 hr pc same meal qd",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "tamsulosin, (capsule), 0.4 mg = 1 cap, oral, once daily, timing after meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 30 cap for 30 days (30 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-114",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: HCTZ\nStrength: 12.5 mg\nDosage form: capsule\nSig: 1 cap po qam\nQuantity: 30 cap\nDays supply: 30",
+   "v1_line": "HCTZ 12.5 mg 1 cap po qam",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "hydrochlorothiazide, (capsule), 12.5 mg = 1 cap, oral, once daily, timing morning",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 30 cap for 30 days (30 cap needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-115",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: KCl ER\nStrength: 20 mEq\nDosage form: tablet\nSig: 1 tab po bid\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "KCl ER 20 mEq tab 1 tab po bid",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "potassium chloride, (tablet), 20 mEq = 1 tab, oral, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 60 tab for 30 days (60 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-116",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Docusate\nStrength: 100 mg\nDosage form: capsule\nSig: 1 cap po bid prn constipation, hold for loose stools\nQuantity: 60 cap\nDays supply: 30",
+   "v1_line": "Docusate 100 mg 1 cap po bid prn constipation, hold for loose stools",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "docusate, (capsule), 100 mg = 1 cap, oral, as needed for constipation, at most 2 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 60 cap for 30 days (at most 60 cap can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-117",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Metoprolol tartrate\nStrength: 50 mg\nDosage form: tablet\nSig: 1 tab po bid, hold if HR < 55 or SBP < 100\nQuantity: 60 tab\nDays supply: 30",
+   "v1_line": "Metoprolol tartrate 50 mg 1 tab po bid, hold if HR < 55 or SBP < 100",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "metoprolol tartrate, (tablet), 50 mg = 1 tab, oral, twice daily",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 tab per dose. Quantity 60 tab for 30 days (60 tab needed).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-118",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Polyethylene glycol 3350\nStrength: 17 g/dose\nDosage form: powder\nSig: 17 g po qd prn constipation, mix in 8 oz water\nQuantity: 510 g\nDays supply: 30",
+   "v1_line": "Polyethylene glycol 3350 17 g po qd prn constipation, mix in 8 oz water",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "polyethylene glycol 3350, (powder), 17 g, oral, as needed for constipation, at most 1 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Strength field 17 g/dose. Dose 17 g. Quantity per dose is null (a powder measured by the cap).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-119",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Benzonatate\nStrength: 100 mg\nDosage form: capsule\nSig: 1 cap po tid prn cough, swallow whole\nQuantity: 21 cap\nDays supply: 7",
+   "v1_line": "Benzonatate 100 mg cap: 1 cap po tid prn cough, swallow whole",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "benzonatate, (capsule), 100 mg = 1 cap, oral, as needed for cough, at most 3 doses a day",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "New fields: 1 cap per dose. Quantity 21 cap for 7 days (at most 21 cap can be used).",
+   "kevin": ""
+  },
+  {
+   "id": "sb-120",
+   "group": "not reviewed yet",
+   "label_status": "proposed",
+   "prescription": "Drug: Insulin lispro\nStrength: 100 units/mL\nDosage form: injection\nSig: inject 8u subcut tid ac\nQuantity: 10 mL\nDays supply: 30",
+   "v1_line": "insulin lispro inject 8u subcut tid ac",
+   "flag": "no",
+   "clarify": null,
+   "likely_reading": "insulin lispro, (injection), 100 units/mL, 8 units, subcutaneous, three times daily, timing before meals",
+   "confidence": "high",
+   "basis": [
+    "Read as written. (sig text)"
+   ],
+   "safety_notes": [
+    "u for units can be read as 0 or 4. Read as 8 units."
+   ],
+   "quantity_role": "consistent",
+   "quantity_math": null,
+   "your_note": null,
+   "what_changed": "Safety note added: u for units is on the error-prone abbreviation list. Still not flagged, as in v1. Flag it?",
+   "kevin": ""
+  }
+ ]
+}

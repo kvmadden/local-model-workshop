@@ -1,0 +1,23 @@
+{
+ "frozenAt": "2026-11-14T05:21:24.871Z",
+ "note": "Rx Intake Check system frozen before the held-out set was read. scripts/rx-intake.ts refuses the held-out set if any of these files change.",
+ "config": {
+  "readers": [
+   "opus"
+  ],
+  "combine": "primary",
+  "why": "On the development lines the qwen3.8:27b second reader added no catch and two false alarms under union_structural (iteration 7), and timed out on 23 of 135 lines on the shared machine. The frozen system uses the Opus reading alone."
+ },
+ "sha256": {
+  "src/rx/rules.ts": "0ade4f7bef85e86d1027943794a7be8626b73287c8b321a750fdb7056853dea3",
+  "src/rx/facts.ts": "be22bb29c194c96e708579fcaeacb59c8e10ca0a64a129b3001548c69ecfcc02",
+  "src/rx/nlm.ts": "6a50a1d87f8627245937b1bbb3491de65843e0c2a7afeb67eb840254a76a805a",
+  "src/rx/claudeCli.ts": "f2e8776324b631cf25e239464701841e3f57fec1d45f6dfc3959a1d98b4e4f9c",
+  "src/rx/score.ts": "20e8c0807bae8b764c76803d13066ede80c22518a2a69e418b32943eda543452",
+  "scripts/rx-intake.ts": "e31bfeb89d7f9ea95907e8c6c7a27360eba0a465c26de75e1f461c6127b20232",
+  "bench/rx-intake/system/extract-system.txt": "f5871b18c7c0b6024f8beaf7e7749de258ec1c242cdc0d799b2e032b098eca43",
+  "bench/rx-intake/system/extract-user.txt": "4ca7190c92e0def6a2425c0769b08a39dd36ba28eddf6a31272f215f5ac0178a",
+  "bench/rx-intake/system/config.json": "9882fc25065bc28132d7111f67554098b601fc6ca896a7bd34b27238e7c987d7",
+  "bench/sig-bench/CLARIFICATION-RULES.md": "e33b803a5b8a18d96a18ad944b785f8b27e0f60d884da3a43482b24d71d2a2d7"
+ }
+}

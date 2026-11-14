@@ -1,0 +1,1537 @@
+{
+ "status": "sig bench, PROPOSED labels not yet confirmed by a pharmacist. Development data: written by the same family that wrote the scorer and the rules parser.",
+ "conventions": {
+  "bedtimeAsNeeded": "no-schedule"
+ },
+ "cases": [
+  {
+   "id": "sb-001",
+   "input": "Lisinopril 20 mg tab: 1 tab po qd",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-001",
+    "drug": "lisinopril",
+    "drug_match": "lisinopril",
+    "dose_per_administration": {
+     "value": 20,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-002",
+   "input": "atorvastatin 20mg 1 tab PO QHS",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-002",
+    "drug": "atorvastatin",
+    "drug_match": "atorvastatin",
+    "dose_per_administration": {
+     "value": 20,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "bedtime",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-003",
+   "input": "METFORMIN 850 MG TAB. 1 TAB PO BID WITH MEALS",
+   "tags": [
+    "clean",
+    "plain",
+    "meal_anchor",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-003",
+    "drug": "metformin",
+    "drug_match": "metformin",
+    "dose_per_administration": {
+     "value": 850,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": "with_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-004",
+   "input": "Amlodipine 5 mg 1 po daily",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-004",
+    "drug": "amlodipine",
+    "drug_match": "amlodipine",
+    "dose_per_administration": {
+     "value": 5,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-005",
+   "input": "Sertraline 50 mg tab, take 1 tab po qam",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-005",
+    "drug": "sertraline",
+    "drug_match": "sertraline",
+    "dose_per_administration": {
+     "value": 50,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "morning",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-006",
+   "input": "Omeprazole 20 mg cap: take 1 cap po bid ac",
+   "tags": [
+    "clean",
+    "abbreviation",
+    "meal_anchor"
+   ],
+   "gold": {
+    "id": "sb-006",
+    "drug": "omeprazole",
+    "drug_match": "omeprazole",
+    "dose_per_administration": {
+     "value": 20,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": "before_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-007",
+   "input": "Losartan 50 mg 1 tab by mouth once a day",
+   "tags": [
+    "clean",
+    "plain"
+   ],
+   "gold": {
+    "id": "sb-007",
+    "drug": "losartan",
+    "drug_match": "losartan",
+    "dose_per_administration": {
+     "value": 50,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-008",
+   "input": "Metoprolol succinate ER 25 mg 1 tab po daily",
+   "tags": [
+    "clean",
+    "plain",
+    "salt_or_release"
+   ],
+   "gold": {
+    "id": "sb-008",
+    "drug": "metoprolol succinate",
+    "drug_match": "metoprolol succinate",
+    "dose_per_administration": {
+     "value": 25,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-009",
+   "input": "Gabapentin 300 mg cap 1 cap po tid",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-009",
+    "drug": "gabapentin",
+    "drug_match": "gabapentin",
+    "dose_per_administration": {
+     "value": 300,
+     "unit": "mg"
+    },
+    "frequency": "three_times_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-010",
+   "input": "Amoxicillin 875 mg tab 1 tab po q12h",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-010",
+    "drug": "amoxicillin",
+    "drug_match": "amoxicillin",
+    "dose_per_administration": {
+     "value": 875,
+     "unit": "mg"
+    },
+    "frequency": "every_12_hours",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-011",
+   "input": "Cephalexin 250 mg cap: take 2 caps by mouth four times a day",
+   "tags": [
+    "clean",
+    "plain",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-011",
+    "drug": "cephalexin",
+    "drug_match": "cephalexin",
+    "dose_per_administration": {
+     "value": 500,
+     "unit": "mg"
+    },
+    "frequency": "four_times_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-012",
+   "input": "Levothyroxine 112 mcg tab, take 1 tablet every morning on an empty stomach",
+   "tags": [
+    "clean",
+    "plain"
+   ],
+   "gold": {
+    "id": "sb-012",
+    "drug": "levothyroxine",
+    "drug_match": "levothyroxine",
+    "dose_per_administration": {
+     "value": 112,
+     "unit": "mcg"
+    },
+    "frequency": "once_daily",
+    "timing": "morning",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-013",
+   "input": "Hydrochlorothiazide 25 mg 1 tab po daily in the morning",
+   "tags": [
+    "clean",
+    "plain"
+   ],
+   "gold": {
+    "id": "sb-013",
+    "drug": "hydrochlorothiazide",
+    "drug_match": "hydrochlorothiazide",
+    "dose_per_administration": {
+     "value": 25,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "morning",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-014",
+   "input": "Tamsulosin 0.4 mg cap 1 cap po qhs",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-014",
+    "drug": "tamsulosin",
+    "drug_match": "tamsulosin",
+    "dose_per_administration": {
+     "value": 0.4,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "bedtime",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-015",
+   "input": "Montelukast 10 mg 1 tab po qpm",
+   "tags": [
+    "clean",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-015",
+    "drug": "montelukast",
+    "drug_match": "montelukast",
+    "dose_per_administration": {
+     "value": 10,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "evening",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-016",
+   "input": "Ondansetron 4 mg tab 1 tab po q8h prn nausea",
+   "tags": [
+    "clean",
+    "prn",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-016",
+    "drug": "ondansetron",
+    "drug_match": "ondansetron",
+    "dose_per_administration": {
+     "value": 4,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "nausea"
+   }
+  },
+  {
+   "id": "sb-017",
+   "input": "Ibuprofen 600 mg 1 tab po q6h prn pain",
+   "tags": [
+    "clean",
+    "prn",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-017",
+    "drug": "ibuprofen",
+    "drug_match": "ibuprofen",
+    "dose_per_administration": {
+     "value": 600,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "pain"
+   }
+  },
+  {
+   "id": "sb-018",
+   "input": "Cetirizine 10 mg 1 tab po daily prn allergies",
+   "tags": [
+    "clean",
+    "prn",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-018",
+    "drug": "cetirizine",
+    "drug_match": "cetirizine",
+    "dose_per_administration": {
+     "value": 10,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "allergies"
+   }
+  },
+  {
+   "id": "sb-019",
+   "input": "hydroxyzine HCl 10 mg: take one tablet by mouth three times a day as needed for anxiety",
+   "tags": [
+    "clean",
+    "prn",
+    "convention"
+   ],
+   "gold": {
+    "id": "sb-019",
+    "drug": "hydroxyzine",
+    "drug_match": "hydroxyzine",
+    "dose_per_administration": {
+     "value": 10,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "anxiety"
+   }
+  },
+  {
+   "id": "sb-020",
+   "input": "Docusate sodium 100 mg cap 1 cap po bid",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-020",
+    "drug": "docusate",
+    "drug_match": "docusate",
+    "dose_per_administration": {
+     "value": 100,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-021",
+   "input": "Prednisone 20 mg tab: take 2 tabs po qd",
+   "tags": [
+    "clean",
+    "arithmetic",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-021",
+    "drug": "prednisone",
+    "drug_match": "prednisone",
+    "dose_per_administration": {
+     "value": 40,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-022",
+   "input": "Escitalopram 10 mg 1 tab po qd",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-022",
+    "drug": "escitalopram",
+    "drug_match": "escitalopram",
+    "dose_per_administration": {
+     "value": 10,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-023",
+   "input": "Pantoprazole 40 mg DR tab 1 tab po qd",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-023",
+    "drug": "pantoprazole",
+    "drug_match": "pantoprazole",
+    "dose_per_administration": {
+     "value": 40,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-024",
+   "input": "Simvastatin 20 mg 1 tab PO every evening",
+   "tags": [
+    "clean",
+    "plain"
+   ],
+   "gold": {
+    "id": "sb-024",
+    "drug": "simvastatin",
+    "drug_match": "simvastatin",
+    "dose_per_administration": {
+     "value": 20,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "evening",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-025",
+   "input": "Insulin glargine 100 units/mL: inject 22 units subcut qhs",
+   "tags": [
+    "clean",
+    "route",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-025",
+    "drug": "insulin glargine",
+    "drug_match": "insulin glargine",
+    "dose_per_administration": {
+     "value": 22,
+     "unit": "units"
+    },
+    "frequency": "once_daily",
+    "timing": "bedtime",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-026",
+   "input": "Albuterol HFA 90 mcg/actuation 2 puffs inh q4h prn wheezing",
+   "tags": [
+    "clean",
+    "prn",
+    "route",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-026",
+    "drug": "albuterol",
+    "drug_match": "albuterol",
+    "dose_per_administration": {
+     "value": 180,
+     "unit": "mcg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "wheezing"
+   }
+  },
+  {
+   "id": "sb-027",
+   "input": "FLUTICASONE PROP 50 MCG NASAL SPRAY: USE 1 SPRAY PER NOSTRIL ONCE A DAY",
+   "tags": [
+    "clean",
+    "route",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-027",
+    "drug": "fluticasone propionate",
+    "drug_match": "fluticasone propionate",
+    "dose_per_administration": {
+     "value": 100,
+     "unit": "mcg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-028",
+   "input": "Amoxicillin 250 mg/5 mL suspension: give 7.5 mL by mouth twice daily",
+   "tags": [
+    "clean",
+    "liquid",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-028",
+    "drug": "amoxicillin",
+    "drug_match": "amoxicillin",
+    "dose_per_administration": {
+     "value": 375,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-029",
+   "input": "Cyclobenzaprine 10 mg tab 1 tab po qhs prn muscle spasm",
+   "tags": [
+    "clean",
+    "prn",
+    "convention"
+   ],
+   "gold": {
+    "id": "sb-029",
+    "drug": "cyclobenzaprine",
+    "drug_match": "cyclobenzaprine",
+    "dose_per_administration": {
+     "value": 10,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": "bedtime",
+    "prn": true,
+    "prn_indication": "muscle spasm"
+   }
+  },
+  {
+   "id": "sb-030",
+   "input": "Clopidogrel 75 mg tablet take one tablet by mouth daily",
+   "tags": [
+    "clean",
+    "plain"
+   ],
+   "gold": {
+    "id": "sb-030",
+    "drug": "clopidogrel",
+    "drug_match": "clopidogrel",
+    "dose_per_administration": {
+     "value": 75,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-031",
+   "input": "Carvedilol 12.5 mg 1 tab po bid with meals",
+   "tags": [
+    "clean",
+    "plain",
+    "meal_anchor"
+   ],
+   "gold": {
+    "id": "sb-031",
+    "drug": "carvedilol",
+    "drug_match": "carvedilol",
+    "dose_per_administration": {
+     "value": 12.5,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": "with_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-032",
+   "input": "Glipizide 5 mg 1 tab po bid ac",
+   "tags": [
+    "clean",
+    "abbreviation",
+    "meal_anchor"
+   ],
+   "gold": {
+    "id": "sb-032",
+    "drug": "glipizide",
+    "drug_match": "glipizide",
+    "dose_per_administration": {
+     "value": 5,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": "before_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-033",
+   "input": "Trazodone 50 mg 1 tab po qhs",
+   "tags": [
+    "clean",
+    "plain",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-033",
+    "drug": "trazodone",
+    "drug_match": "trazodone",
+    "dose_per_administration": {
+     "value": 50,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "bedtime",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-034",
+   "input": "Acetaminophen 325 mg 2 tabs po q6h prn fever",
+   "tags": [
+    "clean",
+    "prn",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-034",
+    "drug": "acetaminophen",
+    "drug_match": "acetaminophen",
+    "dose_per_administration": {
+     "value": 650,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "fever"
+   }
+  },
+  {
+   "id": "sb-065",
+   "input": "Acetaminophen 325 mg tab: 2 tabs po q4h prn fever, do not exceed 10 tabs in 24 hours",
+   "tags": [
+    "hard",
+    "max_daily",
+    "prn",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-065",
+    "drug": "acetaminophen",
+    "drug_match": "acetaminophen",
+    "dose_per_administration": {
+     "value": 650,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "fever"
+   }
+  },
+  {
+   "id": "sb-066",
+   "input": "Naproxen sodium 220 mg 1 tab po q8-12h prn pain, no more than 3 tabs per day",
+   "tags": [
+    "hard",
+    "max_daily",
+    "prn",
+    "range"
+   ],
+   "gold": {
+    "id": "sb-066",
+    "drug": "naproxen",
+    "drug_match": "naproxen",
+    "dose_per_administration": {
+     "value": 220,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "pain"
+   }
+  },
+  {
+   "id": "sb-067",
+   "input": "Sumatriptan 50 mg tab 1 tab po at onset of migraine, may repeat once after 2 hours. Max 200 mg/day",
+   "tags": [
+    "hard",
+    "max_daily",
+    "prn"
+   ],
+   "gold": {
+    "id": "sb-067",
+    "drug": "sumatriptan",
+    "drug_match": "sumatriptan",
+    "dose_per_administration": {
+     "value": 50,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "migraine"
+   }
+  },
+  {
+   "id": "sb-068",
+   "input": "Ibuprofen 200 mg OTC: 2 tabs po q4-6h prn pain. Max 6 tabs/day",
+   "tags": [
+    "hard",
+    "max_daily",
+    "prn",
+    "arithmetic",
+    "range"
+   ],
+   "gold": {
+    "id": "sb-068",
+    "drug": "ibuprofen",
+    "drug_match": "ibuprofen",
+    "dose_per_administration": {
+     "value": 400,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "pain"
+   }
+  },
+  {
+   "id": "sb-069",
+   "input": "Oxycodone 5 mg tab: 1 tab po q6h prn severe pain. Max 4 tabs/day. x 5 days",
+   "tags": [
+    "hard",
+    "max_daily",
+    "prn",
+    "duration"
+   ],
+   "gold": {
+    "id": "sb-069",
+    "drug": "oxycodone",
+    "drug_match": "oxycodone",
+    "dose_per_administration": {
+     "value": 5,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "severe pain"
+   }
+  },
+  {
+   "id": "sb-070",
+   "input": "Ondansetron ODT 4 mg: dissolve 1 tab on tongue q8h prn N/V, max 3 tabs per day",
+   "tags": [
+    "hard",
+    "max_daily",
+    "prn",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-070",
+    "drug": "ondansetron",
+    "drug_match": "ondansetron",
+    "dose_per_administration": {
+     "value": 4,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "nausea and vomiting"
+   }
+  },
+  {
+   "id": "sb-079",
+   "input": "Nitroglycerin 0.4 mg SL tab: 1 tab SL q5min prn chest pain, max 3 doses in 15 min. Call 911 if pain persists",
+   "tags": [
+    "hard",
+    "route",
+    "prn"
+   ],
+   "gold": {
+    "id": "sb-079",
+    "drug": "nitroglycerin",
+    "drug_match": "nitroglycerin",
+    "dose_per_administration": {
+     "value": 0.4,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "chest pain"
+   }
+  },
+  {
+   "id": "sb-088",
+   "input": "Acetaminophen 650 mg supp: insert 1 supp PR q6h prn fever",
+   "tags": [
+    "hard",
+    "route",
+    "prn"
+   ],
+   "gold": {
+    "id": "sb-088",
+    "drug": "acetaminophen",
+    "drug_match": "acetaminophen",
+    "dose_per_administration": {
+     "value": 650,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "fever"
+   }
+  },
+  {
+   "id": "sb-089",
+   "input": "Enoxaparin 40 mg/0.4 mL: inject 40 mg subcut qd x 10 days",
+   "tags": [
+    "hard",
+    "route",
+    "duration"
+   ],
+   "gold": {
+    "id": "sb-089",
+    "drug": "enoxaparin",
+    "drug_match": "enoxaparin",
+    "dose_per_administration": {
+     "value": 40,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-090",
+   "input": "Epinephrine 0.3 mg auto-injector: inject 0.3 mg IM into outer thigh prn anaphylaxis, may repeat once in 5-15 min",
+   "tags": [
+    "hard",
+    "route",
+    "prn",
+    "as_directed"
+   ],
+   "gold": {
+    "id": "sb-090",
+    "drug": "epinephrine",
+    "drug_match": "epinephrine",
+    "dose_per_administration": {
+     "value": 0.3,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "anaphylaxis"
+   }
+  },
+  {
+   "id": "sb-091",
+   "input": "Amoxicillin 500 mg cap 1 cap po tid x 10 days",
+   "tags": [
+    "hard",
+    "duration",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-091",
+    "drug": "amoxicillin",
+    "drug_match": "amoxicillin",
+    "dose_per_administration": {
+     "value": 500,
+     "unit": "mg"
+    },
+    "frequency": "three_times_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-092",
+   "input": "Nitrofurantoin 100 mg cap: 1 cap po q12h x 5 days",
+   "tags": [
+    "hard",
+    "duration",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-092",
+    "drug": "nitrofurantoin",
+    "drug_match": "nitrofurantoin",
+    "dose_per_administration": {
+     "value": 100,
+     "unit": "mg"
+    },
+    "frequency": "every_12_hours",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-093",
+   "input": "Fluconazole 150 mg 1 tab po once, may repeat in 72 hours if symptoms persist",
+   "tags": [
+    "hard",
+    "duration"
+   ],
+   "gold": {
+    "id": "sb-093",
+    "drug": "fluconazole",
+    "drug_match": "fluconazole",
+    "dose_per_administration": {
+     "value": 150,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-094",
+   "input": "Doxycycline hyclate 100 mg cap 1 cap po bid x 14 days, take with a full glass of water",
+   "tags": [
+    "hard",
+    "duration"
+   ],
+   "gold": {
+    "id": "sb-094",
+    "drug": "doxycycline",
+    "drug_match": "doxycycline",
+    "dose_per_administration": {
+     "value": 100,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-095",
+   "input": "Escitalopram 10 mg tab: take 1/2 tab po daily",
+   "tags": [
+    "hard",
+    "split_tablet"
+   ],
+   "gold": {
+    "id": "sb-095",
+    "drug": "escitalopram",
+    "drug_match": "escitalopram",
+    "dose_per_administration": {
+     "value": 5,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-096",
+   "input": "Metoprolol tartrate 25 mg: 1/2 tab po bid",
+   "tags": [
+    "hard",
+    "split_tablet",
+    "salt_or_release"
+   ],
+   "gold": {
+    "id": "sb-096",
+    "drug": "metoprolol tartrate",
+    "drug_match": "metoprolol tartrate",
+    "dose_per_administration": {
+     "value": 12.5,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-097",
+   "input": "Warfarin 5 mg tab: take 1.5 tabs po qd",
+   "tags": [
+    "hard",
+    "split_tablet"
+   ],
+   "gold": {
+    "id": "sb-097",
+    "drug": "warfarin",
+    "drug_match": "warfarin",
+    "dose_per_administration": {
+     "value": 7.5,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-098",
+   "input": "Clonazepam 0.5 mg: take ½ tab po qhs",
+   "tags": [
+    "hard",
+    "split_tablet"
+   ],
+   "gold": {
+    "id": "sb-098",
+    "drug": "clonazepam",
+    "drug_match": "clonazepam",
+    "dose_per_administration": {
+     "value": 0.25,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "bedtime",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-100",
+   "input": "Methotrexate 2.5 mg tab: take 6 tabs (15 mg) po once weekly on Mondays",
+   "tags": [
+    "hard",
+    "weekly_monthly",
+    "day_of_week",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-100",
+    "drug": "methotrexate",
+    "drug_match": "methotrexate",
+    "dose_per_administration": {
+     "value": 15,
+     "unit": "mg"
+    },
+    "frequency": "once_weekly",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-101",
+   "input": "Alendronate 70 mg tab 1 tab po q week, 30 min before breakfast with water, remain upright",
+   "tags": [
+    "hard",
+    "weekly_monthly",
+    "meal_anchor"
+   ],
+   "gold": {
+    "id": "sb-101",
+    "drug": "alendronate",
+    "drug_match": "alendronate",
+    "dose_per_administration": {
+     "value": 70,
+     "unit": "mg"
+    },
+    "frequency": "once_weekly",
+    "timing": "before_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-103",
+   "input": "Ergocalciferol 50,000 units cap: 1 cap po once weekly x 8 weeks",
+   "tags": [
+    "hard",
+    "weekly_monthly",
+    "duration"
+   ],
+   "gold": {
+    "id": "sb-103",
+    "drug": "ergocalciferol",
+    "drug_match": "ergocalciferol",
+    "dose_per_administration": {
+     "value": 50000,
+     "unit": "units"
+    },
+    "frequency": "once_weekly",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-104",
+   "input": "Methotrexate 2.5 mg: take 4 tabs po every Saturday",
+   "tags": [
+    "hard",
+    "weekly_monthly",
+    "day_of_week",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-104",
+    "drug": "methotrexate",
+    "drug_match": "methotrexate",
+    "dose_per_administration": {
+     "value": 10,
+     "unit": "mg"
+    },
+    "frequency": "once_weekly",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-108",
+   "input": "Glucagon 1 mg emergency kit: inject 1 mg subcut or IM ud for severe low blood sugar",
+   "tags": [
+    "hard",
+    "as_directed",
+    "route",
+    "prn"
+   ],
+   "gold": {
+    "id": "sb-108",
+    "drug": "glucagon",
+    "drug_match": "glucagon",
+    "dose_per_administration": {
+     "value": 1,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "severe low blood sugar"
+   }
+  },
+  {
+   "id": "sb-110",
+   "input": "Omeprazole 40 mg cap 1 cap po qd 30 min before breakfast",
+   "tags": [
+    "hard",
+    "meal_anchor"
+   ],
+   "gold": {
+    "id": "sb-110",
+    "drug": "omeprazole",
+    "drug_match": "omeprazole",
+    "dose_per_administration": {
+     "value": 40,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "before_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-111",
+   "input": "Meloxicam 7.5 mg 1 tab po qd with food",
+   "tags": [
+    "hard",
+    "meal_anchor"
+   ],
+   "gold": {
+    "id": "sb-111",
+    "drug": "meloxicam",
+    "drug_match": "meloxicam",
+    "dose_per_administration": {
+     "value": 7.5,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "with_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-112",
+   "input": "Metformin ER 500 mg tab: 2 tabs po with evening meal",
+   "tags": [
+    "hard",
+    "meal_anchor",
+    "convention",
+    "salt_or_release",
+    "arithmetic"
+   ],
+   "gold": {
+    "id": "sb-112",
+    "drug": "metformin ER",
+    "drug_match": "metformin ER",
+    "dose_per_administration": {
+     "value": 1000,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "evening",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-113",
+   "input": "Tamsulosin 0.4 mg 1 cap po 1/2 hr pc same meal qd",
+   "tags": [
+    "hard",
+    "meal_anchor",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-113",
+    "drug": "tamsulosin",
+    "drug_match": "tamsulosin",
+    "dose_per_administration": {
+     "value": 0.4,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "after_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-114",
+   "input": "HCTZ 12.5 mg 1 cap po qam",
+   "tags": [
+    "hard",
+    "abbreviation"
+   ],
+   "gold": {
+    "id": "sb-114",
+    "drug": "hydrochlorothiazide",
+    "drug_match": "hydrochlorothiazide",
+    "dose_per_administration": {
+     "value": 12.5,
+     "unit": "mg"
+    },
+    "frequency": "once_daily",
+    "timing": "morning",
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-116",
+   "input": "Docusate 100 mg 1 cap po bid prn constipation, hold for loose stools",
+   "tags": [
+    "hard",
+    "prn",
+    "hold"
+   ],
+   "gold": {
+    "id": "sb-116",
+    "drug": "docusate",
+    "drug_match": "docusate",
+    "dose_per_administration": {
+     "value": 100,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "constipation"
+   }
+  },
+  {
+   "id": "sb-117",
+   "input": "Metoprolol tartrate 50 mg 1 tab po bid, hold if HR < 55 or SBP < 100",
+   "tags": [
+    "hard",
+    "hold",
+    "salt_or_release"
+   ],
+   "gold": {
+    "id": "sb-117",
+    "drug": "metoprolol tartrate",
+    "drug_match": "metoprolol tartrate",
+    "dose_per_administration": {
+     "value": 50,
+     "unit": "mg"
+    },
+    "frequency": "twice_daily",
+    "timing": null,
+    "prn": false,
+    "prn_indication": null
+   }
+  },
+  {
+   "id": "sb-118",
+   "input": "Polyethylene glycol 3350 17 g po qd prn constipation, mix in 8 oz water",
+   "tags": [
+    "hard",
+    "prn",
+    "name_with_digit"
+   ],
+   "gold": {
+    "id": "sb-118",
+    "drug": "polyethylene glycol 3350",
+    "drug_match": "polyethylene glycol 3350",
+    "dose_per_administration": {
+     "value": 17,
+     "unit": "g"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "constipation"
+   }
+  },
+  {
+   "id": "sb-119",
+   "input": "Benzonatate 100 mg cap: 1 cap po tid prn cough, swallow whole",
+   "tags": [
+    "hard",
+    "prn"
+   ],
+   "gold": {
+    "id": "sb-119",
+    "drug": "benzonatate",
+    "drug_match": "benzonatate",
+    "dose_per_administration": {
+     "value": 100,
+     "unit": "mg"
+    },
+    "frequency": null,
+    "timing": null,
+    "prn": true,
+    "prn_indication": "cough"
+   }
+  },
+  {
+   "id": "sb-120",
+   "input": "insulin lispro inject 8u subcut tid ac",
+   "tags": [
+    "hard",
+    "abbreviation",
+    "unit",
+    "safety"
+   ],
+   "gold": {
+    "id": "sb-120",
+    "drug": "insulin lispro",
+    "drug_match": "insulin lispro",
+    "dose_per_administration": {
+     "value": 8,
+     "unit": "units"
+    },
+    "frequency": "three_times_daily",
+    "timing": "before_meals",
+    "prn": false,
+    "prn_indication": null
+   }
+  }
+ ],
+ "not_representable": [
+  "sb-035",
+  "sb-036",
+  "sb-037",
+  "sb-038",
+  "sb-039",
+  "sb-040",
+  "sb-041",
+  "sb-042",
+  "sb-043",
+  "sb-044",
+  "sb-045",
+  "sb-046",
+  "sb-047",
+  "sb-048",
+  "sb-049",
+  "sb-050",
+  "sb-051",
+  "sb-052",
+  "sb-053",
+  "sb-054",
+  "sb-055",
+  "sb-056",
+  "sb-057",
+  "sb-058",
+  "sb-059",
+  "sb-060",
+  "sb-061",
+  "sb-062",
+  "sb-063",
+  "sb-064",
+  "sb-071",
+  "sb-072",
+  "sb-073",
+  "sb-074",
+  "sb-075",
+  "sb-076",
+  "sb-077",
+  "sb-078",
+  "sb-080",
+  "sb-081",
+  "sb-082",
+  "sb-083",
+  "sb-084",
+  "sb-085",
+  "sb-086",
+  "sb-087",
+  "sb-099",
+  "sb-102",
+  "sb-105",
+  "sb-106",
+  "sb-107",
+  "sb-109",
+  "sb-115"
+ ]
+}

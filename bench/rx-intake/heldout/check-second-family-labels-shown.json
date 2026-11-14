@@ -1,0 +1,545 @@
+{
+ "model": "Gemini 4 Argon (High)",
+ "family": "google (Antigravity CLI)",
+ "checkedAt": "2026-11-14T02:06:01.175Z",
+ "exit": 0,
+ "parsed": true,
+ "results": [
+  {
+   "id": "hx-001",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-002",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_max_daily"
+   ],
+   "tier": "standard"
+  },
+  {
+   "id": "hx-003",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_drug"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-004",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-005",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "implausible_dose_unit"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-006",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "internal_conflict"
+   ],
+   "tier": "judgment"
+  },
+  {
+   "id": "hx-007",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_laterality"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-008",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-009",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "error_prone_abbreviation"
+   ],
+   "tier": "standard"
+  },
+  {
+   "id": "hx-010",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-011",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-012",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "package_unspecified"
+   ],
+   "tier": "judgment"
+  },
+  {
+   "id": "hx-013",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_sliding_scale"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-014",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-015",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-016",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "alternatives_without_rule"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-017",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-018",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_taper_steps"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-019",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "package_unspecified"
+   ],
+   "tier": "judgment"
+  },
+  {
+   "id": "hx-020",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "exceeds_usual_max"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-021",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-022",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_drug"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-023",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "implausible_dose_unit"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-024",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-025",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_strength"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-026",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "internal_conflict"
+   ],
+   "tier": "judgment"
+  },
+  {
+   "id": "hx-027",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_laterality"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-028",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-029",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "conflicting_frequency"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-030",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "error_prone_abbreviation"
+   ],
+   "tier": "standard"
+  },
+  {
+   "id": "hx-031",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "as_directed_without_instructions",
+    "missing_frequency"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-032",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-033",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-034",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "exceeds_usual_max"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-035",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "dosage_form_unspecified"
+   ],
+   "tier": "judgment"
+  },
+  {
+   "id": "hx-036",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_titration_plan"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-037",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-038",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "frequency_product_mismatch"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-039",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-040",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "conflicting_duration"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-041",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-042",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_dose"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-043",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "dosage_form_unspecified"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-044",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-045",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "conflicting_frequency"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-046",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-047",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_strength"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-048",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_taper_steps"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-049",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-050",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "frequency_product_mismatch"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-051",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_frequency"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-052",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-053",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "conflicting_duration"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-054",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "dosage_form_unspecified"
+   ],
+   "tier": "judgment"
+  },
+  {
+   "id": "hx-055",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_max_daily"
+   ],
+   "tier": "standard"
+  },
+  {
+   "id": "hx-056",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-057",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_sliding_scale",
+    "missing_dose"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-058",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-059",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "alternatives_without_rule"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-060",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-061",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_dose"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-062",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "dosage_form_unspecified"
+   ],
+   "tier": "law"
+  },
+  {
+   "id": "hx-063",
+   "agree": true,
+   "flag_needed": false,
+   "reasons": [],
+   "tier": null
+  },
+  {
+   "id": "hx-064",
+   "agree": true,
+   "flag_needed": true,
+   "reasons": [
+    "missing_titration_plan"
+   ],
+   "tier": "law"
+  }
+ ],
+ "stderr": ""
+}

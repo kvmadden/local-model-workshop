@@ -1,0 +1,16 @@
+{
+ "lockedAt": "2026-11-14T02:12:34.478Z",
+ "note": "Frozen before the Rx Intake Check system existed. Scored once, by scripts/rx-intake-score.ts, after the system is frozen.",
+ "sha256": {
+  "bench/rx-intake/heldout/check-second-family-labels-shown.json": "1df648e77bf5ea55f32ef04af9d2d20599e3edcbba03f19e6d3ed131092eef31",
+  "bench/rx-intake/heldout/check-second-family.json": "2f79b32dfad5f37262b47984ef90ccff290940bfc24093101fac570e85bfabf4",
+  "bench/rx-intake/heldout/generation.json": "a34db95f6e76162c267633776eae98fd7d1423f1ef3c96e51bd05f1416d0b9b0",
+  "bench/rx-intake/heldout/heldout.jsonl": "e4805758d6a07fd5e4550cb4d424cd12ec93d6bb353da9ccae65e48ee88bf131",
+  "bench/rx-intake/heldout/raw-generation-1.txt": "853e390bc276f9b24df629a4ba5fffa2e4dc88ffd0ef6c9b844477c48722a47b",
+  "bench/rx-intake/heldout/raw-generation-2.txt": "cbe07470d323dc868320fd3f81791111aea3c651cfb6e181cd47ad21b6acff9a",
+  "bench/rx-intake/heldout/raw-generation-3.txt": "fa57a30c4060179a3f3b2765a19c19f8d345a6a8c8d5668547763ba878d13376",
+  "bench/rx-intake/heldout/raw-generation-4.txt": "3aa2dbe2ec7b4ded7d6b9014a4215e5dca93d13d3a18252dca8079f407f42472",
+  "bench/rx-intake/heldout/verification.json": "4facc69081796e8c686c6ae532f2ab56fc1cea774eba24960f75063463bf8afe",
+  "bench/rx-intake/LABEL-CONVENTIONS.md": "846e789fdd1c1af6a19ee41fc6d1cc77cbed9ed4a277aeb0dc14de7cd301875e"
+ }
+}
