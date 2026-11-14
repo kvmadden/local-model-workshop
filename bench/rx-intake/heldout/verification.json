@@ -1,0 +1,578 @@
+{
+ "hx-001": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-002": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "loperamide",
+     "release": "ir",
+     "form": "capsule",
+     "max_daily": {
+      "value": 16,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "16 mg (eight capsules) per day for adults, for both acute and chronic diarrhea",
+    "quote": "The maximum daily dose is 16 mg (eight capsules).",
+    "quote_found": true,
+    "setid": "580e6cd4-3f05-4996-9dc3-c50d757ae210",
+    "title": "LOPERAMIDE HYDROCHLORIDE CAPSULE [PD-RX PHARMACEUTICALS, INC.]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=580e6cd4-3f05-4996-9dc3-c50d757ae210",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-003": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-004": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-005": {
+  "checks": [
+   {
+    "check": {
+     "kind": "unit_strength",
+     "generic": "glimepiride",
+     "form": "tablet",
+     "written": {
+      "value": 4,
+      "unit": "mcg"
+     },
+     "marketed": {
+      "value": 4,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "written_exists": false,
+    "swap_exists": true,
+    "marketed_mg": [
+     1,
+     2,
+     3,
+     4,
+     6,
+     8
+    ],
+    "source": "RxNorm SCD strengths"
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-006": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-007": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-008": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-009": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-010": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "meclizine",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 100,
+      "unit": "mg"
+     }
+    },
+    "verified": false,
+    "supported": false,
+    "label_value": "1 to 2 chewable tablets once daily (the label text gives no mg strength, so 100 mg/day cannot be confirmed)",
+    "quote": "adults and children 12 years and over: take 1 to 2 chewable tablets once daily or as directed by a doctor",
+    "quote_found": true,
+    "setid": "e599dc64-ac10-4f4e-9318-e9fab0526488",
+    "title": "MOTION SICKNESS RELIEF (MECLIZINE HCL) TABLET, CHEWABLE [RITE AID CORPORATION]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e599dc64-ac10-4f4e-9318-e9fab0526488",
+    "error": null
+   }
+  ],
+  "all_verified": false
+ },
+ "hx-011": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-012": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-013": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-014": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-015": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-016": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-017": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "tizanidine",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 36,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "Maximum total daily dosage is 36 mg; single doses greater than 16 mg have not been studied",
+    "quote": "The maximum total daily dosage is 36 mg.",
+    "quote_found": true,
+    "setid": "3670f9e3-988d-48e6-9df0-d403d699e08a",
+    "title": "TIZANIDINE TABLET [AMERICAN HEALTH PACKAGING]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3670f9e3-988d-48e6-9df0-d403d699e08a",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-018": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-019": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-020": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "lovastatin",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 80,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "80 mg/day",
+    "quote": "The recommended dosing range is 10 to 80 mg/day in single or two divided doses; the maximum recommended dose is 80 mg/day.",
+    "quote_found": true,
+    "setid": "eea93a4b-f804-4b9c-aabf-e906f03c1e80",
+    "title": "LOVASTATIN TABLET [PD-RX PHARMACEUTICALS, INC.]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=eea93a4b-f804-4b9c-aabf-e906f03c1e80",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-021": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-022": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-023": {
+  "checks": [
+   {
+    "check": {
+     "kind": "unit_strength",
+     "generic": "fludrocortisone",
+     "form": "tablet",
+     "written": {
+      "value": 100,
+      "unit": "mg"
+     },
+     "marketed": {
+      "value": 0.1,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "written_exists": false,
+    "swap_exists": true,
+    "marketed_mg": [
+     0.1
+    ],
+    "source": "RxNorm SCD strengths"
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-024": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "codeine sulfate",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 360,
+      "unit": "mg"
+     }
+    },
+    "verified": false,
+    "supported": false,
+    "label_value": "Maximum 24-hour dose of codeine phosphate 360 mg in the acetaminophen and codeine phosphate combination tablet. The label says nothing about single-ingredient codeine sulfate immediate-release tablets.",
+    "quote": "Codeine Phosphate 15 mg to 60 mg 360 mg",
+    "quote_found": true,
+    "setid": "1fe39679-fd58-4d2c-ba61-49d492a2b087",
+    "title": "ACETAMINOPHEN AND CODEINE PHOSPHATE TABLET [REMEDYREPACK INC.]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1fe39679-fd58-4d2c-ba61-49d492a2b087",
+    "error": null
+   }
+  ],
+  "all_verified": false
+ },
+ "hx-025": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-026": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-027": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-028": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "zolmitriptan",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 10,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "10 mg in any 24-hour period",
+    "quote": "The maximum daily dose is 10 mg in any 24-hour period.",
+    "quote_found": true,
+    "setid": "e6628b7a-0b63-4e6f-a5e7-2fa195265235",
+    "title": "ZOLMITRIPTAN TABLET, FILM COATED [BLUEPOINT LABORATORIES]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e6628b7a-0b63-4e6f-a5e7-2fa195265235",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-029": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-030": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-031": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-032": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-033": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-034": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "pregabalin",
+     "release": "ir",
+     "form": "capsule",
+     "max_daily": {
+      "value": 600,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "600 mg/day maximum for adults (PHN, partial-onset seizures, spinal cord injury neuropathic pain); lower indication-specific maximums apply for DPN (300 mg/day) and fibromyalgia (450 mg/day)",
+    "quote": "Adults (17 years and older) 150 mg/day 600 mg/day 2 or 3 divided doses",
+    "quote_found": true,
+    "setid": "08ad87e3-e00c-46d1-98f8-df493cf1712e",
+    "title": "PREGABALIN CAPSULE [BRYANT RANCH PREPACK]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=08ad87e3-e00c-46d1-98f8-df493cf1712e",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-035": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-036": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-037": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-038": {
+  "checks": [
+   {
+    "check": {
+     "kind": "weekly_product",
+     "generic": "tirzepatide",
+     "form": "injection",
+     "interval": "weekly"
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "once weekly; maximum 15 mg injected subcutaneously once weekly",
+    "quote": "Administer ZEPBOUND once weekly at any time of day, with or without meals.",
+    "quote_found": true,
+    "setid": "487cd7e7-434c-4925-99fa-aa80b1cc776b",
+    "title": "ZEPBOUND (TIRZEPATIDE) INJECTION, SOLUTION ZEPBOUND (TIRZEPATIDE) INJECTION, SOLUTION ZEPBOUND KWIKPEN (TIRZEPATIDE) INJECTION, SOLUTION [ELI LILLY AND COMPANY]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=487cd7e7-434c-4925-99fa-aa80b1cc776b",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-039": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-040": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-041": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "glyburide",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 20,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "20 mg daily maximum; daily doses of more than 20 mg are not recommended",
+    "quote": "Daily doses of more than 20 mg are not recommended.",
+    "quote_found": true,
+    "setid": "7e661288-2d24-4403-86a1-754afa1d04ff",
+    "title": "GLYBURIDE TABLET [CHARTWELL RX, LLC]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7e661288-2d24-4403-86a1-754afa1d04ff",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-042": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-043": {
+  "checks": [
+   {
+    "check": {
+     "kind": "controlled_schedule",
+     "generic": "methylphenidate",
+     "schedule": "2"
+    },
+    "verified": true,
+    "rxnorm_schedule": "2",
+    "rxcui": "1091133",
+    "source": "RxNorm"
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-044": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-045": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-046": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-047": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-048": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-049": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-050": {
+  "checks": [
+   {
+    "check": {
+     "kind": "weekly_product",
+     "generic": "exenatide",
+     "form": "extended-release injectable suspension autoinjector",
+     "interval": "weekly"
+    },
+    "verified": false,
+    "why": "no matching DailyMed label with a Dosage and Administration section"
+   }
+  ],
+  "all_verified": false
+ },
+ "hx-051": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-052": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-053": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-054": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-055": {
+  "checks": [
+   {
+    "check": {
+     "kind": "fda_max",
+     "generic": "eletriptan",
+     "release": "ir",
+     "form": "tablet",
+     "max_daily": {
+      "value": 80,
+      "unit": "mg"
+     }
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "80 mg per day (maximum single dose 40 mg; may repeat after 2 hours; not to exceed 80 mg in any 24-hour period)",
+    "quote": "The maximum daily dose should not exceed 80 mg.",
+    "quote_found": true,
+    "setid": "49686c51-bbd9-45f0-92b1-8ffa81612e35",
+    "title": "ELETRIPTAN HYDROBROMIDE TABLET, FILM COATED [APNAR PHARMA LP]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=49686c51-bbd9-45f0-92b1-8ffa81612e35",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-056": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-057": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-058": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-059": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-060": {
+  "checks": [
+   {
+    "check": {
+     "kind": "weekly_product",
+     "generic": "erenumab",
+     "form": "solution prefilled autoinjector",
+     "interval": "monthly"
+    },
+    "verified": true,
+    "supported": true,
+    "label_value": "70 mg once monthly; some patients may benefit from 140 mg once monthly",
+    "quote": "The recommended dosage of AIMOVIG is 70 mg injected subcutaneously once monthly.",
+    "quote_found": true,
+    "setid": "b998ed05-94b0-47fd-b28f-cddd1e128fd8",
+    "title": "AIMOVIG (ERENUMAB-AOOE) INJECTION AIMOVIG (ERENUMAB-AOOE) INJECTION, SOLUTION [AMGEN, INC]",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b998ed05-94b0-47fd-b28f-cddd1e128fd8",
+    "error": null
+   }
+  ],
+  "all_verified": true
+ },
+ "hx-061": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-062": {
+  "checks": [
+   {
+    "check": {
+     "kind": "controlled_schedule",
+     "generic": "diazepam",
+     "schedule": "4"
+    },
+    "verified": false,
+    "rxnorm_schedule": null,
+    "rxcui": "104706",
+    "source": "RxNorm"
+   }
+  ],
+  "all_verified": false
+ },
+ "hx-063": {
+  "checks": [],
+  "all_verified": true
+ },
+ "hx-064": {
+  "checks": [],
+  "all_verified": true
+ }
+}

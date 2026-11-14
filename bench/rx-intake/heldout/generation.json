@@ -1,0 +1,51 @@
+{
+ "generatedAt": "2026-11-14T02:01:12.903Z",
+ "by": "claude CLI print mode, separate sessions, no tools, 4 batches of 16",
+ "auth": {
+  "authMethod": "claude.ai",
+  "subscriptionType": "max"
+ },
+ "batches": [
+  {
+   "batch": 1,
+   "attempt": 0,
+   "models": [
+    "claude-opus-5-5"
+   ],
+   "wallMs": 95024,
+   "error": null,
+   "promptSha256": "ea3c296217177506f51952f4e675c1fa41e6928062d251065026601c16760412"
+  },
+  {
+   "batch": 2,
+   "attempt": 0,
+   "models": [
+    "claude-opus-5-5"
+   ],
+   "wallMs": 101265,
+   "error": null,
+   "promptSha256": "7ce71afb679d67122dfa36cb0f3e1a4cbab9906527e141de48cc995db0bfee89"
+  },
+  {
+   "batch": 3,
+   "attempt": 0,
+   "models": [
+    "claude-opus-5-5"
+   ],
+   "wallMs": 94019,
+   "error": null,
+   "promptSha256": "525f9d280dc8bedcd4b150c74e693597a1bb019504fb5ef2f9b4771aaca78588"
+  },
+  {
+   "batch": 4,
+   "attempt": 0,
+   "models": [
+    "claude-opus-5-5"
+   ],
+   "wallMs": 96697,
+   "error": null,
+   "promptSha256": "3af35a3f3cc16f1fad5a442a5628b5c164df72e93acda10738609fff4496350a"
+  }
+ ],
+ "excludedDrugs": 140
+}

@@ -1,0 +1,1051 @@
+{
+ "model": "Gemini 4 Argon (High)",
+ "family": "google (Antigravity CLI)",
+ "method": "blind relabel from the conventions, then compared",
+ "checkedAt": "2026-11-14T02:12:11.856Z",
+ "exit": 0,
+ "parsed": true,
+ "compare": [
+  {
+   "id": "hx-001",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-001",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a complete dose, bedtime schedule, and matching 30-day quantity within the FDA daily maximum."
+   }
+  },
+  {
+   "id": "hx-002",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-002",
+    "flag_needed": true,
+    "reasons": [
+     "missing_max_daily"
+    ],
+    "tier": "standard",
+    "judgment_only": false,
+    "why": "Taking 2 mg every 2 hours as needed without a daily limit allows up to 24 mg in 24 hours, which exceeds the 16 mg FDA daily maximum for loperamide."
+   }
+  },
+  {
+   "id": "hx-003",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-003",
+    "flag_needed": true,
+    "reasons": [
+     "missing_drug"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The drug field is blank."
+   }
+  },
+  {
+   "id": "hx-004",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-004",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The sig includes a complete dose and twice-daily schedule alongside 'as directed' with a matching 10-day quantity."
+   }
+  },
+  {
+   "id": "hx-005",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-005",
+    "flag_needed": true,
+    "reasons": [
+     "implausible_dose_unit"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "Glimepiride oral tablets are marketed in milligrams (4 mg), not micrograms (4 mcg)."
+   }
+  },
+  {
+   "id": "hx-006",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-006",
+    "flag_needed": true,
+    "reasons": [
+     "internal_conflict"
+    ],
+    "tier": "judgment",
+    "judgment_only": true,
+    "why": "Dispensing 90 tablets for a 30-day supply is three times the 30 tablets required by a one-tablet-daily sig."
+   }
+  },
+  {
+   "id": "hx-007",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-007",
+    "flag_needed": true,
+    "reasons": [
+     "missing_laterality"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig for this ophthalmic solution does not specify which eye(s) to instill the drop into."
+   }
+  },
+  {
+   "id": "hx-008",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-008",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription gives a clear once-daily bedtime dose within the FDA maximum and matches the 30-day quantity."
+   }
+  },
+  {
+   "id": "hx-009",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-009",
+    "flag_needed": true,
+    "reasons": [
+     "error_prone_abbreviation"
+    ],
+    "tier": "standard",
+    "judgment_only": false,
+    "why": "The sig writes the dose with a trailing zero ('5.0 mg'), which is on the ISMP Do Not Use list."
+   }
+  },
+  {
+   "id": "hx-010",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-010",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "An as-needed dose range of 1 to 2 tablets once daily stays at or below the 100 mg daily maximum for meclizine and matches the quantity."
+   }
+  },
+  {
+   "id": "hx-011",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-011",
+    "flag_needed": true,
+    "reasons": [
+     "as_directed_without_instructions"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig uses 'as directed' without providing a dosing schedule or frequency."
+   }
+  },
+  {
+   "id": "hx-012",
+   "answered": true,
+   "flagAgrees": false,
+   "tierAgrees": false,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-012",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription specifies dose, both eyes, and a twice-daily schedule matching the FDA label for cyclosporine ophthalmic emulsion."
+   }
+  },
+  {
+   "id": "hx-013",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-013",
+    "flag_needed": true,
+    "reasons": [
+     "missing_sliding_scale"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig refers to a correction sliding scale without providing the scale parameters."
+   }
+  },
+  {
+   "id": "hx-014",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-014",
+    "flag_needed": true,
+    "reasons": [
+     "missing_frequency"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig gives a dose of one tablet but omits the dosing frequency."
+   }
+  },
+  {
+   "id": "hx-015",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-015",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "A topical instruction to apply a thin layer to the affected area with a three-times-daily schedule is complete."
+   }
+  },
+  {
+   "id": "hx-016",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-016",
+    "flag_needed": true,
+    "reasons": [
+     "alternatives_without_rule"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig offers two alternative schedules ('once daily or twice daily') joined by 'or' with no rule for which to follow."
+   }
+  },
+  {
+   "id": "hx-017",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-017",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "Taking 4 mg every 8 hours as needed allows at most 12 mg in 24 hours, which stays well within the 36 mg FDA daily maximum for tizanidine."
+   }
+  },
+  {
+   "id": "hx-018",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-018",
+    "flag_needed": true,
+    "reasons": [
+     "missing_taper_steps"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig instructs to 'then taper' after 2 weeks without specifying the taper steps."
+   }
+  },
+  {
+   "id": "hx-019",
+   "answered": true,
+   "flagAgrees": false,
+   "tierAgrees": false,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-019",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The sig specifies 1 drop in each eye four times daily as needed using clear standard abbreviations."
+   }
+  },
+  {
+   "id": "hx-020",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-020",
+    "flag_needed": true,
+    "reasons": [
+     "exceeds_usual_max"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "Two 40 mg tablets twice daily totals 160 mg per day, exceeding the 80 mg FDA maximum daily dose for lovastatin."
+   }
+  },
+  {
+   "id": "hx-021",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-021",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a complete 25 mg bedtime dose, schedule, and matching 30-day supply within the FDA daily maximum."
+   }
+  },
+  {
+   "id": "hx-022",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-022",
+    "flag_needed": true,
+    "reasons": [
+     "missing_drug"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The drug field is blank."
+   }
+  },
+  {
+   "id": "hx-023",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-023",
+    "flag_needed": true,
+    "reasons": [
+     "implausible_dose_unit"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "Fludrocortisone acetate oral tablets are marketed as 0.1 mg (100 mcg), not 100 mg."
+   }
+  },
+  {
+   "id": "hx-024",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-024",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "Taking 30 mg every 4 to 6 hours as needed allows at most 180 mg in 24 hours, which is within the 360 mg FDA daily maximum for codeine sulfate."
+   }
+  },
+  {
+   "id": "hx-025",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-025",
+    "flag_needed": true,
+    "reasons": [
+     "missing_strength"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The strength field is blank and the sig does not state the tablet strength."
+   }
+  },
+  {
+   "id": "hx-026",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-026",
+    "flag_needed": true,
+    "reasons": [
+     "internal_conflict"
+    ],
+    "tier": "judgment",
+    "judgment_only": true,
+    "why": "A quantity of 90 tablets with a 30-day supply is three times the 30 tablets needed for a one-tablet-daily schedule."
+   }
+  },
+  {
+   "id": "hx-027",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-027",
+    "flag_needed": true,
+    "reasons": [
+     "missing_laterality"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig for this ophthalmic solution does not state which eye(s) to treat."
+   }
+  },
+  {
+   "id": "hx-028",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-028",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The migraine regimen has a consistent repeat rule and a 2-tablet (5 mg) daily ceiling well within the 10 mg FDA daily maximum."
+   }
+  },
+  {
+   "id": "hx-029",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-029",
+    "flag_needed": true,
+    "reasons": [
+     "conflicting_frequency"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig contains two conflicting frequencies ('daily BID') for the same dose."
+   }
+  },
+  {
+   "id": "hx-030",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-030",
+    "flag_needed": true,
+    "reasons": [
+     "error_prone_abbreviation"
+    ],
+    "tier": "standard",
+    "judgment_only": false,
+    "why": "The dose designation '.5 mg' uses a naked decimal point without a leading zero, which is on the ISMP Do Not Use list."
+   }
+  },
+  {
+   "id": "hx-031",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-031",
+    "flag_needed": true,
+    "reasons": [
+     "as_directed_without_instructions"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig states 'as directed' without specifying how often to take the tablet."
+   }
+  },
+  {
+   "id": "hx-032",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-032",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a clear 5 mg once-daily morning schedule and matching 90-day supply within the 20 mg FDA daily maximum."
+   }
+  },
+  {
+   "id": "hx-033",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-033",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The weekday dosing pattern is explicit, stays within the 200 mg daily maximum for torsemide, and matches the 36-tablet quantity for 28 days."
+   }
+  },
+  {
+   "id": "hx-034",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-034",
+    "flag_needed": true,
+    "reasons": [
+     "exceeds_usual_max"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "One 300 mg capsule three times daily equals 900 mg per day, which exceeds the 600 mg FDA maximum daily dose for pregabalin."
+   }
+  },
+  {
+   "id": "hx-035",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-035",
+    "flag_needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "judgment",
+    "judgment_only": true,
+    "why": "The dosage form field is blank and the sig does not indicate which oral form of cefadroxil to dispense."
+   }
+  },
+  {
+   "id": "hx-036",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-036",
+    "flag_needed": true,
+    "reasons": [
+     "missing_titration_plan"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig instructs to 'increase as tolerated' without specifying the dose step, interval, or maximum ceiling."
+   }
+  },
+  {
+   "id": "hx-037",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-037",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "A topical instruction to apply a thin layer to the affected area once daily for 2 weeks is complete."
+   }
+  },
+  {
+   "id": "hx-038",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-038",
+    "flag_needed": true,
+    "reasons": [
+     "frequency_product_mismatch"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "Tirzepatide is dosed once weekly per the FDA label, but the sig instructs once-daily injection."
+   }
+  },
+  {
+   "id": "hx-039",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-039",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a complete 10 mg once-daily regimen and matching 90-day quantity."
+   }
+  },
+  {
+   "id": "hx-040",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-040",
+    "flag_needed": true,
+    "reasons": [
+     "conflicting_duration"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig states two conflicting treatment durations ('x 7 days x 10 days') for the same regimen."
+   }
+  },
+  {
+   "id": "hx-041",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-041",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "Two 5 mg tablets twice daily totals 20 mg per day, which is at the 20 mg FDA daily maximum for standard glyburide and matches the 120-tablet quantity."
+   }
+  },
+  {
+   "id": "hx-042",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-042",
+    "flag_needed": true,
+    "reasons": [
+     "missing_dose"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig omits the number of tablets or milligram dose to take at each administration."
+   }
+  },
+  {
+   "id": "hx-043",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-043",
+    "flag_needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The dosage form is blank and unspecified in the sig for methylphenidate, a Schedule II controlled substance requiring a dosage form by law."
+   }
+  },
+  {
+   "id": "hx-044",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-044",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription gives a clear 500 mg three-times-daily regimen for 7 days within the FDA maximum and matches the 21-tablet quantity."
+   }
+  },
+  {
+   "id": "hx-045",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-045",
+    "flag_needed": true,
+    "reasons": [
+     "conflicting_frequency"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig gives two incompatible schedules ('daily BID') for the same dose."
+   }
+  },
+  {
+   "id": "hx-046",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-046",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "Liraglutide 1.2 mg subcutaneously once daily is a complete regimen within the 1.8 mg FDA daily maximum."
+   }
+  },
+  {
+   "id": "hx-047",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-047",
+    "flag_needed": true,
+    "reasons": [
+     "missing_strength"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The strength field is blank and the sig does not state the milligram strength of sitagliptin."
+   }
+  },
+  {
+   "id": "hx-048",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-048",
+    "flag_needed": true,
+    "reasons": [
+     "missing_taper_steps"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig instructs to 'then taper' after 8 weeks without providing the taper schedule."
+   }
+  },
+  {
+   "id": "hx-049",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-049",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a complete 5 mg once-daily regimen within the 20 mg daily maximum and a matching 90-day supply."
+   }
+  },
+  {
+   "id": "hx-050",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-050",
+    "flag_needed": true,
+    "reasons": [
+     "frequency_product_mismatch"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "Exenatide extended-release is FDA-labeled for once-weekly administration, but the sig directs once-daily injection."
+   }
+  },
+  {
+   "id": "hx-051",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-051",
+    "flag_needed": true,
+    "reasons": [
+     "missing_frequency"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig states the dose of one tablet but gives no frequency or schedule."
+   }
+  },
+  {
+   "id": "hx-052",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-052",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The taper includes every step with doses and durations that match the 21-capsule quantity and 14-day supply."
+   }
+  },
+  {
+   "id": "hx-053",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-053",
+    "flag_needed": true,
+    "reasons": [
+     "conflicting_duration"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig specifies two conflicting durations ('x 7 days x 10 days') for the same course."
+   }
+  },
+  {
+   "id": "hx-054",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-054",
+    "flag_needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "judgment",
+    "judgment_only": true,
+    "why": "The dosage form field is blank and the sig ('Take 1 by mouth') does not distinguish between standard and orally disintegrating tablets."
+   }
+  },
+  {
+   "id": "hx-055",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-055",
+    "flag_needed": true,
+    "reasons": [
+     "missing_max_daily"
+    ],
+    "tier": "standard",
+    "judgment_only": false,
+    "why": "Repeating 40 mg every 2 hours as needed without a daily ceiling allows up to 480 mg in 24 hours, exceeding the 80 mg FDA daily maximum for eletriptan."
+   }
+  },
+  {
+   "id": "hx-056",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-056",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription states the dose, left eye laterality, and once-daily evening schedule matching the FDA label for bimatoprost."
+   }
+  },
+  {
+   "id": "hx-057",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-057",
+    "flag_needed": true,
+    "reasons": [
+     "missing_sliding_scale"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig directs dosing 'per sliding scale' without including the sliding scale instructions."
+   }
+  },
+  {
+   "id": "hx-058",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-058",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a clear once-daily dose within the FDA maximum and a matching 30-day supply."
+   }
+  },
+  {
+   "id": "hx-059",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-059",
+    "flag_needed": true,
+    "reasons": [
+     "alternatives_without_rule"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig gives two alternative dosing schedules ('every 12 hours or 1 tab once daily') joined by 'or' without a rule for which to use."
+   }
+  },
+  {
+   "id": "hx-060",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-060",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "The prescription has a complete 70 mg once-monthly subcutaneous regimen matching the FDA label and a 1-autoinjector 30-day supply."
+   }
+  },
+  {
+   "id": "hx-061",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-061",
+    "flag_needed": true,
+    "reasons": [
+     "missing_dose"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig does not specify the volume or milligram dose of syrup to take at each administration."
+   }
+  },
+  {
+   "id": "hx-062",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-062",
+    "flag_needed": true,
+    "reasons": [
+     "dosage_form_unspecified"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The dosage form is blank and not specified in the sig for diazepam, a Schedule IV controlled substance that requires a dosage form by law."
+   }
+  },
+  {
+   "id": "hx-063",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": false,
+   "second": {
+    "id": "hx-063",
+    "flag_needed": false,
+    "reasons": [],
+    "tier": null,
+    "judgment_only": false,
+    "why": "A topical instruction to apply a thin layer to the affected area twice daily is complete."
+   }
+  },
+  {
+   "id": "hx-064",
+   "answered": true,
+   "flagAgrees": true,
+   "tierAgrees": true,
+   "reasonOverlap": true,
+   "second": {
+    "id": "hx-064",
+    "flag_needed": true,
+    "reasons": [
+     "missing_titration_plan"
+    ],
+    "tier": "law",
+    "judgment_only": false,
+    "why": "The sig directs to 'increase as tolerated' without providing the titration step, interval, or target ceiling."
+   }
+  }
+ ],
+ "stderr": ""
+}

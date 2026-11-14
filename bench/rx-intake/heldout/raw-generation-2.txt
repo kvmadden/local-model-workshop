@@ -1,0 +1,84 @@
+```json
+[
+  {
+    "input": {"drug_description": "tizanidine", "strength": "4 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth every 8 hours as needed for muscle spasms", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 10},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "tizanidine", "release": "ir", "form": "tablet", "max_daily": {"value": 36, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "venlafaxine extended-release", "strength": "75 mg", "dosage_form": "capsule", "sig": "Take 1 capsule by mouth daily for 2 weeks, then taper", "quantity": {"value": 14, "unit": "cap"}, "days_supply": 14},
+    "label": {"flag": {"needed": true, "reasons": ["missing_taper_steps"]}, "tier": "law", "basis": [{"reason": "missing_taper_steps", "kind": "structure", "fact": "The sig says 'then taper' but gives no taper doses, intervals or end point.", "citation": "Sig as written; CLARIFICATION-RULES.md tier appendix (missing_taper_steps)"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "carboxymethylcellulose sodium", "strength": "0.5%", "dosage_form": "ophthalmic solution", "sig": "Instill 1 gtt in each eye QID prn dry eyes", "quantity": {"value": 15, "unit": "mL"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["package_unspecified"]}, "tier": "judgment", "basis": [{"reason": "package_unspecified", "kind": "judgment", "fact": "Carboxymethylcellulose sodium 0.5% eye drops are sold in multidose bottles and in preservative-free single-use vials. The prescription does not state which package to dispense.", "citation": "Kevin Madden review, 13 November 2026 (timolol precedent); CLARIFICATION-RULES.md tier appendix (package_unspecified)"}], "judgment_only": true},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "lovastatin", "strength": "40 mg", "dosage_form": "tablet", "sig": "Take 2 tabs PO twice a day with meals", "quantity": {"value": 120, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["exceeds_usual_max"]}, "tier": "law", "basis": [{"reason": "exceeds_usual_max", "kind": "fda_max", "fact": "2 tablets of 40 mg twice daily is 160 mg a day. The label maximum is 80 mg a day.", "citation": "DailyMed: lovastatin tablets, Dosage and Administration"}], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "lovastatin", "release": "ir", "form": "tablet", "max_daily": {"value": 80, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "amitriptyline hydrochloride", "strength": "25 mg", "dosage_form": "tablet", "sig": "Take one tablet by mouth at bedtime", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": null, "strength": "20 mg", "dosage_form": "tablet", "sig": "1 tab po qd", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_drug"]}, "tier": "law", "basis": [{"reason": "missing_drug", "kind": "missing_element", "fact": "The drug field is blank and the sig does not name a drug.", "citation": "Prescription fields as written; CLARIFICATION-RULES.md tier appendix (missing_drug)"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "fludrocortisone acetate", "strength": "100 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth once daily", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["implausible_dose_unit"]}, "tier": "law", "basis": [{"reason": "implausible_dose_unit", "kind": "unit_strength", "fact": "RxNorm has no 100 mg fludrocortisone acetate oral tablet. The marketed tablet is 0.1 mg, which is the 1000-fold unit swap of 100 mg.", "citation": "RxNorm (rxnav.nlm.nih.gov): fludrocortisone acetate 0.1 MG Oral Tablet"}], "judgment_only": false},
+    "checks": [{"kind": "unit_strength", "generic": "fludrocortisone", "form": "tablet", "written": {"value": 100, "unit": "mg"}, "marketed": {"value": 0.1, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "codeine sulfate", "strength": "30 mg", "dosage_form": "tablet", "sig": "1 tab PO every 4 to 6 hours as needed for pain", "quantity": {"value": 20, "unit": "tab"}, "days_supply": 5},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "codeine sulfate", "release": "ir", "form": "tablet", "max_daily": {"value": 360, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "atenolol", "strength": null, "dosage_form": "tablet", "sig": "Take 1 tablet by mouth once daily", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_strength"]}, "tier": "law", "basis": [{"reason": "missing_strength", "kind": "missing_element", "fact": "The strength field is blank and the sig does not state a strength. Atenolol tablets come in more than one strength.", "citation": "Prescription fields as written; CLARIFICATION-RULES.md tier appendix (missing_strength)"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "irbesartan", "strength": "150 mg", "dosage_form": "tablet", "sig": "Take one tablet by mouth once a day", "quantity": {"value": 90, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["internal_conflict"]}, "tier": "judgment", "basis": [{"reason": "internal_conflict", "kind": "arithmetic", "fact": "1 tablet x 1 time a day x 30 days = 30 tablets. The written quantity is 90 tablets, a factor of 3, and no product rule explains the difference.", "citation": "Sig, quantity and days supply as written; CLARIFICATION-RULES.md tier appendix (internal_conflict)"}], "judgment_only": true},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "tobramycin", "strength": "0.3%", "dosage_form": "ophthalmic solution", "sig": "Instill 1 drop every 4 hours while awake for 7 days", "quantity": {"value": 5, "unit": "mL"}, "days_supply": 7},
+    "label": {"flag": {"needed": true, "reasons": ["missing_laterality"]}, "tier": "law", "basis": [{"reason": "missing_laterality", "kind": "missing_element", "fact": "The product is an eye drop and the sig does not name the left eye, the right eye, both eyes or the affected eye.", "citation": "Sig as written; CLARIFICATION-RULES.md tier appendix (missing_laterality)"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "zolmitriptan", "strength": "2.5 mg", "dosage_form": "tablet", "sig": "Take 1 tab by mouth at onset of migraine. May repeat once after 2 hours if needed. Do not exceed 2 tablets in 24 hours.", "quantity": {"value": 6, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "zolmitriptan", "release": "ir", "form": "tablet", "max_daily": {"value": 10, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "hydroxychloroquine sulfate", "strength": "200 mg", "dosage_form": "tablet", "sig": "take 1 tablet by mouth daily BID", "quantity": {"value": 60, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["conflicting_frequency"]}, "tier": "law", "basis": [{"reason": "conflicting_frequency", "kind": "structure", "fact": "The sig gives two schedules for the same dose, 'daily' and 'BID', which cannot both hold.", "citation": "Sig as written; CLARIFICATION-RULES.md tier appendix (conflicting_frequency)"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "risperidone", "strength": ".5 mg", "dosage_form": "tablet", "sig": "Take .5 mg by mouth at bedtime", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["error_prone_abbreviation"]}, "tier": "standard", "basis": [{"reason": "error_prone_abbreviation", "kind": "ismp", "fact": "The dose is written as '.5 mg', a naked decimal with no leading zero. It can be misread as 5 mg.", "citation": "ISMP List of Error-Prone Abbreviations, Symbols, and Dose Designations (2024): naked decimal point"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "methocarbamol", "strength": "500 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth as directed.", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 10},
+    "label": {"flag": {"needed": true, "reasons": ["as_directed_without_instructions", "missing_frequency"]}, "tier": "law", "basis": [{"reason": "as_directed_without_instructions", "kind": "missing_element", "fact": "The sig says 'as directed' and gives a dose of 1 tablet, but no schedule.", "citation": "Sig as written; CLARIFICATION-RULES.md tier appendix (as_directed_without_instructions)"}, {"reason": "missing_frequency", "kind": "missing_element", "fact": "The sig gives no schedule, interval or as-needed use, and the line is not a single dose: 30 tablets for 10 days.", "citation": "Sig as written; CLARIFICATION-RULES.md tier appendix (missing_frequency)"}], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "bisoprolol fumarate", "strength": "5 mg", "dosage_form": "tablet", "sig": "take 1 tab by mouth every morning", "quantity": {"value": 90, "unit": "tab"}, "days_supply": 90},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  }
+]
+```

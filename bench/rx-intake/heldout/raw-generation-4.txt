@@ -1,0 +1,105 @@
+```json
+[
+  {
+    "input": {"drug_description": "Ramipril", "strength": "5 mg", "dosage_form": "capsule", "sig": "Take 1 capsule by mouth once daily for blood pressure", "quantity": {"value": 90, "unit": "cap"}, "days_supply": 90},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Exenatide extended-release (Bydureon BCise)", "strength": "2 mg/0.85 mL", "dosage_form": "extended-release injectable suspension, autoinjector", "sig": "Inject 2 mg subcutaneously once daily", "quantity": {"value": 4, "unit": "each"}, "days_supply": 28},
+    "label": {"flag": {"needed": true, "reasons": ["frequency_product_mismatch"]}, "tier": "law", "basis": [
+      {"reason": "frequency_product_mismatch", "kind": "weekly_product", "fact": "The sig gives a daily schedule. The FDA label for exenatide extended-release injectable suspension doses it at 2 mg once every seven days (weekly).", "citation": "DailyMed: Bydureon BCise (exenatide extended-release) injectable suspension, Dosage and Administration"}
+    ], "judgment_only": false},
+    "checks": [{"kind": "weekly_product", "generic": "exenatide", "form": "extended-release injectable suspension autoinjector", "interval": "weekly"}]
+  },
+  {
+    "input": {"drug_description": "Olmesartan medoxomil", "strength": "20 mg", "dosage_form": "tablet", "sig": "Take one tablet by mouth", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_frequency"]}, "tier": "law", "basis": [
+      {"reason": "missing_frequency", "kind": "missing_element", "fact": "The sig states a dose (one tablet) and a route but gives no schedule, interval or as-needed use. A 30-day maintenance supply is not a single dose.", "citation": "CLARIFICATION-RULES.md tier appendix: missing_frequency"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Nortriptyline hydrochloride", "strength": "25 mg", "dosage_form": "capsule", "sig": "Taper: take 2 caps by mouth at bedtime x 7 days, then 1 cap at bedtime x 7 days, then stop", "quantity": {"value": 21, "unit": "cap"}, "days_supply": 14},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Clindamycin hydrochloride", "strength": "300 mg", "dosage_form": "capsule", "sig": "1 cap PO q8h x 7 days x 10 days", "quantity": {"value": 30, "unit": "cap"}, "days_supply": 10},
+    "label": {"flag": {"needed": true, "reasons": ["conflicting_duration"]}, "tier": "law", "basis": [
+      {"reason": "conflicting_duration", "kind": "structure", "fact": "The single step '1 cap q8h' carries two durations, 'x 7 days' and 'x 10 days', which cannot both hold.", "citation": "CLARIFICATION-RULES.md tier appendix: conflicting_duration"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Olanzapine", "strength": "5 mg", "dosage_form": null, "sig": "Take 1 by mouth at bedtime", "quantity": {"value": 30, "unit": "each"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["dosage_form_unspecified"]}, "tier": "judgment", "basis": [
+      {"reason": "dosage_form_unspecified", "kind": "judgment", "fact": "The dosage form field is blank. Olanzapine 5 mg is marketed as both a tablet and an orally disintegrating tablet, and 'take 1 by mouth' fits either. RxNorm gives olanzapine no DEA schedule, so this is judgment tier.", "citation": "RxNorm (rxnav.nlm.nih.gov): olanzapine 5 mg oral tablet; olanzapine 5 mg disintegrating oral tablet"}
+    ], "judgment_only": true},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Eletriptan hydrobromide", "strength": "40 mg", "dosage_form": "tablet", "sig": "Take 1 tablet by mouth at onset of migraine, may repeat every 2 hours as needed", "quantity": {"value": 6, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_max_daily"]}, "tier": "standard", "basis": [
+      {"reason": "missing_max_daily", "kind": "fda_max", "fact": "As-needed use every 2 hours with no written daily maximum allows 12 doses in 24 hours: 12 x 40 mg = 480 mg a day. The label maximum is 80 mg a day.", "citation": "DailyMed: Relpax (eletriptan hydrobromide) tablets, Dosage and Administration"}
+    ], "judgment_only": false},
+    "checks": [{"kind": "fda_max", "generic": "eletriptan", "release": "ir", "form": "tablet", "max_daily": {"value": 80, "unit": "mg"}}]
+  },
+  {
+    "input": {"drug_description": "Bimatoprost", "strength": "0.01%", "dosage_form": "ophthalmic solution", "sig": "Instill 1 drop into the left eye once daily in the evening", "quantity": {"value": 2.5, "unit": "mL"}, "days_supply": 25},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Insulin isophane human (NPH) (Humulin N KwikPen)", "strength": "100 units/mL", "dosage_form": "suspension, pen-injector", "sig": "Inject subcut every morning before breakfast per sliding scale", "quantity": {"value": 15, "unit": "mL"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_sliding_scale", "missing_dose"]}, "tier": "law", "basis": [
+      {"reason": "missing_sliding_scale", "kind": "structure", "fact": "The sig says 'per sliding scale' but does not write the scale (no glucose ranges and no unit doses).", "citation": "CLARIFICATION-RULES.md tier appendix: missing_sliding_scale"},
+      {"reason": "missing_dose", "kind": "missing_element", "fact": "Neither the sig nor the fields give how many units to inject each time.", "citation": "CLARIFICATION-RULES.md tier appendix: missing_dose"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Diltiazem hydrochloride extended-release 24 hr", "strength": "180 mg", "dosage_form": "extended-release capsule", "sig": "Take 1 cap PO QD", "quantity": {"value": 30, "unit": "cap"}, "days_supply": 30},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Ciprofloxacin", "strength": "500 mg", "dosage_form": "tablet", "sig": "Take 1 tab by mouth every 12 hours or 1 tab once daily for UTI", "quantity": {"value": 14, "unit": "tab"}, "days_supply": 7},
+    "label": {"flag": {"needed": true, "reasons": ["alternatives_without_rule"]}, "tier": "law", "basis": [
+      {"reason": "alternatives_without_rule", "kind": "structure", "fact": "Two schedules ('every 12 hours' and 'once daily') are joined by 'or' with no rule for which to use.", "citation": "CLARIFICATION-RULES.md tier appendix: alternatives_without_rule"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Erenumab-aooe (Aimovig)", "strength": "70 mg/mL", "dosage_form": "solution, prefilled autoinjector", "sig": "Inject 70 mg subcutaneously once a month for migraine prevention", "quantity": {"value": 1, "unit": "each"}, "days_supply": 30},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": [{"kind": "weekly_product", "generic": "erenumab", "form": "solution prefilled autoinjector", "interval": "monthly"}]
+  },
+  {
+    "input": {"drug_description": "Promethazine hydrochloride", "strength": "6.25 mg/5 mL", "dosage_form": "syrup", "sig": "take by mouth every 6 hours as needed for nausea", "quantity": {"value": 118, "unit": "mL"}, "days_supply": 7},
+    "label": {"flag": {"needed": true, "reasons": ["missing_dose"]}, "tier": "law", "basis": [
+      {"reason": "missing_dose", "kind": "missing_element", "fact": "The sig gives an interval and as-needed use but no volume or mg to take each time. The fields give only the concentration (6.25 mg/5 mL).", "citation": "CLARIFICATION-RULES.md tier appendix: missing_dose"}
+    ], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Diazepam", "strength": "5 mg", "dosage_form": null, "sig": "Take 5 mg by mouth twice daily as needed for anxiety", "quantity": {"value": 60, "unit": "each"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["dosage_form_unspecified"]}, "tier": "law", "basis": [
+      {"reason": "dosage_form_unspecified", "kind": "controlled_schedule", "fact": "The dosage form field is blank, and 'by mouth' fits both diazepam 5 mg oral tablets and diazepam 5 mg/5 mL oral solution. RxNorm lists diazepam as DEA Schedule IV, so the prescription must state the dosage form.", "citation": "RxNorm (rxnav.nlm.nih.gov): diazepam, DEA schedule CIV; 21 CFR 1306.05(a)"}
+    ], "judgment_only": false},
+    "checks": [{"kind": "controlled_schedule", "generic": "diazepam", "schedule": "4"}]
+  },
+  {
+    "input": {"drug_description": "Fluocinonide", "strength": "0.05%", "dosage_form": "cream", "sig": "Apply a thin layer to the affected area twice daily", "quantity": {"value": 30, "unit": "g"}, "days_supply": 14},
+    "label": {"flag": {"needed": false, "reasons": []}, "tier": null, "basis": [], "judgment_only": false},
+    "checks": []
+  },
+  {
+    "input": {"drug_description": "Quetiapine fumarate", "strength": "25 mg", "dosage_form": "tablet", "sig": "1 tab po qhs, increase as tolerated", "quantity": {"value": 30, "unit": "tab"}, "days_supply": 30},
+    "label": {"flag": {"needed": true, "reasons": ["missing_titration_plan"]}, "tier": "law", "basis": [
+      {"reason": "missing_titration_plan", "kind": "structure", "fact": "The sig says 'increase as tolerated' without the step size, the interval between increases, or a ceiling dose.", "citation": "CLARIFICATION-RULES.md tier appendix: missing_titration_plan"}
+    ], "judgment_only": false},
+    "checks": []
+  }
+]
+```
