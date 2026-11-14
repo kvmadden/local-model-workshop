@@ -1,0 +1,31 @@
+Read the e-prescription at the end and reply with one JSON object with exactly these keys. Every "quote" must be copied exactly from the sig or the fields, or be null when the thing is absent. Report only what is written. Do not fill in what a pharmacist would assume.
+
+{
+  "generic": the active ingredient name(s) in lowercase generic form, combination ingredients joined with "/", or null when no drug is named anywhere,
+  "release": "er" (extended, XL, XR, SR, CR, 24 hour), "dr" (delayed), "ir" (any other oral product), or null when not oral,
+  "product_form": "tablet", "capsule", "orally_disintegrating_tablet", "solution", "suspension", "syrup", "cream", "ointment", "gel", "patch", "suppository", "inhaler", "nasal_spray", "injection", "pen", "drops", or null,
+  "form_stated": the words in the dosage form field or the sig that name the dosage form, or null when neither names it,
+  "strength_in_sig": the strength if the sig itself states it (for example "500 mg tablet"), else null,
+  "per_dose": {"amount": {"min": n, "max": n, "unit": "mg" | "mcg" | "g" | "units" | "mEq"} or null, "count": {"min": n, "max": n, "unit": "tab" | "cap" | "mL" | "drop" | "puff" | "spray" | "unit" | "application" | "patch" | "supp"} or null, "quote": "..."},
+  "schedule": {"type": "fixed" | "prn" | "fixed_and_prn" | "single_dose" | "none", "times_per_day": {"min": n, "max": n} or null, "interval_hours": {"min": n, "max": n} or null, "every_days": n or null, "quote": "..."},
+  "phases": a list of written steps in time, each {"amount": {"min","max","unit"} or null, "count": {"min","max","unit"} or null, "times_per_day": n or null, "days": n or null}, or [] when there is one regimen,
+  "weekday_pattern": true when the dose differs by weekday,
+  "frequency_conflict": {"present": true when two schedules are written for the same dose and cannot both hold (for example "daily bid"), "quote": "..."},
+  "duration_conflict": {"present": true when two different durations are written for the same step, "quote": "..."},
+  "alternatives": {"present": true when the sig offers a choice of dose, schedule or regimen joined by "or" with no rule for which to use, "quote": "..."},
+  "as_directed": {"present": true when the sig says "as directed", "ud" or similar, "quote": "..."},
+  "taper": {"mentioned": true when the sig says to taper, "steps_written": true when every step's dose and length is written, "quote": "..."},
+  "titration": {"mentioned": true when the sig says to increase, titrate or adjust, "plan_written": true when the step, interval and ceiling are all written, "quote": "..."},
+  "sliding_scale": {"mentioned": true when the sig refers to a sliding or correction scale, "scale_written": true when the glucose ranges and doses are written, "quote": "..."},
+  "site": {"kind": "eye" | "ear" | "nose" | "skin" | "mouth" | "other" | null, "side": "left" | "right" | "both" | "affected" | null, "quote": "..."},
+  "written_max": {"amount_per_day": {"value": n, "unit": "..."} or null, "doses_per_day": n or null, "quote": "..."},
+  "max_repeats": {"value": n or null, "quote": "..."},
+  "duration_days": n or null,
+  "prn_reason": "..." or null
+}
+
+Ranges such as "1-2 tabs", "1/2 to 1 tab" or "every 4-6 hours" are not alternatives. Report them as min and max.
+
+The e-prescription:
+
+{{input}}

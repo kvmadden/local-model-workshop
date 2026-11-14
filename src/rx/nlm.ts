@@ -70,6 +70,7 @@ export async function clinicalDrugs(generic: string): Promise<ClinicalDrug[]> {
       for (const m of c.name.matchAll(/([a-z][a-z0-9 ,-]*?)\s+([\d.]+)\s+(MG\/ML|MCG\/ML|UNT\/ML|MG\/ACTUAT|MCG\/ACTUAT|MCG\/HR|MG\/HR|MG|MCG|UNT|MEQ|G|%)(?![A-Z])/gi)) {
         strengths.push({ ingredient: m[1].trim().toLowerCase(), value: Number(m[2]), unit: m[3].toUpperCase() });
       }
+      if (strengths.length > ings.length) continue;
       const form = c.name.replace(/^.*\b(MG|MCG|UNT|MEQ|G|%|ML|ACTUAT|HR)\b\s*/i, '').toLowerCase();
       out.push({ rxcui: c.rxcui, name: c.name, form, strengths });
     }
@@ -128,25 +129,45 @@ export interface LabelSection {
   title: string;
   url: string;
   text: string;
+  /** Active ingredient strengths in mg of the products this label covers (SPL product data). */
+  productMg: number[];
+}
+
+/** Strengths in mg of the active ingredients in an SPL's product data. */
+export function productStrengthsMg(xml: string): number[] {
+  const out = new Set<number>();
+  for (const m of xml.matchAll(/<ingredient classCode="ACTI[BMR]">\s*<quantity>\s*<numerator ([^>]*)\/?>/g)) {
+    const value = m[1].match(/value="([\d.]+)"/)?.[1];
+    const unit = m[1].match(/unit="([a-z]+)"/)?.[1];
+    if (!value || !unit || !['mg', 'ug', 'mcg', 'g'].includes(unit)) continue;
+    const v = Number(value) * (unit === 'g' ? 1000 : unit === 'mg' ? 1 : 0.001);
+    out.add(Math.round(v * 1e6) / 1e6);
+  }
+  return [...out].sort((a, b) => a - b);
 }
 
 /**
  * The Dosage and Administration text of one FDA label for a product. `mustHave` and `mustNotHave`
  * are words the SPL title must or must not contain, such as "EXTENDED RELEASE" or "TABLET".
  */
-export async function dosageSection(generic: string, mustHave: string[], mustNotHave: string[]): Promise<LabelSection | null> {
+export async function dosageSection(generic: string, mustHave: string[], mustNotHave: string[], prefer_: string[] = [], skip = 0): Promise<LabelSection | null> {
   const ings = ingredientsOf(generic);
   const q = encodeURIComponent(ings.join(' and '));
   const list = JSON.parse(await cached(`https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=${q}&pagesize=100`)) as { data?: Array<{ setid: string; title: string }> };
   const titles = (list.data ?? []).filter((d) => {
     const t = d.title.toUpperCase();
     const named = t.split('[')[0];
-    return ings.every((i) => named.includes(i.toUpperCase())) && mustHave.every((w) => t.includes(w.toUpperCase())) && !mustNotHave.some((w) => t.includes(w.toUpperCase()));
+    const nameOnly = named.split(/\b(TABLET|CAPSULE|SOLUTION|INJECTION|SUSPENSION|CREAM|OINTMENT|PATCH|KIT|GEL|SPRAY|POWDER|SYRUP|LIQUID|FILM|AEROSOL)\b/)[0];
+    const combo = /\bAND\b|\/|,/.test(nameOnly);
+    return ings.every((i) => named.includes(i.toUpperCase())) && (ings.length > 1 || !combo) && mustHave.every((w) => t.includes(w.toUpperCase())) && !mustNotHave.some((w) => t.includes(w.toUpperCase()));
   });
-  for (const d of titles.slice(0, 4)) {
+  const prefer = prefer_.map((w) => w.toUpperCase());
+  titles.sort((a, b) => Number(prefer.some((w) => b.title.toUpperCase().includes(w))) - Number(prefer.some((w) => a.title.toUpperCase().includes(w))));
+  let seen = 0;
+  for (const d of titles.slice(0, 4 + skip)) {
     const xml = await cached(`https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/${d.setid}.xml`);
     const text = sectionText(xml, '34068-7');
-    if (text && text.length > 200) return { setid: d.setid, title: d.title, url: `https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=${d.setid}`, text };
+    if (text && text.length > 200 && seen++ >= skip) return { setid: d.setid, title: d.title, url: `https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=${d.setid}`, text, productMg: productStrengthsMg(xml) };
   }
   return null;
 }
@@ -155,4 +176,11 @@ export async function dosageSection(generic: string, mustHave: string[], mustNot
 export function quoteFound(quote: string, text: string): boolean {
   const n = (s: string) => normalizeText(s).toLowerCase().replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s*\(\s*/g, ' (').replace(/\s+/g, ' ');
   return quote.trim().length >= 12 && n(text).includes(n(quote));
+}
+
+/** DailyMed titles for a drug: used to see whether a single-use or preservative-free package exists. */
+export async function splTitles(generic: string): Promise<string[]> {
+  const ings = ingredientsOf(generic);
+  const list = JSON.parse(await cached(`https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=${encodeURIComponent(ings.join(' and '))}&pagesize=100`)) as { data?: Array<{ title: string }> };
+  return (list.data ?? []).map((d) => d.title).filter((t) => ings.every((i) => t.toUpperCase().split('[')[0].includes(i.toUpperCase())));
 }
