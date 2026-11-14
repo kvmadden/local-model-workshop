@@ -1,0 +1,43 @@
+Verify the e-prescription at the end of this message. Reply with one JSON object with exactly these keys: "flag", "clarify", "likely_reading", "safety_notes".
+
+"flag": {"needed": true or false, "reasons": [...]}
+- needed is true when the prescriber must be contacted before this can be dispensed as written. reasons is empty exactly when needed is false.
+- reasons come from this list: missing_drug, missing_strength, missing_dose, missing_frequency, missing_laterality, missing_taper_steps, missing_titration_plan, missing_sliding_scale, missing_max_daily, as_directed_without_instructions, conflicting_frequency, conflicting_duration, alternatives_without_rule, implausible_dose_unit, exceeds_usual_max, frequency_product_mismatch, internal_conflict, package_unspecified, dosage_form_unspecified, error_prone_abbreviation.
+
+"clarify": on a flagged prescription, {"tier": ..., "rule_ids": [...]}. On an unflagged prescription, null.
+- tier is the strictest source that requires the call:
+  - "law": a statute or regulation requires the missing element, or forbids the pharmacist from choosing or changing it.
+  - "standard": a professional or safety standard (ISMP, USP, NCPDP, NABP, board or agency guidance) says to clarify, but no law requires it.
+  - "judgment": no rule requires the call. The pharmacist could interpret and document.
+- rule_ids: short names of the rules or standards you rely on, or an empty list.
+
+"likely_reading": what a careful pharmacist would act on, or null when no safe reading can be made and nothing should be dispensed until the prescriber answers. A flagged prescription can still have a likely reading. Use null for any field the prescription does not give.
+- drug: the drug name without strength or form. Keep a salt or release form only when it makes a different product.
+- dosage_form: tablet, orally_disintegrating_tablet, capsule, solution, suspension, syrup, powder, cream, ointment, transdermal_patch, suppository, inhalation_aerosol, nasal_spray, injection, kit, or null.
+- package: multidose, unit_dose, or null.
+- route: oral, sublingual, inhaled, nasal, topical, ophthalmic, otic, transdermal, subcutaneous, intramuscular, rectal, or null.
+- laterality: left, right, both, affected, or null.
+- concentration: {"amount": {"value": n, "unit": u} or null, "per": {"value": n, "unit": "mL" | "puff" | "spray"} or null, "percent": n or null}, for liquids, inhalers, sprays and percent products. Otherwise null.
+- dose: the amount of drug given each time, {"min": n, "max": n, "unit": "mg" | "mcg" | "g" | "units" | "mEq"}. A fixed dose has min equal to max.
+- quantity: what is given each time in the unit the patient counts, {"min": n, "max": n, "unit": "tab" | "cap" | "mL" | "gtt" | "puff" | "spray" | "unit" | "application" | "patch" | "supp"}. Per eye, ear or nostril when laterality is both.
+- application_amount: for a topical, {"qualifier": "thin_layer" | "ribbon", "length": {"value": n, "unit": "inch" | "cm"} or null}. Otherwise null.
+- frequency: the schedule only. once_daily, twice_daily, three_times_daily, four_times_daily, every_4_hours, every_6_hours, every_8_hours, every_12_hours, once_weekly, every_other_day, every_72_hours, twice_weekly, once_monthly, or null. A dose tied to one time of day (qAM, QHS) is once_daily.
+- frequency_range: a range of times a day, {"min": n, "max": n, "per": "day"}. When this is set, frequency is null.
+- timing: morning, evening, bedtime, with_meals, before_meals, after_meals, or null.
+- prn: true when the dose is taken as needed.
+- prn_indication: the reason for as-needed use, or null.
+- prn_interval: the time between as-needed doses, {"min": n, "max": n, "unit": "min" | "h"}, or null.
+- limits: {"max_daily_dose": {"value": n, "unit": u} or null, "max_doses_per_day": n or null, "max_doses_in_window": {"count": n, "window": {"value": n, "unit": "min" | "h"}} or null, "max_repeats": n or null}. max_repeats is the repeat doses allowed after the first, as in "may repeat once".
+- duration_days: how many days to take it, or null.
+- days_of_week: the weekdays (monday ... sunday) when the dose is the same on each, or null.
+- weekly_schedule: a weekly pattern where the dose depends on the weekday, as a list of {"days": [...], "dose": ..., "quantity": ...}. Never a sequence in time. When this is set, the top-level dose and quantity are null.
+- phases: steps in time, in order, such as a taper or a titration, as a list of {"dose": ..., "quantity": ..., "frequency": ..., "timing": ..., "days": n or null}. Otherwise null.
+- sliding_scale: a list of {"bg_min": n or null, "bg_max": n or null, "units": n}, or null.
+- basis: why this reading, as a list of {"kind": "as_written" | "drug_norm" | "quantity_days" | "unit_error" | "safety_cap" | "abbreviation" | "reviewer_practice", "text": "...", "source": "sig_text" | "input_fields" | "pharmacy_knowledge"}.
+- confidence: high, medium, or low.
+
+"safety_notes": a list of {"code": ..., "text": "..."}, empty when there is nothing to note. code is one of: max_daily_cap_missing, basal_with_correction_dosing, laterality_without_frequency, weekly_drug_written_daily, unit_error, exceeds_usual_max, controlled_without_strength, repeat_limit_conflicts_daily_max, dosing_calendar_needed, error_prone_abbreviation.
+
+The e-prescription:
+
+{{input}}
