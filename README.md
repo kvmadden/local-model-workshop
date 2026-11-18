@@ -16,7 +16,7 @@ On 37 short, clean synthetic medication lines, three local models (20.9B to 31.7
 - **One label decided the ranking, and Kevin has ruled on it.** On 3 November 2026 he ruled that "at bedtime as needed" means no fixed schedule, as needed, at most once a day. Under that reading, gpt-oss:20b is the only model with every field right on both sets. Under the rule the gold was first written with, qwen3.8:27b led on disk size. Both are development results.
 - **Speed is unmeasured.** No quiet-machine run exists, so performance against the 10-second budget is unknown.
 
-**No model is chosen until the new blind test set runs.** That set is specified in [docs/FRESH-TEST-PROTOCOL.md](docs/FRESH-TEST-PROTOCOL.md) and has not been written yet.
+**No model is chosen yet.** The fresh blind set was locked on 3 November 2026 with 455 synthetic lines. Publication of the scored comparison is pending. See the [lock note](eval/fresh-blind-set/LOCK-NOTE.md) and [test protocol](docs/FRESH-TEST-PROTOCOL.md).
 
 ![Every field right on the two development sets, with the rules parser](docs/media/results.png)
 
