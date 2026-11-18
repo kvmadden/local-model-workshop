@@ -12,7 +12,7 @@ Every number here comes from a committed file. No model was run to produce this 
   - Two of the six templates are the two lines that decided the model ranking ("tid prn itching" and "at bedtime as needed for sleep").
   - They were committed before their runs (commit `1b528e3`, 2026-10-31, before the runs of 2026-11-01). That makes them a prospective regression check, not an independent test.
 
-A headline number needs a set that is written blind and locked before its first run. That protocol is in [FRESH-TEST-PROTOCOL.md](FRESH-TEST-PROTOCOL.md). The set itself is not written yet.
+A headline number needs a set that is written blind and locked before its first run. The fresh blind set was locked on 3 November 2026 with 455 synthetic lines. Publication of its scored result is pending. See the [lock note](../eval/fresh-blind-set/LOCK-NOTE.md) and [test protocol](FRESH-TEST-PROTOCOL.md).
 
 ## Every field right
 
@@ -98,7 +98,7 @@ Each row scores one set and takes its latency from the same runs. The 12 templat
 Notes:
 
 - **Disk sizes.** The sizes (13.8, 19.4 and 18.2 GB) are from [ORIGINAL-EVALUATION.md](ORIGINAL-EVALUATION.md). The harness of 2026-10-30 did not record them. It now records digest and size.
-- **Which rule.** Kevin decided it on 3 November 2026 ([KEVIN-REVIEW.md](KEVIN-REVIEW.md)). Under his ruling, gpt-oss:20b leads on both development sets. These are development results, so no model is chosen until the blind test set runs.
+- **Which rule.** Kevin decided it on 3 November 2026 ([KEVIN-REVIEW.md](KEVIN-REVIEW.md)). Under his ruling, gpt-oss:20b leads on both development sets. Model selection remains pending the fresh blind comparison.
 
 ## Latency: what the saved runs show and do not show
 

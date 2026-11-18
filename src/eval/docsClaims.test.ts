@@ -17,6 +17,19 @@ describe('current documents', () => {
     expect(read('eval/sig-extraction/README.md')).toMatch(/Status: development data/);
   });
 
+  it('source the fresh blind set status from the public lock', () => {
+    const { counts } = JSON.parse(read('eval/fresh-blind-set/lock.json'));
+    for (const [file, relativeLock] of [
+      ['README.md', 'eval/fresh-blind-set/LOCK-NOTE.md'],
+      ['docs/DEVELOPMENT-RESULTS.md', '../eval/fresh-blind-set/LOCK-NOTE.md'],
+    ]) {
+      const text = read(file);
+      expect(text, file).toContain(`${counts.lines} synthetic lines`);
+      expect(text, file).toContain(`(${relativeLock})`);
+      expect(text, file).not.toMatch(/not (?:been )?written yet/i);
+    }
+  });
+
   it('do not present the template set as a locked test or the echo mock as proof against copying', () => {
     for (const f of current) {
       const text = read(f);
