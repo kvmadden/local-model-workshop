@@ -1,6 +1,10 @@
 # Local model workshop
 
-A browser workshop for chaining prompt steps against a model on your own Mac, plus a command-line eval that tests local models on synthetic medication instructions through the same engine.
+Local Model Workshop lets developers chain prompts in a browser on their own Mac and compare local models using a command-line evaluation on synthetic medication instructions.
+
+[Try the interactive case study](https://kvmadden.com/projects/local-model-workshop/#try).
+
+**Run locally.** Run `npm ci` and `npm run dev`, then open the address Vite prints. The app starts in mock mode. Run `npm run eval:baselines` to score the baselines without a local model.
 
 [![CI](https://github.com/kvmadden/local-model-workshop/actions/workflows/ci.yml/badge.svg)](https://github.com/kvmadden/local-model-workshop/actions/workflows/ci.yml)
 
