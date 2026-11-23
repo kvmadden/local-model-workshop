@@ -1,0 +1,121 @@
+{
+ "source": "writer claims in lines.jsonl, one line may count toward several categories",
+ "lines": 433,
+ "categories": {
+  "1": {
+   "lines": 258,
+   "openai": 116,
+   "google": 142
+  },
+  "2": {
+   "lines": 100,
+   "openai": 25,
+   "google": 75
+  },
+  "3": {
+   "lines": 153,
+   "openai": 98,
+   "google": 55
+  },
+  "4": {
+   "lines": 32,
+   "openai": 11,
+   "google": 21
+  },
+  "5": {
+   "lines": 103,
+   "openai": 55,
+   "google": 48
+  },
+  "6": {
+   "lines": 26,
+   "openai": 10,
+   "google": 16
+  },
+  "7": {
+   "lines": 139,
+   "openai": 54,
+   "google": 85
+  },
+  "8": {
+   "lines": 26,
+   "openai": 14,
+   "google": 12
+  },
+  "9": {
+   "lines": 30,
+   "openai": 15,
+   "google": 15
+  },
+  "10": {
+   "lines": 25,
+   "openai": 13,
+   "google": 12
+  },
+  "11": {
+   "lines": 34,
+   "openai": 17,
+   "google": 17
+  },
+  "12": {
+   "lines": 28,
+   "openai": 15,
+   "google": 13
+  },
+  "13": {
+   "lines": 38,
+   "openai": 15,
+   "google": 23
+  },
+  "14": {
+   "lines": 65,
+   "openai": 18,
+   "google": 47
+  },
+  "15": {
+   "lines": 73,
+   "openai": 42,
+   "google": 31
+  },
+  "16": {
+   "lines": 98,
+   "openai": 44,
+   "google": 54
+  },
+  "17": {
+   "lines": 26,
+   "openai": 14,
+   "google": 12
+  },
+  "18": {
+   "lines": 25,
+   "openai": 13,
+   "google": 12
+  },
+  "19": {
+   "lines": 27,
+   "openai": 16,
+   "google": 11
+  },
+  "20": {
+   "lines": 30,
+   "openai": 14,
+   "google": 16
+  },
+  "21": {
+   "lines": 28,
+   "openai": 16,
+   "google": 12
+  },
+  "22": {
+   "lines": 25,
+   "openai": 13,
+   "google": 12
+  },
+  "23": {
+   "lines": 101,
+   "openai": 69,
+   "google": 32
+  }
+ }
+}
