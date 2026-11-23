@@ -1,0 +1,167 @@
+{
+ "labelers": [
+  "openai",
+  "google"
+ ],
+ "lines_labeled_by_both": 433,
+ "lines_in_set": 433,
+ "lines_with_any_disagreement": 127,
+ "disagreement_items": 219,
+ "contested_candidates": [
+  "v2-0242",
+  "v2-0244"
+ ],
+ "note": "Drug-entry fields are compared entry by entry in the order labeled, with n = the larger entry count per line. Kappa is Cohen kappa over the canonical value of the field. Strings are compared lowercased and trimmed. Reasons are compared on their letters and digits. Conditions are compared by type and by the numbers in their text, because their wording is free.Null kappa means chance agreement is 1 (every pair has the same single value).",
+ "fields": {
+  "med_count": {
+   "n": 433,
+   "agree": 432,
+   "pct": 99.8,
+   "kappa": 0.981
+  },
+  "ingredient": {
+   "n": 461,
+   "agree": 456,
+   "pct": 98.9,
+   "kappa": 0.989
+  },
+  "salt_or_release": {
+   "n": 461,
+   "agree": 449,
+   "pct": 97.4,
+   "kappa": 0.899
+  },
+  "status": {
+   "n": 461,
+   "agree": 459,
+   "pct": 99.6,
+   "kappa": 0.963
+  },
+  "dose": {
+   "n": 461,
+   "agree": 451,
+   "pct": 97.8,
+   "kappa": 0.977
+  },
+  "form_quantity": {
+   "n": 461,
+   "agree": 439,
+   "pct": 95.2,
+   "kappa": 0.936
+  },
+  "dose_basis": {
+   "n": 461,
+   "agree": 460,
+   "pct": 99.8,
+   "kappa": 0.959
+  },
+  "route": {
+   "n": 461,
+   "agree": 453,
+   "pct": 98.3,
+   "kappa": 0.944
+  },
+  "schedule": {
+   "n": 461,
+   "agree": 456,
+   "pct": 98.9,
+   "kappa": 0.985
+  },
+  "anchors": {
+   "n": 461,
+   "agree": 451,
+   "pct": 97.8,
+   "kappa": 0.957
+  },
+  "as_needed": {
+   "n": 461,
+   "agree": 459,
+   "pct": 99.6,
+   "kappa": 0.988
+  },
+  "as_needed_reason": {
+   "n": 461,
+   "agree": 457,
+   "pct": 99.1,
+   "kappa": 0.978
+  },
+  "max_dose_per_period": {
+   "n": 461,
+   "agree": 458,
+   "pct": 99.3,
+   "kappa": 0.966
+  },
+  "prn_min_interval_h": {
+   "n": 461,
+   "agree": 458,
+   "pct": 99.3,
+   "kappa": 0.974
+  },
+  "duration": {
+   "n": 461,
+   "agree": 449,
+   "pct": 97.4,
+   "kappa": 0.915
+  },
+  "phases": {
+   "n": 461,
+   "agree": 448,
+   "pct": 97.2,
+   "kappa": 0.798
+  },
+  "conditions": {
+   "n": 461,
+   "agree": 441,
+   "pct": 95.7,
+   "kappa": 0.714
+  },
+  "needs_review_flag": {
+   "n": 461,
+   "agree": 451,
+   "pct": 97.8,
+   "kappa": 0.917
+  },
+  "six.drug": {
+   "n": 433,
+   "agree": 401,
+   "pct": 92.6,
+   "kappa": 0.925
+  },
+  "six.dose_per_administration": {
+   "n": 433,
+   "agree": 416,
+   "pct": 96.1,
+   "kappa": 0.955
+  },
+  "six.frequency": {
+   "n": 433,
+   "agree": 426,
+   "pct": 98.4,
+   "kappa": 0.978
+  },
+  "six.timing": {
+   "n": 433,
+   "agree": 426,
+   "pct": 98.4,
+   "kappa": 0.966
+  },
+  "six.prn": {
+   "n": 433,
+   "agree": 429,
+   "pct": 99.1,
+   "kappa": 0.974
+  },
+  "six.prn_indication": {
+   "n": 433,
+   "agree": 427,
+   "pct": 98.6,
+   "kappa": 0.966
+  },
+  "six.six_field_representable": {
+   "n": 433,
+   "agree": 430,
+   "pct": 99.3,
+   "kappa": 0.986
+  }
+ }
+}

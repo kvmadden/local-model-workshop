@@ -1,0 +1,92 @@
+{
+ "rule": "drop a line whose word set has Jaccard similarity >= 0.7 with any development or template line",
+ "tokenizer": "NFKC, lowercase, [a-z0-9]+ word set",
+ "compared_against": {
+  "development_lines": 25,
+  "template_lines": 12
+ },
+ "lines_checked": 446,
+ "lines_dropped": 13,
+ "lines_kept": 433,
+ "max_jaccard_among_kept": 0.692,
+ "dropped": [
+  {
+   "id": "v2-0005",
+   "writer": "openai",
+   "max_jaccard": 0.722,
+   "matched": "dev:s06"
+  },
+  {
+   "id": "v2-0097",
+   "writer": "google",
+   "max_jaccard": 0.867,
+   "matched": "dev:s21"
+  },
+  {
+   "id": "v2-0105",
+   "writer": "google",
+   "max_jaccard": 0.706,
+   "matched": "dev:s12"
+  },
+  {
+   "id": "v2-0136",
+   "writer": "openai",
+   "max_jaccard": 0.8,
+   "matched": "dev:s01"
+  },
+  {
+   "id": "v2-0142",
+   "writer": "openai",
+   "max_jaccard": 0.8,
+   "matched": "dev:s12"
+  },
+  {
+   "id": "v2-0145",
+   "writer": "google",
+   "max_jaccard": 1,
+   "matched": "dev:s01"
+  },
+  {
+   "id": "v2-0217",
+   "writer": "google",
+   "max_jaccard": 0.938,
+   "matched": "dev:s04"
+  },
+  {
+   "id": "v2-0287",
+   "writer": "google",
+   "max_jaccard": 0.8,
+   "matched": "dev:s01"
+  },
+  {
+   "id": "v2-0300",
+   "writer": "openai",
+   "max_jaccard": 0.769,
+   "matched": "dev:s03"
+  },
+  {
+   "id": "v2-0322",
+   "writer": "openai",
+   "max_jaccard": 0.929,
+   "matched": "dev:s21"
+  },
+  {
+   "id": "v2-0347",
+   "writer": "google",
+   "max_jaccard": 0.846,
+   "matched": "dev:s09"
+  },
+  {
+   "id": "v2-0366",
+   "writer": "google",
+   "max_jaccard": 0.706,
+   "matched": "dev:s21"
+  },
+  {
+   "id": "v2-0435",
+   "writer": "openai",
+   "max_jaccard": 0.882,
+   "matched": "dev:s08"
+  }
+ ]
+}
